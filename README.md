@@ -1,4 +1,4 @@
-# mycrypto
+# myCrypto
 
 A new Flutter project.
 
