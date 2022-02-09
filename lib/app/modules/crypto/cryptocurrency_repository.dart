@@ -12,7 +12,7 @@ class CryptocurrencyRepository with Disposable {
   CryptocurrencyRepository(this._client);
 
   Future<CryptocurrencyModel> getCryptocurrencyData(
-      CryptocurrencyModel? data) async {
+      ) async {
     try {
       final Response response = await _client.get('$url?key=$key&per-page=$count');
       return CryptocurrencyModel.fromJson(response.data);
