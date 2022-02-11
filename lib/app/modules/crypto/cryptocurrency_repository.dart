@@ -11,6 +11,8 @@ class CryptocurrencyRepository with Disposable {
   final String date = '0d';
   final String? countPage = '100';
 
+  CryptocurrencyRepository(Dio dio);
+
   /*Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
     try {
       final Response response = await _dio
