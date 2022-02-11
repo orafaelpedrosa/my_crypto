@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/theme/theme.dart';
-
+import 'package:mycrypto/app/modules/auth/auth_login_page.dart';
 
 class AppWidget extends StatelessWidget {
-
-
   const AppWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-      return MaterialApp(
-        title: 'myCrypto',
-        theme: theme,
-        debugShowCheckedModeBanner: false, 
-      ).modular();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+
+      ),
+      home: AuthLoginPage(),
+    );
   }
 }
