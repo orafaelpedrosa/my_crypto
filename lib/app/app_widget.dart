@@ -13,6 +13,7 @@ class AppWidget extends StatelessWidget {
       return MaterialApp(
         title: 'myCrypto',
         theme: theme,
+        debugShowCheckedModeBanner: false, 
       ).modular();
   }
 }
