@@ -13,26 +13,6 @@ class CryptocurrencyRepository with Disposable {
 
   CryptocurrencyRepository(Dio dio);
 
-  /*Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
-    try {
-      final Response response = await _dio
-          .get('$urlBase?key=$apiKey&internal=$date&per-page=$countPage');
-      
-      List<dynamic> result = response.data;
-      final List<CryptocurrencyModel> cryptocurrenciesList = [];
-
-      result.forEach(
-        (element) {
-          cryptocurrenciesList.add(CryptocurrencyModel.fromJson(element));
-        },
-      );
-      return cryptocurrenciesList;
-    } catch (e) {
-      log('getCrypto $e');
-      rethrow;
-    }
-  }*/
-
   Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
     try {
       final Response response = await _dio

@@ -6,17 +6,18 @@ import 'package:mycrypto/app/modules/crypto/cryptocurrency_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-class CryptocurrencyStore extends NotifierStore<DioError, CryptocurrencyModel>
-    with Disposable {
+class CryptocurrencyStore
+    extends NotifierStore<DioError, List<CryptocurrencyModel>> with Disposable {
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
 
-  CryptocurrencyStore(CryptocurrencyModel initialState) : super(initialState);
+  CryptocurrencyStore() : super([]);
 
   Future<void> getCrypto() async {
     setLoading(true);
     try {
       final cryptoData = await _repository.getCryptocurrencyData();
+      update(cryptoData);
     } catch (e) {
       log('StoreCrypto $e');
     }
