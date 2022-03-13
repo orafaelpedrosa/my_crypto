@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/core/theme/theme.dart';
 import 'package:mycrypto/app/modules/auth/auth_login_page.dart';
+import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_list_widget.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);

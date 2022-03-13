@@ -1,22 +1,23 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/crypto/cryptocurrency_model.dart';
+import 'package:mycrypto/app/modules/crypto/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/crypto/cryptocurrency_store.dart';
 
-class BleDevicesListWidget extends StatefulWidget {
-  BleDevicesListWidget({
+class CryptocurrencyListWidget extends StatefulWidget {
+  const CryptocurrencyListWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  _BleDevicesListWidgetState createState() => _BleDevicesListWidgetState();
+  _CryptocurrencyListWidgetState createState() => _CryptocurrencyListWidgetState();
 }
 
-class _BleDevicesListWidgetState extends State<BleDevicesListWidget> {
+class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   CryptocurrencyStore store = Modular.get();
+  CryptocurrencyRepository repository = Modular.get();
 
   @override
   void initState() {
@@ -45,8 +46,8 @@ class _BleDevicesListWidgetState extends State<BleDevicesListWidget> {
                     top: 10.0,
                   ),
                   child: ListTile(
-                    title: Text('a'),
-                    subtitle: Text('fb'),
+                    title: Text(coin.name!),
+                    subtitle: Text(coin.symbol!),
                     leading: CircleAvatar(
                       backgroundColor: Theme.of(context).primaryColor,
                       child: const Icon(
