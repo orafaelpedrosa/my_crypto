@@ -10,7 +10,7 @@ import 'modules/home/home_module.dart';
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => CryptocurrencyRepository(i.get<Dio>())),
+    Bind.lazySingleton((i) => CryptocurrencyRepository()),
     Bind.lazySingleton((i) => CryptocurrencyStore()),
 
 

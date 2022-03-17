@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mycrypto/app/modules/auth/auth_login_page.dart';
+import 'package:mycrypto/app/modules/crypto/widget/crypto_page.dart';
 import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_list_widget.dart';
 
 class AppWidget extends StatelessWidget {
@@ -13,7 +14,7 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.blue,
 
       ),
-      home: AuthLoginPage(),
+      home: const CryptoPage(),
     );
   }
 }

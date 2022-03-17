@@ -15,9 +15,7 @@ class _CryptoPageState extends State<CryptoPage> {
       appBar: AppBar(
         title: const Text('Crypto'),
       ),
-      body: Container(
-        child: Text('abc'),
-      ),
+      body: const CryptocurrencyListWidget(),
     );
   }
 }

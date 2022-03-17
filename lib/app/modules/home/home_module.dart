@@ -10,7 +10,8 @@ class HomeModule extends Module {
   @override
   final List<Bind> binds = [
  Bind.lazySingleton((i) => HomeStore()),
-    Bind.lazySingleton((i) => CryptocurrencyRepository(i.get<Dio>())),
+    Bind.lazySingleton((i) => CryptocurrencyRepository()),
+    Bind.lazySingleton((i) => CryptocurrencyRepository()),
  Bind.lazySingleton((i) => CryptocurrencyStore()),
 
  ];
