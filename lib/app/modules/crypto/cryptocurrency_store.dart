@@ -21,6 +21,8 @@ class CryptocurrencyStore
     } catch (e) {
       log('StoreCrypto $e');
     }
+    setLoading(false);
+
   }
 
   @override
