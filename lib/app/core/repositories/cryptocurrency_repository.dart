@@ -1,14 +1,14 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/crypto/model/cryptocurrency_model.dart';
+import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 
 class CryptocurrencyRepository with Disposable {
   final Dio _dio = Dio();
   final String urlBase = 'https://api.nomics.com/v1/currencies/ticker';
   final String apiKey = '87f126845e26f8aa761c8f7045668c8d9b1f260c';
   final String date = '0d';
-  final String? countPage = '20';
+  final String? countPage = '50';
 
   Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
     try {

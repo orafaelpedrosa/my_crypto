@@ -4,9 +4,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mycrypto/app/modules/crypto/model/cryptocurrency_model.dart';
-import 'package:mycrypto/app/modules/crypto/cryptocurrency_repository.dart';
-import 'package:mycrypto/app/modules/crypto/cryptocurrency_store.dart';
+import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
+import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_card_widget.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
@@ -15,7 +15,8 @@ class CryptocurrencyListWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CryptocurrencyListWidgetState createState() => _CryptocurrencyListWidgetState();
+  _CryptocurrencyListWidgetState createState() =>
+      _CryptocurrencyListWidgetState();
 }
 
 class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
