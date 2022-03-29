@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mycrypto/app/modules/crypto/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/modules/crypto/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/crypto/cryptocurrency_store.dart';
+import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_card_widget.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
   const CryptocurrencyListWidget({
@@ -29,8 +32,9 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<CryptocurrencyModel>>(
       stream: Stream.periodic(
-        const Duration(seconds: 1),
+        const Duration(seconds: 10),
         (_) {
+          store.getCrypto();
           return store.state;
         },
       ),
@@ -41,21 +45,12 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
           physics: const BouncingScrollPhysics(),
           children: snapshot.data!
               .map<Widget>(
-                (coin) => Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10.0,
-                  ),
-                  child: ListTile(
-                    title: Text(coin.name!),
-                    subtitle: Text(coin.symbol!),
-                    leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: const Icon(
-                        Icons.money,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                (crypto) => CryptocurrencyCardWidget(
+                  crypto_name: crypto.name,
+                  crypto_price: double.parse(crypto.price!),
+                  crypto_symbol: crypto.symbol,
+                  crypto_rank: crypto.rank,
+                  crypto_logo_url: crypto.logoUrl,
                 ),
               )
               .toList(),

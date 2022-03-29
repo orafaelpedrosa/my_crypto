@@ -9,19 +9,20 @@ class CryptocurrencyRepository with Disposable {
   final String urlBase = 'https://api.nomics.com/v1/currencies/ticker';
   final String apiKey = '87f126845e26f8aa761c8f7045668c8d9b1f260c';
   final String date = '0d';
-  final String? countPage = '10';
+  final String? countPage = '20';
 
   Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
     try {
       final Response response =
           await _dio.get('$urlBase?key=$apiKey&internal=$date&per-page=$countPage');
       final List<CryptocurrencyModel> cryptos = List.empty(growable: true);
-      response.data.forEach(
-        (crypto) => cryptos.add(CryptocurrencyModel.fromJson(crypto)),
-      );
+      response.data.forEach((crypto) {
+        cryptos.add(CryptocurrencyModel.fromJson(crypto));
+      });
+      log('CryptocurrencyRepository: getCryptocurrencyData: ${cryptos.length}');
       return cryptos;
     } catch (e) {
-      log('getCrypto $e');
+      log('Error getCrypto: $e');
       rethrow;
     }
   }
