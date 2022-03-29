@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/crypto/cryptocurrency_model.dart';
+import 'package:mycrypto/app/modules/crypto/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/modules/crypto/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/crypto/cryptocurrency_store.dart';
 
@@ -40,7 +40,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           children: snapshot.data!
-              .map(
+              .map<Widget>(
                 (coin) => Padding(
                   padding: const EdgeInsets.only(
                     top: 10.0,
