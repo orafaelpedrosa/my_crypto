@@ -22,7 +22,6 @@ class CryptocurrencyStore
       log('StoreCrypto $e');
     }
     setLoading(false);
-
   }
 
   @override

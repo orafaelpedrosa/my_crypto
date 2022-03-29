@@ -32,7 +32,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<CryptocurrencyModel>>(
       stream: Stream.periodic(
-        const Duration(seconds: 10),
+        const Duration(seconds: 2),
         (_) {
           store.getCrypto();
           return store.state;
@@ -51,11 +51,19 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   crypto_symbol: crypto.symbol,
                   crypto_rank: crypto.rank,
                   crypto_logo_url: crypto.logoUrl,
+                  imageFormat: getImageFormat(crypto.logoUrl),
                 ),
               )
               .toList(),
         );
       },
     );
+  }
+
+  String getImageFormat(String? url) {
+    String imageFormat = '';
+    int indexPoint = url!.length;
+    imageFormat = url.substring(indexPoint - 3);
+    return imageFormat;
   }
 }

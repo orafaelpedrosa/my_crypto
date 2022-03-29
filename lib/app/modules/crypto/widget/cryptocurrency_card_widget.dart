@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +12,7 @@ class CryptocurrencyCardWidget extends StatefulWidget {
   double? crypto_price;
   String? crypto_rank;
   String? crypto_logo_url;
+  String? imageFormat;
 
   CryptocurrencyCardWidget({
     Key? key,
@@ -18,6 +21,7 @@ class CryptocurrencyCardWidget extends StatefulWidget {
     this.crypto_price,
     this.crypto_rank,
     this.crypto_logo_url,
+    this.imageFormat,
   }) : super(key: key);
 
   @override
@@ -28,7 +32,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.only(left: 5, right: 5, top: 5),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -36,14 +40,22 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
         child: Column(
           children: <Widget>[
             ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: SvgPicture.network(
-                  widget.crypto_logo_url.toString(),
-                  width: 150,
-                  height: 150,
-                ),
-              ),
+              leading: widget.imageFormat != 'svg'
+                  ? CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: NetworkImage(
+                        widget.crypto_logo_url!,
+                        scale: 2.0,
+                      ),
+                    )
+                  : CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: SvgPicture.network(
+                        widget.crypto_logo_url!,
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
               title: Text(
                 widget.crypto_name!,
                 style: TextStyle(
