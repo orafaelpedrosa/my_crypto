@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData theme = ThemeData(
   primaryColor: const Color(0xff2C3333),
@@ -20,36 +21,41 @@ ThemeData theme = ThemeData(
     selectionColor: const Color(0xFF2666cf).withOpacity(0.5),
     selectionHandleColor: const Color(0xFF2666cf),
   ),
-  
   iconTheme: const IconThemeData(
     color: Color(0xff2666cf),
   ),
   buttonTheme: const ButtonThemeData(
     buttonColor: Color(0xff2666cf),
   ),
-  textTheme: const TextTheme(
+  textTheme: TextTheme(
     headline1: TextStyle(
-      color: Color(0xffffffff),
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+      color: const Color(0xffffffff),
       fontSize: 25,
     ),
     headline2: TextStyle(
-      color: Color(0xffffffff),
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+      color: const Color(0xffffffff),
       fontSize: 22,
     ),
     headline3: TextStyle(
-      color: Color(0xffffffff),
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+      color: const Color(0xffffffff),
       fontSize: 20,
     ),
     headline4: TextStyle(
-      color: Color(0xffffffff),
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+      color: const Color(0xffffffff),
       fontSize: 18,
     ),
     headline5: TextStyle(
-      color: Color(0xffffffff),
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+      color: const Color(0xffffffff),
       fontSize: 16,
     ),
     headline6: TextStyle(
-      color: Color(0xffffffff),
+      fontFamily: GoogleFonts.montserrat().fontFamily,
+      color: const Color(0xffffffff),
       fontSize: 14,
     ),
   ),

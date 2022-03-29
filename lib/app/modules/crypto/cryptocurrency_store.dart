@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/crypto/cryptocurrency_model.dart';
+import 'package:mycrypto/app/modules/crypto/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/modules/crypto/cryptocurrency_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -21,6 +21,7 @@ class CryptocurrencyStore
     } catch (e) {
       log('StoreCrypto $e');
     }
+    setLoading(false);
   }
 
   @override
