@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
@@ -15,8 +14,7 @@ class CryptocurrencyListWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CryptocurrencyListWidgetState createState() =>
-      _CryptocurrencyListWidgetState();
+  _CryptocurrencyListWidgetState createState() => _CryptocurrencyListWidgetState();
 }
 
 class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
@@ -31,32 +29,49 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<CryptocurrencyModel>>(
-      stream: Stream.periodic(
-        const Duration(seconds: 2),
-        (_) {
-          store.getCrypto();
-          return store.state;
-        },
-      ),
-      initialData: const [],
-      builder: (context, snapshot) {
-        return ListView(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          children: snapshot.data!
-              .map<Widget>(
-                (crypto) => CryptocurrencyCardWidget(
-                  crypto_name: crypto.name,
-                  crypto_price: double.parse(crypto.price!),
-                  crypto_symbol: crypto.symbol,
-                  crypto_rank: crypto.rank,
-                  crypto_logo_url: crypto.logoUrl,
-                  imageFormat: getImageFormat(crypto.logoUrl),
-                ),
-              )
-              .toList(),
-        );
+    return TripleBuilder<CryptocurrencyStore, Exception, List<CryptocurrencyModel>>(
+      store: store,
+      builder: (_, context) {
+        if (store.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return StreamBuilder<List<CryptocurrencyModel>>(
+            stream: Stream.periodic(
+              const Duration(seconds: 4),
+              (_) {
+                store.getCrypto();
+                return store.state;
+              },
+            ),
+            initialData: const [],
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting && snapshot.data!.isEmpty) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  children: snapshot.data!
+                      .map<Widget>(
+                        (crypto) => CryptocurrencyCardWidget(
+                          crypto_name: crypto.name,
+                          crypto_price: double.parse(crypto.price!),
+                          crypto_symbol: crypto.symbol,
+                          crypto_rank: crypto.rank,
+                          crypto_logo_url: crypto.logoUrl,
+                          imageFormat: getImageFormat(crypto.logoUrl),
+                        ),
+                      )
+                      .toList(),
+                );
+              }
+            },
+          );
+        }
       },
     );
   }
