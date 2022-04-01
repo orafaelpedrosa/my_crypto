@@ -6,7 +6,7 @@ import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 
 class CryptocurrencyRepository with Disposable {
   final Dio _dio = Dio();
-  final String urlBase = 'https://api.nomics.com/v1/currencies/ticker';
+  final String urlBase = dotenv.get('URL_BASE');
   final String apiKey = dotenv.get('API_KEY');
   final String date = '0d';
   final String? countPage = '50';
