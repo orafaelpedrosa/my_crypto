@@ -1,11 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class CryptocurrencyCardWidget extends StatefulWidget {
   String? crypto_name;
   String? crypto_symbol;
@@ -95,11 +93,12 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
                 ],
               ),
               trailing: Text(
-                widget.crypto_price!.toStringAsFixed(2),
+                '\$ ${widget.crypto_price!.toStringAsFixed(2)}',
                 style: TextStyle(
                   color: const Color(0xFF32CD32),
                   fontFamily: GoogleFonts.montserrat().fontFamily,
                   fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
