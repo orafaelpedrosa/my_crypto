@@ -53,3 +53,6 @@ app.*.map.json
 pubspec.lock
 ios/Podfile.lock
 ios/build/
+
+#dotenv
+.env
