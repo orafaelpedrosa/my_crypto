@@ -9,7 +9,7 @@ class CryptocurrencyRepository with Disposable {
   final String urlBase = dotenv.get('URL_BASE');
   final String apiKey = dotenv.get('API_KEY');
   final String date = '0d';
-  final String? countPage = '50';
+  final String? countPage = '100';
 
   Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
     try {
@@ -19,7 +19,7 @@ class CryptocurrencyRepository with Disposable {
       response.data.forEach((crypto) {
         cryptos.add(CryptocurrencyModel.fromJson(crypto));
       });
-      log('CryptocurrencyRepository: getCryptocurrencyData: ${cryptos.length}');
+      log('getCryptocurrencyData: ${cryptos.length}');
       return cryptos;
     } catch (e) {
       log('Error getCrypto: $e');

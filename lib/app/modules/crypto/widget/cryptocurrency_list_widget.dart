@@ -52,21 +52,23 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return ListView(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  children: snapshot.data!
-                      .map<Widget>(
-                        (crypto) => CryptocurrencyCardWidget(
-                          crypto_name: crypto.name,
-                          crypto_price: double.parse(crypto.price!),
-                          crypto_symbol: crypto.symbol,
-                          crypto_rank: crypto.rank,
-                          crypto_logo_url: crypto.logoUrl,
-                          imageFormat: getImageFormat(crypto.logoUrl),
-                        ),
-                      )
-                      .toList(),
+                return ListView.separated(
+                  itemCount: store.state.length,
+                  itemBuilder: (_, index) {
+                    final cryptocurrency = store.state[index];
+                    return CryptocurrencyCardWidget(
+                      crypto_name: cryptocurrency.name,
+                      crypto_symbol: cryptocurrency.symbol,
+                      crypto_price: double.parse(cryptocurrency.price!),
+                      crypto_rank: cryptocurrency.rank,
+                      crypto_logo_url: cryptocurrency.logoUrl,
+                      imageFormat: getImageFormat(cryptocurrency.logoUrl),
+                    );
+                  },
+                  separatorBuilder: (_, __) => Divider(
+                    height: 0.5,
+                    color: Colors.black.withOpacity(0.1),
+                  ),
                 );
               }
             },
@@ -77,9 +79,13 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   }
 
   String getImageFormat(String? url) {
-    String imageFormat = '';
-    int indexPoint = url!.length;
-    imageFormat = url.substring(indexPoint - 3);
-    return imageFormat;
+    if (url == null) {
+      return 'null';
+    } else {
+      String imageFormat = '';
+      int indexPoint = url.length;
+      imageFormat = url.substring(indexPoint - 3);
+      return imageFormat;
+    }
   }
 }

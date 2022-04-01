@@ -30,80 +30,84 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 5, right: 5, top: 5),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          children: <Widget>[
-            ListTile(
-              leading: widget.imageFormat != 'svg'
-                  ? CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(
-                        widget.crypto_logo_url!,
-                        scale: 2.0,
-                      ),
-                    )
-                  : CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: SvgPicture.network(
-                        widget.crypto_logo_url!,
-                        height: 50,
-                        width: 50,
-                      ),
+      color: Colors.white,
+      margin: const EdgeInsets.only(),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: widget.imageFormat == 'svg'
+                ? CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: SvgPicture.network(
+                      widget.crypto_logo_url!,
+                      height: 35,
+                      width: 35,
                     ),
-              title: Text(
-                widget.crypto_name!,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: GoogleFonts.montserrat().fontFamily,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              subtitle: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    padding: const EdgeInsets.only(left: 5, right: 5, top: 3, bottom: 3),
-                    decoration: BoxDecoration(
-                      color: Colors.black54.withOpacity(0.25),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Center(
-                      child: Text(
-                        widget.crypto_rank!,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: GoogleFonts.montserrat().fontFamily,
-                          fontSize: 10,
+                  )
+                : widget.imageFormat == 'null'
+                    ? CircleAvatar(
+                        backgroundColor: Colors.black,
+                        child: Icon(
+                          Icons.attach_money_outlined,
+                          color: Colors.black54,
+                        ),
+                      )
+                    : CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(
+                          widget.crypto_logo_url!,
+                          scale: 0.1,
                         ),
                       ),
-                    ),
-                  ),
-                  Text(
-                    widget.crypto_symbol!,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: GoogleFonts.montserrat().fontFamily,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-              trailing: Text(
-                '\$ ${widget.crypto_price!.toStringAsFixed(2)}',
-                style: TextStyle(
-                  color: const Color(0xFF32CD32),
-                  fontFamily: GoogleFonts.montserrat().fontFamily,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+            title: Text(
+              widget.crypto_name!,
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: GoogleFonts.montserrat().fontFamily,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          ],
-        ),
+            subtitle: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 5),
+                  padding: const EdgeInsets.only(left: 5, right: 5, top: 3, bottom: 3),
+                  decoration: BoxDecoration(
+                    color: Colors.black54.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      widget.crypto_rank!,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: GoogleFonts.montserrat().fontFamily,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                  widget.crypto_symbol!,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: GoogleFonts.montserrat().fontFamily,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+            trailing: Text(
+              '\$ ${widget.crypto_price!.toStringAsFixed(2)}',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: GoogleFonts.montserrat().fontFamily,
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

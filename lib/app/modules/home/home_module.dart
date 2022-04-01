@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
