@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/modules/crypto/crypto_page.dart';
+import 'package:mycrypto/app/core/theme/theme.dart';
+import 'package:mycrypto/app/modules/auth/auth_check_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -8,7 +9,8 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const CryptoPage(),
+      home: AuthCheckPage(),
+      theme: theme,
     );
   }
 }
