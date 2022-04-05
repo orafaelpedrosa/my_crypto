@@ -15,10 +15,12 @@ class _CryptoPageState extends State<CryptoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: SvgPicture.asset(
-          'assets/app/mycrypto.svg',
-          height: 32,
-          width: 32,
+        title: Center(
+          child: SvgPicture.asset(
+            'assets/app/mycrypto.svg',
+            height: 32,
+            width: 32,
+          ),
         ),
         backgroundColor: AppColors.primaryColor,
       ),

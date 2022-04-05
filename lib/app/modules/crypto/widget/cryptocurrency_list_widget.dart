@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_card_widget.dart';
 
@@ -69,8 +70,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     );
                   },
                   separatorBuilder: (_, __) => Divider(
-                    height: 0.5,
-                    color: Colors.white.withOpacity(0.1),
+                    height: 0.75,
+                    color: AppColors.secondaryColor.withOpacity(0.25),
                   ),
                 );
               }
