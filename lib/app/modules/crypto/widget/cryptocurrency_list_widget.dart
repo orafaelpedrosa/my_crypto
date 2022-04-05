@@ -14,7 +14,8 @@ class CryptocurrencyListWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CryptocurrencyListWidgetState createState() => _CryptocurrencyListWidgetState();
+  _CryptocurrencyListWidgetState createState() =>
+      _CryptocurrencyListWidgetState();
 }
 
 class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
@@ -29,7 +30,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder<CryptocurrencyStore, Exception, List<CryptocurrencyModel>>(
+    return TripleBuilder<CryptocurrencyStore, Exception,
+        List<CryptocurrencyModel>>(
       store: store,
       builder: (_, context) {
         if (store.isLoading) {
@@ -47,7 +49,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
             ),
             initialData: const [],
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting && snapshot.data!.isEmpty) {
+              if (snapshot.connectionState == ConnectionState.waiting &&
+                  snapshot.data!.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -67,7 +70,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   },
                   separatorBuilder: (_, __) => Divider(
                     height: 0.5,
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.white.withOpacity(0.1),
                   ),
                 );
               }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_list_widget.dart';
 
 class CryptoPage extends StatefulWidget {
@@ -13,38 +15,14 @@ class _CryptoPageState extends State<CryptoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crypto'),
+        title: SvgPicture.asset(
+          'assets/app/mycrypto.svg',
+          height: 32,
+          width: 32,
+        ),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: const CryptocurrencyListWidget(),
-      bottomNavigationBar: bottomNavigationBar(),
-    );
-  }
-
-  Widget bottomNavigationBar() {
-    return BottomNavigationBar(
-      backgroundColor: Colors.white,
-      showSelectedLabels: true,
-      type: BottomNavigationBarType.fixed,
-      currentIndex: 0,
-      onTap: (index) {},
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.star),
-          label: 'Favoritos',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Config',
-        ),
-      ],
     );
   }
 }

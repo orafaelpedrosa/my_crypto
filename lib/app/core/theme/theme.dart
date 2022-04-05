@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mycrypto/app/core/theme/colors.dart';
 
 ThemeData theme = ThemeData(
-  primaryColor: const Color(0xff2C3333),
+  primaryColor: const Color(0xff10002B),
   cupertinoOverrideTheme: const CupertinoThemeData(
     brightness: Brightness.dark,
   ),
