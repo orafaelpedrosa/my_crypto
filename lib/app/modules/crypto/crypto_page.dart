@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_list_widget.dart';
-import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptoPage extends StatefulWidget {
   const CryptoPage({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class _CryptoPageState extends State<CryptoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*appBar: AppBar(
+      appBar: AppBar(
         title: Center(
           child: SvgPicture.asset(
             'assets/app/mycrypto.svg',
@@ -28,7 +27,7 @@ class _CryptoPageState extends State<CryptoPage> {
           ),
         ),
         backgroundColor: AppColors.primaryColor,
-      ),*/
+      ),
       body: const CryptocurrencyListWidget(),
     );
   }

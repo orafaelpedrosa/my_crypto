@@ -10,10 +10,10 @@ class AuthCheckStore extends NotifierStore<Exception, bool> with Disposable {
   User? user;
 
   AuthCheckStore() : super(false) {
-    _authCheck();
+    authCheck();
   }
 
-  void _authCheck() {
+  void authCheck() {
     setLoading(true);
     _auth.authStateChanges().listen(
       (User? user) {
@@ -23,21 +23,25 @@ class AuthCheckStore extends NotifierStore<Exception, bool> with Disposable {
     );
   }
 
-  Future<void> register(String email, String password) async {
+  Future<void> authRegister(String email, String password) async {
     setLoading(true);
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      log('AuthCheckStore.authRegister: success');
       _getUser();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         setError(Exception('Senha fraca'));
+        log('Senha fraca');
       } else if (e.code == 'email-already-in-use') {
         setError(Exception('Email já cadastrado'));
+        log('Email já cadastrado');
       } else {
         setError(Exception('Erro desconhecido'));
+        log('Erro desconhecido');
       }
     }
     setLoading(false);
@@ -48,35 +52,43 @@ class AuthCheckStore extends NotifierStore<Exception, bool> with Disposable {
     update(true);
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> authLogin(String email, String password) async {
     setLoading(true);
     try {
       await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      log('AuthCheckStore.authLogin: success');
       _getUser();
       update(true);
-      log('Logado');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setError(Exception('Email não cadastrado'));
         log('Email não cadastrado');
       } else if (e.code == 'wrong-password') {
         setError(Exception('Senha incorreta'));
+        log('Senha incorreta');
       } else {
         setError(Exception('Erro desconhecido'));
+        log('Erro desconhecido');
       }
     }
     setLoading(false);
   }
 
-  logout() async {
+  Future<void> authLogout() async {
     setLoading(true);
     await _auth.signOut();
     _getUser();
     update(false);
+    setLoading(false);
+  }
+
+  Future<void> authResetPassword(String email) async {
     setLoading(true);
+    await _auth.sendPasswordResetEmail(email: email);
+    setLoading(false);
   }
 
   @override
