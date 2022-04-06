@@ -8,6 +8,7 @@ import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_card_widget.dart';
+import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
   const CryptocurrencyListWidget({
@@ -36,8 +37,10 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
       store: store,
       builder: (_, context) {
         if (store.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: LoadingWidget(
+              color: AppColors.primaryColor,
+            ),
           );
         } else {
           return StreamBuilder<List<CryptocurrencyModel>>(
@@ -52,8 +55,10 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting &&
                   snapshot.data!.isEmpty) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: LoadingWidget(
+                    color: AppColors.primaryColor,
+                  ),
                 );
               } else {
                 return ListView.separated(

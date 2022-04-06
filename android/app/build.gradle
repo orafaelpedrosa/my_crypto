@@ -46,8 +46,9 @@ android {
 
     defaultConfig {
         applicationId "com.example.mycrypto"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
+		multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 		multiDexEnabled true

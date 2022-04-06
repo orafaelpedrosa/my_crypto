@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:mycrypto/app/core/theme/colors.dart';
+import 'package:mycrypto/app/modules/auth/stores/auth_check_store.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class AuthLoginPage extends StatefulWidget {
@@ -20,6 +21,33 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
 
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
+  final formKey = GlobalKey<FormState>();
+  final email = TextEditingController();
+  final password = TextEditingController();
+  bool isLogin = true;
+  late String title;
+  late String actionButton;
+  late String toggleButton;
+
+  @override
+  void initState() {
+    setFormAction(true);
+    super.initState();
+  }
+
+  setFormAction(bool action) {
+    setState(() {
+      isLogin = action;
+      title = isLogin ? 'Bem-vindo' : 'Registre-se';
+      actionButton = isLogin ? 'Login' : 'Registrar';
+      toggleButton = isLogin
+          ? 'Não tem conta? Registre-se agora'
+          : 'Já possui conta? Faça login';
+    });
+  }
+
+  void _login() {}
+  void _register() {}
 
   void dispose() {
     emailFocus.dispose();
@@ -29,6 +57,7 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthCheckStore authCheckStore = Modular.get();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -75,7 +104,7 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'Login',
+                      title,
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                             fontSize: 30,
                           ),
@@ -84,7 +113,15 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                       padding: const EdgeInsets.only(
                         top: 30.0,
                       ),
-                      child: TextField(
+                      child: TextFormField(
+                        controller: email,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Por favor, informe o email';
+                          }
+                          return null;
+                        },
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontSize: 14,
                             ),
@@ -124,7 +161,17 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
-                      child: TextField(
+                      child: TextFormField(
+                        controller: password,
+                        obscureText: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Por favor, informe a senha';
+                          } else if (value.length < 6) {
+                            return 'A senha deve conter no mínimo 6 caracteres';
+                          }
+                          return null;
+                        },
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontSize: 14,
                             ),
@@ -165,23 +212,71 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                     Container(
                       padding: EdgeInsets.zero,
                       margin: EdgeInsets.only(top: 20),
-                      child: RoundedLoadingButton(
-                        animateOnTap: false,
-                        borderRadius: 35,
-                        color: AppColors.primaryColor,
-                        child: Text(
-                          'Login',
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              if (isLogin) {
+                                await authCheckStore.login(
+                                    email.text, password.text);
+                                Modular.to
+                                    .pushReplacementNamed('crypto_module/');
+                                log('Button Pressed');
+                              } else {
+                                authCheckStore.register(
+                                    email.text, password.text);
+                              }
+                            },
+                            child: Text(
+                              actionButton,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                    fontSize: 14,
+                                  ),
+                            ),
+                          ),
+                          /*RoundedLoadingButton(
+                            duration: Duration(seconds: 3),
+                            borderRadius: 35,
+                            color: AppColors.primaryColor,
+                            child: Text(
+                              actionButton,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
                                     fontSize: 16,
                                     color: Colors.white,
                                   ),
-                        ),
-                        controller: _btnController1,
-                        onPressed: () {
-                          Modular.to.pushReplacementNamed('crypto_module/');
-                          log('Button Pressed');
-                        },
+                            ),
+                            controller: _btnController1,
+                            onPressed: () {
+                              /*Modular.to.pushReplacementNamed('crypto_module/');
+                              log('Button Pressed');*/
+                              if (formKey.currentState!.validate()) {
+                                isLogin
+                                    ? authCheckStore.login(
+                                        email.text, password.text)
+                                    : authCheckStore.register(
+                                        email.text, password.text);
+                              }
+                            },
+                          ),*/
+                        ],
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setFormAction(!isLogin);
+                      },
+                      child: Text(
+                        toggleButton,
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontSize: 14,
+                            ),
                       ),
                     ),
                   ],
