@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "380771437028",
-    "project_id": "app-my-crypto",
-    "storage_bucket": "app-my-crypto.appspot.com"
+    "project_number": "795266867977",
+    "project_id": "appmycrypto",
+    "storage_bucket": "appmycrypto.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:380771437028:android:c799abf3e1b5fbf5ad1ff1",
+        "mobilesdk_app_id": "1:795266867977:android:d6e713f482a4291827a9d8",
         "android_client_info": {
           "package_name": "com.example.mycrypto"
         }
       },
       "oauth_client": [
         {
-          "client_id": "380771437028-9df9a1ogj8l1efikqeqbmk4i2gn4r0tq.apps.googleusercontent.com",
+          "client_id": "795266867977-buc8echsg1295lf19mt63epvl09emg7p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAsxhnbg-tlUMK624-nV96jBtr-2p4YrhM"
+          "current_key": "AIzaSyCK7t963xxyRGA7Ec0V4nz2r5F07c1WdE0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "380771437028-9df9a1ogj8l1efikqeqbmk4i2gn4r0tq.apps.googleusercontent.com",
+              "client_id": "795266867977-buc8echsg1295lf19mt63epvl09emg7p.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "380771437028-tsert4aloj9ojpgj293ksfff5qvct6hc.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mycrypto"
-              }
             }
           ]
         }
