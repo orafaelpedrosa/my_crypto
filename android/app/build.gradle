@@ -48,7 +48,6 @@ android {
         applicationId "com.example.mycrypto"
         minSdkVersion 23
         targetSdkVersion 30
-		multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 		multiDexEnabled true
