@@ -9,7 +9,11 @@ class TextFormFieldWidget extends StatelessWidget {
   final IconData? iconData;
   final String? labelText;
   final String? hintText;
-  //final FocusNode? focusNode;
+  final FocusNode? focusNode;
+  final Function(String?)? onChange;
+  final TextCapitalization textCapitalization;
+    final TextInputAction? textInputAction;
+
 
   TextFormFieldWidget({
     Key? key,
@@ -20,7 +24,10 @@ class TextFormFieldWidget extends StatelessWidget {
     this.iconData,
     this.labelText,
     this.hintText,
-    //this.focusNode,
+    this.focusNode,
+    this.onChange,
+    this.textCapitalization = TextCapitalization.sentences,
+    this.textInputAction,
   }) : super(key: key);
 
   @override

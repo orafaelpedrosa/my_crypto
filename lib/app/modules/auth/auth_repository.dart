@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/model/credential_model.dart';
 
 class AuthRepository with Disposable {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -21,28 +24,30 @@ class AuthRepository with Disposable {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        throw Exception('Senha fraca');
+        log('Senha fraca');
       } else if (e.code == 'email-already-in-use') {
-        throw Exception('Email já cadastrado');
+        log('Email já cadastrado');
       } else {
-        throw Exception('Erro desconhecido');
+        log('Erro desconhecido');
       }
     }
   }
 
-  Future<void> authLogin(String email, String password) async {
+  Future<void> authLogin(CredentialModel data) async {
+    log(data.email!);
+    log(data.password!);
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: data.email!,
+        password: data.password!,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
-        throw Exception('Senha incorreta');
+        log('Senha incorreta');
       } else if (e.code == 'user-not-found') {
-        throw Exception('Usuário não encontrado');
+        log('Usuário não encontrado');
       } else {
-        throw Exception('Erro desconhecido');
+        log('Erro desconhecido');
       }
     }
   }
@@ -52,9 +57,9 @@ class AuthRepository with Disposable {
       await _firebaseAuth.signOut();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw Exception('Usuário não encontrado');
+        log('Usuário não encontrado');
       } else {
-        throw Exception('Erro desconhecido');
+        log('Erro desconhecido');
       }
     }
   }
@@ -64,9 +69,9 @@ class AuthRepository with Disposable {
       user = _firebaseAuth.currentUser;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw Exception('Usuário não encontrado');
+        log('Usuário não encontrado');
       } else {
-        throw Exception('Erro desconhecido');
+        log('Erro desconhecido');
       }
     }
   }
@@ -76,9 +81,9 @@ class AuthRepository with Disposable {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw Exception('Email não cadastrado');
+        log('Email não cadastrado');
       } else {
-        throw Exception('Erro desconhecido');
+        log('Erro desconhecido');
       }
     }
   }
