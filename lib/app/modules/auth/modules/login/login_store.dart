@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/credential_model.dart';
@@ -9,12 +10,15 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
           CredentialModel(
             // email: 'orafaelpedrosa@outlook.com',
             // password: 'aezakmi',
-            email: "",
-            password: "",
+            email: '',
+            password: '',
           ),
-        );
+        ) {
+    user = _authRepository.user;
+  }
 
   final AuthRepository _authRepository = Modular.get<AuthRepository>();
+  User? user;
 
   void updateForm(CredentialModel form) {
     update(CredentialModel.fromJson(form.toJson()));
@@ -44,6 +48,12 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
         throw error;
       },
     );
+  }
+
+  Future<void> authCheck() async {
+    setLoading(true);
+    _authRepository.authCheck();
+    setLoading(false);
   }
 
   bool get isDisable {

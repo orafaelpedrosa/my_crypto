@@ -2,6 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mycrypto/app/core/theme/colors.dart';
+import 'package:mycrypto/app/modules/auth/auth_check_page.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/login_page.dart';
 
 class SplashPage extends StatelessWidget {
@@ -18,7 +19,7 @@ class SplashPage extends StatelessWidget {
         ),
       ),
       backgroundColor: AppColors.primaryColor,
-      nextScreen: LoginPage(),
+      nextScreen: AuthCheckPage(),
       splashTransition: SplashTransition.rotationTransition,
     );
   }
