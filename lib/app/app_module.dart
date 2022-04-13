@@ -2,7 +2,8 @@ import 'package:mycrypto/app/app_widget.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/auth/auth_module.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/login_module.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/login_page.dart';
 import 'package:mycrypto/app/modules/auth/stores/auth_check_store.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
 
@@ -13,13 +14,14 @@ class AppModule extends Module {
   final List<Bind> binds = [
     Bind.lazySingleton((i) => CryptocurrencyRepository()),
     Bind.lazySingleton((i) => CryptocurrencyStore()),
+    Bind.lazySingleton((i) => LoginPage()),
     Bind.lazySingleton((i) => AuthCheckStore()),
     Bind.lazySingleton((i) => MyNavigatorObserver()),
   ];
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute(Modular.initialRoute, module: AuthModule()),
+    ModuleRoute(Modular.initialRoute, module: LoginModule()),
     ModuleRoute('/crypto_module', module: CryptoModule()),
   ];
 }

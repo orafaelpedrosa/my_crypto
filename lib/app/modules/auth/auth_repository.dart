@@ -7,7 +7,7 @@ import 'package:mycrypto/app/core/model/credential_model.dart';
 class AuthRepository with Disposable {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? user;
-  
+
   void authCheck() {
     _firebaseAuth.authStateChanges().listen(
       (User? user) {
@@ -34,18 +34,20 @@ class AuthRepository with Disposable {
   }
 
   Future<void> authLogin(CredentialModel data) async {
-    log(data.email!);
-    log(data.password!);
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: data.email!,
         password: data.password!,
       );
+      _getUser();
+      log('AuthRepository.authLogin: success');
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'wrong-password') {
-        log('Senha incorreta');
-      } else if (e.code == 'user-not-found') {
+      log(e.code);
+
+      if (e.code == 'user-not-found') {
         log('Usuário não encontrado');
+      } else if (e.code == 'wrong-password') {
+        log('Senha incorreta');
       } else {
         log('Erro desconhecido');
       }
@@ -64,7 +66,7 @@ class AuthRepository with Disposable {
     }
   }
 
-  Future<void> getUser() async {
+  Future<void> _getUser() async {
     try {
       user = _firebaseAuth.currentUser;
     } on FirebaseAuthException catch (e) {
@@ -76,9 +78,9 @@ class AuthRepository with Disposable {
     }
   }
 
-  Future<void> authResetPassword(String email) async {
+  Future<void> authResetPassword(CredentialModel data) async {
     try {
-      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      await _firebaseAuth.sendPasswordResetEmail(email: data.email!);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         log('Email não cadastrado');

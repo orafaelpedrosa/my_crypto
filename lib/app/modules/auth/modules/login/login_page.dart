@@ -21,6 +21,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
 
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -107,115 +108,123 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                             child: TripleBuilder(
                                 store: store,
                                 builder: (_, triple) {
-                                  return Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Login',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline1!
-                                            .copyWith(
-                                              fontSize: 30,
-                                            ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 30.0,
-                                        ),
-                                        child: TextFormFieldWidget(
-                                          controller: email,
-                                          onChange: (String? input) {
-                                            store.state.email = input;
-                                            store.updateForm(store.state);
-                                          },
-                                          textCapitalization:
-                                              TextCapitalization.none,
-                                          textInputAction: TextInputAction.next,
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          /*validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Por favor, informe o email';
-                                            }
-                                            return null;
-                                          },*/
-                                          iconData: Icons.email_rounded,
-                                          labelText: 'E-mail',
-                                          hintText: 'E-mail',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 20.0),
-                                        child: TextFormFieldWidget(
-                                          controller: password,
-                                          onChange: (String? input) {
-                                            store.state.password = input;
-                                            store.updateForm(store.state);
-                                          },
-                                          textCapitalization:
-                                              TextCapitalization.none,
-                                          keyboardType: TextInputType.text,
-                                          /*validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Por favor, informe a senha';
-                                            } else if (value.length < 6) {
-                                              return 'A senha deve conter no mínimo 6 caracteres';
-                                            }
-                                            return null;
-                                          },*/
-                                          obscureText: true,
-                                          iconData: Icons.lock,
-                                          labelText: 'Senha',
-                                          hintText: 'Senha',
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.zero,
-                                        margin: EdgeInsets.only(top: 20),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            RoundedLoadingButton(
-                                              duration: Duration(seconds: 3),
-                                              animateOnTap: false,
-                                              borderRadius: 35,
-                                              color: AppColors.primaryColor,
-                                              child: Text(
-                                                'Login',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline1!
-                                                    .copyWith(
-                                                      fontSize: 16,
-                                                      color: Colors.white,
-                                                    ),
-                                              ),
-                                              controller: _btnController1,
-                                              onPressed: () async {
-                                                store.authLogin(store.state);
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          email.clear();
-                                          password.clear();
-                                        },
-                                        child: Text(
-                                          'toggleButton',
+                                  return Form(
+                                    key: formKey,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'Login',
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline1!
                                               .copyWith(
-                                                fontSize: 14,
+                                                fontSize: 30,
                                               ),
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 30.0,
+                                          ),
+                                          child: TextFormFieldWidget(
+                                            controller: email,
+                                            onChange: (String? input) {
+                                              store.state.email = input;
+                                              store.updateForm(store.state);
+                                            },
+                                            textCapitalization:
+                                                TextCapitalization.none,
+                                            //textInputAction: TextInputAction.next,
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Por favor, informe o email';
+                                              }
+                                              return null;
+                                            },
+                                            iconData: Icons.email_rounded,
+                                            labelText: 'E-mail',
+                                            hintText: 'E-mail',
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 20.0),
+                                          child: TextFormFieldWidget(
+                                            controller: password,
+                                            onChange: (String? input) {
+                                              store.state.password = input;
+                                              store.updateForm(store.state);
+                                            },
+                                            textCapitalization:
+                                                TextCapitalization.none,
+                                            keyboardType: TextInputType.text,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Por favor, informe a senha';
+                                              } else if (value.length < 6) {
+                                                return 'A senha deve conter no mínimo 6 caracteres';
+                                              }
+                                              return null;
+                                            },
+                                            obscureText: true,
+                                            iconData: Icons.lock,
+                                            labelText: 'Senha',
+                                            hintText: 'Senha',
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.zero,
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              RoundedLoadingButton(
+                                                duration: Duration(seconds: 3),
+                                                animateOnTap: false,
+                                                borderRadius: 35,
+                                                color: AppColors.primaryColor,
+                                                child: Text(
+                                                  'Login',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline1!
+                                                      .copyWith(
+                                                        fontSize: 16,
+                                                        color: Colors.white,
+                                                      ),
+                                                ),
+                                                controller: _btnController1,
+                                                onPressed: () async {
+                                                  if (formKey.currentState!
+                                                      .validate()) {
+                                                    store
+                                                        .authLogin(store.state);
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            store.resetPassword(store.state);
+                                            email.clear();
+                                            password.clear();
+                                          },
+                                          child: Text(
+                                            'Esqueceu a senha?',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline1!
+                                                .copyWith(
+                                                  fontSize: 14,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 }),
                           )

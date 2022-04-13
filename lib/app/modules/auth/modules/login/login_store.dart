@@ -7,8 +7,10 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
   LoginStore()
       : super(
           CredentialModel(
-            email: '',
-            password: '',
+            // email: 'orafaelpedrosa@outlook.com',
+            // password: 'aezakmi',
+            email: "",
+            password: "",
           ),
         );
 
@@ -21,6 +23,19 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
   Future<void> authLogin(CredentialModel data) async {
     setLoading(true);
     await _authRepository.authLogin(data).then((value) {
+      setLoading(false);
+    }).catchError(
+      (error) {
+        setLoading(false);
+        setError(error);
+        throw error;
+      },
+    );
+  }
+
+  Future<void> resetPassword(CredentialModel data) async {
+    setLoading(true);
+    await _authRepository.authResetPassword(data).then((value) {
       setLoading(false);
     }).catchError(
       (error) {

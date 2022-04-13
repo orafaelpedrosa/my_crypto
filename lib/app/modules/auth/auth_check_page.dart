@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:mycrypto/app/modules/auth/auth_login_page.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/login_page.dart';
 import 'package:mycrypto/app/modules/auth/stores/auth_check_store.dart';
 import 'package:mycrypto/app/modules/crypto/crypto_page.dart';
 
@@ -28,7 +28,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
           );
         } else {
           if (store.user == null) {
-            return AuthLoginPage();
+            return LoginPage();
           } else {
             return CryptoPage();
           }
