@@ -65,10 +65,10 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                       child: Column(
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
+                            height: MediaQuery.of(context).size.height * 0.25,
                             margin: EdgeInsets.only(
                                 top:
-                                    MediaQuery.of(context).size.height * 0.075),
+                                    MediaQuery.of(context).size.height * 0.065),
                             child: Column(
                               children: [
                                 SvgPicture.asset(
@@ -80,7 +80,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                                 ),
                                 SvgPicture.asset(
                                   'assets/app/mycrypto.svg',
-                                  height: 40,
+                                  height: 35,
                                 ),
                               ],
                             ),

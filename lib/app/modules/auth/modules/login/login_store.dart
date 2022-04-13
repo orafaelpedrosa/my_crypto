@@ -8,10 +8,10 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
   LoginStore()
       : super(
           CredentialModel(
-            // email: 'orafaelpedrosa@outlook.com',
-            // password: 'aezakmi',
-            email: '',
-            password: '',
+            email: 'orafaelpedrosa@outlook.com',
+            password: 'aezakmi',
+            // email: '',
+            // password: '',
           ),
         ) {
     user = _authRepository.user;
