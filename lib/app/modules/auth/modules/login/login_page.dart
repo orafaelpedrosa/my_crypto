@@ -85,7 +85,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                                   height: 100,
                                 ),
                                 SizedBox(
-                                  height: 20,
+                                  height: 10,
                                 ),
                                 SvgPicture.asset(
                                   'assets/app/mycrypto.svg',
@@ -100,8 +100,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(40.0),
-                                topRight: Radius.circular(40.0),
+                                topLeft: Radius.circular(30.0),
+                                topRight: Radius.circular(30.0),
                               ),
                               boxShadow: [
                                 BoxShadow(
@@ -226,17 +226,23 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                                                   ),
                                                   controller: _btnController1,
                                                   onPressed: () async {
-                                                    await Future.delayed(
-                                                        Duration(seconds: 2));
-                                                    _btnController1.success();
                                                     if (formKey.currentState!
                                                         .validate()) {
-                                                      store.authLogin(
-                                                          store.state);
-                                                      Modular.to
-                                                          .pushReplacementNamed(
-                                                              'crypto_module/');
-                                                      log('Button Pressed');
+                                                      store
+                                                          .authLogin(
+                                                              store.state)
+                                                          .whenComplete(
+                                                              () async {
+                                                        _btnController1
+                                                            .success();
+                                                        await Future.delayed(
+                                                            Duration(
+                                                                seconds: 2));
+                                                        Modular.to
+                                                            .pushReplacementNamed(
+                                                                'crypto_module/');
+                                                        log('Button Pressed');
+                                                      });
                                                     }
                                                   }
                                                   /*onPressed: () async {

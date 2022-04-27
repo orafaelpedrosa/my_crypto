@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -45,7 +46,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
         } else {
           return StreamBuilder<List<CryptocurrencyModel>>(
             stream: Stream.periodic(
-              const Duration(seconds: 4),
+              const Duration(seconds: 10),
               (_) {
                 store.getCrypto();
                 return store.state;
@@ -61,22 +62,29 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   ),
                 );
               } else {
-                return ListView.separated(
-                  itemCount: store.state.length,
-                  itemBuilder: (_, index) {
-                    final cryptocurrency = store.state[index];
-                    return CryptocurrencyCardWidget(
-                      crypto_name: cryptocurrency.name,
-                      crypto_symbol: cryptocurrency.symbol,
-                      crypto_price: double.parse(cryptocurrency.price!),
-                      crypto_rank: cryptocurrency.rank,
-                      crypto_logo_url: cryptocurrency.logoUrl,
-                      imageFormat: getImageFormat(cryptocurrency.logoUrl),
-                    );
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    store.getCrypto();
+                    log('onRefresh');
                   },
-                  separatorBuilder: (_, __) => Divider(
-                    height: 0.75,
-                    color: AppColors.secondaryColor.withOpacity(0.25),
+                  color: Colors.white,
+                  child: ListView.separated(
+                    itemCount: store.state.length,
+                    itemBuilder: (_, index) {
+                      final cryptocurrency = store.state[index];
+                      return CryptocurrencyCardWidget(
+                        crypto_name: cryptocurrency.name,
+                        crypto_symbol: cryptocurrency.symbol,
+                        crypto_price: double.parse(cryptocurrency.price!),
+                        crypto_rank: cryptocurrency.rank,
+                        crypto_logo_url: cryptocurrency.logoUrl,
+                        imageFormat: getImageFormat(cryptocurrency.logoUrl),
+                      );
+                    },
+                    separatorBuilder: (_, __) => Divider(
+                      height: 0.5,
+                      color: AppColors.secondaryColor.withOpacity(0.25),
+                    ),
                   ),
                 );
               }

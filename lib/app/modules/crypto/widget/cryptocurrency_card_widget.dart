@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mycrypto/app/core/theme/colors.dart';
 
 // ignore: must_be_immutable
 class CryptocurrencyCardWidget extends StatefulWidget {
@@ -32,7 +31,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.primaryColor,
+      color: Colors.white,
       margin: const EdgeInsets.only(),
       child: Column(
         children: <Widget>[
@@ -64,7 +63,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
             title: Text(
               widget.crypto_name!,
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontFamily: GoogleFonts.montserrat().fontFamily,
                 fontWeight: FontWeight.w500,
               ),
@@ -76,14 +75,14 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
                   padding: const EdgeInsets.only(
                       left: 5, right: 5, top: 3, bottom: 3),
                   decoration: BoxDecoration(
-                    color: Colors.white54.withOpacity(0.20),
+                    color: Colors.black.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Center(
                     child: Text(
                       widget.crypto_rank!,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: GoogleFonts.montserrat().fontFamily,
                         fontSize: 10,
                       ),
@@ -93,7 +92,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
                 Text(
                   widget.crypto_symbol!,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontFamily: GoogleFonts.montserrat().fontFamily,
                     fontSize: 12,
                   ),
@@ -103,7 +102,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptocurrencyCardWidget> {
             trailing: Text(
               '\$ ${widget.crypto_price!.toStringAsFixed(2)}',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontFamily: GoogleFonts.montserrat().fontFamily,
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
