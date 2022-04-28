@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -37,12 +36,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
     super.dispose();
   }
 
-  void doSomething(RoundedLoadingButtonController controller) async {
-    Timer(Duration(seconds: 10), () {
-      controller.success();
-    });
-  }
-
   void login() {
     FocusScope.of(context).requestFocus(FocusNode());
     store.authLogin(store.state).then((value) {
@@ -68,7 +61,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
               Expanded(
                 child: Center(
                   child: SingleChildScrollView(
-                    physics: ClampingScrollPhysics(),
+                    physics: ClampingScrollPhysics(
+                      parent: NeverScrollableScrollPhysics(),
+                    ),
                     child: Container(
                       color: AppColors.primaryColor,
                       child: Column(
@@ -80,15 +75,20 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                                     MediaQuery.of(context).size.height * 0.065),
                             child: Column(
                               children: [
-                                SvgPicture.asset(
-                                  'assets/app/mycrypto_logo.svg',
-                                  height: 100,
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15.0),
+                                  child: SvgPicture.asset(
+                                    'assets/app/logo.svg',
+                                    height: 70,
+                                  ),
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.03,
                                 ),
                                 SvgPicture.asset(
                                   'assets/app/mycrypto.svg',
+                                  color: Colors.white,
                                   height: 35,
                                 ),
                               ],
@@ -142,7 +142,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                                             },
                                             textCapitalization:
                                                 TextCapitalization.none,
-                                            //textInputAction: TextInputAction.next,
                                             keyboardType:
                                                 TextInputType.emailAddress,
                                             validator: (value) {
@@ -189,94 +188,68 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              /*ButtonAuth(
-                                                duration: Duration(seconds: 1),
+                                              RoundedLoadingButton(
+                                                duration: Duration(seconds: 2),
+                                                successColor:
+                                                    AppColors.primaryColor,
+                                                errorColor: Colors.red,
+                                                successIcon:
+                                                    Icons.check_circle_outline,
                                                 animateOnTap: true,
-                                                borderRadius: 35,
+                                                borderRadius: 15,
                                                 color: AppColors.primaryColor,
-                                                text: 'Logiiiiiin',
-                                                textColor: Colors.white,
-                                                textSize: 16,
+                                                child: Text(
+                                                  'Login',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline1!
+                                                      .copyWith(
+                                                        fontSize: 16,
+                                                        color: Colors.white,
+                                                      ),
+                                                ),
+                                                controller: _btnController1,
                                                 onPressed: () async {
                                                   if (formKey.currentState!
                                                       .validate()) {
                                                     store
-                                                        .authLogin(store.state);
-                                                  }
-                                                },
-                                                controller: _btnController1,
-                                              ),*/
-                                              RoundedLoadingButton(
-                                                  duration:
-                                                      Duration(seconds: 10),
-                                                  successIcon: Icons
-                                                      .check_circle_outline,
-                                                  animateOnTap: false,
-                                                  borderRadius: 35,
-                                                  color: AppColors.primaryColor,
-                                                  child: Text(
-                                                    'Login',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline1!
-                                                        .copyWith(
-                                                          fontSize: 16,
-                                                          color: Colors.white,
-                                                        ),
-                                                  ),
-                                                  controller: _btnController1,
-                                                  onPressed: () async {
-                                                    if (formKey.currentState!
-                                                        .validate()) {
-                                                      store
-                                                          .authLogin(
-                                                              store.state)
-                                                          .whenComplete(
-                                                              () async {
+                                                        .authLogin(store.state)
+                                                        .whenComplete(
+                                                      () async {
                                                         _btnController1
                                                             .success();
                                                         await Future.delayed(
-                                                            Duration(
-                                                                seconds: 2));
+                                                          Duration(seconds: 2),
+                                                        );
                                                         Modular.to
                                                             .pushReplacementNamed(
                                                                 'crypto_module/');
-                                                        log('Button Pressed');
-                                                      });
-                                                    }
+                                                      },
+                                                    );
+                                                  } else {
+                                                    _btnController1.error();
+                                                    await Future.delayed(
+                                                      Duration(seconds: 1),
+                                                      _btnController1.reset,
+                                                    );
                                                   }
-                                                  /*onPressed: () async {
-                                                  if (formKey.currentState!
-                                                      .validate()) {
-                                                    _btnController1.success();
-                                                    Timer(Duration(seconds: 3),
-                                                        () {
-                                                      store.authLogin(
-                                                          store.state);
-                                                      Modular.to
-                                                          .pushReplacementNamed(
-                                                              'crypto_module/');
-                                                      log('Button Pressed');
-                                                    });
-                                                  }
-                                                },*/
-                                                  ),
+                                                },
+                                              ),
                                             ],
                                           ),
                                         ),
                                         TextButton(
                                           onPressed: () {
-                                            store.resetPassword(store.state);
-                                            email.clear();
-                                            password.clear();
+                                            Modular.to.pushNamed(
+                                                'login_module/reset_password');
                                           },
                                           child: Text(
                                             'Esqueceu a senha?',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline1!
+                                                .headline6!
                                                 .copyWith(
-                                                  fontSize: 14,
+                                                  color: Colors.black54,
                                                 ),
                                           ),
                                         ),

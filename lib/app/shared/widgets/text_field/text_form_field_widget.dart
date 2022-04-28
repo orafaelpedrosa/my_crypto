@@ -12,8 +12,8 @@ class TextFormFieldWidget extends StatelessWidget {
   final FocusNode? focusNode;
   final Function(String?)? onChange;
   final TextCapitalization textCapitalization;
-    final TextInputAction? textInputAction;
-
+  final TextInputAction? textInputAction;
+  final Widget? suffixIcon;
 
   TextFormFieldWidget({
     Key? key,
@@ -28,6 +28,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.onChange,
     this.textCapitalization = TextCapitalization.sentences,
     this.textInputAction,
+    this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -58,9 +59,10 @@ class TextFormFieldWidget extends StatelessWidget {
           color: AppColors.primaryColor,
           size: 20,
         ),
+        suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(
-            Radius.circular(35),
+            Radius.circular(15),
           ),
           borderSide: BorderSide(
             color: AppColors.primaryColor,
@@ -68,7 +70,7 @@ class TextFormFieldWidget extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(
-            Radius.circular(35),
+            Radius.circular(15),
           ),
           borderSide: BorderSide(
             color: AppColors.primaryColor,

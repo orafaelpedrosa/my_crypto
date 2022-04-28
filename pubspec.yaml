@@ -41,3 +41,4 @@ flutter:
     - .env
     - assets/
     - assets/app/
+    - assets/login/
