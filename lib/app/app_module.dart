@@ -4,7 +4,7 @@ import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/auth/auth_module.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/login_module.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/login_page.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/pages/login_page.dart';
 import 'package:mycrypto/app/modules/auth/stores/auth_check_store.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
 

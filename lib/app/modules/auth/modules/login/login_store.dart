@@ -37,9 +37,9 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
     );
   }
 
-  Future<void> resetPassword(CredentialModel data) async {
+  Future<void> resetPassword(String email) async {
     setLoading(true);
-    await _authRepository.authResetPassword(data).then((value) {
+    await _authRepository.authResetPassword(email).then((value) {
       setLoading(false);
     }).catchError(
       (error) {

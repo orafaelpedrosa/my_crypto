@@ -78,9 +78,10 @@ class AuthRepository with Disposable {
     }
   }
 
-  Future<void> authResetPassword(CredentialModel data) async {
+  Future<void> authResetPassword(String email) async {
     try {
-      await _firebaseAuth.sendPasswordResetEmail(email: data.email!);
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      log('AuthRepository.authResetPassword: success');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         log('Email não cadastrado');
