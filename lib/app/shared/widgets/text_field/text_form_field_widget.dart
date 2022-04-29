@@ -39,6 +39,7 @@ class TextFormFieldWidget extends StatelessWidget {
       validator: validator,
       obscureText: obscureText,
       style: Theme.of(context).textTheme.headline1!.copyWith(
+            color: Colors.black54,
             fontSize: 14,
           ),
       decoration: InputDecoration(

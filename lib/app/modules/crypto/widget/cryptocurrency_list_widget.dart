@@ -67,6 +67,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     store.getCrypto();
                     log('onRefresh');
                   },
+                  backgroundColor: AppColors.primaryColor,
                   color: Colors.white,
                   child: ListView.separated(
                     itemCount: store.state.length,
