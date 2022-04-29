@@ -58,7 +58,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   snapshot.data!.isEmpty) {
                 return Center(
                   child: LoadingWidget(
-                    color: AppColors.primaryColor,
+                    color: Colors.white,
                   ),
                 );
               } else {

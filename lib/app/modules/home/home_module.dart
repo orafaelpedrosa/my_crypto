@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/pages/login_page.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
-import 'package:mycrypto/app/modules/home/splash_page.dart';
 import '../home/home_store.dart';
 
 class HomeModule extends Module {
@@ -14,6 +14,6 @@ class HomeModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute(Modular.initialRoute, child: (_, args) => const SplashPage()),
+    ChildRoute(Modular.initialRoute, child: (_, args) => const LoginPage()),
   ];
 }

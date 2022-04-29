@@ -22,6 +22,7 @@ class _CryptoPageState extends State<CryptoPage> {
         title: Center(
           child: SvgPicture.asset(
             'assets/app/mycrypto.svg',
+            color: Colors.white,
             height: 32,
             width: 32,
           ),

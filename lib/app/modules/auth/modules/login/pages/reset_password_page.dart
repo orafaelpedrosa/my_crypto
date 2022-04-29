@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,6 +19,7 @@ class _ResetPasswordPageState
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
   final formKey = GlobalKey<FormState>();
+  bool validateFormReset = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +60,24 @@ class _ResetPasswordPageState
                 width: 300,
                 height: 300,
               ),
-              TextFormFieldWidget(
-                controller: resetPassword,
-                hintText: 'E-mail',
-                keyboardType: TextInputType.emailAddress,
-                iconData: Icons.email,
+              Form(
+                key: formKey,
+                child: TextFormFieldWidget(
+                  controller: resetPassword,
+                  hintText: 'E-mail',
+                  keyboardType: TextInputType.emailAddress,
+                  iconData: Icons.email,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Por favor, informe o email';
+                    } else if (!value.contains('@')) {
+                      return 'Por favor, informe um email válido';
+                    } else {
+                      validateFormReset = true;
+                      return null;
+                    }
+                  },
+                ),
               ),
               SizedBox(height: 20),
               RoundedLoadingButton(
@@ -73,7 +85,7 @@ class _ResetPasswordPageState
                 successColor: AppColors.primaryColor,
                 errorColor: Colors.red,
                 successIcon: Icons.check_circle_outline,
-                animateOnTap: true,
+                animateOnTap: validateFormReset,
                 borderRadius: 15,
                 color: AppColors.primaryColor,
                 child: Text(
@@ -85,15 +97,15 @@ class _ResetPasswordPageState
                 ),
                 controller: _btnController1,
                 onPressed: () async {
-                  log('ResetPasswordPage. ${resetPassword.text}');
                   if (formKey.currentState!.validate()) {
                     await store.resetPassword(resetPassword.text);
-                  } else {
-                    _btnController1.error();
+                    _btnController1.success();
                     await Future.delayed(
                       Duration(seconds: 1),
-                      _btnController1.reset,
                     );
+                  } else {
+                    _btnController1.error();
+                    _btnController1.reset();
                   }
                 },
               ),

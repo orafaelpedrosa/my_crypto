@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,6 +22,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool validateFormLogin = false;
 
   @override
   void initState() {
@@ -83,7 +82,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 15.0),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
             child: SvgPicture.asset(
               'assets/app/logo.svg',
               height: 70,
@@ -133,6 +133,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                   'Login',
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontSize: 30,
+                        color: Colors.black54,
                       ),
                 ),
                 const SizedBox(height: 30),
@@ -147,8 +148,12 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Por favor, informe o email';
+                    } else if (!value.contains('@')) {
+                      return 'Por favor, informe um email válido';
+                    } else {
+                      validateFormLogin = true;
+                      return null;
                     }
-                    return null;
                   },
                   iconData: Icons.email_rounded,
                   labelText: 'E-mail',
@@ -183,11 +188,11 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RoundedLoadingButton(
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 1),
                         successColor: AppColors.primaryColor,
                         errorColor: Colors.red,
                         successIcon: Icons.check_circle_outline,
-                        animateOnTap: true,
+                        animateOnTap: validateFormLogin,
                         borderRadius: 15,
                         color: AppColors.primaryColor,
                         child: Text(
@@ -201,22 +206,25 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                         controller: _btnController1,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            store.authLogin(store.state).whenComplete(
-                              () async {
-                                _btnController1.success();
-                                await Future.delayed(
-                                  Duration(seconds: 2),
-                                );
-                                Modular.to
-                                    .pushReplacementNamed('crypto_module/');
+                            await store
+                                .authLogin(store.state)
+                                .whenComplete(() async {
+                              _btnController1.success();
+                              await Future.delayed(
+                                Duration(seconds: 1),
+                                () => Modular.to
+                                    .pushReplacementNamed('crypto_module/'),
+                              );
+                            }).catchError(
+                              (error) {
+                                password.clear();
+                                store.state.password = null;
+                                store.updateForm(store.state);
                               },
                             );
                           } else {
                             _btnController1.error();
-                            await Future.delayed(
-                              Duration(seconds: 1),
-                              _btnController1.reset,
-                            );
+                            _btnController1.reset();
                           }
                         },
                       ),
