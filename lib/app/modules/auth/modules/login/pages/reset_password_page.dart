@@ -81,6 +81,8 @@ class _ResetPasswordPageState
               ),
               SizedBox(height: 20),
               RoundedLoadingButton(
+                width: MediaQuery.of(context).size.width * 0.85,
+                height: 50,
                 duration: Duration(seconds: 1),
                 successColor: AppColors.primaryColor,
                 errorColor: Colors.red,
@@ -89,9 +91,8 @@ class _ResetPasswordPageState
                 borderRadius: 15,
                 color: AppColors.primaryColor,
                 child: Text(
-                  'Redefinir senha',
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontSize: 16,
+                  'Enviar',
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
                         color: Colors.white,
                       ),
                 ),
@@ -102,6 +103,9 @@ class _ResetPasswordPageState
                     _btnController1.success();
                     await Future.delayed(
                       Duration(seconds: 1),
+                    );
+                    Modular.to.pushNamed(
+                      'send_mail',
                     );
                   } else {
                     _btnController1.error();

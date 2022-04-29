@@ -188,6 +188,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RoundedLoadingButton(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        height: 50,
                         duration: Duration(seconds: 1),
                         successColor: AppColors.primaryColor,
                         errorColor: Colors.red,
@@ -198,8 +200,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                         child: Text(
                           'Login',
                           style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontSize: 16,
+                              Theme.of(context).textTheme.headline4!.copyWith(
                                     color: Colors.white,
                                   ),
                         ),

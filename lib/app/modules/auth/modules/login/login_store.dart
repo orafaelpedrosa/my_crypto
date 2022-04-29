@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/credential_model.dart';
-import 'package:mycrypto/app/modules/auth/auth_repository.dart';
+import 'package:mycrypto/app/core/repositories/auth_repository.dart';
 
 class LoginStore extends NotifierStore<Exception, CredentialModel> {
   LoginStore()
