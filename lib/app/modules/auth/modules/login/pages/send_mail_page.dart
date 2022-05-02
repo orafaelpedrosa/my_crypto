@@ -16,6 +16,7 @@ class _SendMailPageState extends ModularState<SendMailPage, LoginStore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
       ),

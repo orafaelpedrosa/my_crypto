@@ -13,8 +13,8 @@ class CryptocurrencyRepository with Disposable {
 
   Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
     try {
-      final Response response =
-          await _dio.get('$urlBase?key=$apiKey&internal=$date&per-page=$countPage');
+      final Response response = await _dio.get('$urlBase?key=$apiKey');
+      // final Response response = await _dio.get('$urlBase?key=$apiKey&internal=$date&per-page=$countPage');
       final List<CryptocurrencyModel> cryptos = List.empty(growable: true);
       response.data.forEach((crypto) {
         cryptos.add(CryptocurrencyModel.fromJson(crypto));

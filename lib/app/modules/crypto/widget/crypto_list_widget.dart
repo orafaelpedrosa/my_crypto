@@ -8,7 +8,7 @@ import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
-import 'package:mycrypto/app/modules/crypto/widget/cryptocurrency_card_widget.dart';
+import 'package:mycrypto/app/modules/crypto/widget/crypto_card_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
@@ -73,18 +73,24 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     itemCount: store.state.length,
                     itemBuilder: (_, index) {
                       final cryptocurrency = store.state[index];
-                      return CryptocurrencyCardWidget(
+                      return CryptoCardWidget(
                         crypto_name: cryptocurrency.name,
                         crypto_symbol: cryptocurrency.symbol,
-                        crypto_price: double.parse(cryptocurrency.price!),
+                        crypto_price: double.parse(
+                          cryptocurrency.price!,
+                        ),
                         crypto_rank: cryptocurrency.rank,
                         crypto_logo_url: cryptocurrency.logoUrl,
-                        imageFormat: getImageFormat(cryptocurrency.logoUrl),
+                        crypto_price_date:
+                            cryptocurrency.priceDay!.priceChangePct,
+                        imageFormat: getImageFormat(
+                          cryptocurrency.logoUrl,
+                        ),
                       );
                     },
                     separatorBuilder: (_, __) => Divider(
                       height: 0.5,
-                      color: AppColors.secondaryColor.withOpacity(0.25),
+                      color: Colors.black38,
                     ),
                   ),
                 );

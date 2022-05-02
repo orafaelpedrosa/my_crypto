@@ -81,13 +81,12 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.065),
       child: Column(
         children: [
-          Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
-            child: SvgPicture.asset(
-              'assets/app/logo.svg',
-              height: 70,
-            ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.025,
+          ),
+          SvgPicture.asset(
+            'assets/app/logo.svg',
+            height: 70,
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
@@ -96,6 +95,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
             'assets/app/mycrypto.svg',
             color: Colors.white,
             height: 35,
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.025,
           ),
         ],
       ),
