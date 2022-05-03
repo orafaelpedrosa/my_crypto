@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,8 +23,18 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
 
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode passwordFocus = FocusNode();
   final formKey = GlobalKey<FormState>();
   bool validateFormLogin = false;
+  bool _isObscure = true;
+
+  bool isEmail(String email) {
+    String p =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(p);
+    return regExp.hasMatch(email);
+  }
 
   @override
   void initState() {
@@ -32,18 +44,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
   void dispose() {
     email.dispose();
     password.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
     super.dispose();
-  }
-
-  void login() {
-    FocusScope.of(context).requestFocus(FocusNode());
-    store.authLogin(store.state).then((value) {
-      _btnController1.success();
-    }).catchError((error) {
-      password.clear();
-      store.state.password = null;
-      store.updateForm(store.state);
-    });
   }
 
   @override
@@ -120,7 +123,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
             spreadRadius: 5,
             blurRadius: 20,
             offset: const Offset(4, 7),
-            // changes position of shadow
           ),
         ],
       ),
@@ -140,17 +142,22 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                 ),
                 const SizedBox(height: 30),
                 TextFormFieldWidget(
+                  focusNode: emailFocus,
+                  textInputAction: TextInputAction.next,
                   controller: email,
                   onChange: (String? input) {
                     store.state.email = input;
                     store.updateForm(store.state);
+                  },
+                  onSubmitted: (String? input) {
+                    FocusScope.of(context).requestFocus(passwordFocus);
                   },
                   textCapitalization: TextCapitalization.none,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Por favor, informe o email';
-                    } else if (!value.contains('@')) {
+                    } else if (!(isEmail(value))) {
                       return 'Por favor, informe um email válido';
                     } else {
                       validateFormLogin = true;
@@ -158,15 +165,21 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                     }
                   },
                   iconData: Icons.email_rounded,
-                  labelText: 'E-mail',
+                  label: 'E-mail',
                   hintText: 'E-mail',
+                  enableSuggestions: false,
                 ),
                 const SizedBox(height: 20),
                 TextFormFieldWidget(
+                  focusNode: passwordFocus,
+                  textInputAction: TextInputAction.done,
                   controller: password,
                   onChange: (String? input) {
                     store.state.password = input;
                     store.updateForm(store.state);
+                  },
+                  onSubmitted: (String? input) {
+                    FocusScope.of(context).unfocus();
                   },
                   textCapitalization: TextCapitalization.none,
                   keyboardType: TextInputType.text,
@@ -178,9 +191,23 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                     }
                     return null;
                   },
-                  obscureText: true,
+                  obscureText: _isObscure,
                   iconData: Icons.lock,
-                  labelText: 'Senha',
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscure ? Icons.visibility_off : Icons.visibility,
+                      color: AppColors.primaryColor,
+                    ),
+                    onPressed: () {
+                      log('isObscure: $_isObscure');
+                      setState(
+                        () {
+                          _isObscure = !_isObscure;
+                        },
+                      );
+                    },
+                  ),
+                  label: 'Senha',
                   hintText: 'Senha',
                 ),
                 Container(

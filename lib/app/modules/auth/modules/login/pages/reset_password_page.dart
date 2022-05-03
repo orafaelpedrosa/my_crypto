@@ -21,6 +21,13 @@ class _ResetPasswordPageState
   final formKey = GlobalKey<FormState>();
   bool validateFormReset = false;
 
+  bool isEmail(String email) {
+    String p =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(p);
+    return regExp.hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,13 +77,14 @@ class _ResetPasswordPageState
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Por favor, informe o email';
-                    } else if (!value.contains('@')) {
+                    } else if (!(isEmail(value))) {
                       return 'Por favor, informe um email válido';
                     } else {
                       validateFormReset = true;
                       return null;
                     }
                   },
+                  enableSuggestions: false,
                 ),
               ),
               SizedBox(height: 20),
