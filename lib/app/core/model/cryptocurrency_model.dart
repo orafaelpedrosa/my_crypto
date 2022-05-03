@@ -1,3 +1,5 @@
+import 'package:mycrypto/app/core/model/crypto_price_date_model.dart';
+
 class CryptocurrencyModel {
   String? id;
   String? currency;
@@ -22,6 +24,11 @@ class CryptocurrencyModel {
   String? rankDelta;
   String? high;
   String? highTimestamp;
+  CryptoPriceDateModel? priceDay;
+  CryptoPriceDateModel? priceWeek;
+  CryptoPriceDateModel? priceMonth;
+  CryptoPriceDateModel? priceYear;
+  CryptoPriceDateModel? priceYtd;
 
   CryptocurrencyModel(
     this.id,
@@ -73,6 +80,11 @@ class CryptocurrencyModel {
     rankDelta = json['rank_delta'];
     high = json['high'];
     highTimestamp = json['high_timestamp'];
+    priceDay = CryptoPriceDateModel.fromJson(json['1d']);
+    priceWeek = CryptoPriceDateModel.fromJson(json['7d']);
+    priceMonth = CryptoPriceDateModel.fromJson(json['30d']);
+    priceYear = CryptoPriceDateModel.fromJson(json['365d']);
+    priceYtd = CryptoPriceDateModel.fromJson(json['ytd']);
   }
 
   Map<String, dynamic> toJson() {
@@ -100,6 +112,11 @@ class CryptocurrencyModel {
     data['rank_delta'] = rankDelta;
     data['high'] = high;
     data['high_timestamp'] = highTimestamp;
+    data['1d'] = priceDay?.toJson();
+    data['7d'] = priceWeek?.toJson();
+    data['30d'] = priceMonth?.toJson();
+    data['365d'] = priceYear?.toJson();
+    data['ytd'] = priceYtd?.toJson();
     return data;
   }
 }

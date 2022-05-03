@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mycrypto/app/core/theme/colors.dart';
 
 ThemeData theme = ThemeData(
-  primaryColor: const Color(0xff2C3333),
+  primaryColor: const Color(0xff10002B),
   cupertinoOverrideTheme: const CupertinoThemeData(
     brightness: Brightness.dark,
   ),
@@ -30,32 +31,32 @@ ThemeData theme = ThemeData(
   textTheme: TextTheme(
     headline1: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: const Color(0xffffffff),
+      color: AppColors.primaryColor,
       fontSize: 25,
     ),
     headline2: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: const Color(0xffffffff),
+      color: AppColors.primaryColor,
       fontSize: 22,
     ),
     headline3: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: const Color(0xffffffff),
+      color: AppColors.primaryColor,
       fontSize: 20,
     ),
     headline4: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: const Color(0xffffffff),
+      color: AppColors.primaryColor,
       fontSize: 18,
     ),
     headline5: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: const Color(0xffffffff),
+      color: AppColors.primaryColor,
       fontSize: 16,
     ),
     headline6: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: const Color(0xffffffff),
+      color: AppColors.primaryColor,
       fontSize: 14,
     ),
   ),

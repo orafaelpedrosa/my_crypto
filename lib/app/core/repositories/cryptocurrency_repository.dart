@@ -8,18 +8,14 @@ class CryptocurrencyRepository with Disposable {
   final Dio _dio = Dio();
   final String urlBase = dotenv.get('URL_BASE');
   final String apiKey = dotenv.get('API_KEY');
-  final String date = '0d';
-  final String? countPage = '50';
 
   Future<List<CryptocurrencyModel>> getCryptocurrencyData() async {
     try {
-      final Response response =
-          await _dio.get('$urlBase?key=$apiKey&internal=$date&per-page=$countPage');
+      final Response response = await _dio.get('$urlBase?key=$apiKey');
       final List<CryptocurrencyModel> cryptos = List.empty(growable: true);
       response.data.forEach((crypto) {
         cryptos.add(CryptocurrencyModel.fromJson(crypto));
       });
-      log('CryptocurrencyRepository: getCryptocurrencyData: ${cryptos.length}');
       return cryptos;
     } catch (e) {
       log('Error getCrypto: $e');

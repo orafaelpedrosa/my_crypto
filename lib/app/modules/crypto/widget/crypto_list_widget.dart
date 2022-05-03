@@ -1,0 +1,105 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
+import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/core/theme/colors.dart';
+import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
+import 'package:mycrypto/app/modules/crypto/widget/crypto_card_widget.dart';
+import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
+
+class CryptocurrencyListWidget extends StatefulWidget {
+  const CryptocurrencyListWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _CryptocurrencyListWidgetState createState() =>
+      _CryptocurrencyListWidgetState();
+}
+
+class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
+  CryptocurrencyStore store = Modular.get();
+  CryptocurrencyRepository repository = Modular.get();
+
+  @override
+  void initState() {
+    store.getCrypto();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TripleBuilder<CryptocurrencyStore, Exception,
+        List<CryptocurrencyModel>>(
+      store: store,
+      builder: (_, context) {
+        if (store.isLoading) {
+          return Center(
+            child: LoadingWidget(
+              color: AppColors.primaryColor,
+            ),
+          );
+        } else {
+          return StreamBuilder<List<CryptocurrencyModel>>(
+            stream: Stream.periodic(
+              const Duration(seconds: 10),
+              (_) {
+                store.getCrypto();
+                return store.state;
+              },
+            ),
+            initialData: const [],
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting &&
+                  snapshot.data!.isEmpty) {
+                return Center(
+                  child: LoadingWidget(
+                    color: Colors.white,
+                  ),
+                );
+              } else {
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    store.getCrypto();
+                  },
+                  backgroundColor: AppColors.primaryColor,
+                  color: Colors.white,
+                  child: ListView.separated(
+                    itemCount: store.state.length,
+                    itemBuilder: (_, index) {
+                      final cryptocurrency = store.state[index];
+                      return CryptoCardWidget(
+                        cryptoModel: cryptocurrency,
+                        imageFormat: getImageFormat(
+                          cryptocurrency.logoUrl,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (_, __) => Divider(
+                      height: 0.5,
+                      color: Colors.black12,
+                    ),
+                  ),
+                );
+              }
+            },
+          );
+        }
+      },
+    );
+  }
+
+  String getImageFormat(String? url) {
+    if (url == null) {
+      return 'null';
+    } else {
+      String imageFormat = '';
+      int indexPoint = url.length;
+      imageFormat = url.substring(indexPoint - 3);
+      return imageFormat;
+    }
+  }
+}
