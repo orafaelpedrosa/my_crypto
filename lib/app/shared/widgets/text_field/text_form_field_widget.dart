@@ -69,7 +69,7 @@ class TextFormFieldWidget extends StatelessWidget {
       obscureText: obscureText,
       style: Theme.of(context).textTheme.headline1!.copyWith(
             color: Colors.black54,
-            fontSize: 14,
+            fontSize: 16,
           ),
       decoration: InputDecoration(
         errorStyle: Theme.of(context).textTheme.headline1!.copyWith(
