@@ -12,23 +12,20 @@ class CryptoPage extends StatefulWidget {
   State<CryptoPage> createState() => _CryptoPageState();
 }
 
-class _CryptoPageState extends State<CryptoPage> {
-  CryptocurrencyStore store = Modular.get();
-
+class _CryptoPageState extends ModularState<CryptoPage, CryptocurrencyStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Center(
-          child: SvgPicture.asset(
-            'assets/app/mycrypto.svg',
-            color: Colors.white,
-            height: 32,
-            width: 32,
-          ),
+        title: SvgPicture.asset(
+          'assets/app/mycrypto.svg',
+          color: AppColors.primaryColor,
+          height: 25,
+          width: 25,
         ),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: const CryptocurrencyListWidget(),
     );

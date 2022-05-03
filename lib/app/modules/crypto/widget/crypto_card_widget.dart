@@ -4,25 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 
 // ignore: must_be_immutable
 class CryptoCardWidget extends StatefulWidget {
-  String? crypto_name;
-  String? crypto_symbol;
-  double? crypto_price;
-  String? crypto_rank;
-  String? crypto_logo_url;
-  String? crypto_price_date;
+  final CryptocurrencyModel cryptoModel;
   String? imageFormat;
 
   CryptoCardWidget({
     Key? key,
-    this.crypto_name,
-    this.crypto_symbol,
-    this.crypto_price,
-    this.crypto_rank,
-    this.crypto_logo_url,
-    this.crypto_price_date,
+    required this.cryptoModel,
     this.imageFormat,
   }) : super(key: key);
 
@@ -33,12 +24,14 @@ class CryptoCardWidget extends StatefulWidget {
 class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
   @override
   Widget build(BuildContext context) {
-    double _cryptoPrice = double.parse(widget.crypto_price_date!) * 100;
+    double _cryptoPrice =
+        double.parse(widget.cryptoModel.priceDay!.priceChangePct!) * 100;
 
     return GestureDetector(
       onTap: () {
         Modular.to.pushNamed(
           'crypto_details',
+          arguments: widget.cryptoModel,
         );
       },
       child: Container(
@@ -51,7 +44,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                   ? CircleAvatar(
                       backgroundColor: Colors.white,
                       child: SvgPicture.network(
-                        widget.crypto_logo_url!,
+                        widget.cryptoModel.logoUrl!,
                         height: 50,
                         width: 50,
                       ),
@@ -67,12 +60,12 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                       : CircleAvatar(
                           backgroundColor: Colors.white,
                           backgroundImage: NetworkImage(
-                            widget.crypto_logo_url!,
+                            widget.cryptoModel.logoUrl!,
                             scale: 0.1,
                           ),
                         ),
               title: Text(
-                widget.crypto_name!,
+                widget.cryptoModel.name!,
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: GoogleFonts.montserrat().fontFamily,
@@ -91,7 +84,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                     ),
                     child: Center(
                       child: Text(
-                        widget.crypto_rank!,
+                        widget.cryptoModel.rank!,
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: GoogleFonts.montserrat().fontFamily,
@@ -101,7 +94,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                     ),
                   ),
                   Text(
-                    widget.crypto_symbol!,
+                    widget.cryptoModel.symbol!,
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: GoogleFonts.montserrat().fontFamily,
@@ -115,15 +108,14 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '\$ ${widget.crypto_price}',
+                    '\$ ${widget.cryptoModel.price}',
                     style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    widget.crypto_price_date!.contains('-')
+                    widget.cryptoModel.priceDay!.priceChangePct!.contains('-')
                         ? '${_cryptoPrice.toStringAsFixed(2)}%'
                         : '+${_cryptoPrice.toStringAsFixed(2)}%',
                     style: Theme.of(context).textTheme.headline1!.copyWith(

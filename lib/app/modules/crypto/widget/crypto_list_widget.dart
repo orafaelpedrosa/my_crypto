@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -65,7 +64,6 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                 return RefreshIndicator(
                   onRefresh: () async {
                     store.getCrypto();
-                    log('onRefresh');
                   },
                   backgroundColor: AppColors.primaryColor,
                   color: Colors.white,
@@ -74,15 +72,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     itemBuilder: (_, index) {
                       final cryptocurrency = store.state[index];
                       return CryptoCardWidget(
-                        crypto_name: cryptocurrency.name,
-                        crypto_symbol: cryptocurrency.symbol,
-                        crypto_price: double.parse(
-                          cryptocurrency.price!,
-                        ),
-                        crypto_rank: cryptocurrency.rank,
-                        crypto_logo_url: cryptocurrency.logoUrl,
-                        crypto_price_date:
-                            cryptocurrency.priceDay!.priceChangePct,
+                        cryptoModel: cryptocurrency,
                         imageFormat: getImageFormat(
                           cryptocurrency.logoUrl,
                         ),
@@ -90,7 +80,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     },
                     separatorBuilder: (_, __) => Divider(
                       height: 0.5,
-                      color: Colors.black38,
+                      color: Colors.black12,
                     ),
                   ),
                 );

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/theme/colors.dart';
 
 class CryptoDetailsPage extends StatefulWidget {
-  const CryptoDetailsPage({Key? key}) : super(key: key);
+  final CryptocurrencyModel cryptoModel;
+
+  const CryptoDetailsPage({
+    Key? key,
+    required this.cryptoModel,
+  }) : super(key: key);
 
   @override
   State<CryptoDetailsPage> createState() => _CryptoDetailsPageState();
@@ -13,12 +19,18 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crypto Details'),
-        backgroundColor: AppColors.primaryColor,
+        title: Text(
+          widget.cryptoModel.name!,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: IconThemeData(
+          color: AppColors.primaryColor,
+        ),
       ),
-      body: Center(
-        child: Text('Crypto Details'),
-      ),
+      backgroundColor: Colors.white,
+      body: Container(),
     );
   }
 }

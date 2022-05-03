@@ -14,8 +14,11 @@ class CryptoModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute, child: (_, args) => CryptoPage()),
-    ChildRoute('/crypto_details', child: (_, args) => CryptoDetailsPage()),
-
-
+    ChildRoute(
+      '/crypto_details',
+      child: (_, args) => CryptoDetailsPage(
+        cryptoModel: args.data,
+      ),
+    ),
   ];
 }
