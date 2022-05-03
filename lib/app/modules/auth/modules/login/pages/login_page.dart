@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 import 'package:mycrypto/app/core/theme/colors.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/login_store.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -27,7 +26,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
   final FocusNode passwordFocus = FocusNode();
   final formKey = GlobalKey<FormState>();
   bool validateFormLogin = false;
-  bool _isObscure = true;
 
   bool isEmail(String email) {
     String p =
@@ -170,45 +168,47 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                   enableSuggestions: false,
                 ),
                 const SizedBox(height: 20),
-                TextFormFieldWidget(
-                  focusNode: passwordFocus,
-                  textInputAction: TextInputAction.done,
-                  controller: password,
-                  onChange: (String? input) {
-                    store.state.password = input;
-                    store.updateForm(store.state);
-                  },
-                  onSubmitted: (String? input) {
-                    FocusScope.of(context).unfocus();
-                  },
-                  textCapitalization: TextCapitalization.none,
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Por favor, informe a senha';
-                    } else if (value.length < 6) {
-                      return 'A senha deve conter no mínimo 6 caracteres';
-                    }
-                    return null;
-                  },
-                  obscureText: _isObscure,
-                  iconData: Icons.lock,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isObscure ? Icons.visibility_off : Icons.visibility,
-                      color: AppColors.primaryColor,
-                    ),
-                    onPressed: () {
-                      log('isObscure: $_isObscure');
-                      setState(
-                        () {
-                          _isObscure = !_isObscure;
+                TripleBuilder<ObscureStore, Exception, bool>(
+                  store: store.obscureStore,
+                  builder: (_, obscureStore) {
+                    return TextFormFieldWidget(
+                      focusNode: passwordFocus,
+                      textInputAction: TextInputAction.done,
+                      controller: password,
+                      onChange: (String? input) {
+                        store.state.password = input;
+                        store.updateForm(store.state);
+                      },
+                      onSubmitted: (String? input) {
+                        FocusScope.of(context).unfocus();
+                      },
+                      textCapitalization: TextCapitalization.none,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, informe a senha';
+                        } else if (value.length < 6) {
+                          return 'A senha deve conter no mínimo 6 caracteres';
+                        }
+                        return null;
+                      },
+                      obscureText: store.obscureStore.state,
+                      iconData: Icons.lock,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          store.obscureStore.state
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: AppColors.primaryColor,
+                        ),
+                        onPressed: () {
+                          store.obscurePassword();
                         },
-                      );
-                    },
-                  ),
-                  label: 'Senha',
-                  hintText: 'Senha',
+                      ),
+                      label: 'Senha',
+                      hintText: 'Senha',
+                    );
+                  },
                 ),
                 Container(
                   padding: EdgeInsets.zero,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/login_store.dart';
+import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
 import 'package:mycrypto/app/shared/widgets/button/button_secondary_widget.dart';
 
 class SendMailPage extends StatefulWidget {
