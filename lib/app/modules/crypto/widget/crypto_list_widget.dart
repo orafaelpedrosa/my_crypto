@@ -5,7 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
-import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/crypto_card_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
@@ -35,11 +34,11 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
     return TripleBuilder<CryptocurrencyStore, Exception,
         List<CryptocurrencyModel>>(
       store: store,
-      builder: (_, context) {
+      builder: (_, triple) {
         if (store.isLoading) {
           return Center(
             child: LoadingWidget(
-              color: AppColors.primaryColor,
+              color: Theme.of(context).primaryColor,
             ),
           );
         } else {
@@ -65,15 +64,16 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   onRefresh: () async {
                     store.getCrypto();
                   },
-                  backgroundColor: AppColors.primaryColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                   color: Colors.white,
                   child: ListView.separated(
                     itemCount: store.state.length,
                     itemBuilder: (_, index) {
                       final cryptocurrency = store.state[index];
+                      getFormatImage(cryptocurrency.logoUrl);
                       return CryptoCardWidget(
                         cryptoModel: cryptocurrency,
-                        imageFormat: getImageFormat(
+                        imageFormat: getFormatImage(
                           cryptocurrency.logoUrl,
                         ),
                       );
@@ -92,13 +92,12 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
     );
   }
 
-  String getImageFormat(String? url) {
+  String getFormatImage(String? url) {
     if (url == null) {
       return 'null';
     } else {
-      String imageFormat = '';
-      int indexPoint = url.length;
-      imageFormat = url.substring(indexPoint - 3);
+      int ponto = url.lastIndexOf('.');
+      String imageFormat = url.substring(ponto + 1, url.length);
       return imageFormat;
     }
   }

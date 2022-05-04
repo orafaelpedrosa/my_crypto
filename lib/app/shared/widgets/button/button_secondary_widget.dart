@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/core/theme/colors.dart';
 
 class ButtonSecondaryWidget extends StatelessWidget {
   final String text;
@@ -24,7 +23,7 @@ class ButtonSecondaryWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
@@ -35,13 +34,13 @@ class ButtonSecondaryWidget extends StatelessWidget {
               ? CircularProgressIndicator(
                   strokeWidth: 2.0,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.primaryColor,
+                    Theme.of(context).primaryColor,
                   ),
                 )
               : Text(
                   text,
                   style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                 ),
         ),

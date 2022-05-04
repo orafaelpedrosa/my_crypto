@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
-import 'package:mycrypto/app/core/theme/colors.dart';
 
 class CryptoDetailsPage extends StatefulWidget {
   final CryptocurrencyModel cryptoModel;
@@ -26,7 +25,7 @@ class _CryptoDetailsPageState extends State<CryptoDetailsPage> {
         backgroundColor: Colors.white,
         elevation: 1,
         iconTheme: IconThemeData(
-          color: AppColors.primaryColor,
+          color: Theme.of(context).primaryColor,
         ),
       ),
       backgroundColor: Colors.white,

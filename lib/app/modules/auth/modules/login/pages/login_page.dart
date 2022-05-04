@@ -3,11 +3,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -25,6 +25,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
   final formKey = GlobalKey<FormState>();
+  final Uri _url = Uri.parse('https://nomics.com');
+
   bool validateFormLogin = false;
 
   bool isEmail(String email) {
@@ -32,6 +34,10 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(p);
     return regExp.hasMatch(email);
+  }
+
+  void _launchUrl() async {
+    if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 
   @override
@@ -50,7 +56,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).primaryColor,
       resizeToAvoidBottomInset: true,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -117,7 +123,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryColor.withOpacity(0.5),
+            color: Theme.of(context).primaryColor.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 20,
             offset: const Offset(4, 7),
@@ -199,7 +205,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                           store.obscureStore.state
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: AppColors.primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                         onPressed: () {
                           store.obscurePassword();
@@ -220,12 +226,12 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                         width: MediaQuery.of(context).size.width * 0.85,
                         height: 50,
                         duration: Duration(seconds: 1),
-                        successColor: AppColors.primaryColor,
+                        successColor: Theme.of(context).primaryColor,
                         errorColor: Colors.red,
                         successIcon: Icons.check_circle_outline,
                         animateOnTap: validateFormLogin,
                         borderRadius: 15,
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).primaryColor,
                         child: Text(
                           'Login',
                           style:
@@ -273,6 +279,19 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                           color: Colors.black54,
                         ),
                   ),
+                ),
+                const SizedBox(height: 40),
+                TextButton(
+                  child: Text(
+                    'Crypto Market Cap & Pricing Data Provided\nBy Nomics',
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          fontSize: 12,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  onPressed: () {
+                    _launchUrl();
+                  },
                 ),
               ],
             ),

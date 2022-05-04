@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 
@@ -66,11 +66,10 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                         ),
               title: Text(
                 widget.cryptoModel.name!,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: GoogleFonts.montserrat().fontFamily,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: Colors.black.withOpacity(0.775),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               subtitle: Row(
                 children: [
@@ -110,7 +109,8 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                   Text(
                     '\$ ${widget.cryptoModel.price}',
                     style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.black,
+                          color: Colors.black.withOpacity(0.775),
+                          fontWeight: FontWeight.bold,
                         ),
                   ),
                   SizedBox(height: 5),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mycrypto/app/core/theme/colors.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -34,7 +33,7 @@ class _ResetPasswordPageState
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
-          color: AppColors.primaryColor,
+          color: Theme.of(context).primaryColor,
         ),
         elevation: 0,
       ),
@@ -92,12 +91,12 @@ class _ResetPasswordPageState
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: 50,
                 duration: Duration(seconds: 1),
-                successColor: AppColors.primaryColor,
+                successColor: Theme.of(context).primaryColor,
                 errorColor: Colors.red,
                 successIcon: Icons.check_circle_outline,
                 animateOnTap: validateFormReset,
                 borderRadius: 15,
-                color: AppColors.primaryColor,
+                color: Theme.of(context).primaryColor,
                 child: Text(
                   'Enviar',
                   style: Theme.of(context).textTheme.headline4!.copyWith(

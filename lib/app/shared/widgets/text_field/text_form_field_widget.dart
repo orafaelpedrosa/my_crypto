@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/core/theme/colors.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   final String? label;
@@ -78,15 +77,15 @@ class TextFormFieldWidget extends StatelessWidget {
             ),
         labelText: label,
         labelStyle: TextStyle(
-          color: AppColors.primaryColor.withOpacity(0.5),
+          color: Theme.of(context).primaryColor.withOpacity(0.5),
         ),
         hintText: hintText,
         hintStyle: TextStyle(
-          color: AppColors.primaryColor.withOpacity(0.5),
+          color: Theme.of(context).primaryColor.withOpacity(0.5),
         ),
         prefixIcon: Icon(
           iconData,
-          color: AppColors.primaryColor,
+          color: Theme.of(context).primaryColor,
           size: 20,
         ),
         suffixIcon: suffixIcon,
@@ -95,7 +94,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -103,7 +102,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).primaryColor,
             width: 1.5,
           ),
         ),
@@ -112,7 +111,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).primaryColor,
             width: 1.5,
           ),
         ),
@@ -121,7 +120,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).primaryColor,
             width: 1.5,
           ),
         ),
