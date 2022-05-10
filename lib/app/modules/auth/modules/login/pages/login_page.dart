@@ -42,6 +42,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
 
   @override
   void initState() {
+    email.text = 'abc@gmail.com';
+    password.text = '123456';
     super.initState();
   }
 
@@ -88,23 +90,16 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.065),
       child: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.025,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.020),
           SvgPicture.asset(
             'assets/app/logo.svg',
             height: 70,
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           SvgPicture.asset(
             'assets/app/mycrypto.svg',
             color: Colors.white,
             height: 35,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.025,
           ),
         ],
       ),
@@ -113,7 +108,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
 
   Widget get _buildFormLoginPage {
     return Container(
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.only(top: 15, left: 25, right: 25, bottom: 15),
       height: MediaQuery.of(context).size.height * 0.7,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -280,7 +275,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                         ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 15),
                 TextButton(
                   child: Text(
                     'Crypto Market Cap & Pricing Data Provided\nBy Nomics',

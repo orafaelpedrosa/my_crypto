@@ -6,6 +6,7 @@ class CryptocurrencyModel {
   String? symbol;
   String? name;
   String? logoUrl;
+  String? logoFormat;
   String? status;
   String? price;
   String? priceDate;
@@ -36,6 +37,7 @@ class CryptocurrencyModel {
     this.symbol,
     this.name,
     this.logoUrl,
+    this.logoFormat,
     this.status,
     this.price,
     this.priceDate,

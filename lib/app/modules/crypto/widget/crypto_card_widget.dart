@@ -2,19 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
+import 'package:mycrypto/app/modules/crypto/widget/crypto_logo_widget.dart';
 
-// ignore: must_be_immutable
 class CryptoCardWidget extends StatefulWidget {
   final CryptocurrencyModel cryptoModel;
-  String? imageFormat;
 
   CryptoCardWidget({
     Key? key,
     required this.cryptoModel,
-    this.imageFormat,
   }) : super(key: key);
 
   @override
@@ -40,34 +37,16 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
         child: Column(
           children: <Widget>[
             ListTile(
-              leading: widget.imageFormat == 'svg'
-                  ? CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: SvgPicture.network(
-                        widget.cryptoModel.logoUrl!,
-                        height: 50,
-                        width: 50,
-                      ),
-                    )
-                  : widget.imageFormat == 'null'
-                      ? CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.attach_money_outlined,
-                            color: Colors.white54,
-                          ),
-                        )
-                      : CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: NetworkImage(
-                            widget.cryptoModel.logoUrl!,
-                            scale: 0.1,
-                          ),
-                        ),
+              leading: CryptoLogoWidget(
+                logoFormat: widget.cryptoModel.logoFormat,
+                logoUrl: widget.cryptoModel.logoUrl,
+                width: 40,
+                height: 40,
+              ),
               title: Text(
                 widget.cryptoModel.name!,
                 style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.black.withOpacity(0.775),
+                      color: Colors.black87,
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -85,7 +64,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                       child: Text(
                         widget.cryptoModel.rank!,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.black87,
                           fontFamily: GoogleFonts.montserrat().fontFamily,
                           fontSize: 10,
                         ),
@@ -95,7 +74,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                   Text(
                     widget.cryptoModel.symbol!,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.black87,
                       fontFamily: GoogleFonts.montserrat().fontFamily,
                       fontSize: 12,
                     ),
@@ -107,9 +86,9 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '\$ ${widget.cryptoModel.price}',
+                    '${widget.cryptoModel.price}',
                     style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.black.withOpacity(0.775),
+                          color: Colors.black87,
                           fontWeight: FontWeight.bold,
                         ),
                   ),
@@ -123,7 +102,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
                               ? Colors.green
                               : _cryptoPrice < 0
                                   ? Colors.red
-                                  : Colors.black,
+                                  : Colors.blue,
                           fontSize: 14,
                         ),
                   ),

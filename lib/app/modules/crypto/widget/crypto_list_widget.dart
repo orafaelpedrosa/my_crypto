@@ -5,7 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
-import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
+import 'package:mycrypto/app/modules/crypto/stores/list_crypto_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/crypto_card_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
@@ -20,7 +20,7 @@ class CryptocurrencyListWidget extends StatefulWidget {
 }
 
 class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
-  CryptocurrencyStore store = Modular.get();
+  CryptoListStore store = Modular.get();
   CryptocurrencyRepository repository = Modular.get();
 
   @override
@@ -31,8 +31,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder<CryptocurrencyStore, Exception,
-        List<CryptocurrencyModel>>(
+    return TripleBuilder<CryptoListStore, Exception, List<CryptocurrencyModel>>(
       store: store,
       builder: (_, triple) {
         if (store.isLoading) {
@@ -44,7 +43,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
         } else {
           return StreamBuilder<List<CryptocurrencyModel>>(
             stream: Stream.periodic(
-              const Duration(seconds: 10),
+              const Duration(seconds: 4),
               (_) {
                 store.getCrypto();
                 return store.state;
@@ -70,12 +69,10 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     itemCount: store.state.length,
                     itemBuilder: (_, index) {
                       final cryptocurrency = store.state[index];
-                      getFormatImage(cryptocurrency.logoUrl);
+                      cryptocurrency.logoFormat =
+                          getFormatImage(cryptocurrency.logoUrl);
                       return CryptoCardWidget(
                         cryptoModel: cryptocurrency,
-                        imageFormat: getFormatImage(
-                          cryptocurrency.logoUrl,
-                        ),
                       );
                     },
                     separatorBuilder: (_, __) => Divider(

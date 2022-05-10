@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
+import 'package:mycrypto/app/modules/crypto/stores/list_crypto_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/crypto_list_widget.dart';
 
 class CryptoPage extends StatefulWidget {
@@ -11,7 +11,7 @@ class CryptoPage extends StatefulWidget {
   State<CryptoPage> createState() => _CryptoPageState();
 }
 
-class _CryptoPageState extends ModularState<CryptoPage, CryptocurrencyStore> {
+class _CryptoPageState extends ModularState<CryptoPage, CryptoListStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

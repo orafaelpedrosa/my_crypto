@@ -2,12 +2,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/crypto/pages/crypto_details.dart';
 import 'package:mycrypto/app/modules/crypto/pages/crypto_page.dart';
-import 'package:mycrypto/app/modules/crypto/stores/cryptocurrency_store.dart';
+import 'package:mycrypto/app/modules/crypto/stores/list_crypto_store.dart';
 
 class CryptoModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => CryptocurrencyStore()),
+    Bind.lazySingleton((i) => CryptoListStore()),
     Bind.lazySingleton((i) => CryptocurrencyRepository()),
   ];
 

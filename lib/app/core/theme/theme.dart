@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData theme = ThemeData(
+  
   primaryColor: const Color(0xff1D8A32),
   cupertinoOverrideTheme: const CupertinoThemeData(
     brightness: Brightness.dark,
