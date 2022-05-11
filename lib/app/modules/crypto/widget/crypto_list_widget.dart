@@ -5,7 +5,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
-import 'package:mycrypto/app/modules/crypto/stores/list_crypto_store.dart';
+import 'package:mycrypto/app/modules/crypto/stores/crypto_list_store.dart';
+import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/crypto_card_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
@@ -25,12 +26,13 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
 
   @override
   void initState() {
-    store.getCrypto();
+    store.getListCrypto();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    CryptoStore cryptoStore = Modular.get();
     return TripleBuilder<CryptoListStore, Exception, List<CryptocurrencyModel>>(
       store: store,
       builder: (_, triple) {
@@ -45,7 +47,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
             stream: Stream.periodic(
               const Duration(seconds: 4),
               (_) {
-                store.getCrypto();
+                store.getListCrypto();
+                cryptoStore.getCryptoData();
                 return store.state;
               },
             ),
@@ -61,7 +64,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
               } else {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    store.getCrypto();
+                    store.getListCrypto();
                   },
                   backgroundColor: Theme.of(context).primaryColor,
                   color: Colors.white,

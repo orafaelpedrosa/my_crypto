@@ -31,7 +31,7 @@ class CryptocurrencyModel {
   CryptoPriceDateModel? priceYear;
   CryptoPriceDateModel? priceYtd;
 
-  CryptocurrencyModel(
+  CryptocurrencyModel({
     this.id,
     this.currency,
     this.symbol,
@@ -56,7 +56,7 @@ class CryptocurrencyModel {
     this.rankDelta,
     this.high,
     this.highTimestamp,
-  );
+  });
 
   CryptocurrencyModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

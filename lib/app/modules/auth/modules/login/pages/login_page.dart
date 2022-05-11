@@ -281,6 +281,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                     'Crypto Market Cap & Pricing Data Provided\nBy Nomics',
                     style: Theme.of(context).textTheme.headline6!.copyWith(
                           fontSize: 12,
+                          color: Colors.black54,
                         ),
                     textAlign: TextAlign.center,
                   ),

@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/theme/theme.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/pages/login_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorObservers: [
+    return MaterialApp.router(
+      
+      /*navigatorObservers: [
         Modular.get<MyNavigatorObserver>(),
-      ],
+      ],*/
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      // home: LoginPage(),
       theme: theme,
-    ).modular();
+      routerDelegate: Modular.routerDelegate,
+      routeInformationParser: Modular.routeInformationParser,
+    );
   }
 }
 
-class MyNavigatorObserver extends NavigatorObserver {
+/*class MyNavigatorObserver extends NavigatorObserver {
   List<Route<dynamic>?> routeStack = List.empty(growable: true);
 
   @override
@@ -46,4 +48,4 @@ class MyNavigatorObserver extends NavigatorObserver {
     routeStack.add(newRoute);
     print('didReplace: ${routeStack.map((route) => route?.settings.name)}');
   }
-}
+}*/

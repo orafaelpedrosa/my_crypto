@@ -31,6 +31,5 @@ class CryptocurrencyRepository with Disposable {
 
   @override
   void dispose() {
-    _dio.clear();
   }
 }

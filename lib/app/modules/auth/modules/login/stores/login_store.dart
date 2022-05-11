@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/credential_model.dart';
@@ -13,12 +12,12 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
             password: 'aezakmi',
           ),
         ) {
-    user = _authRepository.user;
+    // user = _authRepository.user;
   }
 
   final AuthRepository _authRepository = Modular.get<AuthRepository>();
   final ObscureStore obscureStore = Modular.get<ObscureStore>();
-  User? user;
+  // User? user;
 
   void updateForm(CredentialModel form) {
     update(CredentialModel.fromJson(form.toJson()));

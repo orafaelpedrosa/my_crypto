@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
+import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 import 'package:mycrypto/app/modules/crypto/widget/crypto_logo_widget.dart';
 
 class CryptoCardWidget extends StatefulWidget {
@@ -19,6 +20,8 @@ class CryptoCardWidget extends StatefulWidget {
 }
 
 class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
+  CryptoStore cryptoStore = Modular.get<CryptoStore>();
+
   @override
   Widget build(BuildContext context) {
     double _cryptoPrice =
@@ -26,10 +29,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
 
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed(
-          'crypto_details',
-          arguments: widget.cryptoModel,
-        );
+        Modular.to.pushNamed('crypto_details', arguments: widget.cryptoModel);
       },
       child: Container(
         color: Colors.white,

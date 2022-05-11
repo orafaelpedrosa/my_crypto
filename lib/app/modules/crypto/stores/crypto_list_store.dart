@@ -11,9 +11,11 @@ class CryptoListStore extends NotifierStore<DioError, List<CryptocurrencyModel>>
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
 
+  // final CryptoStore cryptoStore = Modular.get<CryptoStore>();
+
   CryptoListStore() : super([]);
 
-  Future<void> getCrypto() async {
+  Future<void> getListCrypto() async {
     try {
       final cryptoData = await _repository.getCryptocurrencyData();
       update(cryptoData);
