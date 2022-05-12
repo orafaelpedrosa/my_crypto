@@ -48,7 +48,9 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
               const Duration(seconds: 4),
               (_) {
                 store.getListCrypto();
-                cryptoStore.getCryptoData();
+                setState(() {
+                  cryptoStore.getCryptoData();
+                });
                 return store.state;
               },
             ),

@@ -25,7 +25,6 @@ class _CryptoDetailsPageState
   void initState() {
     store.state.id = widget.cryptoModel.id;
     store.getCryptoData();
-    store.updateState();
     super.initState();
   }
 
@@ -104,21 +103,24 @@ class _CryptoDetailsPageState
     return TripleBuilder<CryptoStore, Exception, CryptocurrencyModel>(
       store: store,
       builder: (_, triple) {
-        store.updateState();
-        return Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Text(
-                store.state.price!,
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ],
-          ),
-        );
+        if (store.isLoading) {
+          return CircularProgressIndicator();
+        } else {
+          return Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Text(
+                  store.state.price!,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+          );
+        }
       },
     );
   }

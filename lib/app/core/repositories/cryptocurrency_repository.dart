@@ -21,7 +21,6 @@ class CryptocurrencyRepository with Disposable {
           cryptos.add(CryptocurrencyModel.fromJson(crypto));
         },
       );
-      log('getCryptocurrencyRepository');
       return cryptos;
     } catch (e) {
       log('Error getCrypto: $e');
@@ -30,6 +29,5 @@ class CryptocurrencyRepository with Disposable {
   }
 
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }
