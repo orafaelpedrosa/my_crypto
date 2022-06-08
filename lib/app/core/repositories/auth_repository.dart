@@ -8,7 +8,7 @@ class AuthRepository with Disposable {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? user;
 
-  void authCheck() {
+  Future<void> authCheck() async {
     _firebaseAuth.authStateChanges().listen(
       (User? user) {
         this.user = (user == null) ? null : user;
@@ -77,6 +77,19 @@ class AuthRepository with Disposable {
       }
     }
   }
+
+  //   Future<void> authLogin(CredentialModel data) async {
+  //   try {
+  //     await _firebaseAuth.signInWithEmailAndPassword(
+  //       email: data.email!,
+  //       password: data.password!,
+  //     );
+  //     _getUser();
+  //     log('AuthRepository.authLogin: success');
+  //   } on FirebaseAuthException {
+  //     rethrow;
+  //   }
+  // }
 
   Future<void> authResetPassword(String email) async {
     try {

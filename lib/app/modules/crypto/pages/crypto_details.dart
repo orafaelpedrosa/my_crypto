@@ -5,8 +5,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/theme/theme.dart';
+import 'package:mycrypto/app/modules/crypto/pages/widget/crypto_logo_widget.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
-import 'package:mycrypto/app/modules/crypto/widget/crypto_logo_widget.dart';
 
 class CryptoDetailsPage extends StatefulWidget {
   final CryptocurrencyModel cryptoModel;
@@ -83,9 +83,6 @@ class _CryptoDetailsPageState
           ),
         ),
       ],
-      // iconTheme: IconThemeData(
-      //   color: theme.primaryColor,
-      // ),
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back_ios_sharp,
@@ -103,24 +100,25 @@ class _CryptoDetailsPageState
     return TripleBuilder<CryptoStore, Exception, CryptocurrencyModel>(
       store: store,
       builder: (_, triple) {
-        if (store.isLoading) {
-          return CircularProgressIndicator();
-        } else {
-          return Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Text(
-                  store.state.price!,
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-          );
-        }
+        return Container(
+          padding: EdgeInsets.all(25),
+          child: Column(
+            children: [
+              Text(
+                triple.state.name!,
+                style: Theme.of(context).textTheme.headline3!.copyWith(
+                      color: Colors.black87,
+                    ),
+              ),
+              Text(
+                store.state.price!,
+                style: Theme.of(context).textTheme.headline3!.copyWith(
+                      color: Colors.black87,
+                    ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }

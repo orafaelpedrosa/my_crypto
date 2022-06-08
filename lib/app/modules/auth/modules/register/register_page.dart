@@ -6,13 +6,19 @@ class RegisterPage extends StatefulWidget {
   @override
   RegisterPageState createState() => RegisterPageState();
 }
+
 class RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor,
+        ),
+        elevation: 0,
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[],
       ),

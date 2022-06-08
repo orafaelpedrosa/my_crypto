@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData theme = ThemeData(
-  
-  primaryColor: const Color(0xff1D8A32),
+  primaryColor: const Color(0xff114b5f),
   cupertinoOverrideTheme: const CupertinoThemeData(
     brightness: Brightness.dark,
   ),
@@ -31,33 +30,35 @@ ThemeData theme = ThemeData(
   textTheme: TextTheme(
     headline1: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: Color(0xff1D8A32),
+      color: Color(0xff114b5f),
       fontSize: 25,
     ),
     headline2: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: Color(0xff1D8A32),
+      color: Color(0xff114b5f),
       fontSize: 22,
     ),
     headline3: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: Color(0xff1D8A32),
+      color: Color(0xff114b5f),
       fontSize: 20,
     ),
     headline4: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: Color(0xff1D8A32),
+      color: Color(0xff114b5f),
       fontSize: 18,
     ),
     headline5: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: Color(0xff1D8A32),
+      color: Color(0xff114b5f),
       fontSize: 16,
+      height: 1.5,
     ),
     headline6: TextStyle(
       fontFamily: GoogleFonts.montserrat().fontFamily,
-      color: Color(0xff1D8A32),
+      color: Color(0xff114b5f),
       fontSize: 14,
+      height: 1.5,
     ),
   ),
 );

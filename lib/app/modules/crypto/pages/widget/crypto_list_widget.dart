@@ -5,9 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/modules/crypto/pages/widget/crypto_card_widget.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_list_store.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
-import 'package:mycrypto/app/modules/crypto/widget/crypto_card_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {

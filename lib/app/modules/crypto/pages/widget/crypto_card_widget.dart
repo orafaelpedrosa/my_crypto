@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
+import 'package:mycrypto/app/modules/crypto/pages/widget/crypto_logo_widget.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
-import 'package:mycrypto/app/modules/crypto/widget/crypto_logo_widget.dart';
 
 class CryptoCardWidget extends StatefulWidget {
   final CryptocurrencyModel cryptoModel;

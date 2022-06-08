@@ -1,23 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/model/credential_model.dart';
 import 'package:mycrypto/app/core/repositories/auth_repository.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
 
-class LoginStore extends NotifierStore<Exception, CredentialModel> {
+class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   LoginStore()
       : super(
           CredentialModel(
             email: 'orafaelpedrosa@outlook.com',
             password: 'aezakmi',
           ),
-        ) {
-    // user = _authRepository.user;
-  }
+        );
 
   final AuthRepository _authRepository = Modular.get<AuthRepository>();
   final ObscureStore obscureStore = Modular.get<ObscureStore>();
-  // User? user;
 
   void updateForm(CredentialModel form) {
     update(CredentialModel.fromJson(form.toJson()));
@@ -30,7 +28,6 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
     }).catchError(
       (error) {
         setLoading(false);
-        setError(error);
         throw error;
       },
     );
@@ -51,7 +48,15 @@ class LoginStore extends NotifierStore<Exception, CredentialModel> {
 
   Future<void> authCheck() async {
     setLoading(true);
-    _authRepository.authCheck();
+    _authRepository.authCheck().then((value) {
+      setLoading(false);
+    }).catchError(
+      (error) {
+        setLoading(false);
+        setError(error);
+        throw error;
+      },
+    );
     setLoading(false);
   }
 

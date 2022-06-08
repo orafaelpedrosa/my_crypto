@@ -237,6 +237,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                         controller: _btnController1,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
+                            // await store
+                            //     .authLogin(store.state)
+                            //     .catchError((e) {});
                             await store
                                 .authLogin(store.state)
                                 .whenComplete(() async {

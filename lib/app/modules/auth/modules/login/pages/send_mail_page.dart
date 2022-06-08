@@ -47,14 +47,15 @@ class _SendMailPageState extends ModularState<SendMailPage, LoginStore> {
                   .headline5!
                   .copyWith(color: Colors.black54),
             ),
+            SizedBox(height: 40),
             SvgPicture.asset(
               'assets/login/send_mail.svg',
-              width: 300,
-              height: 300,
+              width: 250,
+              height: 250,
             ),
             SizedBox(height: 20),
             Text(
-              'Se você não recebeu o e-mail, \nverifique sua caixa de Spam.',
+              'Se você não recebeu o e-mail,\nverifique sua caixa de Spam.',
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
