@@ -22,6 +22,20 @@ class CryptoListStore extends NotifierStore<DioError, List<CryptocurrencyModel>>
     }
   }
 
+  Future<void> updateState(List<CryptocurrencyModel> data) async {
+    update(data);
+  }
+
+  Future<void> searchCrypto(String search) async {
+    final suggestions = state.where((crypto) {
+      final cryptoName = crypto.name!.toLowerCase();
+      final input = search.toLowerCase();
+      return cryptoName.contains(input);
+    }).toList();
+    state.clear();
+    update(suggestions);
+  }
+
   @override
   void dispose() {
     _repository.dispose();
