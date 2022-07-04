@@ -12,8 +12,8 @@ class ResetPasswordPage extends StatefulWidget {
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _ResetPasswordPageState
-    extends ModularState<ResetPasswordPage, LoginStore> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  final LoginStore _store = Modular.get();
   TextEditingController resetPassword = TextEditingController();
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
@@ -106,7 +106,7 @@ class _ResetPasswordPageState
                 controller: _btnController1,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    await store.resetPassword(resetPassword.text);
+                    await _store.resetPassword(resetPassword.text);
                     _btnController1.success();
                     await Future.delayed(
                       Duration(seconds: 1),

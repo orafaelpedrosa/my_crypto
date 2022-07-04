@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +18,8 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends ModularState<LoginPage, LoginStore> {
+class _LoginPageState extends State<LoginPage> {
+  final LoginStore _store = Modular.get();
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
 
@@ -126,7 +129,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
         ],
       ),
       child: TripleBuilder(
-        store: store,
+        store: _store,
         builder: (_, triple) {
           return Form(
             key: formKey,
@@ -145,8 +148,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                   textInputAction: TextInputAction.next,
                   controller: email,
                   onChange: (String? input) {
-                    store.state.email = input;
-                    store.updateForm(store.state);
+                    _store.state.email = input;
+                    _store.updateForm(_store.state);
                   },
                   onSubmitted: (String? input) {
                     FocusScope.of(context).requestFocus(passwordFocus);
@@ -170,15 +173,15 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                 ),
                 const SizedBox(height: 20),
                 TripleBuilder<ObscureStore, Exception, bool>(
-                  store: store.obscureStore,
+                  store: _store.obscureStore,
                   builder: (_, obscureStore) {
                     return TextFormFieldWidget(
                       focusNode: passwordFocus,
                       textInputAction: TextInputAction.done,
                       controller: password,
                       onChange: (String? input) {
-                        store.state.password = input;
-                        store.updateForm(store.state);
+                        _store.state.password = input;
+                        _store.updateForm(_store.state);
                       },
                       onSubmitted: (String? input) {
                         FocusScope.of(context).unfocus();
@@ -193,17 +196,17 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                         }
                         return null;
                       },
-                      obscureText: store.obscureStore.state,
+                      obscureText: _store.obscureStore.state,
                       iconData: Icons.lock,
                       suffixIcon: IconButton(
                         icon: Icon(
-                          store.obscureStore.state
+                          _store.obscureStore.state
                               ? Icons.visibility_off
                               : Icons.visibility,
                           color: Theme.of(context).primaryColor,
                         ),
                         onPressed: () {
-                          store.obscurePassword();
+                          _store.obscurePassword();
                         },
                       ),
                       label: 'Senha',
@@ -237,23 +240,24 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                         controller: _btnController1,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            // await store
-                            //     .authLogin(store.state)
+                            // await _store
+                            //     .authLogin(_store.state)
                             //     .catchError((e) {});
-                            await store
-                                .authLogin(store.state)
+                            await _store
+                                .authLogin(_store.state)
                                 .whenComplete(() async {
+                              log('Login completed ${_store.userCurrent}');
                               _btnController1.success();
                               await Future.delayed(
                                 Duration(seconds: 1),
                                 () => Modular.to
-                                    .pushReplacementNamed('crypto_module/'),
+                                    .pushNamed('crypto_module/'),
                               );
                             }).catchError(
                               (error) {
                                 password.clear();
-                                store.state.password = null;
-                                store.updateForm(store.state);
+                                _store.state.password = null;
+                                _store.updateForm(_store.state);
                               },
                             );
                           } else {

@@ -6,15 +6,6 @@ import 'package:mycrypto/app/core/model/credential_model.dart';
 
 class AuthRepository with Disposable {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  User? user;
-
-  Future<void> authCheck() async {
-    _firebaseAuth.authStateChanges().listen(
-      (User? user) {
-        this.user = (user == null) ? null : user;
-      },
-    );
-  }
 
   Future<void> authRegister(String email, String password) async {
     try {
@@ -39,7 +30,7 @@ class AuthRepository with Disposable {
         email: data.email!,
         password: data.password!,
       );
-      _getUser();
+      // _getUser();
       log('AuthRepository.authLogin: success');
     } on FirebaseAuthException catch (e) {
       log(e.code);
@@ -66,30 +57,6 @@ class AuthRepository with Disposable {
     }
   }
 
-  Future<void> _getUser() async {
-    try {
-      user = _firebaseAuth.currentUser;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        log('Usuário não encontrado');
-      } else {
-        log('Erro desconhecido');
-      }
-    }
-  }
-
-  //   Future<void> authLogin(CredentialModel data) async {
-  //   try {
-  //     await _firebaseAuth.signInWithEmailAndPassword(
-  //       email: data.email!,
-  //       password: data.password!,
-  //     );
-  //     _getUser();
-  //     log('AuthRepository.authLogin: success');
-  //   } on FirebaseAuthException {
-  //     rethrow;
-  //   }
-  // }
 
   Future<void> authResetPassword(String email) async {
     try {

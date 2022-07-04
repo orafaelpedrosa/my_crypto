@@ -20,7 +20,9 @@ class RegisterPageState extends State<RegisterPage> {
       ),
       backgroundColor: Colors.white,
       body: Column(
-        children: <Widget>[],
+        children: <Widget>[
+          Text('RegisterPage'),
+        ],
       ),
     );
   }

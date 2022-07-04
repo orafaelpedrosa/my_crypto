@@ -14,7 +14,6 @@ class AppModule extends Module {
     Bind.lazySingleton((i) => CryptocurrencyRepository()),
     Bind.lazySingleton((i) => CryptoListStore()),
     Bind.lazySingleton((i) => LoginPage()),
-    // Bind.lazySingleton((i) => MyNavigatorObserver()),
   ];
 
   @override

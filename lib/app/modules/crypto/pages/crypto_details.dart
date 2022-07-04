@@ -20,11 +20,13 @@ class CryptoDetailsPage extends StatefulWidget {
 }
 
 class _CryptoDetailsPageState
-    extends ModularState<CryptoDetailsPage, CryptoStore> {
+    extends State<CryptoDetailsPage> {
+  final CryptoStore _store = Modular.get();
+
   @override
   void initState() {
-    store.state.id = widget.cryptoModel.id;
-    store.getCryptoData();
+    _store.state.id = widget.cryptoModel.id;
+    _store.getCryptoData();
     super.initState();
   }
 
@@ -43,20 +45,20 @@ class _CryptoDetailsPageState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CryptoLogoWidget(
-            logoFormat: store.state.logoFormat,
-            logoUrl: store.state.logoUrl,
+            logoFormat: _store.state.logoFormat,
+            logoUrl: _store.state.logoUrl,
             width: 30,
             height: 30,
           ),
           SizedBox(width: 5),
           Text(
-            store.state.symbol!,
+            _store.state.symbol!,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: Colors.black87,
                 ),
           ),
           SizedBox(width: 5),
-          store.state.priceDay!.priceChangePct!.contains('-')
+          _store.state.priceDay!.priceChangePct!.contains('-')
               ? Icon(
                   Icons.arrow_drop_down_sharp,
                   color: Colors.red,
@@ -89,7 +91,7 @@ class _CryptoDetailsPageState
           color: theme.primaryColor,
         ),
         onPressed: () {
-          store.state.id = null;
+          _store.state.id = null;
           Modular.to.pop();
         },
       ),
@@ -98,7 +100,7 @@ class _CryptoDetailsPageState
 
   Widget get cryptoDetailsBody {
     return TripleBuilder<CryptoStore, Exception, CryptocurrencyModel>(
-      store: store,
+      store: _store,
       builder: (_, triple) {
         return Container(
           padding: EdgeInsets.all(25),
@@ -111,7 +113,7 @@ class _CryptoDetailsPageState
                     ),
               ),
               Text(
-                store.state.price!,
+                _store.state.price!,
                 style: Theme.of(context).textTheme.headline3!.copyWith(
                       color: Colors.black87,
                     ),

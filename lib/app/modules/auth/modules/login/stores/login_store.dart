@@ -16,6 +16,26 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   final AuthRepository _authRepository = Modular.get<AuthRepository>();
   final ObscureStore obscureStore = Modular.get<ObscureStore>();
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  User? userCurrent;
+
+  void authService() {
+    _authCheck();
+  }
+
+  void _authCheck() {
+    setLoading(true);
+    _firebaseAuth.authStateChanges().listen(
+      (User? user) {
+        this.userCurrent = (user == null) ? null : user;
+        setLoading(false);
+      },
+    );
+  }
+
+  _getUser() {
+    userCurrent = _firebaseAuth.currentUser;
+  }
 
   void updateForm(CredentialModel form) {
     update(CredentialModel.fromJson(form.toJson()));
@@ -24,6 +44,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   Future<void> authLogin(CredentialModel data) async {
     setLoading(true);
     await _authRepository.authLogin(data).then((value) {
+      _getUser();
       setLoading(false);
     }).catchError(
       (error) {
@@ -36,6 +57,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   Future<void> resetPassword(String email) async {
     setLoading(true);
     await _authRepository.authResetPassword(email).then((value) {
+      _getUser();
       setLoading(false);
     }).catchError(
       (error) {
@@ -46,9 +68,12 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
     );
   }
 
-  Future<void> authCheck() async {
+  Future<void> authRegister(CredentialModel data) async {
     setLoading(true);
-    _authRepository.authCheck().then((value) {
+    await _authRepository
+        .authRegister(data.email!, data.password!)
+        .then((value) {
+      _getUser();
       setLoading(false);
     }).catchError(
       (error) {
@@ -57,7 +82,6 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
         throw error;
       },
     );
-    setLoading(false);
   }
 
   bool get isDisable {

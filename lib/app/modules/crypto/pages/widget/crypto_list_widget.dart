@@ -87,10 +87,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     const Duration(seconds: 4),
                     (_) {
                       if (!store.search) {
-                        log('Atualizando lista');
                         store.getListCrypto();
-                      } else {
-                        log('Não atualizando lista');
                       }
                       setState(() {
                         cryptoStore.getCryptoData();
