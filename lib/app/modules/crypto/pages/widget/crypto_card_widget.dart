@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
-import 'package:mycrypto/app/modules/crypto/pages/widget/crypto_logo_widget.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 
 class CryptoCardWidget extends StatefulWidget {
@@ -29,6 +29,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
 
     return GestureDetector(
       onTap: () {
+        cryptoStore.cryptoListStore.search = false;
         Modular.to.pushNamed('crypto_details', arguments: widget.cryptoModel);
       },
       child: Container(
@@ -37,12 +38,38 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
         child: Column(
           children: <Widget>[
             ListTile(
-              leading: CryptoLogoWidget(
-                logoFormat: widget.cryptoModel.logoFormat,
-                logoUrl: widget.cryptoModel.logoUrl,
-                width: 40,
-                height: 40,
-              ),
+              leading: widget.cryptoModel.logoFormat == 'svg'
+                  ? CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: SvgPicture.network(
+                        widget.cryptoModel.logoUrl!,
+                        height: 40,
+                        width: 40,
+                      ),
+                    )
+                  : widget.cryptoModel.logoFormat == 'null'
+                      ? CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.attach_money_outlined,
+                            color: Colors.white54,
+                          ),
+                        )
+                      : ClipOval(
+                          child: SizedBox.fromSize(
+                            size: Size(40, 40),
+                            child: Image.network(
+                              widget.cryptoModel.logoUrl!,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+              // leading: CryptoLogoWidget(
+              //   logoFormat: widget.cryptoModel.logoFormat,
+              //   logoUrl: widget.cryptoModel.logoUrl,
+              //   width: 40,
+              //   height: 40,
+              // ),
               title: Text(
                 widget.cryptoModel.name!,
                 style: Theme.of(context).textTheme.headline5!.copyWith(

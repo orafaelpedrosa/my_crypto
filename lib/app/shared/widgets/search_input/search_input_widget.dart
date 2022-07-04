@@ -2,15 +2,61 @@
 import 'package:flutter/material.dart';
 
 class SearchInputWidget extends StatelessWidget {
-  final TextEditingController textController;
-  final String hintText;
+  final String? label;
+  final bool autocorrect;
+  final bool readOnly;
+  final bool isEnabled;
+  final FocusNode? focusNode;
+  final bool autoFocus;
+  final String? placeholder;
+  final String? errorText;
+  final String? hintText;
+  final EdgeInsets? padding;
+  final bool enableSuggestions;
+  final bool obscureText;
   final Function(String?)? onChange;
+  final Function()? onTap;
+  final TextEditingController controller;
+  final int? maxLines;
+  final int minLines;
+  final IconData? iconData;
+  final IconData? prefixIcon;
+  final Widget? suffixIcon;
+  final TextInputAction? textInputAction;
+  final TextInputType? keyboardType;
+  final Function(String)? onSubmitted;
+  final String? Function(String?)? validator;
+  final TextCapitalization textCapitalization;
+  final bool? showCursor;
 
   const SearchInputWidget({
     Key? key,
-    required this.textController,
-    required this.hintText,
+    this.label,
+    this.placeholder,
+    this.errorText,
+    this.hintText,
+    this.focusNode,
+    this.autoFocus = false,
+    this.onSubmitted,
+    this.validator,
+    this.obscureText = false,
+    this.textCapitalization = TextCapitalization.sentences,
+    this.enableSuggestions = true,
+    this.autocorrect = true,
+    this.readOnly = false,
+    this.isEnabled = true,
+    required this.controller,
     this.onChange,
+    this.onTap,
+    this.padding,
+    this.maxLines = 1,
+    this.iconData,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.minLines = 1,
+    this.textInputAction,
+    this.keyboardType,
+    this.showCursor = true,
   }) : super(key: key);
 
   @override
@@ -21,9 +67,10 @@ class SearchInputWidget extends StatelessWidget {
         color: Colors.white,
       ),
       child: TextField(
+        enableSuggestions: false,
         textInputAction: TextInputAction.search,
         textCapitalization: TextCapitalization.none,
-        controller: textController,
+        controller: controller,
         onChanged: onChange,
         style: Theme.of(context).textTheme.headline5,
         decoration: InputDecoration(

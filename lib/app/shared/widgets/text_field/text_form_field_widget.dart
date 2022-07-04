@@ -57,6 +57,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.showCursor = true,
   }) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return TextFormField(

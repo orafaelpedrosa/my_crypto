@@ -39,6 +39,7 @@ class CryptoLogoWidget extends StatelessWidget {
                   size: Size(width, height),
                   child: Image.network(
                     logoUrl!,
+                    fit: BoxFit.cover,
                   ),
                 ),
               );
