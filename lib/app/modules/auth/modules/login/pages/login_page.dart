@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +5,7 @@ import 'package:flutter_triple/flutter_triple.dart';
 
 import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,8 +44,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    email.text = 'abc@gmail.com';
-    password.text = '123456';
+    email.text = 'orafaelpedrosa@outlook.co';
+    password.text = 'aezakmi';
     super.initState();
   }
 
@@ -240,24 +239,24 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _btnController1,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            // await _store
-                            //     .authLogin(_store.state)
-                            //     .catchError((e) {});
+                            _store.state.email = email.text;
+                            _store.state.password = password.text;
                             await _store
                                 .authLogin(_store.state)
                                 .whenComplete(() async {
-                              log('Login completed ${_store.userCurrent}');
-                              _btnController1.success();
-                              await Future.delayed(
-                                Duration(seconds: 1),
-                                () => Modular.to
-                                    .pushNamed('crypto_module/'),
-                              );
+                              if (_store.userCurrent != null) {
+                                _btnController1.success();
+                                await Future.delayed(
+                                  Duration(seconds: 1),
+                                  () => Modular.to.pushNamed('crypto_module/'),
+                                );
+                              }
                             }).catchError(
-                              (error) {
-                                password.clear();
+                              (error) async {
+                                await openErrorSnackBar(context, "${error.message}");
                                 _store.state.password = null;
                                 _store.updateForm(_store.state);
+                                _btnController1.reset();
                               },
                             );
                           } else {

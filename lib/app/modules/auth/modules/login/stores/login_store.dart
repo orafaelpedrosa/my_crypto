@@ -8,10 +8,7 @@ import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dar
 class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   LoginStore()
       : super(
-          CredentialModel(
-            email: 'orafaelpedrosa@outlook.com',
-            password: 'aezakmi',
-          ),
+          CredentialModel(),
         );
 
   final AuthRepository _authRepository = Modular.get<AuthRepository>();
@@ -42,8 +39,18 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   }
 
   Future<void> authLogin(CredentialModel data) async {
-    setLoading(true);
     await _authRepository.authLogin(data).then((value) {
+      _getUser();
+    }).catchError(
+      (error) {
+        throw error;
+      },
+    );
+  }
+
+  Future<void> authLogout() async {
+    setLoading(true);
+    await _authRepository.authLogout().then((value) {
       _getUser();
       setLoading(false);
     }).catchError(
