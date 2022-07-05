@@ -18,6 +18,5 @@ class CryptoModule extends Module {
     ChildRoute(Modular.initialRoute, child: (_, args) => CryptoPage()),
     ChildRoute('/crypto_details',
         child: (_, args) => CryptoDetailsPage(cryptoModel: args.data)),
-    // ChildRoute('/crypto_details', child: (_, args) => CryptoDetailsPage()),
   ];
 }
