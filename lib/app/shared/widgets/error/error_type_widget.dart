@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:mycrypto/app/core/enums/error_type_enum.dart';
 
+// ignore: must_be_immutable
 class ErrorHttpWidget extends StatefulWidget {
   final String error;
   ErrorHttpEnum? errorType;

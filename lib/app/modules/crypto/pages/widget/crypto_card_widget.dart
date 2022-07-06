@@ -30,7 +30,7 @@ class _CryptocurrencyCardWidgetState extends State<CryptoCardWidget> {
     return GestureDetector(
       onTap: () {
         cryptoStore.cryptoListStore.search = false;
-        Modular.to.pushNamed('/crypto_details', arguments: widget.cryptoModel);
+        Modular.to.pushNamed('crypto_details', arguments: widget.cryptoModel);
       },
       child: Container(
         color: Colors.white,

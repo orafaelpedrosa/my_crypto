@@ -27,9 +27,8 @@ class LoadingWidget extends StatelessWidget {
                 children: [
                   Lottie.asset(
                     'assets/app/loading.json',
-                    width: 150,
-                    height: 150,
-                    
+                    width: 100,
+                    height: 100,
                   ),
                 ],
               ),

@@ -25,7 +25,7 @@ extension ErrorHttpEnumExtension on ErrorHttpEnum {
       case ErrorHttpEnum.e404:
         return 'Nenhum resultado encontrado';
       case ErrorHttpEnum.e429:
-        return 'Muitos requisições.\nTente novamente mais tarde!';
+        return 'Estamos com problemas.\nTente novamente mais tarde!';
       default:
         return '404';
     }

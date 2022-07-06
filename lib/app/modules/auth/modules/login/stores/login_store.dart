@@ -5,6 +5,7 @@ import 'package:mycrypto/app/core/model/credential_model.dart';
 import 'package:mycrypto/app/core/repositories/auth_repository.dart';
 import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
 
+// ignore: must_be_immutable
 class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   LoginStore()
       : super(
@@ -17,19 +18,21 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   User? userCurrent;
 
   void authService() async {
-    _authCheck();
+    authCheck();
   }
 
-  void _authCheck() async {
-    userCurrent = _firebaseAuth.currentUser!;
-    _firebaseAuth.authStateChanges().listen(
-      (User? user) async {
-        if (user == null) {
-          this.userCurrent = null;
-        } else
-          this.userCurrent = user;
-      },
-    );
+  void authCheck() async {
+    userCurrent = await _firebaseAuth.authStateChanges().first;
+    // userCurrent = _firebaseAuth.currentUser;
+    // _firebaseAuth.authStateChanges().listen(
+    //   (User? user) async {
+    //     if (user == null) {
+    //       this.userCurrent = null;
+    //     } else {
+    //       userCurrent = user;
+    //     }
+    //   },
+    // );
   }
 
   _getUser() {

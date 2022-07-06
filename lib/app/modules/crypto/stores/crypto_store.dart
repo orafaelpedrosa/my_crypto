@@ -19,6 +19,7 @@ class CryptoStore extends NotifierStore<Exception, CryptocurrencyModel> {
         },
       );
     } catch (e) {
+      setLoading(false);
       throw e;
     }
     setLoading(false);
