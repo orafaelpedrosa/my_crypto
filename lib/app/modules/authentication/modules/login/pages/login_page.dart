@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/stores/obscure_store.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';

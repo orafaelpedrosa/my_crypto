@@ -1,14 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
-import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/modules/crypto/crypto_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/modules/crypto/models/cryptocurrency_model.dart';
 
 // ignore: must_be_immutable
 class CryptoListStore extends NotifierStore<DioError, List<CryptocurrencyModel>>
     with Disposable {
-  final CryptocurrencyRepository _repository =
-      Modular.get<CryptocurrencyRepository>();
+  final CryptoRepository _repository =
+      Modular.get<CryptoRepository>();
   bool search = false;
   List<CryptocurrencyModel> listCrypto = [];
 

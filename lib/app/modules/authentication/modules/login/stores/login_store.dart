@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:mycrypto/app/core/model/credential_model.dart';
-import 'package:mycrypto/app/core/repositories/auth_repository.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/models/credential_model.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/login_repository.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/stores/obscure_store.dart';
 
 // ignore: must_be_immutable
 class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
@@ -12,7 +12,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
           CredentialModel(),
         );
 
-  final AuthRepository _authRepository = Modular.get<AuthRepository>();
+  final LoginRepository _loginRepository = Modular.get<LoginRepository>();
   final ObscureStore obscureStore = Modular.get<ObscureStore>();
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? userCurrent;
@@ -44,7 +44,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   }
 
   Future<void> authLogin(CredentialModel data) async {
-    await _authRepository.authLogin(data).then((value) {
+    await _loginRepository.authLogin(data).then((value) {
       _getUser();
     }).catchError(
       (error) {
@@ -55,7 +55,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   Future<void> authLogout() async {
     setLoading(true);
-    await _authRepository.authLogout().then((value) {
+    await _loginRepository.authLogout().then((value) {
       _getUser();
       setLoading(false);
     }).catchError(
@@ -68,23 +68,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   Future<void> resetPassword(String email) async {
     setLoading(true);
-    await _authRepository.authResetPassword(email).then((value) {
-      _getUser();
-      setLoading(false);
-    }).catchError(
-      (error) {
-        setLoading(false);
-        setError(error);
-        throw error;
-      },
-    );
-  }
-
-  Future<void> authRegister(CredentialModel data) async {
-    setLoading(true);
-    await _authRepository
-        .authRegister(data.email!, data.password!)
-        .then((value) {
+    await _loginRepository.authResetPassword(email).then((value) {
       _getUser();
       setLoading(false);
     }).catchError(

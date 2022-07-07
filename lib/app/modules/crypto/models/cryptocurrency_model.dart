@@ -1,4 +1,5 @@
-import 'package:mycrypto/app/core/model/crypto_price_date_model.dart';
+
+import 'package:mycrypto/app/modules/crypto/models/crypto_price_date_model.dart';
 
 class CryptocurrencyModel {
   String? id;

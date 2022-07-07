@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
 import 'package:mycrypto/app/core/theme/theme.dart';
+import 'package:mycrypto/app/modules/crypto/models/cryptocurrency_model.dart';
 import 'package:mycrypto/app/modules/crypto/pages/widget/crypto_logo_widget.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 

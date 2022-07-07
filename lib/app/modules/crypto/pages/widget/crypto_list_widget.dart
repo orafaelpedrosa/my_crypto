@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/core/model/cryptocurrency_model.dart';
-import 'package:mycrypto/app/core/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/modules/crypto/crypto_repository.dart';
+import 'package:mycrypto/app/modules/crypto/models/cryptocurrency_model.dart';
 import 'package:mycrypto/app/modules/crypto/pages/widget/crypto_card_widget.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_list_store.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
@@ -22,7 +22,7 @@ class CryptocurrencyListWidget extends StatefulWidget {
 
 class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   CryptoListStore store = Modular.get();
-  CryptocurrencyRepository repository = Modular.get();
+  CryptoRepository repository = Modular.get();
   CryptoStore cryptoStore = Modular.get();
   TextEditingController _searchController = TextEditingController();
   FocusNode _searchFocus = FocusNode();
@@ -30,7 +30,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   @override
   void initState() {
     _searchController.clear();
-    store.getListCrypto();
+    // store.getListCrypto();
+    cryptoStore.cryptocurrencyStore.getCryptocurrencyData();
     super.initState();
   }
 
@@ -68,7 +69,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
               const Duration(seconds: 5),
               (_) {
                 if (!store.search) {
-                  store.getListCrypto();
+                  //store.getListCrypto();
                 }
                 setState(() {
                   cryptoStore.getCryptoData();

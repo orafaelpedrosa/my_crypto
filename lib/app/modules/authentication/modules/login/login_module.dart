@@ -1,10 +1,10 @@
-import 'package:mycrypto/app/modules/auth/modules/login/pages/login_page.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/stores/obscure_store.dart';
-import 'package:mycrypto/app/core/repositories/auth_repository.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/login_repository.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/pages/login_page.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/stores/login_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/pages/reset_password_page.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/pages/send_mail_page.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/pages/reset_password_page.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/pages/send_mail_page.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 
 class LoginModule extends Module {
@@ -13,7 +13,7 @@ class LoginModule extends Module {
     Bind.lazySingleton((i) => ObscureStore()),
     Bind.lazySingleton((i) => LoginStore()),
     Bind.lazySingleton((i) => CryptoStore()),
-    Bind.lazySingleton((i) => AuthRepository()),
+    Bind.lazySingleton((i) => LoginRepository()),
   ];
 
   @override

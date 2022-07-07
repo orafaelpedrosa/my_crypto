@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/auth/modules/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/authentication/modules/login/stores/login_store.dart';
 
 class AuthCheckPage extends StatefulWidget {
   const AuthCheckPage({Key? key}) : super(key: key);
@@ -13,6 +13,12 @@ class AuthCheckPage extends StatefulWidget {
 }
 
 class _AuthCheckPageState extends State<AuthCheckPage> {
+  @override
+  void initState() {
+    _loginStore..authLogout();
+    super.initState();
+  }
+
   final LoginStore _loginStore = Modular.get();
 
   @override
