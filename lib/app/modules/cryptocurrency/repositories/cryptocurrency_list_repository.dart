@@ -25,6 +25,7 @@ class CryptocurrencyRepository with Disposable {
           cryptos.add(CryptocurrencySimpleModel.fromJson(crypto));
         },
       );
+      log('CryptocurrencyRepository');
       return cryptos;
     } catch (e) {
       log('Error getCrypto: $e');

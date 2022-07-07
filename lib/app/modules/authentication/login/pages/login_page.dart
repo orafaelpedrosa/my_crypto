@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                                     await Future.delayed(
                                       Duration(seconds: 1),
                                       () => Modular.to
-                                          .pushNamed('/crypto_module/'),
+                                          .pushNamed('/cryptocurrency/'),
                                     );
                                   }
                                 }).catchError(

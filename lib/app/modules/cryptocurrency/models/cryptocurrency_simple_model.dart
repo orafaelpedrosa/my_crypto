@@ -6,6 +6,7 @@ class CryptocurrencySimpleModel {
   String? symbol;
   String? name;
   String? image;
+  String? formatImage;
   num? currentPrice;
   num? marketCap;
   num? marketCapRank;
@@ -42,6 +43,7 @@ class CryptocurrencySimpleModel {
     this.symbol,
     this.name,
     this.image,
+    this.formatImage,
     this.currentPrice,
     this.marketCap,
     this.marketCapRank,
@@ -79,6 +81,7 @@ class CryptocurrencySimpleModel {
     symbol = json['symbol'];
     name = json['name'];
     image = json['image'];
+    // formatImage = json['format_image'];
     currentPrice = json['current_price'];
     marketCap = json['market_cap'];
     marketCapRank = json['market_cap_rank'];
@@ -126,6 +129,7 @@ class CryptocurrencySimpleModel {
     data['symbol'] = this.symbol;
     data['name'] = this.name;
     data['image'] = this.image;
+    data['format_image'] = this.formatImage;
     data['current_price'] = this.currentPrice;
     data['market_cap'] = this.marketCap;
     data['market_cap_rank'] = this.marketCapRank;

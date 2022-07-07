@@ -26,8 +26,8 @@ class AuthModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute, child: (_, args) => AuthCheckPage()),
-    ModuleRoute('/crypto', module: CryptoModule()),
     ModuleRoute('/login', module: LoginModule()),
     ModuleRoute('/register', module: RegisterModule()),
+    ModuleRoute('/cryptocurreny', module: CryptoModule()),
   ];
 }

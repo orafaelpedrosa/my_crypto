@@ -32,7 +32,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
           _loginStore.userCurrent = null;
         } else {
           log('User is ${snapshot.data!.email}');
-          Modular.to.pushReplacementNamed('/crypto_module/');
+          Modular.to.pushReplacementNamed('/cryptocurrency/');
           _loginStore.userCurrent = snapshot.data;
         }
         return Container(
