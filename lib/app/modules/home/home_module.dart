@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/crypto/crypto_repository.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/pages/login_page.dart';
+import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_list_store.dart';
 import '../home/home_store.dart';
 

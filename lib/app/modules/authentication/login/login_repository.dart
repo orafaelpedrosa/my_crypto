@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/models/credential_model.dart';
+import 'package:mycrypto/app/modules/authentication/login/models/credential_model.dart';
 
 class LoginRepository with Disposable {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

@@ -1,11 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_page.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/login_module.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/login_repository.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/stores/login_store.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/stores/obscure_store.dart';
-import 'package:mycrypto/app/modules/authentication/modules/register/register_module.dart';
-import 'package:mycrypto/app/modules/authentication/modules/register/register_repository.dart';
+import 'package:mycrypto/app/modules/authentication/login/login_module.dart';
+import 'package:mycrypto/app/modules/authentication/login/login_repository.dart';
+import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/modules/authentication/register/register_module.dart';
+import 'package:mycrypto/app/modules/authentication/register/register_repository.dart';
 import 'package:mycrypto/app/modules/crypto/crypto_module.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/models/credential_model.dart';
-import 'package:mycrypto/app/modules/authentication/modules/register/register_repository.dart';
+import 'package:mycrypto/app/modules/authentication/login/models/credential_model.dart';
+import 'package:mycrypto/app/modules/authentication/register/register_repository.dart';
 
 // ignore: must_be_immutable
 class RegisterStore

@@ -1,10 +1,10 @@
-import 'package:mycrypto/app/modules/authentication/modules/login/login_repository.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/pages/login_page.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/stores/obscure_store.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/authentication/login/login_repository.dart';
+import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
+import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/pages/reset_password_page.dart';
-import 'package:mycrypto/app/modules/authentication/modules/login/pages/send_mail_page.dart';
+import 'package:mycrypto/app/modules/authentication/login/pages/reset_password_page.dart';
+import 'package:mycrypto/app/modules/authentication/login/pages/send_mail_page.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 
 class LoginModule extends Module {
