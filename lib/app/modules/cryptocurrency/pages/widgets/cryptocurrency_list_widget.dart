@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_item_list_widget.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_store.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
@@ -14,7 +14,7 @@ class CryptocurrencyListWidget extends StatefulWidget {
 }
 
 class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
-  CryptocurrencyStore store = Modular.get();
+  ListCryptocurrenciesStore store = Modular.get();
 
   @override
   void initState() {
@@ -26,18 +26,17 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
     return Expanded(
       child: StreamBuilder<List<CryptocurrencySimpleModel>>(
         stream: Stream.periodic(
-          const Duration(seconds: 1),
+          const Duration(seconds: 5),
           (_) {
             if (!store.search) {
-              store.getCryptocurrencyData();
+              store.getListCryptocurrencies();
             }
             return store.state;
           },
         ),
         initialData: const [],
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting &&
-              snapshot.data!.isEmpty) {
+          if (snapshot.data!.isEmpty) {
             return Center(
               child: LoadingWidget(
                 color: Colors.white,
@@ -46,11 +45,12 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
           } else {
             return RefreshIndicator(
               onRefresh: () async {
-                store.getCryptocurrencyData();
+                store.getListCryptocurrencies();
               },
               child: ListView.separated(
                 itemCount: store.state.length,
                 itemBuilder: (_, index) {
+                  store.getFormatImage(store.state[index].image);
                   return CryptocurrencyItemListWidget(
                     coin: store.state[index],
                   );

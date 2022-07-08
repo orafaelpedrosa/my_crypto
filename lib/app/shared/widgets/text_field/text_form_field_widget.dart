@@ -78,11 +78,11 @@ class TextFormFieldWidget extends StatelessWidget {
             ),
         labelText: label,
         labelStyle: TextStyle(
-          color: Theme.of(context).primaryColor.withOpacity(0.5),
+          color: Colors.black54,
         ),
         hintText: hintText,
         hintStyle: TextStyle(
-          color: Theme.of(context).primaryColor.withOpacity(0.5),
+          color: Colors.black54,
         ),
         prefixIcon: Icon(
           iconData,
@@ -95,7 +95,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Colors.black54,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -103,7 +103,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Colors.black54,
             width: 1.5,
           ),
         ),
@@ -112,7 +112,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Colors.black54,
             width: 1.5,
           ),
         ),

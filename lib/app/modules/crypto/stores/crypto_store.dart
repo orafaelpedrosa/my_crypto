@@ -2,13 +2,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/crypto/models/cryptocurrency_model.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_list_store.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_store.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 
 class CryptoStore extends NotifierStore<Exception, CryptocurrencyModel> {
   CryptoStore() : super(CryptocurrencyModel());
 
   final CryptoListStore cryptoListStore = Modular.get<CryptoListStore>();
-  final CryptocurrencyStore cryptocurrencyStore = Modular.get<CryptocurrencyStore>();
+  final ListCryptocurrenciesStore cryptocurrencyStore =
+      Modular.get<ListCryptocurrenciesStore>();
 
   Future<void> getCryptoData() async {
     setLoading(true);

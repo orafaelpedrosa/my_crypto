@@ -1,20 +1,35 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_list_repository.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 
-class CryptocurrencyStore
+class ListCryptocurrenciesStore
     extends NotifierStore<DioError, List<CryptocurrencySimpleModel>> {
-  CryptocurrencyStore() : super([]);
-  final CryptocurrencyRepository _repository = CryptocurrencyRepository();
+  ListCryptocurrenciesStore() : super([]);
+  final CryptocurrencyRepository _repository =
+      Modular.get<CryptocurrencyRepository>();
   List<CryptocurrencySimpleModel> listCrypto = [];
   bool search = false;
 
-  Future<void> getCryptocurrencyData() async {
-    await _repository.getCryptocurrencyData().then((value) {
+  Future<void> getListCryptocurrencies() async {
+    await _repository.getListCryptocurrenciesData().then((value) {
       listCrypto = value;
       update(value);
     }).catchError((onError) {
+      log(onError.toString());
+      setError(onError);
+    });
+  }
+
+  Future<void> getCryptocurrencyById(String id) async {
+    await _repository.getCryptoData(id).then((value) {
+      log('deu bom');
+      // update(value);
+    }).catchError((onError) {
+      log(onError.toString());
       setError(onError);
     });
   }
@@ -35,7 +50,9 @@ class CryptocurrencyStore
       final input = find.toLowerCase();
       return cryptoName.contains(input);
     }).toList();
-    updateState(suggestions);
+    if (suggestions.isNotEmpty) {
+      await updateState(suggestions);
+    }
   }
 
   Future<void> updateState(List<CryptocurrencySimpleModel> data) async {

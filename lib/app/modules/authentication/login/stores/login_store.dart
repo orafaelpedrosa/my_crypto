@@ -23,16 +23,6 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   void authCheck() async {
     userCurrent = await _firebaseAuth.authStateChanges().first;
-    // userCurrent = _firebaseAuth.currentUser;
-    // _firebaseAuth.authStateChanges().listen(
-    //   (User? user) async {
-    //     if (user == null) {
-    //       this.userCurrent = null;
-    //     } else {
-    //       userCurrent = user;
-    //     }
-    //   },
-    // );
   }
 
   _getUser() {

@@ -30,8 +30,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   @override
   void initState() {
     _searchController.clear();
-    // store.getListCrypto();
-    cryptoStore.cryptocurrencyStore.getCryptocurrencyData();
+    store.getListCrypto();
+    // cryptoStore.cryptocurrencyStore.getListCryptocurrencies();
     super.initState();
   }
 
