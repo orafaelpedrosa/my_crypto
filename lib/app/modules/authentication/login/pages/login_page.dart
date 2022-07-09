@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
@@ -290,7 +293,33 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                )
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).primaryColor.withOpacity(0.65),
+                    onPrimary: Theme.of(context).primaryColor,
+                    minimumSize: Size(double.infinity, 50),
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  icon: FaIcon(
+                    FontAwesomeIcons.google,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    _store.authGoogle();
+                    log('Google');
+                  },
+                  label: Text(
+                    'Entrar com Google',
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
+                ),
               ],
             ),
           );

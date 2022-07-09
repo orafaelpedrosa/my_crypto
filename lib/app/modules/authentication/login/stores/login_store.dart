@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -63,6 +65,21 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
       setLoading(false);
     }).catchError(
       (error) {
+        setLoading(false);
+        setError(error);
+        throw error;
+      },
+    );
+  }
+
+  Future<void> authGoogle() async {
+    setLoading(true);
+    await _loginRepository.googleAuth().then((value) {
+      _getUser();
+      setLoading(false);
+    }).catchError(
+      (error) {
+        log(error);
         setLoading(false);
         setError(error);
         throw error;

@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/shared/widgets/search_input/search_input_widget.dart';
@@ -16,6 +17,7 @@ class ListCryptocurrenciesPage extends StatefulWidget {
 
 class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final ListCryptocurrenciesStore store = Modular.get();
+  final LoginStore loginStore = Modular.get();
   TextEditingController _searchController = TextEditingController();
   FocusNode _searchFocus = FocusNode();
 
@@ -61,6 +63,12 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
           SizedBox(height: 10),
           CryptocurrencyListWidget(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          loginStore.authLogout();
+        },
+        child: Icon(Icons.logout),
       ),
     );
   }

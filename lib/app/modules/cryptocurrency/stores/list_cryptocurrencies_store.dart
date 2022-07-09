@@ -26,7 +26,6 @@ class ListCryptocurrenciesStore
 
   Future<void> getCryptocurrencyById(String id) async {
     await _repository.getCryptoData(id).then((value) {
-      log('deu bom');
       // update(value);
     }).catchError((onError) {
       log(onError.toString());

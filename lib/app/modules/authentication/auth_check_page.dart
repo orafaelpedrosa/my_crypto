@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/list_cryptocurrencies_page.dart';
 
 class AuthCheckPage extends StatefulWidget {
   const AuthCheckPage({Key? key}) : super(key: key);
@@ -15,34 +13,27 @@ class AuthCheckPage extends StatefulWidget {
 class _AuthCheckPageState extends State<AuthCheckPage> {
   @override
   void initState() {
-    _loginStore..authLogout();
     super.initState();
   }
-
-  final LoginStore _loginStore = Modular.get();
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        if (snapshot.data == null) {
-          log('User is null');
-          Modular.to.pushReplacementNamed('/login_module/');
-          _loginStore.userCurrent = null;
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasData) {
+          return ListCryptocurrenciesPage();
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
         } else {
-          log('User is ${snapshot.data!.email}');
-          Modular.to.pushReplacementNamed('/cryptocurrency/');
-          _loginStore.userCurrent = snapshot.data;
+          return LoginPage();
         }
-        return Container(
-          color: Colors.white,
-          child: Center(
-            child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-        );
       },
     );
   }

@@ -38,6 +38,7 @@ class CryptocurrencyRepository with Disposable {
   Future<void> getCryptoData(String id) async {
     try {
       final Response response = await _dio.get('$urlBase/$id');
+      log(response.data.toString());
     } catch (e) {
       log('Error getCrypto: $e');
       rethrow;
