@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: Column(
                   children: [
-                    _buildContainerLoginPage,
+                    _buildHeaderLoginPage,
                     _buildFormLoginPage,
                   ],
                 ),
@@ -83,9 +83,25 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget get _buildContainerLoginPage {
+  Widget get _buildHeaderLoginPage {
     return Container(
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+      height: MediaQuery.of(context).size.height * 0.25,
+      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.065),
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height * 0.020),
+          SvgPicture.asset(
+            'assets/app/logo.svg',
+            height: 70,
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+          SvgPicture.asset(
+            'assets/app/mycrypto.svg',
+            color: Colors.white,
+            height: 35,
+          ),
+        ],
+      ),
     );
   }
 
@@ -115,19 +131,14 @@ class _LoginPageState extends State<LoginPage> {
             key: formKey,
             child: Column(
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.020),
-                SvgPicture.asset(
-                  'assets/app/logo.svg',
-                  color: Theme.of(context).primaryColor,
-                  height: 60,
+                Text(
+                  'Login',
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 30,
+                        color: Colors.black54,
+                      ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                SvgPicture.asset(
-                  'assets/app/mycrypto.svg',
-                  color: Theme.of(context).primaryColor,
-                  height: 35,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.065),
+                const SizedBox(height: 30),
                 TextFormFieldWidget(
                   focusNode: emailFocus,
                   textInputAction: TextInputAction.next,
