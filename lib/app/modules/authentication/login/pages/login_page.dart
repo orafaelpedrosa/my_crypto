@@ -6,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
@@ -32,12 +33,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool validateFormLogin = false;
 
-  bool isEmail(String email) {
-    String p =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = new RegExp(p);
-    return regExp.hasMatch(email);
-  }
+  Validation _validation = Validation();
 
   @override
   void initState() {
@@ -155,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Por favor, informe o email';
-                    } else if (!(isEmail(value))) {
+                    } else if (!_validation.isEmail(value)) {
                       return 'Por favor, informe um email válido';
                     } else {
                       validateFormLogin = true;
