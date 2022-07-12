@@ -18,8 +18,11 @@ class CryptocurrencyRepository with Disposable {
 
   Future<List<CryptocurrencySimpleModel>> getListCryptocurrenciesData() async {
     try {
+      // final Response response = await _dio.get(
+      //     '$urlBase/markets?vs_currency=$vsCurrency&$order&per_page=$perPage&page=$page&sparkline=$sparkline&price_change_percentage=$priceChangePercentage');
+
       final Response response = await _dio.get(
-          '$urlBase/markets?vs_currency=$vsCurrency&$order&per_page=$perPage&page=$page&sparkline=$sparkline&price_change_percentage=$priceChangePercentage');
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true');
 
       final List<CryptocurrencySimpleModel> cryptos =
           List.empty(growable: true);
