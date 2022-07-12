@@ -17,6 +17,7 @@ class AppModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ModuleRoute(Modular.initialRoute, module: AuthModule()),
+    ModuleRoute('/auth', module: AuthModule()),
     ModuleRoute('/login_module', module: LoginModule()),
     ModuleRoute('/register_module', module: RegisterModule()),
     ModuleRoute('/cryptocurrency', module: CryptocurrencyModule()),
