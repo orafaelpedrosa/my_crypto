@@ -1,5 +1,5 @@
-import 'package:mycrypto/app/modules/cryptocurrency/models/roi_model.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/models/sparkline_in_7d_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/roi_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/sparkline_in_7d_model.dart';
 
 class CryptocurrencySimpleModel {
   String? id;

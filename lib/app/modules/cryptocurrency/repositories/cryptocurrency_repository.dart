@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 
 class CryptocurrencyRepository with Disposable {
@@ -38,10 +39,12 @@ class CryptocurrencyRepository with Disposable {
     }
   }
 
-  Future<void> getCryptoData(String id) async {
+  Future<CryptocurrencyDetailsModel> getCryptoData(String id) async {
     try {
       final Response response = await _dio.get('$urlBase/$id');
-      log(response.data.toString());
+      final CryptocurrencyDetailsModel crypto =
+          CryptocurrencyDetailsModel.fromMap(response.data);
+      return crypto;
     } catch (e) {
       log('Error getCrypto: $e');
       rethrow;

@@ -21,7 +21,7 @@ class _CryptocurrencyItemListWidgetState
     return GestureDetector(
       onTap: () {
         Modular.to.pushNamed(
-          'details',
+          'cryptocurrency/details',
           arguments: widget.coin.id,
         );
       },
