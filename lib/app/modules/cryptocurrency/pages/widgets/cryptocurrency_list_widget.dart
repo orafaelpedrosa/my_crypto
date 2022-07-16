@@ -47,7 +47,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
               onRefresh: () async {
                 store.getListCryptocurrencies();
               },
-              child: ListView.separated(
+              child: ListView.builder(
                 itemCount: store.state.length,
                 itemBuilder: (_, index) {
                   store.getFormatImage(store.state[index].image);
@@ -55,10 +55,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     coin: store.state[index],
                   );
                 },
-                separatorBuilder: (_, __) => Divider(
-                  height: 0.5,
-                  color: Colors.black12,
-                ),
+
               ),
             );
           }

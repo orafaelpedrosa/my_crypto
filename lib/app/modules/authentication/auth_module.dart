@@ -10,6 +10,7 @@ import 'package:mycrypto/app/modules/crypto/crypto_module.dart';
 import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 
 class AuthModule extends Module {
@@ -27,6 +28,7 @@ class AuthModule extends Module {
     Bind.lazySingleton((i) => CryptocurrencyModule()),
     Bind.lazySingleton((i) => ListCryptocurrenciesStore()),
     Bind.lazySingleton((i) => CryptocurrencyRepository()),
+    Bind.lazySingleton((i) => CryptocurrencyDataStore()),
 
   ];
 

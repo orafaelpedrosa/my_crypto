@@ -11,6 +11,7 @@ class CryptocurrencyDetailsModel {
   String? name;
   num? blockTimeInMinutes;
   String? hashingAlgorithm;
+  List<String>? categories;
   Description? description;
   Image? image;
   String? countryOrigin;
@@ -32,6 +33,7 @@ class CryptocurrencyDetailsModel {
     this.name,
     this.blockTimeInMinutes,
     this.hashingAlgorithm,
+    this.categories,
     this.description,
     this.image,
     this.countryOrigin,
@@ -56,6 +58,7 @@ class CryptocurrencyDetailsModel {
       'name': name,
       'blockTimeInMinutes': blockTimeInMinutes,
       'hashingAlgorithm': hashingAlgorithm,
+      'categories': categories?.toList(),
       'description': description?.toMap(),
       'image': image?.toMap(),
       'countryOrigin': countryOrigin,
@@ -81,6 +84,7 @@ class CryptocurrencyDetailsModel {
       name: map['name'],
       blockTimeInMinutes: map['blockTimeInMinutes'],
       hashingAlgorithm: map['hashingAlgorithm'],
+      categories: map['categories']?.cast<String>(),
       description: map['description'] != null
           ? Description.fromMap(map['description'])
           : null,

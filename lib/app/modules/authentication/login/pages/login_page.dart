@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextButton(
                     onPressed: () {
                       Modular.to.pushNamed(
-                        'reset_password',
+                        '/login/reset_password',
                       );
                     },
                     child: Text(

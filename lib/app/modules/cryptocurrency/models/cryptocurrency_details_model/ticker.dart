@@ -22,7 +22,7 @@ class Ticker {
 	bool? isAnomaly;
 	bool? isStale;
 	String? tradeUrl;
-	dynamic tokenInfoUrl;
+	String? tokenInfoUrl;
 	String? coinId;
 	String? targetCoinId;
 
@@ -69,7 +69,7 @@ class Ticker {
 				isAnomaly: data['is_anomaly'] as bool?,
 				isStale: data['is_stale'] as bool?,
 				tradeUrl: data['trade_url'] as String?,
-				tokenInfoUrl: data['token_info_url'] as dynamic,
+				tokenInfoUrl: data['token_info_url'] as String?,
 				coinId: data['coin_id'] as String?,
 				targetCoinId: data['target_coin_id'] as String?,
 			);
