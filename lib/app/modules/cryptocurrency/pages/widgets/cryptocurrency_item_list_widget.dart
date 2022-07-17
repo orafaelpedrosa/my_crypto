@@ -24,7 +24,10 @@ class _CryptocurrencyItemListWidgetState
       onTap: () {
         Modular.to.pushNamed(
           '/cryptocurrency/details',
-          arguments: widget.coin.id,
+          arguments: {
+            'id': widget.coin.id,
+            'name': widget.coin.name,
+          },
         );
       },
       child: Card(
@@ -99,9 +102,7 @@ class _CryptocurrencyItemListWidgetState
                     : '+' +
                         '${widget.coin.priceChangePercentage24h!.toStringAsFixed(2)}%',
                 style: Theme.of(context).textTheme.headline6!.copyWith(
-                      color: widget.coin.priceChangePercentage24h
-                              .toString()
-                              .contains('-')
+                      color: widget.coin.priceChangePercentage24h.toString().contains('-')
                           ? Colors.red
                           : Colors.green,
                     ),

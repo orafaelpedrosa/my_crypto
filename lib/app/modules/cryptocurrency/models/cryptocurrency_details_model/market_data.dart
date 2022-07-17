@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/ath_date.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/fully_diluted_valuation.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/price_change_percentage_in_currency.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/roi_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/sparkline_in_7d_model.dart';
@@ -16,8 +15,7 @@ class MarketData {
   PriceChangePercentageInCurrency? atlChangePercentage;
   AthDate? atlDate;
   PriceChangePercentageInCurrency? marketCap;
-  int? marketCapRank;
-  FullyDilutedValuation? fullyDilutedValuation;
+  num? marketCapRank;
   PriceChangePercentageInCurrency? totalVolume;
   PriceChangePercentageInCurrency? high24h;
   PriceChangePercentageInCurrency? low24h;
@@ -29,8 +27,8 @@ class MarketData {
   num? priceChangePercentage60d;
   num? priceChangePercentage200d;
   num? priceChangePercentage1y;
-  int? marketCapChange24h;
-  double? marketCapChangePercentage24h;
+  num? marketCapChange24h;
+  num? marketCapChangePercentage24h;
   PriceChangePercentageInCurrency? priceChange24hInCurrency;
   PriceChangePercentageInCurrency? priceChangePercentage1hInCurrency;
   PriceChangePercentageInCurrency? priceChangePercentage24hInCurrency;
@@ -42,9 +40,9 @@ class MarketData {
   PriceChangePercentageInCurrency? priceChangePercentage1yInCurrency;
   PriceChangePercentageInCurrency? marketCapChange24hInCurrency;
   PriceChangePercentageInCurrency? marketCapChangePercentage24hInCurrency;
-  double? totalSupply;
-  dynamic maxSupply;
-  double? circulatingSupply;
+  num? totalSupply;
+  num? maxSupply;
+  num? circulatingSupply;
   SparklineIn7dModel? sparkline7d;
   DateTime? lastUpdated;
 
@@ -59,7 +57,6 @@ class MarketData {
     this.atlDate,
     this.marketCap,
     this.marketCapRank,
-    this.fullyDilutedValuation,
     this.totalVolume,
     this.high24h,
     this.low24h,
@@ -138,7 +135,7 @@ class MarketData {
             ? null
             : PriceChangePercentageInCurrency.fromMap(
                 data['low_24h'] as Map<String, dynamic>),
-        priceChange24h: (data['price_change_24h'] as num?)?.toDouble(),
+        priceChange24h: (data['price_change_24h'] as num).toDouble(),
         priceChangePercentage24h:
             (data['price_change_percentage_24h'] as num?)?.toDouble(),
         priceChangePercentage7d:
@@ -153,7 +150,7 @@ class MarketData {
             (data['price_change_percentage_200d'] as num?)?.toDouble(),
         priceChangePercentage1y:
             (data['price_change_percentage_1y'] as num?)?.toDouble(),
-        marketCapChange24h: data['market_cap_change_24h'] as int?,
+        marketCapChange24h: data['market_cap_change_24h'] as num?,
         marketCapChangePercentage24h:
             (data['market_cap_change_percentage_24h'] as num?)?.toDouble(),
         priceChange24hInCurrency: data['price_change_24h_in_currency'] == null
@@ -221,7 +218,7 @@ class MarketData {
                     data['market_cap_change_percentage_24h_in_currency']
                         as Map<String, dynamic>),
         totalSupply: (data['total_supply'] as num?)?.toDouble(),
-        maxSupply: data['max_supply'] as dynamic,
+        maxSupply: (data['max_supply'] as num?)?.toDouble(),
         circulatingSupply: (data['circulating_supply'] as num?)?.toDouble(),
         sparkline7d: data['sparkline_7d'] == null
             ? null

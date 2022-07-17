@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/community_data.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/description.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/ico_data.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/image.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/links.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/market_data.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/ticker.dart';
 
 class CryptocurrencyDetailsModel {
   String? id;
@@ -13,12 +15,12 @@ class CryptocurrencyDetailsModel {
   String? hashingAlgorithm;
   List<String>? categories;
   Description? description;
+  Links? links;
   Image? image;
   String? countryOrigin;
   String? genesisDate;
   num? sentimentVotesUpPercentage;
   num? sentimentVotesDownPercentage;
-  IcoData? icoData;
   num? marketCapRank;
   num? coingeckoRank;
   num? coingeckoScore;
@@ -27,6 +29,10 @@ class CryptocurrencyDetailsModel {
   num? liquidityScore;
   num? publicnumerestScore;
   MarketData? marketData;
+  CommunityData? communityData;
+  DateTime? lastUpdated;
+  List<Ticker>? tickers;
+
   CryptocurrencyDetailsModel({
     this.id,
     this.symbol,
@@ -35,12 +41,12 @@ class CryptocurrencyDetailsModel {
     this.hashingAlgorithm,
     this.categories,
     this.description,
+    this.links,
     this.image,
     this.countryOrigin,
     this.genesisDate,
     this.sentimentVotesUpPercentage,
     this.sentimentVotesDownPercentage,
-    this.icoData,
     this.marketCapRank,
     this.coingeckoRank,
     this.coingeckoScore,
@@ -49,6 +55,9 @@ class CryptocurrencyDetailsModel {
     this.liquidityScore,
     this.publicnumerestScore,
     this.marketData,
+    this.communityData,
+    this.lastUpdated,
+    this.tickers,
   });
 
   Map<String, dynamic> toMap() {
@@ -56,24 +65,27 @@ class CryptocurrencyDetailsModel {
       'id': id,
       'symbol': symbol,
       'name': name,
-      'blockTimeInMinutes': blockTimeInMinutes,
-      'hashingAlgorithm': hashingAlgorithm,
+      'block_time_in_minutes': blockTimeInMinutes,
+      'hashing_algorithm': hashingAlgorithm,
       'categories': categories?.toList(),
       'description': description?.toMap(),
+      'links': links?.toMap(),
       'image': image?.toMap(),
-      'countryOrigin': countryOrigin,
-      'genesisDate': genesisDate,
-      'sentimentVotesUpPercentage': sentimentVotesUpPercentage,
-      'sentimentVotesDownPercentage': sentimentVotesDownPercentage,
-      'icoData': icoData?.toMap(),
-      'marketCapRank': marketCapRank,
-      'coingeckoRank': coingeckoRank,
-      'coingeckoScore': coingeckoScore,
-      'developerScore': developerScore,
-      'communityScore': communityScore,
-      'liquidityScore': liquidityScore,
-      'publicnumerestScore': publicnumerestScore,
-      'marketData': marketData?.toMap(),
+      'country_origin': countryOrigin,
+      'genesis_date': genesisDate,
+      'sentiment_votes_up_percentage': sentimentVotesUpPercentage,
+      'sentiment_votes_down_percentage': sentimentVotesDownPercentage,
+      'market_cap_rank': marketCapRank,
+      'coingecko_rank': coingeckoRank,
+      'coingecko_score': coingeckoScore,
+      'developer_score': developerScore,
+      'community_score': communityScore,
+      'liquidity_score': liquidityScore,
+      'public_interest_score': publicnumerestScore,
+      'market_data': marketData?.toMap(),
+      'community_data': communityData?.toMap(),
+      'last_updated': lastUpdated?.toIso8601String(),
+      'tickers': tickers?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -88,21 +100,30 @@ class CryptocurrencyDetailsModel {
       description: map['description'] != null
           ? Description.fromMap(map['description'])
           : null,
+      links: map['links'] != null ? Links.fromMap(map['links']) : null,
       image: map['image'] != null ? Image.fromMap(map['image']) : null,
-      countryOrigin: map['countryOrigin'],
-      genesisDate: map['genesisDate'],
-      sentimentVotesUpPercentage: map['sentimentVotesUpPercentage'],
-      sentimentVotesDownPercentage: map['sentimentVotesDownPercentage'],
-      icoData: map['icoData'] != null ? IcoData.fromMap(map['icoData']) : null,
-      marketCapRank: map['marketCapRank'],
-      coingeckoRank: map['coingeckoRank'],
-      coingeckoScore: map['coingeckoScore'],
-      developerScore: map['developerScore'],
-      communityScore: map['communityScore'],
-      liquidityScore: map['liquidityScore'],
-      publicnumerestScore: map['publicnumerestScore'],
-      marketData: map['marketData'] != null
-          ? MarketData.fromMap(map['marketData'])
+      countryOrigin: map['country_origin'],
+      genesisDate: map['genesis_date'],
+      sentimentVotesUpPercentage: map['sentiment_votes_up_percentage'],
+      sentimentVotesDownPercentage: map['sentiment_votes_down_percentage'],
+      marketCapRank: map['market_cap_rank'],
+      coingeckoRank: map['coingecko_rank'],
+      coingeckoScore: map['coingecko_score'],
+      developerScore: map['developer_score'],
+      communityScore: map['community_score'],
+      liquidityScore: map['liquidity_score'],
+      publicnumerestScore: map['public_interest_score'],
+      marketData: map['market_data'] != null
+          ? MarketData.fromMap(map['market_data'])
+          : null,
+      communityData: map['community_data'] != null
+          ? CommunityData.fromMap(map['community_data'])
+          : null,
+      lastUpdated: map['last_updated'] != null
+          ? DateTime.parse(map['last_updated'])
+          : null,
+      tickers: map['tickers'] != null
+          ? List<Ticker>.from(map['tickers']?.map((x) => Ticker.fromMap(x)))
           : null,
     );
   }

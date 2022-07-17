@@ -21,21 +21,12 @@ class ListCryptocurrenciesStore
     await _repository.getListCryptocurrenciesData().then((value) {
       listCrypto = value;
       update(value);
-      log('ListCryptocurrenciesStore ${listCrypto.length}');
     }).catchError((onError) {
       log(onError.toString());
       setError(onError);
     });
   }
 
-  Future<void> getCryptocurrencyById(String id) async {
-    await _repository.getCryptoData(id).then((value) {
-      // update(value);
-    }).catchError((onError) {
-      log(onError.toString());
-      setError(onError);
-    });
-  }
 
   String getFormatImage(String? url) {
     if (url == null) {

@@ -9,9 +9,11 @@ import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_s
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
   final String id;
+  final String name;
   const CryptocurrencyDetailsPage({
     Key? key,
     required this.id,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -28,12 +30,17 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
     super.initState();
   }
 
+  void getCrypto() {
+    store.getCryptocurrencyById(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
-    log('CryptocurrencyDetailsPage ${widget.id}');
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.id}'),
+        title: Text('${widget.name}'),
+        backgroundColor: Theme.of(context).primaryColor,
+        centerTitle: true,
       ),
       body: Center(
         child: TripleBuilder<CryptocurrencyDataStore, DioError,
@@ -43,7 +50,20 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
             if (store.isLoading) {
               return CircularProgressIndicator();
             } else {
-              return Text('${store.state.name}');
+              return StreamBuilder<CryptocurrencyDetailsModel>(
+                stream: Stream.periodic(
+                  const Duration(seconds: 10),
+                  (_) {
+                    store.getStreamCryptocurrency(widget.id);
+                    return store.state;
+                  },
+                ),
+                initialData: store.state,
+                builder: (context, snapshot) {
+                  return Text(
+                      '${snapshot.data!.marketData!.currentPrice!.brl}');
+                },
+              );
             }
           },
         ),

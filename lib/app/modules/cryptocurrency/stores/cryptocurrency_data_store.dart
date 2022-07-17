@@ -24,6 +24,15 @@ class CryptocurrencyDataStore
     });
   }
 
+  Future<void> getStreamCryptocurrency(String id) async {
+    await _repository.getCryptoData(id).then((value) {
+      update(value);
+    }).catchError((onError) {
+      log(onError.toString());
+      setError(onError);
+    });
+  }
+
   Future<void> updateState(CryptocurrencyDetailsModel data) async {
     update(data);
   }

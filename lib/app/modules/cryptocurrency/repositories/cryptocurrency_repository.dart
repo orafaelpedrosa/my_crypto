@@ -41,7 +41,7 @@ class CryptocurrencyRepository with Disposable {
 
   Future<CryptocurrencyDetailsModel> getCryptoData(String id) async {
     try {
-      final Response response = await _dio.get('$urlBase/$id');
+      final Response response = await _dio.get('$urlBase/$id?sparkline=true');
       final CryptocurrencyDetailsModel crypto =
           CryptocurrencyDetailsModel.fromMap(response.data);
       return crypto;

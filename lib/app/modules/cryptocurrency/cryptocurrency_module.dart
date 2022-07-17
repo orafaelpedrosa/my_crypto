@@ -17,6 +17,9 @@ class CryptocurrencyModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => ListCryptocurrenciesPage()),
     ChildRoute('/details',
-        child: (_, args) => CryptocurrencyDetailsPage(id: args.data)),
+        child: (_, args) => CryptocurrencyDetailsPage(
+              id: args.data!['id'],
+              name: args.data!['name'],
+            )),
   ];
 }
