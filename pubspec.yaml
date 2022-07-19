@@ -25,6 +25,8 @@ dependencies:
   flutter_native_splash: ^2.2.4
   google_sign_in: ^5.4.0
   font_awesome_flutter: ^10.1.0
+  shimmer: ^2.0.0
+
 
 
 
@@ -33,7 +35,7 @@ dependencies:
 
 
 flutter_native_splash:
-  color: '#114B5F'
+  color: '#5865F2'
   image: 'assets/app/splash.png'
   android: true
   ios: true

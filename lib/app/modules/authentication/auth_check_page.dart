@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/pages/list_cryptocurrencies_page.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class AuthCheckPage extends StatefulWidget {
   const AuthCheckPage({Key? key}) : super(key: key);
@@ -26,14 +26,18 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return ListCryptocurrenciesPage();
+          Modular.to.pushNamed('/cryptocurrency/');
+          // return ListCryptocurrenciesPage();
         } else if (snapshot.hasError) {
           return Center(
             child: Text('Error: ${snapshot.error}'),
           );
         } else {
-          return LoginPage();
+          Modular.to.pushNamed('/login/');
+          // return LoginPage();
         }
+        return LoadingWidget();
+        // return SizedBox.shrink();
       },
     );
   }

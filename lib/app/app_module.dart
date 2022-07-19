@@ -1,4 +1,3 @@
-import 'package:mycrypto/app/modules/crypto/crypto_repository.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/authentication/auth_module.dart';
@@ -10,7 +9,6 @@ import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => CryptoRepository()),
     Bind.lazySingleton((i) => LoginPage()),
   ];
 

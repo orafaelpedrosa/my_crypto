@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
+import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
   final String id;
@@ -38,9 +37,21 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.name}'),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          '${widget.name}',
+          style: Theme.of(context).textTheme.headline5,
+        ),
+        backgroundColor: Colors.white,
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () {
+            Modular.to.pop();
+          },
+        ),
       ),
       body: Center(
         child: TripleBuilder<CryptocurrencyDataStore, DioError,
@@ -48,7 +59,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
           store: store,
           builder: (_, triple) {
             if (store.isLoading) {
-              return CircularProgressIndicator();
+              return LoadingWidget();
             } else {
               return StreamBuilder<CryptocurrencyDetailsModel>(
                 stream: Stream.periodic(
@@ -60,8 +71,9 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                 ),
                 initialData: store.state,
                 builder: (context, snapshot) {
-                  return Text(
-                      '${snapshot.data!.marketData!.currentPrice!.brl}');
+                  return Container(
+                    color: Colors.white,
+                  );
                 },
               );
             }

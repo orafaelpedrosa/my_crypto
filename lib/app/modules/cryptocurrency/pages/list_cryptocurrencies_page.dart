@@ -30,7 +30,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.91),
+      backgroundColor: Colors.white.withOpacity(0.975),
       appBar: AppBar(
         centerTitle: true,
         title: SvgPicture.asset(

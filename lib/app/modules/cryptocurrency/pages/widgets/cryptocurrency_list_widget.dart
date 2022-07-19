@@ -26,7 +26,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
     return Expanded(
       child: StreamBuilder<List<CryptocurrencySimpleModel>>(
         stream: Stream.periodic(
-          const Duration(seconds: 5),
+          const Duration(seconds: 35),
           (_) {
             if (!store.search) {
               store.getListCryptocurrencies();
@@ -36,12 +36,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
         ),
         initialData: const [],
         builder: (context, snapshot) {
-          if (snapshot.data!.isEmpty) {
-            return Center(
-              child: LoadingWidget(
-                color: Colors.white,
-              ),
-            );
+          if (store.state.isEmpty) {
+            return LoadingWidget();
           } else {
             return RefreshIndicator(
               onRefresh: () async {
@@ -55,7 +51,6 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     coin: store.state[index],
                   );
                 },
-
               ),
             );
           }

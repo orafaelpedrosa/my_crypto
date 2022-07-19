@@ -5,14 +5,12 @@ import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dar
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/authentication/login/pages/reset_password_page.dart';
 import 'package:mycrypto/app/modules/authentication/login/pages/send_mail_page.dart';
-import 'package:mycrypto/app/modules/crypto/stores/crypto_store.dart';
 
 class LoginModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => ObscureStore()),
     Bind.lazySingleton((i) => LoginStore()),
-    Bind.lazySingleton((i) => CryptoStore()),
     Bind.lazySingleton((i) => LoginRepository()),
   ];
 

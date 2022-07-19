@@ -148,7 +148,7 @@ class LoginRepository with Disposable {
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
       User user = userCredential.user!;
-      log("User name: ${user.phoneNumber}");
+      log("User name: ${user.displayName}");
     } else {
       log("Erro ao logar com o Google");
     }
