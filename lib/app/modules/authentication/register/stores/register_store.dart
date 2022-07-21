@@ -27,6 +27,8 @@ class RegisterStore
         .authRegister(data.email!, data.password!)
         .then((value) {
       _getUser();
+      userCurrent!.sendEmailVerification();
+      Modular.to.pushReplacementNamed('/login');
       setLoading(false);
     }).catchError(
       (error) {

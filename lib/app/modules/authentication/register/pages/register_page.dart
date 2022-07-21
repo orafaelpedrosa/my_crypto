@@ -23,15 +23,15 @@ class RegisterPageState extends State<RegisterPage> {
                 color: Colors.white,
               ),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.white,
         iconTheme: IconThemeData(
           color: Theme.of(context).primaryColor,
         ),
         elevation: 0,
         leading: IconButton(
             icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
+              Icons.arrow_back_ios,
+              color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
               if (currentPage > 0) {
@@ -51,6 +51,7 @@ class RegisterPageState extends State<RegisterPage> {
           children: [
             Expanded(
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: pageController,
                 onPageChanged: (index) {
                   currentPage = index;

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -16,6 +17,7 @@ class ListCryptocurrenciesStore
       Modular.get<CryptocurrencyDataStore>();
   List<CryptocurrencySimpleModel> listCrypto = [];
   bool search = false;
+  Timer? _debounce;
 
   Future<void> getListCryptocurrencies() async {
     await _repository.getListCryptocurrenciesData().then((value) {
@@ -26,7 +28,6 @@ class ListCryptocurrenciesStore
       setError(onError);
     });
   }
-
 
   String getFormatImage(String? url) {
     if (url == null) {
@@ -39,14 +40,19 @@ class ListCryptocurrenciesStore
   }
 
   Future<void> searchCrypto(String find) async {
-    final suggestions = state.where((crypto) {
-      final cryptoName = crypto.name!.toLowerCase();
-      final input = find.toLowerCase();
-      return cryptoName.contains(input);
-    }).toList();
-    if (suggestions.isNotEmpty) {
-      await updateState(suggestions);
-    }
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      final suggestions = state.where((crypto) {
+        final cryptoName = crypto.name!.toLowerCase();
+        final input = find.toLowerCase();
+        return cryptoName.contains(input);
+      }).toList();
+      if (suggestions.isNotEmpty) {
+        await updateState(suggestions);
+      }
+    });
   }
 
   Future<void> updateState(List<CryptocurrencySimpleModel> data) async {

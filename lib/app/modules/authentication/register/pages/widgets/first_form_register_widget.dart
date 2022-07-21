@@ -28,110 +28,149 @@ class _FirstFormRegisterWidgetState extends State<FirstFormRegisterWidget> {
 
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Validation _validation = Validation();
   RegisterStore _registerStore = Modular.get<RegisterStore>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          TextFormFieldWidget(
-            controller: _nameController,
-            label: 'Nome completo',
-            hintText: 'Digite seu nome',
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Digite seu nome';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 20),
-          TextFormFieldWidget(
-            controller: _emailController,
-            label: 'Email',
-            hintText: 'Digite seu email',
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Digite seu email';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 20),
-          TextFormFieldWidget(
-            obscureText: true,
-            controller: _passwordController,
-            label: 'Senha',
-            hintText: 'Digite seu email',
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Digite seu email';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 20),
-          TextFormFieldWidget(
-            obscureText: true,
-            controller: _confirmPasswordController,
-            label: 'Confirmar senha',
-            hintText: 'Digite seu email',
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Digite seu email';
-              }
-              return null;
-            },
-          ),
-          Container(
-            padding: EdgeInsets.zero,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RoundedLoadingButton(
-                  width: MediaQuery.of(context).size.width * 0.85,
-                  height: 50,
-                  duration: Duration(seconds: 1),
-                  successColor: Theme.of(context).primaryColor,
-                  errorColor: Colors.red,
-                  successIcon: Icons.check_circle_outline,
-                  animateOnTap: (_validation.isEmail(_emailController.text) &&
-                      _validation.isEmail(_emailController.text)),
-                  borderRadius: 15,
-                  color: Theme.of(context).primaryColor,
-                  child: Text(
-                    'Login',
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
-                          color: Colors.white,
-                        ),
-                  ),
-                  controller: _btnController1,
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      log('Formulário validado');
-                      _registerStore.state.email = _emailController.text;
-                      _registerStore.state.password = _passwordController.text;
-                      _registerStore
-                          .authRegister(_registerStore.state)
-                          .then((value) {
-                        Modular.to.pushReplacementNamed('/auth');
-                      }).catchError((error) {
-                        log(error);
-                      });
-                    } else {
-                      _btnController1.error();
-                      _btnController1.reset();
-                    }
-                  },
-                ),
-              ],
+      key: _formKey,
+      child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(
+          parent: NeverScrollableScrollPhysics(),
+        ),
+        child: Column(
+          children: [
+            TextFormFieldWidget(
+              iconData: Icon(
+                Icons.person_outline,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              controller: _nameController,
+              label: 'Nome completo',
+              hintText: 'Digite seu nome',
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Digite seu nome';
+                }
+                return null;
+              },
             ),
-          ),
-        ],
+            SizedBox(height: 15),
+            TextFormFieldWidget(
+              controller: _emailController,
+              iconData: Icon(
+                Icons.email_outlined,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              label: 'Email',
+              hintText: 'Digite seu email',
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Digite seu email';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 15),
+            TextFormFieldWidget(
+              obscureText: true,
+              controller: _passwordController,
+              iconData: Icon(
+                Icons.lock_outline,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              label: 'Senha',
+              hintText: 'Senha',
+              validator: (String? value) {
+                if (value!.isEmpty) {
+                  return 'Digite sua senha';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 15),
+            TextFormFieldWidget(
+              obscureText: true,
+              controller: _confirmPasswordController,
+              iconData: Icon(
+                Icons.lock_outline,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              label: 'Confirme sua senha',
+              hintText: 'Confirme sua senha',
+              validator: (String? value) {
+                if (value!.isEmpty) {
+                  return 'Confirme sua senha';
+                }
+                if (_passwordController.text !=
+                    _confirmPasswordController.text) {
+                  return "As senhas não conferem";
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 15),
+            Container(
+              padding: EdgeInsets.zero,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: RoundedLoadingButton(
+                      // width: MediaQuery.of(context).size.width * 0.85,
+                      height: 50,
+                      duration: Duration(seconds: 1),
+                      successColor: Theme.of(context).primaryColor,
+                      errorColor: Colors.red,
+                      successIcon: Icons.check_circle_outline,
+                      animateOnTap:
+                          (_validation.isEmail(_emailController.text) &&
+                              _validation.isEmail(_emailController.text)),
+                      borderRadius: 15,
+                      color: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Cadastrar',
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      controller: _btnController1,
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          _registerStore.state.password =
+                              _passwordController.text;
+                          _registerStore
+                              .authRegister(_registerStore.state)
+                              .then((value) {
+                                
+                            Modular.to.pushNamed(
+                              'send_mail',
+                              arguments:
+                                  'Verifique sua Caixa de Entrada\ne clique no link para confirmar seu cadastro',
+                            );
+                          }).catchError(
+                            (error) {
+                              log(error);
+                            },
+                          );
+                        } else {
+                          _btnController1.error();
+                          _btnController1.reset();
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

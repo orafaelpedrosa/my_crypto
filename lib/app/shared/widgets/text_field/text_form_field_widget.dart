@@ -18,8 +18,8 @@ class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final int? maxLines;
   final int minLines;
-  final IconData? iconData;
-  final IconData? prefixIcon;
+  final Icon? iconData;
+  final Icon? prefixIcon;
   final Widget? suffixIcon;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
@@ -57,10 +57,16 @@ class TextFormFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.showCursor = true,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      toolbarOptions: ToolbarOptions(
+        copy: true,
+        cut: true,
+        paste: true,
+        selectAll: false,
+      ),
       textInputAction: textInputAction,
       controller: controller,
       autofocus: autoFocus,
@@ -84,11 +90,7 @@ class TextFormFieldWidget extends StatelessWidget {
         hintStyle: TextStyle(
           color: Colors.black54,
         ),
-        prefixIcon: Icon(
-          iconData,
-          color: Theme.of(context).primaryColor,
-          size: 20,
-        ),
+        prefixIcon: iconData,
         suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(

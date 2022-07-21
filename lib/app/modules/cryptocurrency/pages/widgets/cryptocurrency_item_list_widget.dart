@@ -79,33 +79,61 @@ class _CryptocurrencyItemListWidgetState
                 ),
               ),
               Text(
-                widget.coin.symbol!,
+                widget.coin.symbol!.toUpperCase(),
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       color: Colors.black87,
                     ),
               ),
             ],
           ),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                widget.coin.currentPrice.toString(),
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                      color: Colors.black87,
-                    ),
-              ),
-              Text(
-                widget.coin.priceChangePercentage24h.toString().contains('-')
-                    ? '${widget.coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
-                    : '+' +
-                        '${widget.coin.priceChangePercentage24h!.toStringAsFixed(2)}%',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                      color: widget.coin.priceChangePercentage24h.toString().contains('-')
-                          ? Colors.red
-                          : Colors.green,
-                    ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    widget.coin.currentPrice.toString(),
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Colors.black87,
+                        ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      widget.coin.priceChangePercentage24h
+                              .toString()
+                              .contains('-')
+                          ? Icon(
+                              Icons.arrow_downward_outlined,
+                              color: Colors.red,
+                              size: 15,
+                            )
+                          : Icon(
+                              Icons.arrow_upward_outlined,
+                              color: Colors.green,
+                              size: 15,
+                            ),
+                      SizedBox(width: 5),
+                      Text(
+                        widget.coin.priceChangePercentage24h
+                                .toString()
+                                .contains('-')
+                            ? '${widget.coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
+                            : '+' +
+                                '${widget.coin.priceChangePercentage24h!.toStringAsFixed(2)}%',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              color: widget.coin.priceChangePercentage24h
+                                      .toString()
+                                      .contains('-')
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

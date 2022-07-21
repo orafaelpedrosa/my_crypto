@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:mycrypto/app/shared/widgets/button/button_secondary_widget.dart';
 
 class SendMailPage extends StatefulWidget {
-  SendMailPage({Key? key}) : super(key: key);
+  final String message;
+  SendMailPage({
+    Key? key,
+    required this.message,
+  }) : super(key: key);
 
   @override
   State<SendMailPage> createState() => _SendMailPageState();
@@ -39,7 +44,7 @@ class _SendMailPageState extends State<SendMailPage> {
               ),
             ),
             Text(
-              'Verifique sua Caixa de Entrada\ne clique no link para redefinir sua senha.',
+              widget.message,
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme

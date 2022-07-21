@@ -72,7 +72,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   controller: resetPassword,
                   hintText: 'E-mail',
                   keyboardType: TextInputType.emailAddress,
-                  iconData: Icons.email,
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Theme.of(context).primaryColor,
+                    size: 20,
+                  ),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Por favor, informe o email';
@@ -113,6 +117,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     );
                     Modular.to.pushNamed(
                       'send_mail',
+                      arguments: 'Verifique sua Caixa de Entrada\ne clique no link para redefinir sua senha.',
                     );
                   } else {
                     _btnController1.error();

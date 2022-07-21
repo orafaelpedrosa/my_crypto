@@ -29,33 +29,33 @@ ThemeData theme = ThemeData(
   ),
   textTheme: TextTheme(
     headline1: TextStyle(
-      fontFamily: GoogleFonts.montserrat().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 25,
     ),
     headline2: TextStyle(
-      fontFamily: GoogleFonts.montserrat().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 22,
     ),
     headline3: TextStyle(
-      fontFamily: GoogleFonts.montserrat().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 20,
     ),
     headline4: TextStyle(
-      fontFamily: GoogleFonts.montserrat().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 18,
     ),
     headline5: TextStyle(
-      fontFamily: GoogleFonts.montserrat().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 16,
       height: 1.5,
     ),
     headline6: TextStyle(
-      fontFamily: GoogleFonts.montserrat().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 14,
       height: 1.5,

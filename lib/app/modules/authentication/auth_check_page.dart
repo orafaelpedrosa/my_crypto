@@ -25,7 +25,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
           return Center(
             child: CircularProgressIndicator(),
           );
-        } else if (snapshot.hasData) {
+        } else if (snapshot.hasData && snapshot.data!.emailVerified) {
           Modular.to.pushNamed('/cryptocurrency/');
           // return ListCryptocurrenciesPage();
         } else if (snapshot.hasError) {

@@ -61,7 +61,10 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
               }
             },
           ),
-          SizedBox(height: 10),
+          Divider(
+            color: Colors.black12,
+            thickness: 1,
+          ),
           CryptocurrencyListWidget(),
         ],
       ),
