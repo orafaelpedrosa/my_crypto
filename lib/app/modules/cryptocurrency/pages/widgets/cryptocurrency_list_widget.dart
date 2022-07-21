@@ -37,7 +37,9 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
         initialData: const [],
         builder: (context, snapshot) {
           if (store.state.isEmpty) {
-            return LoadingWidget();
+            return LoadingWidget(
+              color: Colors.white,
+            );
           } else {
             return RefreshIndicator(
               onRefresh: () async {

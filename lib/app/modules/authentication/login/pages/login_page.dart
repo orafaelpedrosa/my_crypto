@@ -84,15 +84,14 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           SvgPicture.asset(
             'assets/login/login.svg',
-            height: 200,
+            height: MediaQuery.of(context).size.height * 0.25,
           ),
           SvgPicture.asset(
             'assets/app/mycrypto.svg',
-            height: 40,
+            height: MediaQuery.of(context).size.height * 0.06,
             color: Theme.of(context).primaryColor,
           ),
           const SizedBox(height: 20),
-          const SizedBox(height: 30),
           TripleBuilder(
             store: _store,
             builder: (_, triple) {
@@ -235,6 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                                   if (_store.userCurrent != null &&
                                       _store.userCurrent!.emailVerified) {
                                     _btnController1.success();
+                                    
                                     await Future.delayed(
                                       Duration(seconds: 1),
                                       () => Modular.to

@@ -145,12 +145,12 @@ class _FirstFormRegisterWidgetState extends State<FirstFormRegisterWidget> {
                         if (_formKey.currentState!.validate()) {
                           _registerStore.state.password =
                               _passwordController.text;
+                          _registerStore.state.email = _emailController.text;
                           _registerStore
                               .authRegister(_registerStore.state)
                               .then((value) {
-                                
                             Modular.to.pushNamed(
-                              'send_mail',
+                              '/send_mail/',
                               arguments:
                                   'Verifique sua Caixa de Entrada\ne clique no link para confirmar seu cadastro',
                             );

@@ -11,10 +11,14 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor,
+      color: color == Theme.of(context).primaryColor
+          ? Colors.white
+          : color,
       child: Center(
         child: CircularProgressIndicator(
-          color: Colors.white,
+          color: color != Theme.of(context).primaryColor
+              ? Theme.of(context).primaryColor
+              : color,
         ),
       ),
     );

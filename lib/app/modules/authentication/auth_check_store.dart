@@ -16,7 +16,7 @@ class AuthCheckStore extends NotifierStore<PlatformException, bool> {
   Future<bool> authenticate() async {
     try {
       return await _auth.authenticate(
-        localizedReason: 'Por favor autentique-se para continuar',
+        localizedReason: 'Desbloqueie seu celular para continuar',
       );
     } on PlatformException catch (e) {
       log('$e');

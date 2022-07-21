@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -17,19 +16,37 @@ class AuthCheckPage extends StatefulWidget {
 class _AuthCheckPageState extends State<AuthCheckPage> {
   final AuthCheckStore _store = Modular.get<AuthCheckStore>();
 
+  // checkLocalAuth() async {
+  //   final isLocalAuthAvilable = await _store.isBiometricAvailable();
+  //   if (isLocalAuthAvilable) {
+  //     final isAuthenticated = await _store.authenticate();
+  //     log('store 1: ${_store.state}');
+  //     _store.updateState(isAuthenticated);
+  //     log('store 2: ${_store.state}');
+
+  //     if (_store.state) {
+  //       Modular.to.pushReplacementNamed('/cryptocurrency/');
+  //     }
+  //   } else {
+  //     Modular.to.pushReplacementNamed('/login/');
+  //   }
+  // }
+
   checkLocalAuth() async {
     final isLocalAuthAvilable = await _store.isBiometricAvailable();
-    if (isLocalAuthAvilable) {
-      final isAuthenticated = await _store.authenticate();
-      log('store 1: ${_store.state}');
-      _store.updateState(isAuthenticated);
-      log('store 2: ${_store.state}');
-
-      if (_store.state) {
-        Modular.to.pushReplacementNamed('/cryptocurrency/');
-      }
-    } else {
+    final _authFirebase = FirebaseAuth.instance;
+    if (_authFirebase.currentUser == null) {
       Modular.to.pushReplacementNamed('/login/');
+    } else {
+      if (isLocalAuthAvilable) {
+        final isAuth = await _store.authenticate();
+        _store.updateState(isAuth);
+        if (_store.state) {
+          Modular.to.pushReplacementNamed('/cryptocurrency/');
+        } else {
+          Modular.to.pushReplacementNamed('/login/');
+        }
+      }
     }
   }
 
