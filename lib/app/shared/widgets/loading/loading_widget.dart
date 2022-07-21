@@ -12,7 +12,7 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color,
+      color: Theme.of(context).primaryColor,
       child: Lottie.asset(
         'assets/app/load.json',
         width: 50,
