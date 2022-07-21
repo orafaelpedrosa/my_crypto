@@ -1,3 +1,4 @@
+import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_repository.dart';
 import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
@@ -12,6 +13,7 @@ class LoginModule extends Module {
     Bind.lazySingleton((i) => ObscureStore()),
     Bind.lazySingleton((i) => LoginStore()),
     Bind.lazySingleton((i) => LoginRepository()),
+    Bind.lazySingleton((i) => AuthCheckStore()),
   ];
 
   @override
