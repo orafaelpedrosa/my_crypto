@@ -39,6 +39,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
@@ -47,11 +48,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      body: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
@@ -62,16 +66,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Text(
-                  'Não se preocupe, vamos te ajudar!\n\nInsira seu e-mail abaixo para que possamos enviar um link para você redefinir sua senha.',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(color: Colors.black54),
-                ),
+              Text(
+                'Não se preocupe, vamos te ajudar!\nInsira seu e-mail abaixo para que possamos enviar um link para você redefinir sua senha.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5!
+                    .copyWith(color: Colors.black54),
               ),
               SvgPicture.asset(
                 'assets/login/reset_password.svg',

@@ -26,9 +26,11 @@ class RegisterPageState extends State<RegisterPage> {
       RoundedLoadingButtonController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Validation _validation = Validation();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -45,6 +47,7 @@ class RegisterPageState extends State<RegisterPage> {
       ),
       backgroundColor: Colors.white,
       body: Container(
+        alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         child: SingleChildScrollView(
           physics: ClampingScrollPhysics(
@@ -54,8 +57,7 @@ class RegisterPageState extends State<RegisterPage> {
             children: [
               SvgPicture.asset(
                 'assets/login/register.svg',
-                height: 200,
-                width: 200,
+                height: 175,
               ),
               SizedBox(height: 20),
               Form(
@@ -153,12 +155,10 @@ class RegisterPageState extends State<RegisterPage> {
                           color: Theme.of(context).primaryColor,
                           child: Text(
                             'Cadastrar',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4!
-                                .copyWith(
-                                  color: Colors.white,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.headline4!.copyWith(
+                                      color: Colors.white,
+                                    ),
                           ),
                           controller: _btnController1,
                           onPressed: () async {
@@ -169,7 +169,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   _emailController.text;
                               _registerStore
                                   .authRegister(_registerStore.state)
-                                  .whenComplete(() async {
+                                  .then((value) async {
                                 _btnController1.success();
                                 Modular.to.pushNamed(
                                   'send_mail',

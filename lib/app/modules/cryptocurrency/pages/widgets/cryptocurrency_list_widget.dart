@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_item_list_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/shimmer_patient_item.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
@@ -37,9 +38,19 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
         initialData: const [],
         builder: (context, snapshot) {
           if (store.state.isEmpty) {
-            return LoadingWidget(
-              color: Colors.white,
-            );
+                return Theme(
+                  data: Theme.of(context).copyWith(
+                    shadowColor: Colors.transparent,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: List.generate(
+                        10,
+                        (index) => const ShimmerPatientItem(),
+                      ),
+                    ),
+                  ),
+                );
           } else {
             return RefreshIndicator(
               onRefresh: () async {

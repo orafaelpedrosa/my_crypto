@@ -19,6 +19,7 @@ class _SendMailPageState extends State<SendMailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -26,60 +27,59 @@ class _SendMailPageState extends State<SendMailPage> {
       ),
       backgroundColor: Colors.white,
       body: Container(
-        alignment: AlignmentGeometry.lerp(
-          Alignment.center,
-          Alignment.center,
-          0.5,
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                'E-mail enviado!',
-                style: Theme.of(context).textTheme.headline2!.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 25),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  'E-mail enviado!',
+                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
               ),
-            ),
-            Text(
-              widget.message,
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(color: Colors.black54),
-            ),
-            SizedBox(height: 40),
-            SvgPicture.asset(
-              'assets/login/send_mail.svg',
-              width: 250,
-              height: 250,
-              placeholderBuilder: (context) => Container(
-                height: 100,
-                width: 100,
-                child: const CircularProgressIndicator(),
+              Text(
+                widget.message,
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5!
+                    .copyWith(color: Colors.black54),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Se você não recebeu o e-mail, verifique sua caixa de Spam.',
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(color: Colors.black54),
-            ),
-            SizedBox(height: 30),
-            ButtonSecondaryWidget(
-              text: 'Continuar',
-              onPressed: () {
-                Modular.to.popUntil(ModalRoute.withName('/login/'));
-              },
-              isLoading: false,
-            ),
-          ],
+              SizedBox(height: 40),
+              SvgPicture.asset(
+                'assets/login/send_mail.svg',
+                width: 250,
+                height: 250,
+                placeholderBuilder: (context) => Container(
+                  height: 100,
+                  width: 100,
+                  child: const CircularProgressIndicator(),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Se você não recebeu o e-mail, verifique sua caixa de Spam.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5!
+                    .copyWith(color: Colors.black54),
+              ),
+              SizedBox(height: 30),
+              ButtonSecondaryWidget(
+                text: 'Continuar',
+                onPressed: () {
+                  Modular.to.popUntil(ModalRoute.withName('/login/'));
+                },
+                isLoading: false,
+              ),
+            ],
+          ),
         ),
       ),
     );
