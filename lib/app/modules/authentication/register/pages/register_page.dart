@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/modules/authentication/register/pages/widgets/first_form_register_widget.dart';
-import 'package:mycrypto/app/modules/authentication/register/pages/widgets/second_form_register_widget.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/core/utils/validation.dart';
+import 'package:mycrypto/app/modules/authentication/register/stores/register_store.dart';
+import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
+import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class RegisterPage extends StatefulWidget {
   final String title;
@@ -10,8 +15,17 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
-  final PageController pageController = PageController();
-  int currentPage = 0;
+  RegisterStore _registerStore = Modular.get<RegisterStore>();
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
+
+  final RoundedLoadingButtonController _btnController1 =
+      RoundedLoadingButtonController();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Validation _validation = Validation();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,45 +42,161 @@ class RegisterPageState extends State<RegisterPage> {
           color: Theme.of(context).primaryColor,
         ),
         elevation: 0,
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: () {
-              if (currentPage > 0) {
-                pageController.previousPage(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
-                );
-              } else {
-                Navigator.of(context).pop();
-              }
-            }),
       ),
       backgroundColor: Colors.white,
       body: Container(
-        margin: EdgeInsets.only(top: 50, left: 20, right: 20),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: pageController,
-                onPageChanged: (index) {
-                  currentPage = index;
-                },
-                children: [
-                  FirstFormRegisterWidget(
-                    pageController: pageController,
-                  ),
-                  SecondFormRegisterWidget(
-                    pageController: pageController,
-                  ),
-                ],
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(
+            parent: NeverScrollableScrollPhysics(),
+          ),
+          child: Column(
+            children: [
+              SvgPicture.asset(
+                'assets/login/register.svg',
+                height: 200,
+                width: 200,
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormFieldWidget(
+                      iconData: Icon(
+                        Icons.person_outline,
+                        color: Theme.of(context).primaryColor,
+                        size: 20,
+                      ),
+                      controller: _nameController,
+                      label: 'Nome completo',
+                      hintText: 'Digite seu nome',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Digite seu nome';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    TextFormFieldWidget(
+                      controller: _emailController,
+                      iconData: Icon(
+                        Icons.email_outlined,
+                        color: Theme.of(context).primaryColor,
+                        size: 20,
+                      ),
+                      label: 'Email',
+                      hintText: 'Digite seu email',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Digite seu email';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    TextFormFieldWidget(
+                      obscureText: true,
+                      controller: _passwordController,
+                      iconData: Icon(
+                        Icons.lock_outline,
+                        color: Theme.of(context).primaryColor,
+                        size: 20,
+                      ),
+                      label: 'Senha',
+                      hintText: 'Senha',
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'Digite sua senha';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    TextFormFieldWidget(
+                      obscureText: true,
+                      controller: _confirmPasswordController,
+                      iconData: Icon(
+                        Icons.lock_outline,
+                        color: Theme.of(context).primaryColor,
+                        size: 20,
+                      ),
+                      label: 'Confirme sua senha',
+                      hintText: 'Confirme sua senha',
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'Confirme sua senha';
+                        }
+                        if (_passwordController.text !=
+                            _confirmPasswordController.text) {
+                          return "As senhas não conferem";
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RoundedLoadingButton(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          height: 50,
+                          duration: Duration(seconds: 1),
+                          successColor: Theme.of(context).primaryColor,
+                          errorColor: Colors.red,
+                          successIcon: Icons.check_circle_outline,
+                          animateOnTap:
+                              (_validation.isEmail(_emailController.text) &&
+                                  _validation.isEmail(_emailController.text)),
+                          borderRadius: 15,
+                          color: Theme.of(context).primaryColor,
+                          child: Text(
+                            'Cadastrar',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                          controller: _btnController1,
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _registerStore.state.password =
+                                  _passwordController.text;
+                              _registerStore.state.email =
+                                  _emailController.text;
+                              _registerStore
+                                  .authRegister(_registerStore.state)
+                                  .whenComplete(() async {
+                                _btnController1.success();
+                                Modular.to.pushNamed(
+                                  'send_mail',
+                                  arguments:
+                                      'Enviamos um email para ${_registerStore.state.email} para que você possa confirmar seu cadastro!',
+                                );
+                              }).catchError(
+                                (error) async {
+                                  await openErrorSnackBar(
+                                      context, "${error.message}");
+                                  _registerStore.state.password = null;
+                                  _btnController1.reset();
+                                },
+                              );
+                            } else {
+                              _btnController1.error();
+                              _btnController1.reset();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

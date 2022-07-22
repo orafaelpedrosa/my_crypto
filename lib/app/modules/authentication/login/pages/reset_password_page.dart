@@ -75,8 +75,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               ),
               SvgPicture.asset(
                 'assets/login/reset_password.svg',
-                width: 300,
-                height: 300,
+                width: 250,
+                height: 250,
+                placeholderBuilder: (context) => Container(
+                  height: 100,
+                  width: 100,
+                  child: const CircularProgressIndicator(),
+                ),
               ),
               Form(
                 key: formKey,
@@ -122,9 +127,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 controller: _btnController1,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                                        await _store
-                        .resetPassword(resetPassword.text).then((value) async {
-                                                _btnController1.success();
+                    await _store
+                        .resetPassword(resetPassword.text)
+                        .then((value) async {
+                      _btnController1.success();
                       await Future.delayed(
                         Duration(seconds: 1),
                       );
@@ -133,7 +139,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         arguments:
                             'Verifique sua Caixa de Entrada\ne clique no link para redefinir sua senha.',
                       );
-                        }).catchError((e) async {
+                    }).catchError((e) async {
                       _btnController1.error();
                       await Future.delayed(
                         Duration(seconds: 1),

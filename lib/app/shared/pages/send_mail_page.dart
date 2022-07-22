@@ -56,10 +56,15 @@ class _SendMailPageState extends State<SendMailPage> {
               'assets/login/send_mail.svg',
               width: 250,
               height: 250,
+              placeholderBuilder: (context) => Container(
+                height: 100,
+                width: 100,
+                child: const CircularProgressIndicator(),
+              ),
             ),
             SizedBox(height: 20),
             Text(
-              'Se você não recebeu o e-mail,\nverifique sua caixa de Spam.',
+              'Se você não recebeu o e-mail, verifique sua caixa de Spam.',
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme

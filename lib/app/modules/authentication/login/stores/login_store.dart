@@ -66,7 +66,6 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   Future<void> resetPassword(String email) async {
     setLoading(true);
     await _loginRepository.authResetPassword(email).then((value) async {
-      authLogout();
       setLoading(false);
     }).catchError(
       (error) {

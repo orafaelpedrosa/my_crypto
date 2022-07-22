@@ -81,6 +81,11 @@ class _LoginPageState extends State<LoginPage> {
           SvgPicture.asset(
             'assets/login/login.svg',
             height: MediaQuery.of(context).size.height * 0.25,
+            placeholderBuilder: (context) => Container(
+              height: 50,
+              width: 50,
+              child: const CircularProgressIndicator(),
+            ),
           ),
           const SizedBox(height: 15),
           SvgPicture.asset(
@@ -234,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
                                     await Future.delayed(
                                       Duration(seconds: 1),
                                       () async {
-                                         Modular.to
+                                        Modular.to
                                             .pushNamed('/cryptocurrency/');
                                       },
                                     );

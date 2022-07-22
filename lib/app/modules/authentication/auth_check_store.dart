@@ -44,7 +44,7 @@ class AuthCheckStore extends NotifierStore<PlatformException, bool> {
 
     try {
       return await _auth.authenticate(
-        localizedReason: 'Por favor autentique-se para continuar',
+        localizedReason: 'Obrigado por desbloquear o aplicativo',
       );
     } on PlatformException {
       return false;

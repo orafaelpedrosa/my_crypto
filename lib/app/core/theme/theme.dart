@@ -9,7 +9,7 @@ ThemeData theme = ThemeData(
   ),
   scaffoldBackgroundColor: const Color(0xff1a1a1a),
   backgroundColor: const Color(0xff1a1a1a),
-  cardColor: Colors.grey,
+  cardColor: Color(0xFF455A64),
   brightness: Brightness.dark,
   dividerTheme: const DividerThemeData(
     color: Colors.white,

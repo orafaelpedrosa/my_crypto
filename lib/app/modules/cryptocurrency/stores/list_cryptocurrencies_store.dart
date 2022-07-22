@@ -8,6 +8,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 
+// ignore: must_be_immutable
 class ListCryptocurrenciesStore
     extends NotifierStore<DioError, List<CryptocurrencySimpleModel>> {
   ListCryptocurrenciesStore() : super([]);
