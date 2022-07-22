@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/register/stores/register_store.dart';
+import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -31,6 +30,11 @@ class _FirstFormRegisterWidgetState extends State<FirstFormRegisterWidget> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Validation _validation = Validation();
   RegisterStore _registerStore = Modular.get<RegisterStore>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,15 +152,19 @@ class _FirstFormRegisterWidgetState extends State<FirstFormRegisterWidget> {
                           _registerStore.state.email = _emailController.text;
                           _registerStore
                               .authRegister(_registerStore.state)
-                              .then((value) {
+                              .whenComplete(() async {
+                            _btnController1.success();
                             Modular.to.pushNamed(
-                              '/send_mail/',
+                              'send_mail',
                               arguments:
-                                  'Verifique sua Caixa de Entrada\ne clique no link para confirmar seu cadastro',
+                                  'Enviamos um email para ${_registerStore.state.email} para que possa confirmar seu cadastro!',
                             );
                           }).catchError(
-                            (error) {
-                              log(error);
+                            (error) async {
+                              await openErrorSnackBar(
+                                  context, "${error.message}");
+                              _registerStore.state.password = null;
+                              _btnController1.reset();
                             },
                           );
                         } else {

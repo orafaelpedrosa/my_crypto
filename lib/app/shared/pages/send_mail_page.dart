@@ -68,9 +68,9 @@ class _SendMailPageState extends State<SendMailPage> {
             ),
             SizedBox(height: 30),
             ButtonSecondaryWidget(
-              text: 'Voltar',
+              text: 'Continuar',
               onPressed: () {
-                Modular.to.popUntil(ModalRoute.withName('/login_module/'));
+                Modular.to.popUntil(ModalRoute.withName('/login/'));
               },
               isLoading: false,
             ),

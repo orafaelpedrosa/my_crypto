@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
-import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
+import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
+import 'package:mycrypto/app/core/utils/validation.dart';
+import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
+import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
+
 class ResetPasswordPage extends StatefulWidget {
-  ResetPasswordPage({Key? key}) : super(key: key);
+  final String? email;
+  ResetPasswordPage({
+    Key? key,
+    this.email,
+  }) : super(key: key);
 
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
@@ -19,12 +26,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       RoundedLoadingButtonController();
   final formKey = GlobalKey<FormState>();
   bool validateFormReset = false;
+  Validation validation = Validation();
 
-  bool isEmail(String email) {
-    String p =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = new RegExp(p);
-    return regExp.hasMatch(email);
+  @override
+  void initState() {
+    if (widget.email != null || widget.email != '') {
+      resetPassword.text = widget.email!;
+    }
+    super.initState();
   }
 
   @override
@@ -53,13 +62,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       ),
                 ),
               ),
-              Text(
-                'Não se preocupe, vamos te ajudar!\nInsira seu e-mail abaixo para \nredefinir sua senha.',
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5!
-                    .copyWith(color: Colors.black54),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Text(
+                  'Não se preocupe, vamos te ajudar!\n\nInsira seu e-mail abaixo para que possamos enviar um link para você redefinir sua senha.',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: Colors.black54),
+                ),
               ),
               SvgPicture.asset(
                 'assets/login/reset_password.svg',
@@ -72,7 +84,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   controller: resetPassword,
                   hintText: 'E-mail',
                   keyboardType: TextInputType.emailAddress,
-                  prefixIcon: Icon(
+                  iconData: Icon(
                     Icons.email,
                     color: Theme.of(context).primaryColor,
                     size: 20,
@@ -80,7 +92,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Por favor, informe o email';
-                    } else if (!(isEmail(value))) {
+                    } else if (!(validation.isEmail(value))) {
                       return 'Por favor, informe um email válido';
                     } else {
                       validateFormReset = true;
@@ -110,15 +122,28 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 controller: _btnController1,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    await _store.resetPassword(resetPassword.text);
-                    _btnController1.success();
-                    await Future.delayed(
-                      Duration(seconds: 1),
-                    );
-                    Modular.to.pushNamed(
-                      'send_mail',
-                      arguments: 'Verifique sua Caixa de Entrada\ne clique no link para redefinir sua senha.',
-                    );
+                                        await _store
+                        .resetPassword(resetPassword.text).then((value) async {
+                                                _btnController1.success();
+                      await Future.delayed(
+                        Duration(seconds: 1),
+                      );
+                      Modular.to.pushNamed(
+                        'send_mail',
+                        arguments:
+                            'Verifique sua Caixa de Entrada\ne clique no link para redefinir sua senha.',
+                      );
+                        }).catchError((e) async {
+                      _btnController1.error();
+                      await Future.delayed(
+                        Duration(seconds: 1),
+                      );
+                      await openErrorSnackBar(
+                        context,
+                        e.message,
+                      );
+                      _btnController1.reset();
+                    });
                   } else {
                     _btnController1.error();
                     _btnController1.reset();

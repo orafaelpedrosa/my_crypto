@@ -45,7 +45,7 @@ class LoginRepository with Disposable {
       log(e.code);
       if (e.code == 'user-not-found') {
         throw FirebaseAuthException(
-          message: 'Usuário não encontrado',
+          message: 'Usuário não cadastrado',
           code: e.code,
         );
       } else {
@@ -64,7 +64,7 @@ class LoginRepository with Disposable {
       log(e.code);
       if (e.code == 'user-not-found') {
         throw FirebaseAuthException(
-          message: 'Usuário não encontrado',
+          message: 'Usuário não cadastrado',
           code: e.code,
         );
       } else {

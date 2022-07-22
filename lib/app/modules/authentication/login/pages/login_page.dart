@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,17 +20,15 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final LoginStore _store = Modular.get();
+
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
-
   TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
   final FocusNode emailFocus = FocusNode();
+  TextEditingController password = TextEditingController();
   final FocusNode passwordFocus = FocusNode();
   final formKey = GlobalKey<FormState>();
-
   bool validateFormLogin = false;
-
   Validation _validation = Validation();
 
   @override
@@ -86,12 +82,13 @@ class _LoginPageState extends State<LoginPage> {
             'assets/login/login.svg',
             height: MediaQuery.of(context).size.height * 0.25,
           ),
+          const SizedBox(height: 15),
           SvgPicture.asset(
             'assets/app/mycrypto.svg',
-            height: MediaQuery.of(context).size.height * 0.06,
+            height: MediaQuery.of(context).size.height * 0.05,
             color: Theme.of(context).primaryColor,
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           TripleBuilder(
             store: _store,
             builder: (_, triple) {
@@ -184,6 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           Modular.to.pushNamed(
                             '/login/reset_password',
+                            arguments: email.text,
                           );
                         },
                         child: Text(
@@ -226,27 +224,40 @@ class _LoginPageState extends State<LoginPage> {
                                 _store.state.password = password.text;
                                 await _store
                                     .authLogin(_store.state)
-                                    .whenComplete(() async {
+                                    .then((value) async {
                                   if (!_store.userCurrent!.emailVerified) {
-                                    await openErrorSnackBar(
-                                        context, "Verifique seu email");
-                                  }
-                                  if (_store.userCurrent != null &&
+                                    await openErrorSnackBar(context,
+                                        "Verifique seu email para continuar");
+                                  } else if (_store.userCurrent != null &&
                                       _store.userCurrent!.emailVerified) {
                                     _btnController1.success();
-                                    
                                     await Future.delayed(
                                       Duration(seconds: 1),
-                                      () => Modular.to
-                                          .pushNamed('/cryptocurrency/'),
+                                      () async {
+                                         Modular.to
+                                            .pushNamed('/cryptocurrency/');
+                                      },
+                                    );
+                                    Future.delayed(
+                                      Duration(seconds: 5),
+                                      () async {
+                                        _btnController1.reset();
+                                      },
                                     );
                                   }
                                 }).catchError(
                                   (error) async {
-                                    await openErrorSnackBar(
-                                        context, "${error.message}");
+                                    _store.state.email = null;
                                     _store.state.password = null;
                                     _store.updateForm(_store.state);
+                                    _btnController1.error();
+                                    await Future.delayed(
+                                      Duration(seconds: 1),
+                                    );
+                                    await openErrorSnackBar(
+                                      context,
+                                      error.message,
+                                    );
                                     _btnController1.reset();
                                   },
                                 );
@@ -303,8 +314,20 @@ class _LoginPageState extends State<LoginPage> {
                         color: Theme.of(context).primaryColor,
                       ),
                       onPressed: () {
-                        _store.authGoogle();
-                        log('Google');
+                        _store.authGoogle().then((value) async {
+                          if (_store.userCurrent != null &&
+                              _store.userCurrent!.emailVerified) {
+                            await Future.delayed(
+                              Duration(seconds: 1),
+                              () => Modular.to.pushNamed('/cryptocurrency/'),
+                            );
+                          }
+                        }).catchError((error) async {
+                          await openErrorSnackBar(
+                            context,
+                            error.message,
+                          );
+                        });
                       },
                       label: Text(
                         'Entrar com Google',

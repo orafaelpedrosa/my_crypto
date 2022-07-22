@@ -31,12 +31,10 @@ class RegisterStore
         .then((value) {
       _getUser();
       userCurrent!.sendEmailVerification();
-      Modular.to.pushReplacementNamed('/login');
       setLoading(false);
     }).catchError(
       (error) {
         setLoading(false);
-        setError(error);
         throw error;
       },
     );
