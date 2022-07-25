@@ -76,83 +76,63 @@ class LoginRepository with Disposable {
     }
   }
 
-  // Future<void> authGoogle() async {
-  //   final googleUser = await googleSignIn.signIn();
-  //   if (googleUser == null) {
-  //     throw FirebaseAuthException(
-  //       message: 'Erro ao logar com o Google',
-  //       code: 'google-login-error',
-  //     );
-  //   } else {
-  //     _user = googleUser;
-  //   }
+  Future<bool> googleAuth() async {
+    try {
+      final googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        throw FirebaseAuthException(
+          message: 'Erro ao logar com o Google',
+          code: 'google-login-error',
+        );
+      } else {
+        _user = googleUser;
+      }
 
-  //   final googleAuth = await googleUser.authentication;
+      final googleAuth = await googleUser.authentication;
 
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth.accessToken,
-  //     idToken: googleAuth.idToken,
-  //   );
-
-  //   await _firebaseAuth.signInWithCredential(credential);
-  // }
-
-  // Future<bool> googleLoginProcess() async {
-  //   try {
-  //     final googleUser = await googleSignIn.signIn();
-  //     if (googleUser == null) {
-  //       throw FirebaseAuthException(
-  //         message: 'Erro ao logar com o Google',
-  //         code: 'google-login-error',
-  //       );
-  //     } else {
-  //       _user = googleUser;
-  //     }
-
-  //     final googleAuth = await googleUser.authentication;
-
-  //     final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-
-  //     await _firebaseAuth.signInWithCredential(credential);
-  //     return true;
-  //   } on FirebaseAuthException catch (e) {
-  //     log(e.code);
-  //     if (e.code == 'user-not-found') {
-  //       throw FirebaseAuthException(
-  //         message: 'Usuário não encontrado',
-  //         code: e.code,
-  //       );
-  //     } else {
-  //       throw FirebaseAuthException(
-  //         message: 'Erro desconhecido',
-  //         code: e.code,
-  //       );
-  //     }
-  //   }
-  // }
-
-  Future<void> googleAuth() async {
-    GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-    if (googleSignInAccount != null) {
-      GoogleSignInAuthentication googleAuth =
-          await googleSignInAccount.authentication;
-
-      AuthCredential credential = GoogleAuthProvider.credential(
+      final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-      User user = userCredential.user!;
-      log("User name: ${user.displayName}");
-    } else {
-      log("Erro ao logar com o Google");
+      await _firebaseAuth.signInWithCredential(credential);
+      log('Logado com sucesso Google: ${_user!.displayName}');
+      return true;
+    } on FirebaseAuthException catch (e) {
+      log(e.code);
+      if (e.code == 'user-not-found') {
+        throw FirebaseAuthException(
+          message: 'Usuário não encontrado',
+          code: e.code,
+        );
+      } else {
+        throw FirebaseAuthException(
+          message: 'Não foi possível logar com o Google',
+          code: e.code,
+        );
+      }
     }
   }
+
+  // Future<void> googleAuth() async {
+  //   GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+  //   if (googleSignInAccount != null) {
+  //     GoogleSignInAuthentication googleAuth =
+  //         await googleSignInAccount.authentication;
+
+  //     AuthCredential credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+
+  //     UserCredential userCredential =
+  //         await _firebaseAuth.signInWithCredential(credential);
+  //     User user = userCredential.user!;
+  //     log("User name: ${user.displayName}");
+  //   } else {
+  //     log("Erro ao logar com o Google");
+  //   }
+  // }
 
   @override
   void dispose() {}

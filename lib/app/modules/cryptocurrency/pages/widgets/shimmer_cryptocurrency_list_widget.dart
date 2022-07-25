@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerPatientItem extends StatefulWidget {
-  const ShimmerPatientItem({Key? key}) : super(key: key);
+class ShimmerCryptocurrencyListWidget extends StatefulWidget {
+  const ShimmerCryptocurrencyListWidget({Key? key}) : super(key: key);
 
   @override
-  State<ShimmerPatientItem> createState() => _ShimmerPatientItemState();
+  State<ShimmerCryptocurrencyListWidget> createState() => _ShimmerCryptocurrencyListWidgetState();
 }
 
-class _ShimmerPatientItemState extends State<ShimmerPatientItem> {
+class _ShimmerCryptocurrencyListWidgetState extends State<ShimmerCryptocurrencyListWidget> {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(

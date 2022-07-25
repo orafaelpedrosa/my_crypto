@@ -233,6 +233,8 @@ class _LoginPageState extends State<LoginPage> {
                                   if (!_store.userCurrent!.emailVerified) {
                                     await openErrorSnackBar(context,
                                         "Verifique seu email para continuar");
+                                    await _store.authLogout();
+                                    _btnController1.reset();
                                   } else if (_store.userCurrent != null &&
                                       _store.userCurrent!.emailVerified) {
                                     _btnController1.success();
