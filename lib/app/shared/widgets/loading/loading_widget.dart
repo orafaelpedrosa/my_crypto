@@ -1,42 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class LoadingWidget extends StatelessWidget {
-  final bool isStretch;
   final Color color;
 
   LoadingWidget({
     Key? key,
-    this.isStretch = true,
-    this.color = Colors.transparent,
+    this.color = Colors.white,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          color: color,
-          child: Column(
-            crossAxisAlignment: isStretch
-                ? CrossAxisAlignment.stretch
-                : CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Lottie.asset(
-                    'assets/app/loading.json',
-                    width: 150,
-                    height: 150,
-                    
-                  ),
-                ],
-              ),
-            ],
-          ),
+    return Container(
+      color: color == Theme.of(context).primaryColor
+          ? Colors.white
+          : color,
+      child: Center(
+        child: CircularProgressIndicator(
+          color: color != Theme.of(context).primaryColor
+              ? Theme.of(context).primaryColor
+              : color,
         ),
-      ],
+      ),
     );
   }
 }

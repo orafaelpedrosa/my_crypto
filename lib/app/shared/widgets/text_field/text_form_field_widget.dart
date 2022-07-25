@@ -1,72 +1,103 @@
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/core/theme/colors.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
-  final TextEditingController controller;
-  final TextInputType? keyboardType;
-  final String? Function(String?)? validator;
-  final bool obscureText;
-  final IconData? iconData;
-  final String? labelText;
-  final String? hintText;
+  final String? label;
+  final bool autocorrect;
+  final bool readOnly;
+  final bool isEnabled;
   final FocusNode? focusNode;
+  final bool autoFocus;
+  final String? placeholder;
+  final String? errorText;
+  final String? hintText;
+  final EdgeInsets? padding;
+  final bool enableSuggestions;
+  final bool obscureText;
   final Function(String?)? onChange;
-  final TextCapitalization textCapitalization;
-  final TextInputAction? textInputAction;
+  final Function()? onTap;
+  final TextEditingController controller;
+  final int? maxLines;
+  final int minLines;
+  final Icon? iconData;
+  final Icon? prefixIcon;
   final Widget? suffixIcon;
+  final TextInputAction? textInputAction;
+  final TextInputType? keyboardType;
+  final Function(String)? onSubmitted;
+  final String? Function(String?)? validator;
+  final TextCapitalization textCapitalization;
+  final bool? showCursor;
 
-  TextFormFieldWidget({
+  const TextFormFieldWidget({
     Key? key,
-    required this.controller,
-    this.keyboardType,
-    this.validator,
-    this.obscureText = false,
-    this.iconData,
-    this.labelText,
+    this.label,
+    this.placeholder,
+    this.errorText,
     this.hintText,
     this.focusNode,
-    this.onChange,
+    this.autoFocus = false,
+    this.onSubmitted,
+    this.validator,
+    this.obscureText = false,
     this.textCapitalization = TextCapitalization.sentences,
-    this.textInputAction,
+    this.enableSuggestions = true,
+    this.autocorrect = true,
+    this.readOnly = false,
+    this.isEnabled = true,
+    required this.controller,
+    this.onChange,
+    this.onTap,
+    this.padding,
+    this.maxLines = 1,
+    this.iconData,
+    this.prefixIcon,
     this.suffixIcon,
+    this.minLines = 1,
+    this.textInputAction,
+    this.keyboardType,
+    this.showCursor = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      toolbarOptions: ToolbarOptions(
+        copy: true,
+        cut: true,
+        paste: true,
+        selectAll: false,
+      ),
+      textInputAction: textInputAction,
       controller: controller,
+      autofocus: autoFocus,
       keyboardType: keyboardType,
       validator: validator,
       obscureText: obscureText,
       style: Theme.of(context).textTheme.headline1!.copyWith(
             color: Colors.black54,
-            fontSize: 14,
+            fontSize: 16,
           ),
       decoration: InputDecoration(
         errorStyle: Theme.of(context).textTheme.headline1!.copyWith(
               color: Colors.red,
               fontSize: 12,
             ),
-        labelText: labelText,
+        labelText: label,
         labelStyle: TextStyle(
-          color: AppColors.primaryColor.withOpacity(0.5),
+          color: Colors.black54,
         ),
         hintText: hintText,
         hintStyle: TextStyle(
-          color: AppColors.primaryColor.withOpacity(0.5),
+          color: Colors.black54,
         ),
-        prefixIcon: Icon(
-          iconData,
-          color: AppColors.primaryColor,
-          size: 20,
-        ),
+        prefixIcon: iconData,
         suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Colors.black54,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -74,7 +105,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Colors.black54,
             width: 1.5,
           ),
         ),
@@ -83,7 +114,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Colors.black54,
             width: 1.5,
           ),
         ),
@@ -92,7 +123,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).primaryColor,
             width: 1.5,
           ),
         ),

@@ -60,3 +60,9 @@ ios/build/
 #Firebase
 # **/ios/GoogleService-Info.plist
 # **/android/app/google-services.json
+
+#Plataformas 
+.windows/
+.web/
+.macos/
+.linux/
