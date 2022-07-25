@@ -66,7 +66,15 @@ class RegisterPageState extends State<RegisterPage> {
             children: [
               SvgPicture.asset(
                 'assets/login/register.svg',
-                height: 175,
+                height: 145,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Cadastre-se',
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               SizedBox(height: 20),
               Form(
@@ -74,12 +82,13 @@ class RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   children: [
                     TextFormFieldWidget(
+                      controller: _nameController,
+                      textInputAction: TextInputAction.next,
                       iconData: Icon(
                         Icons.person_outline,
                         color: Theme.of(context).primaryColor,
                         size: 20,
                       ),
-                      controller: _nameController,
                       label: 'Nome completo',
                       hintText: 'Digite seu nome',
                       validator: (value) {
@@ -92,6 +101,7 @@ class RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: 15),
                     TextFormFieldWidget(
                       controller: _emailController,
+                      textInputAction: TextInputAction.next,
                       iconData: Icon(
                         Icons.email_outlined,
                         color: Theme.of(context).primaryColor,
@@ -108,8 +118,9 @@ class RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: 15),
                     TextFormFieldWidget(
-                      obscureText: true,
                       controller: _passwordController,
+                      textInputAction: TextInputAction.next,
+                      obscureText: true,
                       iconData: Icon(
                         Icons.lock_outline,
                         color: Theme.of(context).primaryColor,
@@ -126,8 +137,9 @@ class RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: 15),
                     TextFormFieldWidget(
-                      obscureText: true,
                       controller: _confirmPasswordController,
+                      textInputAction: TextInputAction.done,
+                      obscureText: true,
                       iconData: Icon(
                         Icons.lock_outline,
                         color: Theme.of(context).primaryColor,
