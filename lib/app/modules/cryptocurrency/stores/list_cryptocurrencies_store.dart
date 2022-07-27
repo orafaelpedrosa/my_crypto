@@ -21,6 +21,18 @@ class ListCryptocurrenciesStore
   Timer? _debounce;
 
   Future<void> getListCryptocurrencies() async {
+    setLoading(true);
+    await _repository.getListCryptocurrenciesData().then((value) {
+      listCrypto = value;
+      update(value);
+      setLoading(false);
+    }).catchError((onError) {
+      setLoading(false);
+      log(onError.toString());
+      setError(onError);
+    });
+  }
+    Future<void> getListCryptoStream() async {
     await _repository.getListCryptocurrenciesData().then((value) {
       listCrypto = value;
       update(value);
