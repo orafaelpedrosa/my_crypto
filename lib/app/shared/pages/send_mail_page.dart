@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 
 import 'package:mycrypto/app/shared/widgets/button/button_secondary_widget.dart';
 
@@ -20,11 +21,10 @@ class _SendMailPageState extends State<SendMailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+      appBar: AppBarWidget(
+        visibleTitle: false,
+        showLeading: false,
+      ).build(context) as AppBar,
       backgroundColor: Colors.white,
       body: Container(
         alignment: Alignment.center,

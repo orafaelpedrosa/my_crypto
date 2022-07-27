@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/register/stores/register_store.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -40,20 +41,10 @@ class RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Cadastre-se',
-          style: Theme.of(context).textTheme.headline4!.copyWith(
-                color: Colors.white,
-              ),
-        ),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor,
-        ),
-        elevation: 0,
-      ),
+      appBar: AppBarWidget(
+        showLeading: true,
+        visibleTitle: false,
+      ).build(context) as AppBar,
       backgroundColor: Colors.white,
       body: Container(
         alignment: Alignment.center,

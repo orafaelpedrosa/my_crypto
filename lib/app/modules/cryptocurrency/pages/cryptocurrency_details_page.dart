@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
@@ -36,23 +37,10 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '${widget.name}',
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Theme.of(context).primaryColor,
-          ),
-          onPressed: () {
-            Modular.to.pop();
-          },
-        ),
-      ),
+      appBar: AppBarWidget(
+        title: widget.name,
+        elevation: 1,
+      ).build(context) as AppBar,
       body: Center(
         child: TripleBuilder<CryptocurrencyDataStore, DioError,
             CryptocurrencyDetailsModel>(

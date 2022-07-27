@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -40,13 +41,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor,
-        ),
-        elevation: 0,
-      ),
+      appBar: AppBarWidget(
+        visibleTitle: false,
+        showLeading: true,
+      ).build(context) as AppBar,
       backgroundColor: Colors.white,
       body: Container(
         alignment: Alignment.center,
