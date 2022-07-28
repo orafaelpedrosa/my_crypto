@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline7d_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 
 class CryptocurrencyItemListWidget extends StatefulWidget {
@@ -24,10 +25,7 @@ class _CryptocurrencyItemListWidgetState
       onTap: () {
         Modular.to.pushNamed(
           '/cryptocurrency/details',
-          arguments: {
-            'id': widget.coin.id,
-            'name': widget.coin.name,
-          },
+          arguments: widget.coin,
         );
       },
       child: Card(

@@ -19,17 +19,13 @@ class CryptocurrencyModule extends Module {
     Bind.lazySingleton((i) => AuthCheckStore()),
     Bind.lazySingleton((i) => LoginRepository()),
     Bind.lazySingleton((i) => ObscureStore()),
-
-
   ];
 
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => ListCryptocurrenciesPage()),
     ChildRoute('/details',
-        child: (_, args) => CryptocurrencyDetailsPage(
-              id: args.data!['id'],
-              name: args.data!['name'],
-            )),
+        child: (_, args) =>
+            CryptocurrencyDetailsPage(cryptocurrency: args.data)),
   ];
 }

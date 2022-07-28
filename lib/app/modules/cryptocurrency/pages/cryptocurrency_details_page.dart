@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline7d_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
-  final String id;
-  final String name;
+  final CryptocurrencySimpleModel cryptocurrency;
   const CryptocurrencyDetailsPage({
     Key? key,
-    required this.id,
-    required this.name,
+    required this.cryptocurrency,
   }) : super(key: key);
 
   @override
@@ -26,19 +26,15 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
 
   @override
   void initState() {
-    store.getCryptocurrencyById(widget.id);
+    store.getCryptocurrencyById(widget.cryptocurrency.id!);
     super.initState();
-  }
-
-  void getCrypto() {
-    store.getCryptocurrencyById(widget.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        title: widget.name,
+        title: widget.cryptocurrency.symbol!.toUpperCase(),
         elevation: 1,
       ).build(context) as AppBar,
       body: Center(
@@ -53,7 +49,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                 stream: Stream.periodic(
                   const Duration(seconds: 10),
                   (_) {
-                    store.getStreamCryptocurrency(widget.id);
+                    store.getStreamCryptocurrency(widget.cryptocurrency.id!);
                     return store.state;
                   },
                 ),
@@ -61,6 +57,36 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                 builder: (context, snapshot) {
                   return Container(
                     color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          snapshot.data!.name!,
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
+                                    color: Colors.black87,
+                                  ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          snapshot.data!.marketData!.currentPrice!.usd!
+                              .toString(),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        SizedBox(height: 45),
+                        ChartSparkline7dWidget(
+                          data: snapshot.data!.marketData!.sparkline7d!.price!,
+                          priceChangePercentage7d: snapshot
+                              .data!.marketData!.priceChangePercentage7d!
+                              .toDouble(),
+                        ),
+                      ],
+                    ),
                   );
                 },
               );
@@ -71,3 +97,27 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
     );
   }
 }
+
+
+
+                        // Text(
+                        //   'Price Max: ${snapshot.data!.marketData!.sparkline7d!.price!.reduce((curr, next) => curr > next ? curr : next)}',
+                        //   style:
+                        //       Theme.of(context).textTheme.headline4!.copyWith(
+                        //             color: Colors.black87,
+                        //           ),
+                        // ),
+                        // Text(
+                        //   'Price Min: ${snapshot.data!.marketData!.sparkline7d!.price!.reduce((curr, next) => curr < next ? curr : next)}',
+                        //   style:
+                        //       Theme.of(context).textTheme.headline4!.copyWith(
+                        //             color: Colors.black87,
+                        //           ),
+                        // ),
+                        // Text(
+                        //   'Price Atual: ${snapshot.data!.marketData!.currentPrice!.usd}',
+                        //   style:
+                        //       Theme.of(context).textTheme.headline4!.copyWith(
+                        //             color: Colors.black87,
+                        //           ),
+                        // ),

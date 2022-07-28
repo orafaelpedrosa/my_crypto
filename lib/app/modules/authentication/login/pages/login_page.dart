@@ -231,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
                                     .authLogin(_store.state)
                                     .then((value) async {
                                   if (!_store.userCurrent!.emailVerified) {
-                                    await openErrorSnackBar(context,
+                                    await openWarningSnackBar(context,
                                         "Verifique seu email para continuar");
                                     await _store.authLogout();
                                     _btnController1.reset();

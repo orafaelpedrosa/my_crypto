@@ -45,7 +45,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                 const Duration(seconds: 5),
                 (_) {
                   if (!store.search) {
-                    store.getListCryptoStream();
+                    // store.getListCryptoStream();
                   }
                   return store.state;
                 },
