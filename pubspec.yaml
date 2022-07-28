@@ -28,6 +28,9 @@ dependencies:
   shimmer: ^2.0.0
   local_auth: ^2.1.0
   syncfusion_flutter_charts: ^20.2.40
+  flutter_html: ^3.0.0-alpha.5
+
+
 
 
 

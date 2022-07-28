@@ -23,7 +23,6 @@ class _ChartSparkline7dWidgetState extends State<ChartSparkline7dWidget> {
               ? Colors.green
               : Colors.red
           : Colors.blue,
-          
       highPointColor: Colors.blue,
       axisLineColor: Colors.transparent,
       data: widget.data,

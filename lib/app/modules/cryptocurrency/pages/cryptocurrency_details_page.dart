@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
@@ -33,38 +34,40 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBarWidget(
         title: widget.cryptocurrency.symbol!.toUpperCase(),
         elevation: 1,
       ).build(context) as AppBar,
-      body: Center(
-        child: TripleBuilder<CryptocurrencyDataStore, DioError,
-            CryptocurrencyDetailsModel>(
-          store: store,
-          builder: (_, triple) {
-            if (store.isLoading) {
-              return LoadingWidget();
-            } else {
-              return StreamBuilder<CryptocurrencyDetailsModel>(
-                stream: Stream.periodic(
-                  const Duration(seconds: 10),
-                  (_) {
-                    store.getStreamCryptocurrency(widget.cryptocurrency.id!);
-                    return store.state;
-                  },
-                ),
-                initialData: store.state,
-                builder: (context, snapshot) {
-                  return Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
+      body: TripleBuilder<CryptocurrencyDataStore, DioError,
+          CryptocurrencyDetailsModel>(
+        store: store,
+        builder: (_, triple) {
+          if (store.isLoading) {
+            return LoadingWidget();
+          } else {
+            return StreamBuilder<CryptocurrencyDetailsModel>(
+              stream: Stream.periodic(
+                const Duration(seconds: 10),
+                (_) {
+                  store.getStreamCryptocurrency(widget.cryptocurrency.id!);
+                  return store.state;
+                },
+              ),
+              initialData: store.state,
+              builder: (context, snapshot) {
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        SizedBox(height: 20),
                         Text(
                           snapshot.data!.name!,
                           style:
-                              Theme.of(context).textTheme.headline5!.copyWith(
+                              Theme.of(context).textTheme.headline3!.copyWith(
                                     color: Colors.black87,
                                   ),
                         ),
@@ -85,14 +88,35 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               .data!.marketData!.priceChangePercentage7d!
                               .toDouble(),
                         ),
+                        SizedBox(height: 40),
+                        Text(
+                          'Sobre',
+                          style:
+                              Theme.of(context).textTheme.headline3!.copyWith(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          snapshot.data!.description!.en!,
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
+                                    color: Colors.black87,
+                                  ),
+                          textAlign: TextAlign.justify,
+                        ),
+                        // Html(
+                        //   data: snapshot.data!.description!.en!,
+                        // ),
                       ],
                     ),
-                  );
-                },
-              );
-            }
-          },
-        ),
+                  ),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

@@ -25,7 +25,7 @@ class CryptocurrencyRepository with Disposable {
       final List<CryptocurrencySimpleModel> cryptos =
           List.empty(growable: true);
       response.data.forEach(
-        (crypto) {
+        (crypto) {  
           cryptos.add(CryptocurrencySimpleModel.fromJson(crypto));
         },
       );
@@ -39,7 +39,7 @@ class CryptocurrencyRepository with Disposable {
   Future<CryptocurrencyDetailsModel> getCryptoData(String id) async {
     try {
       final Response response = await _dio.get(
-        '$urlBase/$id?sparkline=true',
+        'https://api.coingecko.com/api/v3/coins/$id?sparkline=true',
       );
       final CryptocurrencyDetailsModel crypto =
           CryptocurrencyDetailsModel.fromMap(response.data);
