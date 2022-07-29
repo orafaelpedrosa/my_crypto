@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
+import 'package:mycrypto/app/shared/utils/utils.dart';
 
 class CryptocurrencyItemListWidget extends StatefulWidget {
   final CryptocurrencySimpleModel coin;
@@ -18,6 +19,7 @@ class CryptocurrencyItemListWidget extends StatefulWidget {
 class _CryptocurrencyItemListWidgetState
     extends State<CryptocurrencyItemListWidget> {
   ListCryptocurrenciesStore store = Modular.get();
+  Utils utils = Utils();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -85,7 +87,7 @@ class _CryptocurrencyItemListWidgetState
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  widget.coin.currentPrice.toString(),
+                  utils.formatNumber(widget.coin.currentPrice!.toDouble()),
                   style: Theme.of(context).textTheme.headline3!.copyWith(
                         color: Colors.black87,
                         fontWeight: FontWeight.bold,

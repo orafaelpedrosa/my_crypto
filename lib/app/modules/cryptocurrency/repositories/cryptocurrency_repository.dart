@@ -2,9 +2,12 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/charts_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/charts_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
+
 
 class CryptocurrencyRepository with Disposable {
   final Dio _dio = Dio();
@@ -46,6 +49,20 @@ class CryptocurrencyRepository with Disposable {
       return crypto;
     } catch (e) {
       log('Error getCrypto: $e');
+      rethrow;
+    }
+  }
+
+  Future<ChartModel> getChartData(ChartsParamsModel paramsModel) async {
+    try {
+      final Response response = await _dio.get(
+        'https://api.coingecko.com/api/v3/coins/${paramsModel.id}/market_chart',
+        queryParameters:  paramsModel.toJson(),
+      );
+      final ChartModel chart = ChartModel.fromJson(response.data);
+      return chart;
+    } catch (e) {
+      log('Error getChart: $e');
       rethrow;
     }
   }

@@ -5,9 +5,13 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline7d_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
+import 'package:mycrypto/app/shared/utils/utils.dart';
+import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
   final CryptocurrencySimpleModel cryptocurrency;
@@ -23,6 +27,8 @@ class CryptocurrencyDetailsPage extends StatefulWidget {
 
 class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   CryptocurrencyDataStore store = Modular.get();
+  ChartStore chartStore = Modular.get();
+  Utils utils = Utils();
 
   @override
   void initState() {
@@ -37,6 +43,11 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
       appBar: AppBarWidget(
         title: widget.cryptocurrency.symbol!.toUpperCase(),
         elevation: 1,
+        showAction: true,
+        iconAction: Icon(
+          Icons.star_rate_rounded,
+          color: Theme.of(context).primaryColor,
+        ),
       ).build(context) as AppBar,
       body: TripleBuilder<CryptocurrencyDataStore, DioError,
           CryptocurrencyDetailsModel>(
@@ -72,8 +83,8 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          snapshot.data!.marketData!.currentPrice!.usd!
-                              .toString(),
+                          utils.formatNumber(
+                              snapshot.data!.marketData!.currentPrice!.usd!),
                           style:
                               Theme.of(context).textTheme.headline1!.copyWith(
                                     color: Colors.black87,
@@ -88,6 +99,57 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               .toDouble(),
                         ),
                         SizedBox(height: 40),
+                        Align(
+                          alignment: AlignmentDirectional.center,
+                          child: ToggleSwitch(
+                            minWidth: 90.0,
+                            minHeight: 25.0,
+                            initialLabelIndex: 0,
+                            inactiveBgColor:
+                                Theme.of(context).cardColor.withOpacity(0.05),
+                            inactiveFgColor: Theme.of(context).cardColor,
+                            activeFgColor: Colors.white,
+                            dividerColor:
+                                Theme.of(context).cardColor.withOpacity(0.5),
+                            totalSwitches: 3,
+                            animate: true,
+                            borderWidth: 0.5,
+                            labels: ['1d', '7d', '30d'],
+                            onToggle: (index) {
+                              chartStore.chartsParamsModel.id =
+                                  snapshot.data!.id;
+                              chartStore.chartsParamsModel.vsCurrency = 'usd';
+                              switch (index) {
+                                case 0:
+                                  chartStore.chartsParamsModel.days = '1d';
+                                  break;
+                                case 1:
+                                  chartStore.chartsParamsModel.days = '7d';
+                                  break;
+                                case 1:
+                                  chartStore.chartsParamsModel.days = '30d';
+                              }
+                              chartStore.getChartData();
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 40),
+                        Text(
+                          'Market Cap:',
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        Text(
+                          '\$ ${utils.formatNumber(snapshot.data!.marketData!.marketCap!.usd!)}',
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
+                                    color: Colors.black87,
+                                  ),
+                        ),
+                        SizedBox(height: 25),
                         Text(
                           'Sobre',
                           style:
@@ -97,17 +159,17 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                                   ),
                         ),
                         SizedBox(height: 5),
-                        Text(
+                        ReadMoreText(
                           snapshot.data!.description!.en!,
-                          style:
-                              Theme.of(context).textTheme.headline5!.copyWith(
-                                    color: Colors.black87,
-                                  ),
+                          trimLines: 5,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(color: Colors.black87),
+                          colorClickableText: Theme.of(context).primaryColor,
+                          trimMode: TrimMode.Line,
                           textAlign: TextAlign.justify,
                         ),
-                        // Html(
-                        //   data: snapshot.data!.description!.en!,
-                        // ),
                       ],
                     ),
                   ),

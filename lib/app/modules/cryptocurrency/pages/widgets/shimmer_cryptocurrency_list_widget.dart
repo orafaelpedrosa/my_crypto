@@ -23,23 +23,39 @@ class _ShimmerCryptocurrencyListWidgetState
         ),
         child: Column(
           children: [
-            Card(
-              color: Colors.transparent,
-              elevation: 2,
-              margin: const EdgeInsets.all(5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ListTile(
-                leading: Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  height: 60,
-                  width: 60,
+            ListTile(
+              leading: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
                 ),
-                title: Row(
+                height: 60,
+                width: 60,
+              ),
+              title: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    height: 17.5,
+                    width: 50,
+                  ),
+                  Spacer(),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    height: 17.5,
+                    width: 80,
+                  ),
+                ],
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -47,42 +63,18 @@ class _ShimmerCryptocurrencyListWidgetState
                         color: Colors.white,
                       ),
                       height: 17.5,
-                      width: 50,
+                      width: 17.5,
                     ),
-                    Spacer(),
+                    SizedBox(width: 10),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.white,
                       ),
                       height: 17.5,
-                      width: 80,
+                      width: 60,
                     ),
                   ],
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                        ),
-                        height: 17.5,
-                        width: 17.5,
-                      ),
-                      SizedBox(width: 10),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                        ),
-                        height: 17.5,
-                        width: 60,
-                      ),
-                    ],
-                  ),
                 ),
               ),
             ),
