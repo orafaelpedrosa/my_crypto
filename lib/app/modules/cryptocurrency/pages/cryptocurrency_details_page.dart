@@ -38,6 +38,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    int selectIndex = 0;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
@@ -104,7 +105,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                           child: ToggleSwitch(
                             minWidth: 90.0,
                             minHeight: 25.0,
-                            initialLabelIndex: 0,
+                            initialLabelIndex: selectIndex,
                             inactiveBgColor:
                                 Theme.of(context).cardColor.withOpacity(0.05),
                             inactiveFgColor: Theme.of(context).cardColor,
@@ -116,6 +117,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             borderWidth: 0.5,
                             labels: ['1d', '7d', '30d'],
                             onToggle: (index) {
+                              selectIndex = index!;
                               chartStore.chartsParamsModel.id =
                                   snapshot.data!.id;
                               chartStore.chartsParamsModel.vsCurrency = 'usd';

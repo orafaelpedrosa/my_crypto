@@ -12,8 +12,7 @@ class CryptocurrencyDataStore
   CryptocurrencyDataStore() : super(CryptocurrencyDetailsModel());
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
-  String htmlString = '<a href="https://www.google.com">Google</a>';
-  Utils utils = Utils();
+  final Utils utils = Utils();
 
   Future<void> getCryptocurrencyById(String id) async {
     setLoading(true);

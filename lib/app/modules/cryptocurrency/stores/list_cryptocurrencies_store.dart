@@ -34,7 +34,8 @@ class ListCryptocurrenciesStore
       setError(onError);
     });
   }
-    Future<void> getListCryptoStream() async {
+
+  Future<void> getListCryptoStream() async {
     await _repository.getListCryptocurrenciesData(marketsParams).then((value) {
       listCrypto = value;
       update(value);
