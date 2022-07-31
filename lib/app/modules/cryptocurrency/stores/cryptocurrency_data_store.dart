@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
 import 'package:mycrypto/app/shared/utils/utils.dart';
 
 class CryptocurrencyDataStore
@@ -12,6 +13,7 @@ class CryptocurrencyDataStore
   CryptocurrencyDataStore() : super(CryptocurrencyDetailsModel());
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
+  final ChartStore chartStore = Modular.get();
   final Utils utils = Utils();
 
   Future<void> getCryptocurrencyById(String id) async {

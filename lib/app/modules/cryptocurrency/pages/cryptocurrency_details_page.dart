@@ -5,7 +5,6 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline7d_widget.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
 import 'package:mycrypto/app/shared/utils/utils.dart';
 import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
@@ -27,12 +26,16 @@ class CryptocurrencyDetailsPage extends StatefulWidget {
 
 class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   CryptocurrencyDataStore store = Modular.get();
-  ChartStore chartStore = Modular.get();
+
   Utils utils = Utils();
 
   @override
   void initState() {
     store.getCryptocurrencyById(widget.cryptocurrency.id!);
+    store.chartStore.chartsParamsModel.id = widget.cryptocurrency.id;
+    store.chartStore.chartsParamsModel.days = '1d';
+    store.chartStore.chartsParamsModel.vsCurrency = 'usd';
+    store.chartStore.getChartData();
     super.initState();
   }
 
@@ -94,7 +97,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         ),
                         SizedBox(height: 45),
                         ChartSparkline7dWidget(
-                          data: snapshot.data!.marketData!.sparkline7d!.price!,
+                          // data: snapshot.data!.marketData!.sparkline7d!.price!,
                           priceChangePercentage7d: snapshot
                               .data!.marketData!.priceChangePercentage7d!
                               .toDouble(),
@@ -117,21 +120,25 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             borderWidth: 0.5,
                             labels: ['1d', '7d', '30d'],
                             onToggle: (index) {
-                              selectIndex = index!;
-                              chartStore.chartsParamsModel.id =
+                              store.chartStore.chartsParamsModel.id =
                                   snapshot.data!.id;
-                              chartStore.chartsParamsModel.vsCurrency = 'usd';
+                              store.chartStore.chartsParamsModel.vsCurrency =
+                                  'usd';
                               switch (index) {
                                 case 0:
-                                  chartStore.chartsParamsModel.days = '1d';
+                                  store.chartStore.chartsParamsModel.days =
+                                      '1d';
                                   break;
                                 case 1:
-                                  chartStore.chartsParamsModel.days = '7d';
+                                  store.chartStore.chartsParamsModel.days =
+                                      '7d';
                                   break;
-                                case 1:
-                                  chartStore.chartsParamsModel.days = '30d';
+                                case 2:
+                                  store.chartStore.chartsParamsModel.days =
+                                      '30d';
                               }
-                              chartStore.getChartData();
+                              selectIndex = index!;
+                              store.chartStore.getChartData();
                             },
                           ),
                         ),

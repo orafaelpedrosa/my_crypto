@@ -7,21 +7,34 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_mo
 import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 
-class ChartStore extends NotifierStore<DioError, ChartModel> {
-  ChartStore() : super(ChartModel());
+class ChartStore extends NotifierStore<DioError, List<double>> {
+  ChartStore() : super([]);
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
-  final ChartsParamsModel chartsParamsModel = ChartsParamsModel();
+  ChartsParamsModel chartsParamsModel = ChartsParamsModel();
+  ChartModel chartModel = ChartModel();
+
+  // Future<void> getChartData() async {
+  //   setLoading(true);
+  //   await _repository.getChartData(chartsParamsModel).then((value) {
+  //     // update(value);
+  //     setLoading(false);
+  //   }).catchError((onError) {
+  //     setLoading(false);
+  //     log(onError.toString());
+  //     setError(onError);
+  //   });
+  // }
 
   Future<void> getChartData() async {
+    final List<double> data = [];
     setLoading(true);
-    await _repository.getChartData(chartsParamsModel).then((value) {
-      update(value);
-      setLoading(false);
-    }).catchError((onError) {
-      setLoading(false);
-      log(onError.toString());
-      setError(onError);
+    log('getChartData ${chartsParamsModel.days}');
+    chartModel = await _repository.getChartData(chartsParamsModel);
+    chartModel.prices!.forEach((element) {
+      data.add(element.last.toDouble());
     });
+    update(data);
+    setLoading(false);
   }
 }
