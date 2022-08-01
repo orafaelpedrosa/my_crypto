@@ -7,6 +7,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_mo
 import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 
+// ignore: must_be_immutable
 class ChartStore extends NotifierStore<DioError, List<double>> {
   ChartStore() : super([]);
   final CryptocurrencyRepository _repository =
