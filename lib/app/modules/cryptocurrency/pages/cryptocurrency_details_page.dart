@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline7d_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline_widget.dart';
 import 'package:mycrypto/app/shared/utils/utils.dart';
 import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
@@ -86,20 +86,43 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                                   ),
                         ),
                         SizedBox(height: 5),
-                        Text(
-                          utils.formatNumber(
-                              snapshot.data!.marketData!.currentPrice!.usd!),
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
+                        Row(
+                          children: [
+                            Text(
+                              utils.formatNumber(snapshot
+                                  .data!.marketData!.currentPrice!.usd!),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
                                     color: Colors.black87,
                                     fontWeight: FontWeight.bold,
                                   ),
+                            ),
+                            Spacer(),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: snapshot.data!.marketData!
+                                            .priceChangePercentage24h! >
+                                        0
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
+                              child: Text(
+                                utils.formatNumber(snapshot.data!.marketData!.priceChangePercentage24h!.toDouble()),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 45),
-                        ChartSparkline7dWidget(
-                          // data: snapshot.data!.marketData!.sparkline7d!.price!,
+                        ChartSparklineWidget(
                           priceChangePercentage7d: snapshot
-                              .data!.marketData!.priceChangePercentage7d!
+                              .data!.marketData!.priceChangePercentage24h!
                               .toDouble(),
                         ),
                         SizedBox(height: 40),
@@ -120,10 +143,10 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             borderWidth: 0.5,
                             labels: ['1d', '7d', '30d'],
                             onToggle: (index) {
-                              store.chartStore.chartsParamsModel.id =
-                                  snapshot.data!.id;
-                              store.chartStore.chartsParamsModel.vsCurrency =
-                                  'usd';
+                              // store.chartStore.chartsParamsModel.id =
+                              //     snapshot.data!.id;
+                              // store.chartStore.chartsParamsModel.vsCurrency =
+                              //     'usd';
                               switch (index) {
                                 case 0:
                                   store.chartStore.chartsParamsModel.days =

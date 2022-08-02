@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-class ChartSparkline7dWidget extends StatefulWidget {
-  // final List<double> data;
+class ChartSparklineWidget extends StatefulWidget {
   final double? priceChangePercentage7d;
-  const ChartSparkline7dWidget({
+  const ChartSparklineWidget({
     Key? key,
-    // required this.data,
     this.priceChangePercentage7d,
   }) : super(key: key);
 
   @override
-  State<ChartSparkline7dWidget> createState() => _ChartSparkline7dWidgetState();
+  State<ChartSparklineWidget> createState() => _ChartSparklineWidgetState();
 }
 
-class _ChartSparkline7dWidgetState extends State<ChartSparkline7dWidget> {
-  final ChartStore chartStore = Modular.get();
+class _ChartSparklineWidgetState extends State<ChartSparklineWidget> {
+  final ChartStore _store = Modular.get();
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder<ChartStore, Exception, List<double>>(
-      store: chartStore,
+    return TripleBuilder<ChartStore, Exception, ChartModel>(
+      store: _store,
       builder: (_, triple) {
         return SfSparkLineChart(
           color: widget.priceChangePercentage7d != null
@@ -33,7 +32,7 @@ class _ChartSparkline7dWidgetState extends State<ChartSparkline7dWidget> {
               : Colors.blue,
           highPointColor: Colors.blue,
           axisLineColor: Colors.transparent,
-          data: chartStore.state,
+          data: _store.state.pricesChart,
           marker: SparkChartMarker(
             color: Colors.blue,
           ),
