@@ -11,11 +11,13 @@ openErrorSnackBar(context, String text) {
             color: Colors.white,
           ),
           SizedBox(width: 15),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.headline5!.copyWith(
-                  color: Colors.white,
-                ),
+          Expanded(
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                    color: Colors.white,
+                  ),
+            ),
           ),
         ],
       ),

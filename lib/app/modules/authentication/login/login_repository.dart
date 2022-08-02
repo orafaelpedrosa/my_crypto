@@ -114,26 +114,6 @@ class LoginRepository with Disposable {
     }
   }
 
-  // Future<void> googleAuth() async {
-  //   GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  //   if (googleSignInAccount != null) {
-  //     GoogleSignInAuthentication googleAuth =
-  //         await googleSignInAccount.authentication;
-
-  //     AuthCredential credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-
-  //     UserCredential userCredential =
-  //         await _firebaseAuth.signInWithCredential(credential);
-  //     User user = userCredential.user!;
-  //     log("User name: ${user.displayName}");
-  //   } else {
-  //     log("Erro ao logar com o Google");
-  //   }
-  // }
-
   @override
   void dispose() {}
 }
