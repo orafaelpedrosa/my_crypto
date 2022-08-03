@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -6,10 +8,10 @@ import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class ChartSparklineWidget extends StatefulWidget {
-  final double? priceChangePercentage7d;
+  final double? priceChangePercentage;
   const ChartSparklineWidget({
     Key? key,
-    this.priceChangePercentage7d,
+    this.priceChangePercentage,
   }) : super(key: key);
 
   @override
@@ -25,8 +27,8 @@ class _ChartSparklineWidgetState extends State<ChartSparklineWidget> {
       store: _store,
       builder: (_, triple) {
         return SfSparkLineChart(
-          color: widget.priceChangePercentage7d != null
-              ? (widget.priceChangePercentage7d! > 0)
+          color: widget.priceChangePercentage != null
+              ? (widget.priceChangePercentage! > 0)
                   ? Colors.green
                   : Colors.red
               : Colors.blue,

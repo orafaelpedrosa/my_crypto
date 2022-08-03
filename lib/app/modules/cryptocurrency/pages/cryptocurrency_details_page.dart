@@ -5,6 +5,7 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
 import 'package:mycrypto/app/shared/utils/utils.dart';
 import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
@@ -32,9 +33,9 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   @override
   void initState() {
     store.getCryptocurrencyById(widget.cryptocurrency.id!);
-    store.chartStore.chartsParamsModel.id = widget.cryptocurrency.id;
-    store.chartStore.chartsParamsModel.days = '1d';
-    store.chartStore.chartsParamsModel.vsCurrency = 'usd';
+    store.chartStore.paramsChart.id = widget.cryptocurrency.id;
+    store.chartStore.paramsChart.days = '1d';
+    store.chartStore.paramsChart.vsCurrency = 'usd';
     store.chartStore.getChartData();
     super.initState();
   }
@@ -100,37 +101,41 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                                   ),
                             ),
                             Spacer(),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: snapshot.data!.marketData!
-                                            .priceChangePercentage24h! >
-                                        0
-                                    ? Colors.green
-                                    : Colors.red,
-                              ),
-                              child: Text(
-                                utils.formatNumber(snapshot.data!.marketData!.priceChangePercentage24h!.toDouble()),
-                              ),
+                            // Container(
+                            //   padding: EdgeInsets.symmetric(
+                            //     horizontal: 10,
+                            //     vertical: 5,
+                            //   ),
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(5),
+                            //     color: snapshot.data!.marketData!
+                            //                 .priceChangePercentage24h! >
+                            //             0
+                            //         ? Colors.green
+                            //         : Colors.red,
+                            //   ),
+                            //   child: Text(
+                            //     utils.formatNumber(snapshot
+                            //         .data!.marketData!.priceChangePercentage24h!
+                            //         .toDouble()),
+                            //   ),
+                            // ),
+                            TabPriceChangePercentageWidget(
+                              priceChange:
+                                  store.changePricePercente(selectIndex),
+                              // priceChange: 0.0,
                             ),
                           ],
                         ),
                         SizedBox(height: 45),
                         ChartSparklineWidget(
-                          priceChangePercentage7d: snapshot
-                              .data!.marketData!.priceChangePercentage24h!
-                              .toDouble(),
+                          priceChangePercentage:
+                              store.changePricePercente(selectIndex),
                         ),
                         SizedBox(height: 40),
-                        Align(
-                          alignment: AlignmentDirectional.center,
+                        Center(
                           child: ToggleSwitch(
-                            minWidth: 90.0,
-                            minHeight: 25.0,
+                            minHeight: 35.0,
                             initialLabelIndex: selectIndex,
                             inactiveBgColor:
                                 Theme.of(context).cardColor.withOpacity(0.05),
@@ -138,30 +143,13 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             activeFgColor: Colors.white,
                             dividerColor:
                                 Theme.of(context).cardColor.withOpacity(0.5),
-                            totalSwitches: 3,
-                            animate: true,
+                            totalSwitches: 4,
+                            animate: false,
                             borderWidth: 0.5,
-                            labels: ['1d', '7d', '30d'],
+                            labels: ['1d', '7d', '30d', '1y'],
                             onToggle: (index) {
-                              // store.chartStore.chartsParamsModel.id =
-                              //     snapshot.data!.id;
-                              // store.chartStore.chartsParamsModel.vsCurrency =
-                              //     'usd';
-                              switch (index) {
-                                case 0:
-                                  store.chartStore.chartsParamsModel.days =
-                                      '1d';
-                                  break;
-                                case 1:
-                                  store.chartStore.chartsParamsModel.days =
-                                      '7d';
-                                  break;
-                                case 2:
-                                  store.chartStore.chartsParamsModel.days =
-                                      '30d';
-                              }
                               selectIndex = index!;
-                              store.chartStore.getChartData();
+                              store.chartStore.changeChart(index);
                             },
                           ),
                         ),

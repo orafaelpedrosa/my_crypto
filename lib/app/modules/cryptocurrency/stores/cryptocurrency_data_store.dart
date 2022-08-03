@@ -39,6 +39,21 @@ class CryptocurrencyDataStore
     });
   }
 
+  double changePricePercente(int period) {
+    switch (period) {
+      case 0:
+        return state.marketData!.priceChangePercentage24h!.toDouble();
+      case 1:
+        return state.marketData!.priceChangePercentage7d!.toDouble();
+      case 2:
+        return state.marketData!.priceChangePercentage30d!.toDouble();
+      case 3:
+        return state.marketData!.priceChangePercentage1y!.toDouble();
+      default:
+        return 0.0;
+    }
+  }
+
   Future<void> updateState(CryptocurrencyDetailsModel data) async {
     update(data);
   }
