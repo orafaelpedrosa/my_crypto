@@ -18,9 +18,10 @@ class CryptocurrencyDataStore
 
   Future<void> getCryptocurrencyById(String id) async {
     setLoading(true);
-    await _repository.getCryptoData(id).then((value) {
+    await _repository.getCryptoData(id).then((value) async {
       value.description!.en = utils.parseHtmlString(value.description!.en!);
       update(value);
+      await priceChangePercente(0);
       setLoading(false);
     }).catchError((onError) {
       setLoading(false);
@@ -29,10 +30,12 @@ class CryptocurrencyDataStore
     });
   }
 
-  Future<void> getStreamCryptocurrency(String id) async {
-    await _repository.getCryptoData(id).then((value) {
+  Future<void> getStreamCryptocurrency(String id, int index) async {
+    await _repository.getCryptoData(id).then((value) async {
       value.description!.en = utils.parseHtmlString(value.description!.en!);
+      value.priceChangePercente = changePricePercente(index);
       update(value);
+      log('MONZA: ${state.priceChangePercente}');
     }).catchError((onError) {
       log(onError.toString());
       setError(onError);
@@ -52,6 +55,32 @@ class CryptocurrencyDataStore
       default:
         return 0.0;
     }
+  }
+
+  Future<void> priceChangePercente(int period) async {
+    switch (period) {
+      case 0:
+        state.priceChangePercente = 
+            state.marketData?.priceChangePercentage24h!.toDouble() ?? 0.0;
+        break;
+      case 1:
+        state.priceChangePercente =
+            state.marketData?.priceChangePercentage7d!.toDouble() ?? 0.0;
+        break;
+      case 2:
+        state.priceChangePercente =
+            state.marketData?.priceChangePercentage30d!.toDouble() ?? 0.0;
+        break;
+      case 3:
+        state.priceChangePercente =
+            state.marketData?.priceChangePercentage1y!.toDouble() ?? 0.0;
+        break;
+      default:
+        state.priceChangePercente =
+            state.marketData?.priceChangePercentage24h!.toDouble() ?? 0.0;
+        break;
+    }
+    updateState(state);
   }
 
   Future<void> updateState(CryptocurrencyDetailsModel data) async {

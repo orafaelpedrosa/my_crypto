@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -33,6 +35,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   @override
   void initState() {
     store.getCryptocurrencyById(widget.cryptocurrency.id!);
+    store.priceChangePercente(0);
     store.chartStore.paramsChart.id = widget.cryptocurrency.id;
     store.chartStore.paramsChart.days = '1d';
     store.chartStore.paramsChart.vsCurrency = 'usd';
@@ -58,6 +61,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
           CryptocurrencyDetailsModel>(
         store: store,
         builder: (_, triple) {
+          log('GOLF: ${triple.state.priceChangePercente}');
           if (store.isLoading) {
             return LoadingWidget();
           } else {
@@ -65,12 +69,14 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
               stream: Stream.periodic(
                 const Duration(seconds: 10),
                 (_) {
-                  store.getStreamCryptocurrency(widget.cryptocurrency.id!);
+                  store.getStreamCryptocurrency(
+                      widget.cryptocurrency.id!, selectIndex);
                   return store.state;
                 },
               ),
               initialData: store.state,
               builder: (context, snapshot) {
+                log('STREAM CELTA: ${snapshot.data!.priceChangePercente}');
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: SingleChildScrollView(
@@ -108,29 +114,25 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             //   ),
                             //   decoration: BoxDecoration(
                             //     borderRadius: BorderRadius.circular(5),
-                            //     color: snapshot.data!.marketData!
-                            //                 .priceChangePercentage24h! >
-                            //             0
+                            //     color: store.state.priceChangePercente! > 0
                             //         ? Colors.green
                             //         : Colors.red,
                             //   ),
                             //   child: Text(
-                            //     utils.formatNumber(snapshot
-                            //         .data!.marketData!.priceChangePercentage24h!
-                            //         .toDouble()),
+                            //     store.state.priceChangePercente!.isNegative
+                            //         ? '${utils.formatNumber(store.state.priceChangePercente!)}%'
+                            //         : '+${utils.formatNumber(store.state.priceChangePercente!)}%',
                             //   ),
                             // ),
                             TabPriceChangePercentageWidget(
-                              priceChange:
-                                  store.changePricePercente(selectIndex),
+                              // priceChange: store.changePricePercente(selectIndex),
+                              //     store.changePricePercente(selectIndex),
                               // priceChange: 0.0,
                             ),
                           ],
                         ),
                         SizedBox(height: 45),
                         ChartSparklineWidget(
-                          priceChangePercentage:
-                              store.changePricePercente(selectIndex),
                         ),
                         SizedBox(height: 40),
                         Center(
@@ -150,6 +152,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             onToggle: (index) {
                               selectIndex = index!;
                               store.chartStore.changeChart(index);
+                              store.priceChangePercente(selectIndex);
                             },
                           ),
                         ),

@@ -32,6 +32,7 @@ class CryptocurrencyDetailsModel {
   CommunityData? communityData;
   DateTime? lastUpdated;
   List<Ticker>? tickers;
+  double? priceChangePercente;
 
   CryptocurrencyDetailsModel({
     this.id,
@@ -58,6 +59,7 @@ class CryptocurrencyDetailsModel {
     this.communityData,
     this.lastUpdated,
     this.tickers,
+    this.priceChangePercente,
   });
 
   Map<String, dynamic> toMap() {
