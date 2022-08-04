@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -26,7 +24,6 @@ class _ChartSparklineWidgetState extends State<ChartSparklineWidget> {
     return TripleBuilder<ChartStore, Exception, ChartModel>(
       store: _store,
       builder: (_, triple) {
-        log('SAVEIRO: ${_dataStore.state.priceChangePercente}');
         return SfSparkLineChart(
           color: _dataStore.state.priceChangePercente != null
               ? (_dataStore.state.priceChangePercente! > 0)

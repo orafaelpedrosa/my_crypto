@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -18,8 +16,6 @@ class ChartStore extends NotifierStore<DioError, ChartModel> {
   Future<void> getChartData() async {
     final List<double> data = List<double>.empty(growable: true);
     setLoading(true);
-    log('getChart ${paramsChart.days}');
-
     chart = await _repository.getChartData(paramsChart);
     chart.prices!.forEach((element) {
       data.add(element.last.toDouble());
@@ -30,8 +26,6 @@ class ChartStore extends NotifierStore<DioError, ChartModel> {
   }
 
   void changeChart(int period) {
-    log('changeChart $period');
-
     switch (period) {
       case 0:
         paramsChart.days = '1d';
@@ -51,8 +45,6 @@ class ChartStore extends NotifierStore<DioError, ChartModel> {
     }
     getChartData();
   }
-
-
 
   Future<void> updateState() async {
     update(state);

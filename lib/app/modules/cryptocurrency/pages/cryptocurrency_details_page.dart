@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -61,7 +59,6 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
           CryptocurrencyDetailsModel>(
         store: store,
         builder: (_, triple) {
-          log('GOLF: ${triple.state.priceChangePercente}');
           if (store.isLoading) {
             return LoadingWidget();
           } else {
@@ -76,7 +73,6 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
               ),
               initialData: store.state,
               builder: (context, snapshot) {
-                log('STREAM CELTA: ${snapshot.data!.priceChangePercente}');
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: SingleChildScrollView(
@@ -125,15 +121,14 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             //   ),
                             // ),
                             TabPriceChangePercentageWidget(
-                              // priceChange: store.changePricePercente(selectIndex),
-                              //     store.changePricePercente(selectIndex),
-                              // priceChange: 0.0,
-                            ),
+                                // priceChange: store.changePricePercente(selectIndex),
+                                //     store.changePricePercente(selectIndex),
+                                // priceChange: 0.0,
+                                ),
                           ],
                         ),
                         SizedBox(height: 45),
-                        ChartSparklineWidget(
-                        ),
+                        ChartSparklineWidget(),
                         SizedBox(height: 40),
                         Center(
                           child: ToggleSwitch(

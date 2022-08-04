@@ -35,7 +35,6 @@ class CryptocurrencyDataStore
       value.description!.en = utils.parseHtmlString(value.description!.en!);
       value.priceChangePercente = changePricePercente(index);
       update(value);
-      log('MONZA: ${state.priceChangePercente}');
     }).catchError((onError) {
       log(onError.toString());
       setError(onError);
