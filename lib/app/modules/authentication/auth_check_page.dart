@@ -39,6 +39,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
 
   @override
   void initState() {
+    
     checkLocalAuth();
     super.initState();
   }

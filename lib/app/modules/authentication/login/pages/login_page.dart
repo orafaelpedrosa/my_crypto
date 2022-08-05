@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     email.text = 'orafaelpedrosa@outlook.com';
     password.text = 'aezakmi';
+    _store.authService();
     super.initState();
   }
 
