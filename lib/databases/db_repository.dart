@@ -11,11 +11,3 @@ class DBRepository with Disposable {
   @override
   void dispose() {}
 }
-gradient4(){
-return LinearGradient(colors: [Colors.blue, Colors.blue.shade900]);
-}
-LinearGradient(colors: [Colors.blue, Colors.blue.shade900])
-
-gradient4(){
-return LinearGradient(colors: [Colors.blue, Colors.blue.shade900]);
-}
