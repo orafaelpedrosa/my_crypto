@@ -103,28 +103,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                                   ),
                             ),
                             Spacer(),
-                            // Container(
-                            //   padding: EdgeInsets.symmetric(
-                            //     horizontal: 10,
-                            //     vertical: 5,
-                            //   ),
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(5),
-                            //     color: store.state.priceChangePercente! > 0
-                            //         ? Colors.green
-                            //         : Colors.red,
-                            //   ),
-                            //   child: Text(
-                            //     store.state.priceChangePercente!.isNegative
-                            //         ? '${utils.formatNumber(store.state.priceChangePercente!)}%'
-                            //         : '+${utils.formatNumber(store.state.priceChangePercente!)}%',
-                            //   ),
-                            // ),
-                            TabPriceChangePercentageWidget(
-                                // priceChange: store.changePricePercente(selectIndex),
-                                //     store.changePricePercente(selectIndex),
-                                // priceChange: 0.0,
-                                ),
+                            TabPriceChangePercentageWidget(),
                           ],
                         ),
                         SizedBox(height: 45),
@@ -200,27 +179,3 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
     );
   }
 }
-
-
-
-                        // Text(
-                        //   'Price Max: ${snapshot.data!.marketData!.sparkline7d!.price!.reduce((curr, next) => curr > next ? curr : next)}',
-                        //   style:
-                        //       Theme.of(context).textTheme.headline4!.copyWith(
-                        //             color: Colors.black87,
-                        //           ),
-                        // ),
-                        // Text(
-                        //   'Price Min: ${snapshot.data!.marketData!.sparkline7d!.price!.reduce((curr, next) => curr < next ? curr : next)}',
-                        //   style:
-                        //       Theme.of(context).textTheme.headline4!.copyWith(
-                        //             color: Colors.black87,
-                        //           ),
-                        // ),
-                        // Text(
-                        //   'Price Atual: ${snapshot.data!.marketData!.currentPrice!.usd}',
-                        //   style:
-                        //       Theme.of(context).textTheme.headline4!.copyWith(
-                        //             color: Colors.black87,
-                        //           ),
-                        // ),

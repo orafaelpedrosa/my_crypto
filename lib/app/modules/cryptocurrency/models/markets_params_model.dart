@@ -42,34 +42,4 @@ class MarketsParamsModel {
     data['price_change_percentage'] = priceChangePercentage;
     return data;
   }
-
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'vsCurrency': vsCurrency ?? 'usd',
-  //     'ids': ids ?? '',
-  //     'category': category ?? '',
-  //     'order': order ?? '',
-  //     'perPage': perPage ?? '',
-  //     'page': page ?? '',
-  //     'sparkline': sparkline ?? '',
-  //     'priceChangePercentage': priceChangePercentage ?? '',
-  //   };
-  // }
-
-  // factory MarketsParamsModel.fromMap(Map<String, dynamic> map) {
-  //   return MarketsParamsModel(
-  //     vsCurrency: map['vsCurrency'] as String?,
-  //     ids: map['ids'] as String?,
-  //     category: map['category'] as String?,
-  //     order: map['order'] as String?,
-  //     perPage: map['perPage'] as String?,
-  //     page: map['page'] as String?,
-  //     sparkline: map['sparkline'],
-  //     priceChangePercentage: map['priceChangePercentage'] as String?,
-  //   );
-  // }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory MarketsParamsModel.fromJson(String source) => MarketsParamsModel.fromMap(json.decode(source));
 }

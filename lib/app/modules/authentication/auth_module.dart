@@ -8,21 +8,13 @@ import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.d
 import 'package:mycrypto/app/modules/authentication/register/register_module.dart';
 
 class AuthModule extends Module {
-  List<Module> get imports => [
-      ];
+  List<Module> get imports => [];
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => LoginRepository()),
     Bind.lazySingleton((i) => LoginStore()),
     Bind.lazySingleton((i) => ObscureStore()),
     Bind.lazySingleton((i) => AuthCheckStore()),
-    // Bind.lazySingleton((i) => RegisterRepository()),
-    // Bind.lazySingleton((i) => CryptoStore()),
-    // Bind.lazySingleton((i) => RegisterModule()),
-    // Bind.lazySingleton((i) => CryptocurrencyModule()),
-    // Bind.lazySingleton((i) => ListCryptocurrenciesStore()),
-    // Bind.lazySingleton((i) => CryptocurrencyRepository()),
-    // Bind.lazySingleton((i) => CryptocurrencyDataStore()),
   ];
 
   @override

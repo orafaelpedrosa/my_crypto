@@ -71,36 +71,6 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     ),
                   ),
                 );
-                // if (store.state.isEmpty) {
-                //   return Theme(
-                //     data: Theme.of(context).copyWith(
-                //       shadowColor: Colors.transparent,
-                //     ),
-                //     child: SingleChildScrollView(
-                //       child: Column(
-                //         children: List.generate(
-                //           10,
-                //           (index) => const ShimmerCryptocurrencyListWidget(),
-                //         ),
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   return RefreshIndicator(
-                //     onRefresh: () async {
-                //       store.getListCryptocurrencies();
-                //     },
-                //     child: ListView.builder(
-                //       itemCount: store.state.length,
-                //       itemBuilder: (_, index) {
-                //         store.getFormatImage(store.state[index].image);
-                //         return CryptocurrencyItemListWidget(
-                //           coin: store.state[index],
-                //         );
-                //       },
-                //     ),
-                //   );
-                // }
               },
             ),
           );
