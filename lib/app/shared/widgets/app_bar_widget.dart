@@ -7,6 +7,7 @@ class AppBarWidget extends StatelessWidget {
   final Color? colorTitle;
   final Color backgroundColor;
   final Function()? onBackPressed;
+  final Function()? actionsPressed;
   final Icon? iconLeading;
   final bool showLeading;
   final Icon? iconAction;
@@ -25,6 +26,7 @@ class AppBarWidget extends StatelessWidget {
     this.iconAction,
     this.iconLeading,
     this.onBackPressed,
+    this.actionsPressed,
     this.elevation = 0,
   }) : super(key: key);
 
@@ -64,7 +66,8 @@ class AppBarWidget extends StatelessWidget {
                 Icon(
                   Icons.check,
                 ),
-            onPressed: () {},
+            onPressed: actionsPressed ??
+                () {},
           ),
       ],
     );

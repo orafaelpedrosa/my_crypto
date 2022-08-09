@@ -6,6 +6,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_detail
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
 import 'package:mycrypto/app/shared/utils/utils.dart';
 import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
@@ -27,6 +28,7 @@ class CryptocurrencyDetailsPage extends StatefulWidget {
 
 class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   CryptocurrencyDataStore store = Modular.get();
+  CryptoFavoriteStore cryptoFavorite = Modular.get();
 
   Utils utils = Utils();
 
@@ -51,9 +53,20 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
         elevation: 1,
         showAction: true,
         iconAction: Icon(
-          Icons.star_rate_rounded,
+          // Icons.star_rate_rounded,
+          cryptoFavorite.state.any((current) => current.id == widget.cryptocurrency.id)
+              ? Icons.star_border_rounded
+              : Icons.star_rounded,
           color: Theme.of(context).primaryColor,
         ),
+        actionsPressed: () {
+
+          if (cryptoFavorite.state.any((current) => current.id == widget.cryptocurrency.id)) {
+            cryptoFavorite.removeFavorite(widget.cryptocurrency);
+          } else {
+            cryptoFavorite.addFavorite(widget.cryptocurrency);
+          }
+        },
       ).build(context) as AppBar,
       body: TripleBuilder<CryptocurrencyDataStore, DioError,
           CryptocurrencyDetailsModel>(
