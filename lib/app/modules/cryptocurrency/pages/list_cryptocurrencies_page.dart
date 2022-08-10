@@ -54,6 +54,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             focusNode: _searchFocus,
             hintText: 'Pesquise uma criptomoeda',
             enableSuggestions: false,
+            autocorrect: false,
             onChange: (value) {
               if (value != '') {
                 store.searchCrypto(value!);
