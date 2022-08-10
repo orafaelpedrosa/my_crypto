@@ -55,8 +55,7 @@ class _CryptocurrencyItemListWidgetState
         subtitle: Row(
           children: [
             Container(
-              padding:
-                  const EdgeInsets.only(left: 5, right: 5),
+              padding: const EdgeInsets.only(left: 5, right: 5),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(5),
@@ -117,7 +116,7 @@ class _CryptocurrencyItemListWidgetState
                           ? '${widget.coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
                           : '+' +
                               '${widget.coin.priceChangePercentage24h!.toStringAsFixed(2)}%',
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
                             color: widget.coin.priceChangePercentage24h
                                     .toString()
                                     .contains('-')
