@@ -28,7 +28,7 @@ class CryptoFavoriteStore
     db = FirestoreRepository.get();
   }
 
-  Future<void> saveAll(List<CryptocurrencySimpleModel> cryptos) async {
+  Future<void> _saveAll(List<CryptocurrencySimpleModel> cryptos) async {
     cryptos.forEach((crypto) async {
       if (_list.any((current) => current.id == crypto.id)) {
         _list.add(crypto);
@@ -41,6 +41,7 @@ class CryptoFavoriteStore
           'id': crypto.id,
         }).then((value) {
           update(_list);
+          updateState();
           log('saveAll: ${crypto.name}');
         }).catchError((error) {
           log(error);
@@ -50,7 +51,7 @@ class CryptoFavoriteStore
     });
   }
 
-  Future<void> removeFavorite(CryptocurrencySimpleModel crypto) async {
+  Future<void> _removeFavorite(CryptocurrencySimpleModel crypto) async {
     await db
         .collection('users')
         .doc(userStore.user!.uid)
@@ -60,6 +61,7 @@ class CryptoFavoriteStore
         .then((value) {
       _list.removeWhere((current) => current.id == crypto.id);
       update(_list);
+      updateState();
       log('removed');
     }).catchError((error) {
       log(error);
@@ -67,8 +69,7 @@ class CryptoFavoriteStore
     });
   }
 
-  Future<void> addFavorite(CryptocurrencySimpleModel crypto) async {
-    _startFavorites();
+  Future<void> _addFavorite(CryptocurrencySimpleModel crypto) async {
     if (_list.any((current) => current.id == crypto.id)) {
       return;
     }
@@ -82,6 +83,7 @@ class CryptoFavoriteStore
     }).then((value) {
       _list.add(crypto);
       update(_list);
+      updateState();
       log('add');
     }).catchError((error) {
       log(error);
@@ -89,29 +91,62 @@ class CryptoFavoriteStore
     });
   }
 
-  readFavorites() async {
-    if (userStore.user != null && state.isNotEmpty) {
+  Future<void> _getFavorites() async {
+    if (userStore.user != null) {
       final snapshot = await db
           .collection('users')
           .doc(userStore.user!.uid)
           .collection('favorites')
-          .get()
-          .then((value) {
+          .get();
+      if (snapshot.docs.isNotEmpty) {
+        snapshot.docs.forEach((doc) {
+          _list.add(CryptocurrencySimpleModel.fromJson(doc.data()));
+        });
         update(_list);
-        log('get favorites');
-      }).catchError((error) {
-        log(error);
-        throw error;
-      });
-      snapshot.docs.forEach((doc) {
-        _list.add(CryptocurrencySimpleModel.fromJson(doc.data()));
-      });
-      update(_list);
-      _list.forEach((crypto) {
-        log('${crypto.name}');
-      });
+        updateState();
+      }
     } else {
-      log('User ${userStore.user}');
+      log('User null _getFavorites');
     }
+  }
+
+  bool isFavorite(CryptocurrencySimpleModel crypto) {
+    if (_list.any((current) => current.id == crypto.id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> toggleFavorite(CryptocurrencySimpleModel crypto) async {
+    if (_list.any((current) => current.id == crypto.id)) {
+      await _removeFavorite(crypto);
+    } else {
+      await _addFavorite(crypto);
+    }
+    await _getFavorites();
+  }
+
+  Future<void> startFavorites() async {
+    await _startFavorites();
+    await _getFavorites();
+  }
+
+  Future<void> removeFavorite(CryptocurrencySimpleModel crypto) async {
+    await _removeFavorite(crypto);
+  }
+
+  Future<void> addFavorite(CryptocurrencySimpleModel crypto) async {
+    await _addFavorite(crypto);
+  }
+
+  Future<void> saveAllFavorites(List<CryptocurrencySimpleModel> cryptos) async {
+    await _saveAll(cryptos);
+  }
+
+  Future<void> updateState() async {
+    final List<CryptocurrencySimpleModel> list =
+        List<CryptocurrencySimpleModel>.from(_list);
+    update(list);
   }
 }

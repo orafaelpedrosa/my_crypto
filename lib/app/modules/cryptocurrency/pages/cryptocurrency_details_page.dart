@@ -30,7 +30,6 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   CryptocurrencyDataStore store = Modular.get();
   CryptoFavoriteStore cryptoFavorite = Modular.get();
 
-
   @override
   void initState() {
     store.getCryptocurrencyById(widget.cryptocurrency.id!);
@@ -51,21 +50,21 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
         title: widget.cryptocurrency.symbol!.toUpperCase(),
         elevation: 1,
         showAction: true,
-        iconAction: Icon(
-          // Icons.star_rate_rounded,
-          cryptoFavorite.state.any((current) => current.id == widget.cryptocurrency.id)
-              ? Icons.star_border_rounded
-              : Icons.star_rounded,
-          color: Theme.of(context).primaryColor,
-        ),
-        actionsPressed: () {
-
-          if (cryptoFavorite.state.any((current) => current.id == widget.cryptocurrency.id)) {
-            cryptoFavorite.removeFavorite(widget.cryptocurrency);
-          } else {
-            cryptoFavorite.addFavorite(widget.cryptocurrency);
-          }
-        },
+        actions: [
+          TripleBuilder<CryptoFavoriteStore, Exception,
+                  List<CryptocurrencySimpleModel>>(
+              store: cryptoFavorite,
+              builder: (_, triple) {
+                return IconButton(
+                  icon: cryptoFavorite.isFavorite(widget.cryptocurrency)
+                      ? Icon(Icons.star)
+                      : Icon(Icons.star_border),
+                  onPressed: () {
+                    cryptoFavorite.toggleFavorite(widget.cryptocurrency);
+                  },
+                );
+              }),
+        ],
       ).build(context) as AppBar,
       body: TripleBuilder<CryptocurrencyDataStore, DioError,
           CryptocurrencyDetailsModel>(

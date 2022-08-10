@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/shared/widgets/search_input/search_input_widget.dart';
 
@@ -20,10 +21,12 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final LoginStore loginStore = Modular.get();
   TextEditingController _searchController = TextEditingController();
   FocusNode _searchFocus = FocusNode();
+  final CryptoFavoriteStore cryptoFavoriteStore = Modular.get();
 
   @override
   void initState() {
     store.getListCryptocurrencies();
+    cryptoFavoriteStore.startFavorites();
     super.initState();
   }
 

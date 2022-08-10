@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -25,9 +27,10 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   Future<void> authLogin(CredentialModel data) async {
     setLoading(true);
-    await _loginRepository.authLogin(data).then((value) {
-      userStore.getUser();
+    await _loginRepository.authLogin(data).then((value) async {
       _authCheckStore.updateState(true);
+      await userStore.getUser();
+      log('authLogin: ${userStore.user!.displayName}');
       setLoading(false);
     }).catchError(
       (error) {
@@ -40,7 +43,6 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   Future<void> authLogout() async {
     setLoading(true);
     await _loginRepository.authLogout().then((value) {
-      UserStore.signOut();
       Modular.to.pushReplacementNamed('/login/');
       setLoading(false);
     }).catchError(
@@ -65,8 +67,8 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   Future<void> authGoogle() async {
     setLoading(true);
-    await _loginRepository.googleAuth().then((value) {
-      userStore.getUser();
+    await _loginRepository.googleAuth().then((value) async {
+      await userStore.getUser();
       setLoading(false);
       Modular.to.pushReplacementNamed('/cryptocurrency/');
     }).catchError(

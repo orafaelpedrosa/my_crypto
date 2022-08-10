@@ -14,7 +14,7 @@ class UserStore extends NotifierStore<Exception, bool> {
     await FirebaseAuth.instance.signOut();
   }
 
-  static Future<bool> stateUser() async {
+  static bool stateUser()  {
     return FirebaseAuth.instance.currentUser != null;
   }
 }

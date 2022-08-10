@@ -10,7 +10,7 @@ class AppBarWidget extends StatelessWidget {
   final Function()? actionsPressed;
   final Icon? iconLeading;
   final bool showLeading;
-  final Icon? iconAction;
+  final List<Widget> actions;
   final bool showAction;
   final double elevation;
 
@@ -23,7 +23,7 @@ class AppBarWidget extends StatelessWidget {
     this.backgroundColor = Colors.white,
     this.showLeading = true,
     this.showAction = false,
-    this.iconAction,
+    this.actions = const [],
     this.iconLeading,
     this.onBackPressed,
     this.actionsPressed,
@@ -59,17 +59,7 @@ class AppBarWidget extends StatelessWidget {
                   },
             )
           : SizedBox.shrink(),
-      actions: <Widget>[
-        if (showAction)
-          IconButton(
-            icon: iconAction ??
-                Icon(
-                  Icons.check,
-                ),
-            onPressed: actionsPressed ??
-                () {},
-          ),
-      ],
+      actions: actions,
     );
   }
 }

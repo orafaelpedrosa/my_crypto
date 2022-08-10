@@ -81,7 +81,6 @@ class CryptocurrencySimpleModel {
     symbol = json['symbol'];
     name = json['name'];
     image = json['image'];
-    // formatImage = json['format_image'];
     currentPrice = json['current_price'];
     marketCap = json['market_cap'];
     marketCapRank = json['market_cap_rank'];
@@ -102,11 +101,12 @@ class CryptocurrencySimpleModel {
     atl = json['atl'];
     atlChangePercentage = json['atl_change_percentage'];
     atlDate = json['atl_date'];
-    if (json['roi'] != null) {
-      roi = RoiModel.fromJson(json['roi']);
-    }
+    roi = json['roi'] != null ? RoiModel.fromJson(json['roi']) : null;
+
     lastUpdated = json['last_updated'];
-    sparklineIn7d = SparklineIn7dModel.fromJson(json['sparkline_in_7d']);
+    sparklineIn7d = json['sparkline_in_7d'] != null
+        ? SparklineIn7dModel.fromJson(json['sparkline_in_7d'])
+        : null;
     priceChangePercentage1hInCurrency =
         json['price_change_percentage_1h_in_currency'];
     priceChangePercentage24hInCurrency =
