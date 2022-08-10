@@ -4,12 +4,16 @@ import 'package:mycrypto/app/modules/authentication/auth_module.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_module.dart';
 import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
 import 'package:mycrypto/app/modules/authentication/register/register_module.dart';
+import 'package:mycrypto/app/modules/authentication/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
 
 class AppModule extends Module {
+  
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => LoginPage()),
+    Bind.lazySingleton((i) => UserStore()),
+
   ];
 
   @override

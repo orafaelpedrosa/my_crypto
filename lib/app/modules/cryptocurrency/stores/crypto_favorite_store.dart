@@ -1,13 +1,14 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
+import 'package:mycrypto/app/modules/authentication/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/databases/firestore_repository.dart';
 
+// ignore: must_be_immutable
 class CryptoFavoriteStore
     extends NotifierStore<Exception, List<CryptocurrencySimpleModel>> {
   CryptoFavoriteStore() : super([]);
@@ -16,10 +17,10 @@ class CryptoFavoriteStore
       List<CryptocurrencySimpleModel>.empty(growable: true);
   final LoginStore loginStore = Modular.get();
   late FirebaseFirestore db;
-  User? user;
+  UserStore userStore = Modular.get();
 
   _startFavorites() async {
-    loginStore.authCheck();
+    userStore.getUser();
     _startFirestore();
   }
 
@@ -33,16 +34,11 @@ class CryptoFavoriteStore
         _list.add(crypto);
         await db
             .collection('users')
-            .doc(loginStore.userCurrent!.uid)
+            .doc(userStore.user!.uid)
             .collection('favorites')
             .doc(crypto.id)
             .set({
           'id': crypto.id,
-          'name': crypto.name,
-          'symbol': crypto.symbol,
-          'price': crypto.currentPrice,
-          'image': crypto.image,
-          'isFavorite': true,
         }).then((value) {
           update(_list);
           log('saveAll: ${crypto.name}');
@@ -57,7 +53,7 @@ class CryptoFavoriteStore
   Future<void> removeFavorite(CryptocurrencySimpleModel crypto) async {
     await db
         .collection('users')
-        .doc(loginStore.userCurrent!.uid)
+        .doc(userStore.user!.uid)
         .collection('favorites')
         .doc(crypto.id)
         .delete()
@@ -78,16 +74,11 @@ class CryptoFavoriteStore
     }
     await db
         .collection('users')
-        .doc(loginStore.userCurrent!.uid)
+        .doc(userStore.user!.uid)
         .collection('favorites')
         .doc(crypto.id)
         .set({
       'id': crypto.id,
-      'name': crypto.name,
-      'symbol': crypto.symbol,
-      'price': crypto.currentPrice,
-      'image': crypto.image,
-      'isFavorite': true,
     }).then((value) {
       _list.add(crypto);
       update(_list);
@@ -99,10 +90,10 @@ class CryptoFavoriteStore
   }
 
   readFavorites() async {
-    if (loginStore.userCurrent != null && state.isNotEmpty) {
+    if (userStore.user != null && state.isNotEmpty) {
       final snapshot = await db
           .collection('users')
-          .doc(loginStore.userCurrent!.uid)
+          .doc(userStore.user!.uid)
           .collection('favorites')
           .get()
           .then((value) {
@@ -120,7 +111,7 @@ class CryptoFavoriteStore
         log('${crypto.name}');
       });
     } else {
-      log('User ${loginStore.userCurrent}');
+      log('User ${userStore.user}');
     }
   }
 }

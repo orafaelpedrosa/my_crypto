@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/modules/authentication/user_store.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -20,6 +21,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final LoginStore _store = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
@@ -35,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     email.text = 'orafaelpedrosa@outlook.com';
     password.text = 'aezakmi';
-    _store.authService();
     super.initState();
   }
 
@@ -231,16 +232,19 @@ class _LoginPageState extends State<LoginPage> {
                                 await _store
                                     .authLogin(_store.state)
                                     .then((value) async {
-                                  if (!_store.userCurrent!.emailVerified) {
-                                    await openWarningSnackBar(context,
-                                        "Verifique seu email para continuar");
-                                    _store.userCurrent ??
-                                        await _store.userCurrent!
+                                  if (!_userStore.user!.emailVerified) {
+                                    _userStore.user ??
+                                        _userStore.user!
                                             .sendEmailVerification();
-                                    await _store.authLogout();
+                                    openWarningSnackBar(
+                                      context,
+                                      'Verifique seu e-mail para continuar',
+                                    );
+
+                                    // await _store.authLogout();
                                     _btnController1.reset();
-                                  } else if (_store.userCurrent != null &&
-                                      _store.userCurrent!.emailVerified) {
+                                  } else if (_userStore.user != null &&
+                                      _userStore.user!.emailVerified) {
                                     _btnController1.success();
                                     await Future.delayed(
                                       Duration(seconds: 1),
@@ -326,8 +330,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         _store.authGoogle().then((value) async {
-                          if (_store.userCurrent != null &&
-                              _store.userCurrent!.emailVerified) {
+                          if (_userStore.user != null &&
+                              _userStore.user!.emailVerified) {
                             await Future.delayed(
                               Duration(seconds: 1),
                               () => Modular.to.pushNamed('/cryptocurrency/'),

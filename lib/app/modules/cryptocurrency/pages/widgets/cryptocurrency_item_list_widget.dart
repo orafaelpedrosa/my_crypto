@@ -19,7 +19,7 @@ class CryptocurrencyItemListWidget extends StatefulWidget {
 class _CryptocurrencyItemListWidgetState
     extends State<CryptocurrencyItemListWidget> {
   ListCryptocurrenciesStore store = Modular.get();
-  Utils utils = Utils();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -87,7 +87,7 @@ class _CryptocurrencyItemListWidgetState
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  utils.formatNumber(widget.coin.currentPrice!.toDouble()),
+                  Utils.formatNumber(widget.coin.currentPrice!.toDouble()),
                   style: Theme.of(context).textTheme.headline3!.copyWith(
                         color: Colors.black87,
                         fontWeight: FontWeight.bold,

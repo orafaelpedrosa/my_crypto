@@ -21,7 +21,6 @@ class _TabPriceChangePercentageWidgetState
     extends State<TabPriceChangePercentageWidget> {
   final ChartStore _store = Modular.get();
   final CryptocurrencyDataStore _dataStore = Modular.get();
-  Utils _utils = Utils();
   @override
   Widget build(BuildContext context) {
     return TripleBuilder<ChartStore, Exception, ChartModel>(
@@ -40,8 +39,8 @@ class _TabPriceChangePercentageWidgetState
           ),
           child: Text(
             _dataStore.state.priceChangePercente!.isNegative
-                ? '${_utils.formatNumber(_dataStore.state.priceChangePercente!)}%'
-                : '+${_utils.formatNumber(_dataStore.state.priceChangePercente!)}%',
+                ? '${Utils.formatNumber(_dataStore.state.priceChangePercente!)}%'
+                : '+${Utils.formatNumber(_dataStore.state.priceChangePercente!)}%',
           ),
         );
       },

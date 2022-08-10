@@ -30,7 +30,6 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   CryptocurrencyDataStore store = Modular.get();
   CryptoFavoriteStore cryptoFavorite = Modular.get();
 
-  Utils utils = Utils();
 
   @override
   void initState() {
@@ -105,7 +104,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         Row(
                           children: [
                             Text(
-                              utils.formatNumber(snapshot
+                              Utils.formatNumber(snapshot
                                   .data!.marketData!.currentPrice!.usd!),
                               style: Theme.of(context)
                                   .textTheme
@@ -153,7 +152,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                                   ),
                         ),
                         Text(
-                          '\$ ${utils.formatNumber(snapshot.data!.marketData!.marketCap!.usd!)}',
+                          '\$ ${Utils.formatNumber(snapshot.data!.marketData!.marketCap!.usd!)}',
                           style:
                               Theme.of(context).textTheme.headline5!.copyWith(
                                     color: Colors.black87,
