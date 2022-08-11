@@ -6,6 +6,7 @@ import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart'
 import 'package:mycrypto/app/modules/authentication/register/register_module.dart';
 import 'package:mycrypto/app/modules/authentication/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
+import 'package:mycrypto/app/modules/home/home_module.dart';
 
 class AppModule extends Module {
   
@@ -20,6 +21,7 @@ class AppModule extends Module {
   final List<ModularRoute> routes = [
     ModuleRoute(Modular.initialRoute, module: AuthModule()),
     ModuleRoute('/auth', module: AuthModule()),
+    ModuleRoute('/home', module: HomeModule()),
     ModuleRoute('/login_module', module: LoginModule()),
     ModuleRoute('/register_module', module: RegisterModule()),
     ModuleRoute('/cryptocurrency', module: CryptocurrencyModule()),
