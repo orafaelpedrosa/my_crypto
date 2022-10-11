@@ -6,7 +6,7 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/databases/firestore_repository.dart';
+import 'package:mycrypto/app/core/services/firestore_repository.dart';
 
 // ignore: must_be_immutable
 class CryptoFavoriteStore

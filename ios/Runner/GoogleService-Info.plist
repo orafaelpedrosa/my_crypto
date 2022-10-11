@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>124314124257-ni2n3afbkdf9od103a9htatae34nq5fm.apps.googleusercontent.com</string>
+	<string>124314124257-rtg517hhpq0m022r72n7ioiqv8pioq3e.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.124314124257-ni2n3afbkdf9od103a9htatae34nq5fm</string>
+	<string>com.googleusercontent.apps.124314124257-rtg517hhpq0m022r72n7ioiqv8pioq3e</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>124314124257-u5msq9km341f4c8lmpo1srefbe047g4i.apps.googleusercontent.com</string>
+	<string>124314124257-la2lkpscqk9blkc3uqq93rvaujplfigv.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAkpZMSy557HaGtupgpdIL8BHFJCSAQ0xg</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.mycrypto</string>
+	<string>com.app.mycrypto</string>
 	<key>PROJECT_ID</key>
 	<string>mycrypto-f4fe2</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:124314124257:ios:aeb772611aa80c98cc1ca0</string>
+	<string>1:124314124257:ios:0ea4812e8c9920f5cc1ca0</string>
 </dict>
 </plist>

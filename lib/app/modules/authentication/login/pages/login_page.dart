@@ -312,8 +312,8 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Theme.of(context).primaryColor,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Theme.of(context).primaryColor,
                         minimumSize: Size(double.infinity, 50),
                         elevation: 2,
                         shape: RoundedRectangleBorder(
