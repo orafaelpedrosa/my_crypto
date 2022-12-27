@@ -250,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                                       Duration(seconds: 1),
                                       () async {
                                         Modular.to
-                                            .pushNamed('/home/');
+                                            .pushNamed('/cryptocurrency/');
                                       },
                                     );
                                     Future.delayed(

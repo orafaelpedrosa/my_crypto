@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
+import 'package:mycrypto/app/modules/authentication/register/stores/accept_terms_store.dart';
 import 'package:mycrypto/app/modules/authentication/register/stores/register_store.dart';
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
@@ -17,6 +20,7 @@ class RegisterPage extends StatefulWidget {
 
 class RegisterPageState extends State<RegisterPage> {
   RegisterStore _registerStore = Modular.get<RegisterStore>();
+  AccetpTermsStore _accetpTermsStore = Modular.get<AccetpTermsStore>();
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -150,6 +154,51 @@ class RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                     SizedBox(height: 15),
+                    //Aceito dos termos de uso
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TripleBuilder<AccetpTermsStore, FirebaseAuthException,
+                            bool>(
+                          store: _accetpTermsStore,
+                          builder: (_, state) {
+                            return GestureDetector(
+                              onTap: () {
+                                _accetpTermsStore
+                                    .acceptTerms(!_accetpTermsStore.state);
+                              },
+                              child: _accetpTermsStore.state
+                                  ? Icon(
+                                      Icons.check_box,
+                                      color: Theme.of(context).primaryColor,
+                                    )
+                                  : Icon(
+                                      Icons.check_box_outline_blank,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                            );
+                          },
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Aceito os ',
+                          style:
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                        ),
+                        Text(
+                          'Termos de Uso',
+                          style:
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -174,7 +223,8 @@ class RegisterPageState extends State<RegisterPage> {
                           ),
                           controller: _btnController1,
                           onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate() &&
+                                _accetpTermsStore.state) {
                               _registerStore.state.password =
                                   _passwordController.text;
                               _registerStore.state.email =
@@ -183,6 +233,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   .authRegister(_registerStore.state)
                                   .then((value) async {
                                 _btnController1.success();
+                                _accetpTermsStore.setAcceptTerms(true);
                                 Modular.to.pushNamed(
                                   'send_mail',
                                   arguments:

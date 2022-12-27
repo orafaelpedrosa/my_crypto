@@ -31,7 +31,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
         if (!_authenticate) {
           _store.updateState(true);
         } else {
-          Modular.to.pushReplacementNamed('/home/');
+          Modular.to.pushReplacementNamed('/cryptocurrency/');
         }
       }
     }

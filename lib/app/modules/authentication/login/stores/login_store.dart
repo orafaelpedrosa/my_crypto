@@ -70,7 +70,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
     await _loginRepository.googleAuth().then((value) async {
       await userStore.getUser();
       setLoading(false);
-      Modular.to.pushReplacementNamed('/home/');
+      Modular.to.pushReplacementNamed('/cryptocurrency/');
     }).catchError(
       (error) {
         setLoading(false);
