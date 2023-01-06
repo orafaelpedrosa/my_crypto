@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class Description {
   String? en;
+  String? pt;
 
   Description({this.en});
 

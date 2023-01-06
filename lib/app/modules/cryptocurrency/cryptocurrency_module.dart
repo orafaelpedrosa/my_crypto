@@ -29,7 +29,10 @@ class CryptocurrencyModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => ListCryptocurrenciesPage()),
+    ChildRoute(
+      '/',
+      child: (_, args) => ListCryptocurrenciesPage(),
+    ),
     ChildRoute('/details',
         child: (_, args) =>
             CryptocurrencyDetailsPage(cryptocurrency: args.data)),

@@ -47,6 +47,9 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
+        onBackPressed: () {
+          Modular.to.pop();
+        },
         title: widget.cryptocurrency.symbol!.toUpperCase(),
         elevation: 1,
         showAction: true,
@@ -168,7 +171,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         ),
                         SizedBox(height: 5),
                         ReadMoreText(
-                          snapshot.data!.description!.en!,
+                          snapshot.data!.description!.pt!,
                           trimLines: 5,
                           style: Theme.of(context)
                               .textTheme

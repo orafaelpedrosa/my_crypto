@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/services/translator_service.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
@@ -19,6 +20,8 @@ class CryptocurrencyDataStore
     setLoading(true);
     await _repository.getCryptoData(id).then((value) async {
       value.description!.en = Utils.parseHtmlString(value.description!.en!);
+      value.description!.pt =
+          await TranslatorService.translate(value.description!.en!);
       update(value);
       await priceChangePercente(0);
       setLoading(false);
@@ -32,6 +35,8 @@ class CryptocurrencyDataStore
   Future<void> getStreamCryptocurrency(String id, int index) async {
     await _repository.getCryptoData(id).then((value) async {
       value.description!.en = Utils.parseHtmlString(value.description!.en!);
+      value.description!.pt =
+          await TranslatorService.translate(value.description!.en!);
       value.priceChangePercente = changePricePercente(index);
       update(value);
     }).catchError((onError) {
@@ -58,7 +63,7 @@ class CryptocurrencyDataStore
   Future<void> priceChangePercente(int period) async {
     switch (period) {
       case 0:
-        state.priceChangePercente = 
+        state.priceChangePercente =
             state.marketData?.priceChangePercentage24h!.toDouble() ?? 0.0;
         break;
       case 1:
