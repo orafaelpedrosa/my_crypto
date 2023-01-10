@@ -5,7 +5,6 @@ import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dar
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
-import 'package:mycrypto/app/shared/widgets/search_input/search_input_widget.dart';
 
 class ListCryptocurrenciesPage extends StatefulWidget {
   final String title;
@@ -52,30 +51,35 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
         ),
         body: Column(
           children: [
-            SizedBox(height: 5),
-            SearchInputWidget(
-              controller: _searchController,
-              focusNode: _searchFocus,
-              hintText: 'Pesquise uma criptomoeda',
-              enableSuggestions: false,
-              autocorrect: false,
-              onChange: (value) {
-                if (value != '') {
-                  store.searchCrypto(value!);
-                  store.search = true;
-                } else {
-                  store.search = false;
-                  store.updateState(store.listCrypto);
-                }
-              },
-            ),
-            Divider(
-              color: Colors.black12,
-              thickness: 1,
-            ),
             CryptocurrencyListWidget(),
           ],
         ),
+        // body: Column(
+        //   children: [
+        //     SizedBox(height: 5),
+        //     SearchInputWidget(
+        //       controller: _searchController,
+        //       focusNode: _searchFocus,
+        //       hintText: 'Pesquise uma criptomoeda',
+        //       enableSuggestions: false,
+        //       autocorrect: false,
+        //       onChange: (value) {
+        //         if (value != '') {
+        //           store.searchCrypto(value!);
+        //           store.search = true;
+        //         } else {
+        //           store.search = false;
+        //           store.updateState(store.listCrypto);
+        //         }
+        //       },
+        //     ),
+        //     Divider(
+        //       color: Colors.black12,
+        //       thickness: 1,
+        //     ),
+        //     CryptocurrencyListWidget(),
+        //   ],
+        // ),
 
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () {

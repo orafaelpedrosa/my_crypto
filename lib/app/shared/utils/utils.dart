@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
   }
 
   static String formatNumber(double number) {
-    return NumberFormat.decimalPattern('en').format(number);
+    return NumberFormat.decimalPattern('pt').format(number);
   }
 
 
