@@ -45,7 +45,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.mycrypto"
+        applicationId "com.app.mycrypto"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()

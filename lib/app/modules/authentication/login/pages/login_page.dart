@@ -250,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                                       Duration(seconds: 1),
                                       () async {
                                         Modular.to
-                                            .pushNamed('/cryptocurrency/');
+                                            .pushNamed('/home/');
                                       },
                                     );
                                     Future.delayed(
@@ -334,7 +334,7 @@ class _LoginPageState extends State<LoginPage> {
                               _userStore.user!.emailVerified) {
                             await Future.delayed(
                               Duration(seconds: 1),
-                              () => Modular.to.pushNamed('/cryptocurrency/'),
+                              () => Modular.to.pushNamed('/home/'),
                             );
                           }
                         }).catchError((error) async {

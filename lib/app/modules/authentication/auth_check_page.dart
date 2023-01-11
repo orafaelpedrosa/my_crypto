@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
+import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
 
 class AuthCheckPage extends StatefulWidget {
@@ -16,10 +17,12 @@ class AuthCheckPage extends StatefulWidget {
 
 class _AuthCheckPageState extends State<AuthCheckPage> {
   final AuthCheckStore _store = Modular.get<AuthCheckStore>();
+  final LoginStore _loginStore = Modular.get<LoginStore>();
 
   checkLocalAuth() async {
     final isLocalAuthAvilable = await _store.isBiometricAvailable();
     final _authFirebase = FirebaseAuth.instance;
+
     _store.updateState(false);
     if (_authFirebase.currentUser == null ||
         !_authFirebase.currentUser!.emailVerified) {
@@ -39,6 +42,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
 
   @override
   void initState() {
+    _loginStore.authLogout();
     checkLocalAuth();
     super.initState();
   }

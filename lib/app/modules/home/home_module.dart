@@ -1,21 +1,15 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
+import 'package:mycrypto/app/modules/favorites/favorites_module.dart';
 import 'package:mycrypto/app/modules/home/home_page.dart';
 import 'package:mycrypto/app/modules/home/home_store.dart';
+import 'package:mycrypto/app/modules/profile/profile_module.dart';
+import 'package:mycrypto/app/modules/wallet/wallet_module.dart';
 
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => HomeStore()),
-    // Bind.lazySingleton((i) => LoginStore()),
-    // Bind.lazySingleton((i) => ListCryptocurrenciesStore()),
-    // Bind.lazySingleton((i) => CryptocurrencyRepository()),
-    // Bind.lazySingleton((i) => CryptocurrencyDataStore()),
-    // Bind.lazySingleton((i) => ChartStore()),
-    // Bind.lazySingleton((i) => CryptoFavoriteStore()),
-    // Bind.lazySingleton((i) => ObscureStore()),
-    // Bind.lazySingleton((i) => AuthCheckStore()),
-    // Bind.lazySingleton((i) => LoginRepository()),
   ];
 
   @override
@@ -27,6 +21,18 @@ class HomeModule extends Module {
         ModuleRoute(
           '/cryptocurrency',
           module: CryptocurrencyModule(),
+        ),
+        ModuleRoute(
+          '/favorites',
+          module: FavoritesModule(),
+        ),
+        ModuleRoute(
+          '/wallet',
+          module: WalletModule(),
+        ),
+        ModuleRoute(
+          '/profile',
+          module: ProfileModule(),
         ),
       ],
     ),

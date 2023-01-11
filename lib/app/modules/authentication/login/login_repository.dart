@@ -95,8 +95,9 @@ class LoginRepository with Disposable {
         idToken: googleAuth.idToken,
       );
 
-      await _firebaseAuth.signInWithCredential(credential);
-      log('Logado com sucesso Google: ${_user!.displayName}');
+      await _firebaseAuth.signInWithCredential(credential).then((value) {
+        log('Logado com sucesso Google: ${value.user!.displayName}');
+      });
       return true;
     } on FirebaseAuthException catch (e) {
       log(e.code);

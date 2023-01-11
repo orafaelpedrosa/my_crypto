@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    Modular.to.pushNamed('cryptocurrency/');
+    Modular.to.pushNamed('/home/cryptocurrency/');
     super.initState();
   }
 
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
-              color: Colors.black.withOpacity(.5),
+              color: Colors.black.withOpacity(.1),
             )
           ],
         ),
@@ -73,13 +73,13 @@ class _HomePageState extends State<HomePage> {
               onTabChange: (index) {
                 setState(() {
                   if (index == 0) {
-                    Modular.to.pushNamed('cryptocurrency/');
+                    Modular.to.pushReplacementNamed('/home/cryptocurrency/');
                   } else if (index == 1) {
-                    Modular.to.pushNamed('home');
+                    Modular.to.pushReplacementNamed('/home/favorites/');
                   } else if (index == 2) {
-                    Modular.to.pushNamed('home');
+                    Modular.to.pushReplacementNamed('/home/wallet/');
                   } else if (index == 3) {
-                    Modular.to.pushNamed('home');
+                    Modular.to.pushReplacementNamed('/home/profile/');
                   }
                 });
               },

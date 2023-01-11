@@ -1,6 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
@@ -18,8 +17,8 @@ class ListCryptocurrenciesPage extends StatefulWidget {
 class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final ListCryptocurrenciesStore store = Modular.get();
   final LoginStore loginStore = Modular.get();
-  TextEditingController _searchController = TextEditingController();
-  FocusNode _searchFocus = FocusNode();
+  // TextEditingController _searchController = TextEditingController();
+  // FocusNode _searchFocus = FocusNode();
   final CryptoFavoriteStore cryptoFavoriteStore = Modular.get();
 
   @override
@@ -37,22 +36,24 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          title: SvgPicture.asset(
-            'assets/app/mycrypto.svg',
-            color: Colors.white,
-            height: 25,
-            width: 25,
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   title: SvgPicture.asset(
+        //     'assets/app/mycrypto.svg',
+        //     color: Colors.white,
+        //     height: 25,
+        //     width: 25,
+        //   ),
+        //   backgroundColor: Theme.of(context).primaryColor,
+        //   elevation: 1,
+        //   automaticallyImplyLeading: false,
+        // ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              CryptocurrencyListWidget(),
+            ],
           ),
-          backgroundColor: Theme.of(context).primaryColor,
-          elevation: 1,
-          automaticallyImplyLeading: false,
-        ),
-        body: Column(
-          children: [
-            CryptocurrencyListWidget(),
-          ],
         ),
         // body: Column(
         //   children: [

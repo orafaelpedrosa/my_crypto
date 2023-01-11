@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -19,7 +20,8 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder(
+    return TripleBuilder<ListCryptocurrenciesStore, DioError,
+        List<CryptocurrencySimpleModel>>(
       store: store,
       builder: (_, triple) {
         if (store.isLoading) {
@@ -42,10 +44,10 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
           return Expanded(
             child: StreamBuilder<List<CryptocurrencySimpleModel>>(
               stream: Stream.periodic(
-                const Duration(seconds: 5),
+                const Duration(seconds: 20),
                 (_) {
                   if (!store.search) {
-                    // store.getListCryptoStream();
+                    store.getListCryptoStream();
                   }
                   return store.state;
                 },

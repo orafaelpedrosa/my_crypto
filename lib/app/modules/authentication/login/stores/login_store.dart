@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -30,7 +28,6 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
     await _loginRepository.authLogin(data).then((value) async {
       _authCheckStore.updateState(true);
       await userStore.getUser();
-      log('authLogin: ${userStore.user!.displayName}');
       setLoading(false);
     }).catchError(
       (error) {
@@ -70,7 +67,6 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
     await _loginRepository.googleAuth().then((value) async {
       await userStore.getUser();
       setLoading(false);
-      Modular.to.pushReplacementNamed('/cryptocurrency/');
     }).catchError(
       (error) {
         setLoading(false);

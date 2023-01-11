@@ -44,6 +44,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     int selectIndex = 0;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
