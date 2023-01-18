@@ -65,7 +65,7 @@ class SearchInputWidget extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
       ),
       child: TextField(
         enableSuggestions: false,

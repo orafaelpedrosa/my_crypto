@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class WalletPage extends StatefulWidget {
   final String title;
-  const WalletPage({Key? key, this.title = 'WalletPage'}) : super(key: key);
+  const WalletPage({Key? key, this.title = 'Carteira'}) : super(key: key);
   @override
   WalletPageState createState() => WalletPageState();
 }
@@ -15,6 +15,14 @@ class WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).backgroundColor,
+      ),
       body: Column(
         children: <Widget>[],
       ),

@@ -6,7 +6,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_detail
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
+import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:mycrypto/app/shared/utils/utils.dart';
 import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
@@ -28,7 +28,7 @@ class CryptocurrencyDetailsPage extends StatefulWidget {
 
 class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   CryptocurrencyDataStore store = Modular.get();
-  CryptoFavoriteStore cryptoFavorite = Modular.get();
+  FavoritesStore favoritesStore = Modular.get();
 
   @override
   void initState() {
@@ -46,25 +46,25 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
     int selectIndex = 0;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBarWidget(
         onBackPressed: () {
-          Modular.to.pop();
+          Modular.to.pushReplacementNamed('/home/cryptocurrency/');
         },
         title: widget.cryptocurrency.symbol!.toUpperCase(),
         elevation: 1,
         showAction: true,
         actions: [
-          TripleBuilder<CryptoFavoriteStore, Exception,
+          TripleBuilder<FavoritesStore, Exception,
                   List<CryptocurrencySimpleModel>>(
-              store: cryptoFavorite,
+              store: favoritesStore,
               builder: (_, triple) {
                 return IconButton(
-                  icon: cryptoFavorite.isFavorite(widget.cryptocurrency)
-                      ? Icon(Icons.star)
-                      : Icon(Icons.star_border),
+                  icon: favoritesStore.isFavorite(widget.cryptocurrency)
+                      ? Icon(Icons.favorite)
+                      : Icon(Icons.favorite_border),
                   onPressed: () {
-                    cryptoFavorite.toggleFavorite(widget.cryptocurrency);
+                    favoritesStore.toggleFavorite(widget.cryptocurrency);
                   },
                 );
               }),
@@ -131,7 +131,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             inactiveBgColor:
                                 Theme.of(context).cardColor.withOpacity(0.05),
                             inactiveFgColor: Theme.of(context).cardColor,
-                            activeFgColor: Colors.white,
+                            activeFgColor: Theme.of(context).backgroundColor,
                             dividerColor:
                                 Theme.of(context).cardColor.withOpacity(0.5),
                             totalSwitches: 4,

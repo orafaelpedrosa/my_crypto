@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       body: RouterOutlet(),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).backgroundColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,

@@ -7,7 +7,6 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 
 // ignore: must_be_immutable
@@ -18,8 +17,7 @@ class ListCryptocurrenciesStore
       Modular.get<CryptocurrencyRepository>();
   final CryptocurrencyDataStore dataStore =
       Modular.get<CryptocurrencyDataStore>();
-        final CryptoFavoriteStore cryptoFavorite =
-      Modular.get<CryptoFavoriteStore>();
+  // final FavoritesStore cryptoFavorite = Modular.get<FavoritesStore>();
   List<CryptocurrencySimpleModel> listCrypto = [];
   final MarketsParamsModel marketsParams = MarketsParamsModel();
   bool search = false;

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
   final String title;
-  const ProfilePage({Key? key, this.title = 'ProfilePage'}) : super(key: key);
+  const ProfilePage({Key? key, this.title = 'Perfil'}) : super(key: key);
   @override
   ProfilePageState createState() => ProfilePageState();
 }
@@ -15,8 +15,32 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[],
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 1,
+      ),
+      body: Container(
+        padding: EdgeInsets.all(15),
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 150,
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                //circular
+                shape: BoxShape.circle,
+              ),
+            ),
+            SizedBox(height: 20),
+        
+          ],
+        ),
       ),
     );
   }

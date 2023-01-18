@@ -1,9 +1,7 @@
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 
- class  Utils {
-
-
+class Utils {
   static String parseHtmlString(String htmlString) {
     final document = parse(htmlString);
     final String parsedString =
@@ -12,9 +10,7 @@ import 'package:intl/intl.dart';
   }
 
   static String formatNumber(double number) {
-    return NumberFormat.decimalPattern('pt').format(number);
+    final String locale = Intl.getCurrentLocale();
+    return NumberFormat.decimalPattern(locale).format(number);
   }
-
-
 }
-  

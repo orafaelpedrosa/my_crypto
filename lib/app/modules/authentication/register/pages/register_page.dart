@@ -49,7 +49,7 @@ class RegisterPageState extends State<RegisterPage> {
         showLeading: true,
         visibleTitle: false,
       ).build(context) as AppBar,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
@@ -218,7 +218,7 @@ class RegisterPageState extends State<RegisterPage> {
                             'Cadastrar',
                             style:
                                 Theme.of(context).textTheme.headline4!.copyWith(
-                                      color: Colors.white,
+                                      color: Theme.of(context).backgroundColor,
                                     ),
                           ),
                           controller: _btnController1,

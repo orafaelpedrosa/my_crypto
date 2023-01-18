@@ -1,6 +1,6 @@
 class MarketsParamsModel {
   String? vsCurrency;
-  String? ids;
+  List<String>? ids;
   String? category;
   String? order;
   String? perPage;
@@ -21,7 +21,7 @@ class MarketsParamsModel {
 
   MarketsParamsModel.fromJson(Map<String, dynamic> json) {
     vsCurrency = json['vs_currency'] as String?;
-    ids = json['ids'] as String?;
+    ids = json['ids'] as List<String>?;
     category = json['category'] as String?;
     order = json['order'] as String?;
     perPage = json['per_page'] as String?;

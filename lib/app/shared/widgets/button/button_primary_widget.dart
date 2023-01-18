@@ -31,13 +31,13 @@ class ButtonPrimaryWidget extends StatelessWidget {
               ? CircularProgressIndicator(
                   strokeWidth: 2.0,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.white,
+                    Theme.of(context).backgroundColor,
                   ),
                 )
               : Text(
                   text,
                   style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.white,
+                        color: Theme.of(context).backgroundColor,
                       ),
                 ),
         ),

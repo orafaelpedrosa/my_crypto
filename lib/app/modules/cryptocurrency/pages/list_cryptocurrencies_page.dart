@@ -1,9 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
+import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 
 class ListCryptocurrenciesPage extends StatefulWidget {
   final String title;
@@ -19,12 +20,12 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final LoginStore loginStore = Modular.get();
   // TextEditingController _searchController = TextEditingController();
   // FocusNode _searchFocus = FocusNode();
-  final CryptoFavoriteStore cryptoFavoriteStore = Modular.get();
+  final FavoritesStore favoritesStore = Modular.get();
 
   @override
   void initState() {
     store.getListCryptocurrencies();
-    cryptoFavoriteStore.startFavorites();
+    favoritesStore.startFavorites();
     super.initState();
   }
 
@@ -35,19 +36,30 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
-        // appBar: AppBar(
-        //   centerTitle: true,
-        //   title: SvgPicture.asset(
-        //     'assets/app/mycrypto.svg',
-        //     color: Colors.white,
-        //     height: 25,
-        //     width: 25,
-        //   ),
-        //   backgroundColor: Theme.of(context).primaryColor,
-        //   elevation: 1,
-        //   automaticallyImplyLeading: false,
-        // ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          centerTitle: true,
+          title: SvgPicture.asset(
+            'assets/app/mycrypto.svg',
+            color: Theme.of(context).primaryColor,
+            height: 25,
+            width: 25,
+          ),
+          backgroundColor: Theme.of(context).backgroundColor,
+          elevation: 1,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                loginStore.authLogout();
+              },
+            ),
+          ],
+        ),
         body: SafeArea(
           child: Column(
             children: [

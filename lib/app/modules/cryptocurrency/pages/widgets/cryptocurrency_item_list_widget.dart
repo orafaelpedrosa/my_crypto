@@ -30,7 +30,7 @@ class _CryptocurrencyItemListWidgetState
         );
       },
       child: Container(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         child: ListTile(
           leading: ClipOval(
             child: SizedBox.fromSize(

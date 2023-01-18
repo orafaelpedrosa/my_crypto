@@ -45,7 +45,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         visibleTitle: false,
         showLeading: true,
       ).build(context) as AppBar,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -120,7 +120,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 child: Text(
                   'Enviar',
                   style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.white,
+                        color: Theme.of(context).backgroundColor,
                       ),
                 ),
                 controller: _btnController1,

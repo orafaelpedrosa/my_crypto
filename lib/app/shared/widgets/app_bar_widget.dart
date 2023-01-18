@@ -14,7 +14,6 @@ class AppBarWidget extends StatelessWidget {
   final bool showAction;
   final double elevation;
 
-
   AppBarWidget({
     Key? key,
     this.title,

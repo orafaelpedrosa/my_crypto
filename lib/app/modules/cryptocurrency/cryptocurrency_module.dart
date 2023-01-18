@@ -7,17 +7,17 @@ import 'package:mycrypto/app/modules/cryptocurrency/pages/cryptocurrency_details
 import 'package:mycrypto/app/modules/cryptocurrency/pages/list_cryptocurrencies_page.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/crypto_favorite_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/obscure_store.dart';
+import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 
 class CryptocurrencyModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => ListCryptocurrenciesStore()),
     Bind.lazySingleton((i) => CryptocurrencyDataStore()),
-    Bind.lazySingleton((i) => CryptoFavoriteStore()),
+    Bind.lazySingleton((i) => FavoritesStore()),
     Bind.lazySingleton((i) => CryptocurrencyRepository()),
     Bind.lazySingleton((i) => ChartStore()),
     Bind.lazySingleton((i) => IndexChartStore()),

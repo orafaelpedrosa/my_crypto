@@ -8,7 +8,7 @@ ThemeData theme = ThemeData(
     brightness: Brightness.dark,
   ),
   scaffoldBackgroundColor: const Color(0xff1a1a1a),
-  backgroundColor: const Color(0xff1a1a1a),
+  backgroundColor: Colors.white,
   cardColor: Color(0xFF455A64),
   brightness: Brightness.dark,
   dividerTheme: const DividerThemeData(
@@ -62,4 +62,3 @@ ThemeData theme = ThemeData(
     ),
   ),
 );
- 

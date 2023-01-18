@@ -8,14 +8,14 @@ openErrorSnackBar(context, String text) {
         children: [
           Icon(
             Icons.error,
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
           ),
           SizedBox(width: 15),
           Expanded(
             child: Text(
               text,
               style: Theme.of(context).textTheme.headline5!.copyWith(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                   ),
             ),
           ),
@@ -62,13 +62,13 @@ openSucessSnackBar(context, String text) {
         children: [
           Icon(
             Icons.check,
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
           ),
           SizedBox(width: 5),
           Text(
             text,
             style: Theme.of(context).textTheme.headline5!.copyWith(
-                  color: Colors.white,
+                  color: Theme.of(context).backgroundColor,
                 ),
           ),
         ],

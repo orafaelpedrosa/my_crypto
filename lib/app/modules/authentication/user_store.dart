@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
@@ -10,7 +8,6 @@ class UserStore extends NotifierStore<Exception, bool> {
 
   Future<void> getUser() async {
     user = FirebaseAuth.instance.currentUser!;
-    log('User UID: ${user!.uid}');
   }
 
   static Future<void> signOut() async {

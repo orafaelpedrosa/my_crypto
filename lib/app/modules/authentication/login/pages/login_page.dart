@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       resizeToAvoidBottomInset: true,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -221,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .textTheme
                                   .headline4!
                                   .copyWith(
-                                    color: Colors.white,
+                                    color: Theme.of(context).backgroundColor,
                                   ),
                             ),
                             controller: _btnController1,
@@ -249,8 +249,7 @@ class _LoginPageState extends State<LoginPage> {
                                     await Future.delayed(
                                       Duration(seconds: 1),
                                       () async {
-                                        Modular.to
-                                            .pushNamed('/home/');
+                                        Modular.to.pushNamed('/home/');
                                       },
                                     );
                                     Future.delayed(
@@ -312,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).backgroundColor,
                         foregroundColor: Theme.of(context).primaryColor,
                         minimumSize: Size(double.infinity, 50),
                         elevation: 2,

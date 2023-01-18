@@ -25,7 +25,7 @@ class _SendMailPageState extends State<SendMailPage> {
         visibleTitle: false,
         showLeading: false,
       ).build(context) as AppBar,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 25),

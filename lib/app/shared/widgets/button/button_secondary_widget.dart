@@ -21,7 +21,7 @@ class ButtonSecondaryWidget extends StatelessWidget {
         height: 50,
         width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).backgroundColor,
           border: Border.all(
             color: Theme.of(context).primaryColor,
           ),
