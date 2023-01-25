@@ -14,47 +14,11 @@ class CryptocurrencyRepository with Disposable {
 
   Future<List<CryptocurrencySimpleModel>> getListCryptocurrenciesData(
       MarketsParamsModel paramsModel) async {
-    // final Response response = await _dio.get(
-    //   'https://api.coingecko.com/api/v3/coins/markets',
-    //   queryParameters: paramsModel.toJson(),
-    // );
-    // log('response.data: ${response.realUri}');
     try {
       final Response response = await _dio.get(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=7d',
       );
 
-      final List<CryptocurrencySimpleModel> cryptos =
-          List.empty(growable: true);
-      response.data.forEach(
-        (crypto) {
-          cryptos.add(CryptocurrencySimpleModel.fromJson(crypto));
-        },
-      );
-      return cryptos;
-    } catch (e) {
-      log('Error getCrypto: $e');
-      rethrow;
-    }
-  }
-
-  Future<List<CryptocurrencySimpleModel>> getCryptocurrenciesByIDs(
-      MarketsParamsModel marketsParamsModel) async {
-    log('${marketsParamsModel.ids!.toList()}');
-    
-    try {
-      final Response response = await _dio.get(
-          'https://api.coingecko.com/api/v3/coins/markets',
-          queryParameters: {
-            'vs_currency': 'usd',
-            'ids': marketsParamsModel.ids!.toList(),
-            'order': 'market_cap_desc',
-            'per_page': '100',
-            'page': '1',
-            'sparkline': 'true',
-            'price_change_percentage': '7d',
-          });
-      log('URL ${response.realUri}');
       final List<CryptocurrencySimpleModel> cryptos =
           List.empty(growable: true);
       response.data.forEach(

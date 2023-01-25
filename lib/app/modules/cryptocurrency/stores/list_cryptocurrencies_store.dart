@@ -26,7 +26,6 @@ class ListCryptocurrenciesStore
   Future<void> getListCryptocurrencies() async {
     setLoading(true);
     await _repository.getListCryptocurrenciesData(marketsParams).then((value) {
-      listCrypto = value;
       update(value);
       setLoading(false);
     }).catchError((onError) {

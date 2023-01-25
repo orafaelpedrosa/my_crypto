@@ -56,18 +56,30 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
         showAction: true,
         actions: [
           TripleBuilder<FavoritesStore, Exception,
-                  List<CryptocurrencySimpleModel>>(
-              store: favoritesStore,
-              builder: (_, triple) {
-                return IconButton(
-                  icon: favoritesStore.isFavorite(widget.cryptocurrency)
-                      ? Icon(Icons.favorite)
-                      : Icon(Icons.favorite_border),
-                  onPressed: () {
-                    favoritesStore.toggleFavorite(widget.cryptocurrency);
-                  },
-                );
-              }),
+              List<CryptocurrencySimpleModel>>(
+            store: favoritesStore,
+            builder: (_, triple) {
+              return triple.isLoading
+                  ? Container(
+                      padding: EdgeInsets.all(5),
+                      height: 55,
+                      width: 55,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    )
+                  : IconButton(
+                      icon: favoritesStore.isFavorite(widget.cryptocurrency)
+                          ? Icon(Icons.star_rate_rounded)
+                          : Icon(Icons.star_outline_rounded),
+                      onPressed: () {
+                        favoritesStore.toggleFavorite(widget.cryptocurrency);
+                      },
+                    );
+            },
+          ),
         ],
       ).build(context) as AppBar,
       body: TripleBuilder<CryptocurrencyDataStore, DioError,

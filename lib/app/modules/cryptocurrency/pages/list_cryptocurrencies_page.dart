@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/search_bar_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 
@@ -55,7 +56,11 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
-                loginStore.authLogout();
+                // loginStore.authLogout();
+                showSearch(
+                  context: context,
+                  delegate: SearchBarWidget(),
+                );
               },
             ),
           ],

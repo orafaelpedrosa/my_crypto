@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                   textStyle: Theme.of(context).textTheme.headline6!,
                 ),
                 GButton(
-                  icon: Icons.favorite,
+                  icon: Icons.star,
                   text: 'Favoritas',
                   textStyle: Theme.of(context).textTheme.headline6!,
                 ),
