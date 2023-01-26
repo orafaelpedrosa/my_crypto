@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       body: RouterOutlet(),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -51,22 +51,22 @@ class _HomePageState extends State<HomePage> {
                   icon: Icons.home,
                   text: 'Home',
                   style: GnavStyle.oldSchool,
-                  textStyle: Theme.of(context).textTheme.headline6!,
+                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
                 GButton(
                   icon: Icons.star,
                   text: 'Favoritas',
-                  textStyle: Theme.of(context).textTheme.headline6!,
+                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
                 GButton(
                   icon: Icons.wallet,
                   text: 'Carteira',
-                  textStyle: Theme.of(context).textTheme.headline6!,
+                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
                 GButton(
                   icon: Icons.person,
                   text: 'Perfil',
-                  textStyle: Theme.of(context).textTheme.headline6!,
+                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
               ],
               selectedIndex: _selectedIndex,

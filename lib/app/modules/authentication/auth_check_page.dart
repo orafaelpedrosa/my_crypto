@@ -51,7 +51,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
       builder: (_, failed) {
         if (_store.state) {
           return Container(
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
                 SizedBox(height: 20),
                 Text(
                   'Acesse o MyCrypto',
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         color: Theme.of(context).cardColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -78,7 +78,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
                 SizedBox(height: 10),
                 Text(
                   'Erro ao autenticar. Tente novamente para continuar usando o app.',
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         color: Theme.of(context).cardColor,
                       ),
                   textAlign: TextAlign.center,

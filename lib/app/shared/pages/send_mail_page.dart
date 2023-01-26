@@ -25,7 +25,7 @@ class _SendMailPageState extends State<SendMailPage> {
         visibleTitle: false,
         showLeading: false,
       ).build(context) as AppBar,
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 25),
@@ -37,7 +37,7 @@ class _SendMailPageState extends State<SendMailPage> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   'E-mail enviado!',
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -47,7 +47,7 @@ class _SendMailPageState extends State<SendMailPage> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5!
+                    .headlineSmall!
                     .copyWith(color: Colors.black54),
               ),
               SizedBox(height: 40),
@@ -67,7 +67,7 @@ class _SendMailPageState extends State<SendMailPage> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5!
+                    .headlineSmall!
                     .copyWith(color: Colors.black54),
               ),
               SizedBox(height: 30),

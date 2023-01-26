@@ -65,7 +65,7 @@ class SearchInputWidget extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
       ),
       child: TextField(
         enableSuggestions: false,
@@ -73,14 +73,14 @@ class SearchInputWidget extends StatelessWidget {
         textCapitalization: TextCapitalization.none,
         controller: controller,
         onChanged: onChange,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.search_sharp,
             color: Theme.of(context).primaryColor,
           ),
           hintText: hintText,
-          hintStyle: Theme.of(context).textTheme.headline5!.copyWith(
+          hintStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 color: Theme.of(context).primaryColor.withOpacity(.5),
               ),
           contentPadding: const EdgeInsets.symmetric(

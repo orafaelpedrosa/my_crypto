@@ -37,7 +37,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           centerTitle: true,
           title: SvgPicture.asset(
@@ -46,7 +46,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             height: 25,
             width: 25,
           ),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Colors.grey[100]!,
           elevation: 1,
           automaticallyImplyLeading: false,
           actions: [
@@ -72,39 +72,6 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             ],
           ),
         ),
-        // body: Column(
-        //   children: [
-        //     SizedBox(height: 5),
-        //     SearchInputWidget(
-        //       controller: _searchController,
-        //       focusNode: _searchFocus,
-        //       hintText: 'Pesquise uma criptomoeda',
-        //       enableSuggestions: false,
-        //       autocorrect: false,
-        //       onChange: (value) {
-        //         if (value != '') {
-        //           store.searchCrypto(value!);
-        //           store.search = true;
-        //         } else {
-        //           store.search = false;
-        //           store.updateState(store.listCrypto);
-        //         }
-        //       },
-        //     ),
-        //     Divider(
-        //       color: Colors.black12,
-        //       thickness: 1,
-        //     ),
-        //     CryptocurrencyListWidget(),
-        //   ],
-        // ),
-
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     loginStore.authLogout();
-        //   },
-        //   child: Icon(Icons.logout),
-        // ),
       ),
     );
   }

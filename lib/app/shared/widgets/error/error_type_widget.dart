@@ -49,7 +49,7 @@ class _ErrorHttpWidgetState extends State<ErrorHttpWidget> {
           SizedBox(height: 10),
           Text(
             widget.errorType!.errorMessage,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
             textAlign: TextAlign.center,
           ),
         ],

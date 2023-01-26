@@ -49,7 +49,7 @@ class RegisterPageState extends State<RegisterPage> {
         showLeading: true,
         visibleTitle: false,
       ).build(context) as AppBar,
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
@@ -66,7 +66,7 @@ class RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 20),
               Text(
                 'Cadastre-se',
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
@@ -183,7 +183,7 @@ class RegisterPageState extends State<RegisterPage> {
                         Text(
                           'Aceito os ',
                           style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -191,7 +191,7 @@ class RegisterPageState extends State<RegisterPage> {
                         Text(
                           'Termos de Uso',
                           style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -216,10 +216,13 @@ class RegisterPageState extends State<RegisterPage> {
                           color: Theme.of(context).primaryColor,
                           child: Text(
                             'Cadastrar',
-                            style:
-                                Theme.of(context).textTheme.headline4!.copyWith(
-                                      color: Theme.of(context).backgroundColor,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.background,
+                                ),
                           ),
                           controller: _btnController1,
                           onPressed: () async {

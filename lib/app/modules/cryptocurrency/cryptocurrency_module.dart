@@ -35,8 +35,12 @@ class CryptocurrencyModule extends Module {
       '/',
       child: (_, args) => ListCryptocurrenciesPage(),
     ),
-    ChildRoute('/details',
-        child: (_, args) =>
-            CryptocurrencyDetailsPage(cryptocurrency: args.data)),
+    ChildRoute(
+      '/details',
+      child: (_, args) => CryptocurrencyDetailsPage(
+        cryptocurrency: args.data['cryptocurrency'],
+        isFavorite: args.data['isFavorite'],
+      ),
+    ),
   ];
 }

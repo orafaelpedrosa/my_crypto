@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_item_list_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/slidable_item_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/shimmer_cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 
@@ -62,8 +62,17 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     itemCount: store.state.length,
                     itemBuilder: (_, index) {
                       store.getFormatImage(store.state[index].image);
-                      return CryptocurrencyItemListWidget(
+                      return SlidableItemListWidget(
                         coin: store.state[index],
+                        onTap: () {
+                          Modular.to.pushNamed(
+                            '/home/cryptocurrency/details',
+                            arguments: {
+                              'cryptocurrency': store.state[index],
+                              'isFavorite': false,
+                            },
+                          );
+                        },
                       );
                     },
                     separatorBuilder: (_, index) => const Divider(

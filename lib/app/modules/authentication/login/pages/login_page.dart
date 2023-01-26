@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: true,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           'Esqueceu a senha?',
                           style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Colors.black87,
                                   ),
                         ),
@@ -219,9 +219,11 @@ class _LoginPageState extends State<LoginPage> {
                               'Login',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline4!
+                                  .headlineMedium!
                                   .copyWith(
-                                    color: Theme.of(context).backgroundColor,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
                                   ),
                             ),
                             controller: _btnController1,
@@ -288,16 +290,18 @@ class _LoginPageState extends State<LoginPage> {
                     RichText(
                       text: TextSpan(
                         text: 'Não tem uma conta? ',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Colors.black87,
                             ),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Cadastre-se',
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Modular.to.pushNamed(
@@ -311,7 +315,8 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).backgroundColor,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                         foregroundColor: Theme.of(context).primaryColor,
                         minimumSize: Size(double.infinity, 50),
                         elevation: 2,
@@ -345,9 +350,10 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       label: Text(
                         'Entrar com Google',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                              color: Theme.of(context).primaryColor,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                       ),
                     ),
                   ],

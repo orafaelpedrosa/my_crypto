@@ -61,24 +61,18 @@ class TextFormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      toolbarOptions: ToolbarOptions(
-        copy: true,
-        cut: true,
-        paste: true,
-        selectAll: false,
-      ),
       textInputAction: textInputAction,
       controller: controller,
       autofocus: autoFocus,
       keyboardType: keyboardType,
       validator: validator,
       obscureText: obscureText,
-      style: Theme.of(context).textTheme.headline1!.copyWith(
+      style: Theme.of(context).textTheme.displayLarge!.copyWith(
             color: Colors.black54,
             fontSize: 16,
           ),
       decoration: InputDecoration(
-        errorStyle: Theme.of(context).textTheme.headline1!.copyWith(
+        errorStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
               color: Colors.red,
               fontSize: 12,
             ),

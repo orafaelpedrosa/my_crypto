@@ -8,7 +8,6 @@ ThemeData theme = ThemeData(
     brightness: Brightness.dark,
   ),
   scaffoldBackgroundColor: const Color(0xff1a1a1a),
-  backgroundColor: Colors.white,
   cardColor: Color(0xFF455A64),
   brightness: Brightness.dark,
   dividerTheme: const DividerThemeData(
@@ -28,37 +27,50 @@ ThemeData theme = ThemeData(
     buttonColor: Color(0xff5865F2),
   ),
   textTheme: TextTheme(
-    headline1: TextStyle(
+    displayLarge: TextStyle(
       fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 25,
     ),
-    headline2: TextStyle(
+    displayMedium: TextStyle(
       fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 22,
     ),
-    headline3: TextStyle(
+    displaySmall: TextStyle(
       fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 20,
     ),
-    headline4: TextStyle(
+    headlineMedium: TextStyle(
       fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 18,
     ),
-    headline5: TextStyle(
+    headlineSmall: TextStyle(
       fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 16,
       height: 1.5,
     ),
-    headline6: TextStyle(
+    titleLarge: TextStyle(
       fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 14,
       height: 1.5,
     ),
+  ),
+  colorScheme: ColorScheme(
+    background: Colors.white,
+    brightness: Brightness.dark,
+    error: Colors.red,
+    onError: Colors.red,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
+    onSurface: Colors.white,
+    primary: const Color(0xff5865F2),
+    secondary: const Color(0xff5865F2),
+    surface: Colors.white,
+    onBackground: Colors.white,
   ),
 );

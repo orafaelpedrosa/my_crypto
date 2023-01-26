@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -15,7 +17,7 @@ class SearchBarWidget extends SearchDelegate {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
       appBarTheme: AppBarTheme(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         iconTheme: theme.primaryIconTheme
             .copyWith(color: Theme.of(context).primaryColor),
         elevation: 1,
@@ -23,7 +25,19 @@ class SearchBarWidget extends SearchDelegate {
       inputDecorationTheme: InputDecorationTheme(
         border: InputBorder.none,
       ),
-      backgroundColor: Theme.of(context).backgroundColor,
+      colorScheme: ColorScheme(
+        background: Theme.of(context).colorScheme.background,
+        brightness: Brightness.light,
+        error: Colors.red,
+        onBackground: Colors.black,
+        onError: Colors.white,
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+        onSurface: Colors.black,
+        primary: Theme.of(context).primaryColor,
+        secondary: Theme.of(context).primaryColor,
+        surface: Theme.of(context).colorScheme.background,
+      ),
     );
   }
 
@@ -54,26 +68,25 @@ class SearchBarWidget extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.isEmpty) {
+    final List<CryptocurrencySimpleModel> suggestionList = query.isEmpty
+        ? store.state
+        : store.state
+            .where((element) =>
+                element.name!.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+    if (query.isEmpty || suggestionList.isEmpty) {
       return Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: Center(
           child: Text(
             'No results found',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
       );
     } else {
-      final suggestionList = query.isEmpty
-          ? store.state
-          : store.state
-              .where((element) =>
-                  element.name!.toLowerCase().contains(query.toLowerCase()))
-              .toList();
-
       return Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: ListView.builder(
           itemCount: suggestionList.length,
           itemBuilder: (context, index) {
@@ -106,7 +119,7 @@ class SearchBarWidget extends SearchDelegate {
               ),
               title: Text(
                 suggestionList[index].name!,
-                style: Theme.of(context).textTheme.headline4!.copyWith(
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       color: Colors.black,
                     ),
               ),
@@ -114,14 +127,19 @@ class SearchBarWidget extends SearchDelegate {
                   List<CryptocurrencySimpleModel>>(
                 store: favoritesStore,
                 builder: (_, triple) {
-                  return IconButton(
-                    icon: favoritesStore.isFavorite(suggestionList[index])
-                        ? Icon(Icons.star)
-                        : Icon(Icons.favorite_border),
-                    onPressed: () {
-                      favoritesStore.toggleFavorite(suggestionList[index]);
-                    },
-                  );
+                  log('toggle ${store.isLoading}');
+
+                  return store.isLoading
+                      ? CircularProgressIndicator()
+                      : IconButton(
+                          icon: favoritesStore.isFavorite(suggestionList[index])
+                              ? Icon(Icons.star_rate_rounded)
+                              : Icon(Icons.star_border_rounded),
+                          onPressed: () {
+                            favoritesStore
+                                .toggleFavorite(suggestionList[index]);
+                          },
+                        );
                 },
               ),
             );
@@ -141,7 +159,7 @@ class SearchBarWidget extends SearchDelegate {
             .toList();
 
     return Container(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       child: ListView.builder(
         itemCount: suggestionList.length,
         itemBuilder: (context, index) {
@@ -174,7 +192,7 @@ class SearchBarWidget extends SearchDelegate {
             ),
             title: Text(
               suggestionList[index].name!,
-              style: Theme.of(context).textTheme.headline4!.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     color: Colors.black,
                   ),
             ),
@@ -182,14 +200,16 @@ class SearchBarWidget extends SearchDelegate {
                 List<CryptocurrencySimpleModel>>(
               store: favoritesStore,
               builder: (_, triple) {
-                return IconButton(
-                  icon: favoritesStore.isFavorite(suggestionList[index])
-                      ? Icon(Icons.star_rate_rounded)
-                      : Icon(Icons.star_outline_rounded),
-                  onPressed: () {
-                    favoritesStore.toggleFavorite(suggestionList[index]);
-                  },
-                );
+                return store.isLoading
+                    ? CircularProgressIndicator()
+                    : IconButton(
+                        icon: favoritesStore.isFavorite(suggestionList[index])
+                            ? Icon(Icons.star_rate_rounded)
+                            : Icon(Icons.star_outline_rounded),
+                        onPressed: () {
+                          favoritesStore.toggleFavorite(suggestionList[index]);
+                        },
+                      );
               },
             ),
           );

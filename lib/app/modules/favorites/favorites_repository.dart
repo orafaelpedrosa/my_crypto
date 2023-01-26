@@ -41,7 +41,7 @@ class FavoritesRepository extends Disposable {
   }
 
   startFavorites() async {
-    userStore.getUser();
+    await userStore.getUser();
     _startFirestore();
   }
 

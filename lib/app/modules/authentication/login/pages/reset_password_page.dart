@@ -45,7 +45,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         visibleTitle: false,
         showLeading: true,
       ).build(context) as AppBar,
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -59,7 +59,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   'Esqueceu sua senha ?',
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -69,7 +69,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5!
+                    .headlineSmall!
                     .copyWith(color: Colors.black54),
               ),
               SvgPicture.asset(
@@ -119,8 +119,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 color: Theme.of(context).primaryColor,
                 child: Text(
                   'Enviar',
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Theme.of(context).backgroundColor,
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.background,
                       ),
                 ),
                 controller: _btnController1,

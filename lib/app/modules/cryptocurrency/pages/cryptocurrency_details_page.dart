@@ -16,9 +16,11 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
   final CryptocurrencySimpleModel cryptocurrency;
+  final bool isFavorite;
   const CryptocurrencyDetailsPage({
     Key? key,
     required this.cryptocurrency,
+    this.isFavorite = false,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
 
   @override
   void initState() {
+    favoritesStore.startFavorites();
     store.getCryptocurrencyById(widget.cryptocurrency.id!);
     store.priceChangePercente(0);
     store.chartStore.paramsChart.id = widget.cryptocurrency.id;
@@ -46,10 +49,12 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
     int selectIndex = 0;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBarWidget(
         onBackPressed: () {
-          Modular.to.pushReplacementNamed('/home/cryptocurrency/');
+          widget.isFavorite
+              ? Modular.to.pushReplacementNamed('/home/favorites/')
+              : Modular.to.pushReplacementNamed('/home/cryptocurrency/');
         },
         title: widget.cryptocurrency.symbol!.toUpperCase(),
         elevation: 1,
@@ -110,10 +115,12 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         SizedBox(height: 20),
                         Text(
                           snapshot.data!.name!,
-                          style:
-                              Theme.of(context).textTheme.headline3!.copyWith(
-                                    color: Colors.black87,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(
+                                color: Colors.black87,
+                              ),
                         ),
                         SizedBox(height: 5),
                         Row(
@@ -123,7 +130,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                                   .data!.marketData!.currentPrice!.usd!),
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline1!
+                                  .displayLarge!
                                   .copyWith(
                                     color: Colors.black87,
                                     fontWeight: FontWeight.bold,
@@ -143,7 +150,8 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             inactiveBgColor:
                                 Theme.of(context).cardColor.withOpacity(0.05),
                             inactiveFgColor: Theme.of(context).cardColor,
-                            activeFgColor: Theme.of(context).backgroundColor,
+                            activeFgColor:
+                                Theme.of(context).colorScheme.background,
                             dividerColor:
                                 Theme.of(context).cardColor.withOpacity(0.5),
                             totalSwitches: 4,
@@ -160,27 +168,33 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         SizedBox(height: 40),
                         Text(
                           'Market Cap:',
-                          style:
-                              Theme.of(context).textTheme.headline5!.copyWith(
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                         Text(
                           '\$ ${Utils.formatNumber(snapshot.data!.marketData!.marketCap!.usd!)}',
-                          style:
-                              Theme.of(context).textTheme.headline5!.copyWith(
-                                    color: Colors.black87,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: Colors.black87,
+                              ),
                         ),
                         SizedBox(height: 25),
                         Text(
                           'Sobre',
-                          style:
-                              Theme.of(context).textTheme.headline3!.copyWith(
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                         SizedBox(height: 5),
                         ReadMoreText(
@@ -188,7 +202,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                           trimLines: 5,
                           style: Theme.of(context)
                               .textTheme
-                              .headline5!
+                              .headlineSmall!
                               .copyWith(color: Colors.black87),
                           colorClickableText: Theme.of(context).primaryColor,
                           trimMode: TrimMode.Line,

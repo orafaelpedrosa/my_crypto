@@ -18,10 +18,10 @@ class WalletPageState extends State<WalletPage> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
       ),
       body: Column(
         children: <Widget>[],

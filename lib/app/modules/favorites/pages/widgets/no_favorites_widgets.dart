@@ -6,7 +6,7 @@ class NoFavoritesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       padding: EdgeInsets.all(30),
       width: double.infinity,
       child: Column(
@@ -21,13 +21,13 @@ class NoFavoritesWidget extends StatelessWidget {
             child: Icon(
               Icons.star_rate_rounded,
               size: 100,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
           ),
           SizedBox(height: 30),
           Text(
             'Nenhuma favorita!',
-            style: Theme.of(context).textTheme.headline4!.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   color: Theme.of(context).cardColor,
                   fontWeight: FontWeight.bold,
                 ),
@@ -35,7 +35,7 @@ class NoFavoritesWidget extends StatelessWidget {
           SizedBox(height: 15),
           Text(
             'Adicione uma criptomoeda a sua lista de favoritas clicando no botão de estrela na tela de detalhes.',
-            style: Theme.of(context).textTheme.headline6!.copyWith(
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
                   color: Theme.of(context).cardColor,
                 ),
             textAlign: TextAlign.center,
