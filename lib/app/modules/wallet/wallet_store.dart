@@ -1,7 +1,36 @@
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
+import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
 
-class WalletStore extends NotifierStore<Exception, int> {
+// ignore: must_be_immutable
+class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
+  WalletStore() : super([]);
 
-  WalletStore() : super(0);
+  final WalletRepository _repository = WalletRepository();
+  List<MyCryptoModel> _list = List<MyCryptoModel>.empty(growable: true);
 
+  Future<void> addCryptocurrency(MyCryptoModel crypto) async {
+    await _repository.addCryptocurrency(crypto);
+  }
+
+  Future<void> removeCrypto(MyCryptoModel crypto) async {
+    await _repository.removeCryptocurrency(crypto);
+  }
+
+  Future<void> updateCryptocurrency(MyCryptoModel crypto) async {
+    await _repository.updateCryptocurrency(crypto);
+  }
+
+  Future<void> getAll() async {
+    _list = await _repository.getAll();
+    update(_list);
+  }
+
+  Future<MyCryptoModel> getcryptocurrencyByID(String id) async {
+    return await _repository.getCryptocurrencyByID(id);
+  }
+
+  Future<void> updateProfit() async {
+    await _repository.updatePrice();
+  }
 }

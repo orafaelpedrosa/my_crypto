@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/services/firestore_repository.dart';
-import 'package:mycrypto/app/modules/authentication/user_store.dart';
+import 'package:mycrypto/app/core/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 
@@ -115,7 +115,7 @@ class FavoritesRepository extends Disposable {
   }
 
   Future<List<CryptocurrencySimpleModel>> getFavorites() async {
-    if (userStore.user != null) {
+    if (userStore.stateUser()) {
       final snapshot = await db
           .collection('users')
           .doc(userStore.user!.uid)
@@ -138,7 +138,7 @@ class FavoritesRepository extends Disposable {
   Future<List<String>> getFavoritesIDs() async {
     final List<String> _listIDsFavorites = List<String>.empty(growable: true);
 
-    if (userStore.user != null) {
+    if (userStore.stateUser()) {
       final snapshot = await db
           .collection('users')
           .doc(userStore.user!.uid)
@@ -158,5 +158,7 @@ class FavoritesRepository extends Disposable {
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    _dio.close();
+  }
 }

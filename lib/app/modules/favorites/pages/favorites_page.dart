@@ -58,7 +58,7 @@ class FavoritesPageState extends State<FavoritesPage> {
                   child: Text(triple.error.toString()),
                 );
               } else {
-                return (store.listIDs.length == 0)
+                return (triple.state.isEmpty)
                     ? NoFavoritesWidget()
                     : Column(
                         children: [

@@ -15,18 +15,18 @@ class CryptocurrencyRepository with Disposable {
   Future<List<CryptocurrencySimpleModel>> getListCryptocurrenciesData(
       MarketsParamsModel paramsModel) async {
     try {
-      final Response response = await _dio.get(
+      final Response _response = await _dio.get(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=7d',
       );
 
-      final List<CryptocurrencySimpleModel> cryptos =
+      final List<CryptocurrencySimpleModel> _cryptocurrencies =
           List.empty(growable: true);
-      response.data.forEach(
-        (crypto) {
-          cryptos.add(CryptocurrencySimpleModel.fromJson(crypto));
+      _response.data.forEach(
+        (coin) {
+          _cryptocurrencies.add(CryptocurrencySimpleModel.fromJson(coin));
         },
       );
-      return cryptos;
+      return _cryptocurrencies;
     } catch (e) {
       log('Error getCrypto: $e');
       rethrow;
@@ -35,12 +35,12 @@ class CryptocurrencyRepository with Disposable {
 
   Future<CryptocurrencyDetailsModel> getCryptoData(String id) async {
     try {
-      final Response response = await _dio.get(
+      final Response _response = await _dio.get(
         'https://api.coingecko.com/api/v3/coins/$id?sparkline=true',
       );
-      final CryptocurrencyDetailsModel crypto =
-          CryptocurrencyDetailsModel.fromMap(response.data);
-      return crypto;
+      final CryptocurrencyDetailsModel _cryptocurrencies =
+          CryptocurrencyDetailsModel.fromMap(_response.data);
+      return _cryptocurrencies;
     } catch (e) {
       log('Error getCrypto: $e');
       rethrow;
@@ -49,11 +49,11 @@ class CryptocurrencyRepository with Disposable {
 
   Future<ChartModel> getChartData(ChartsParamsModel paramsModel) async {
     try {
-      final Response response = await _dio.get(
+      final Response _response = await _dio.get(
         'https://api.coingecko.com/api/v3/coins/${paramsModel.id}/market_chart',
         queryParameters: paramsModel.toJson(),
       );
-      return ChartModel.fromJson(response.data);
+      return ChartModel.fromJson(_response.data);
     } catch (e) {
       log('Error getChart: $e');
       rethrow;
@@ -61,5 +61,7 @@ class CryptocurrencyRepository with Disposable {
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    _dio.close();
+  }
 }

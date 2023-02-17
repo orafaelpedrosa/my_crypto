@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
-import 'package:mycrypto/app/modules/authentication/user_store.dart';
+import 'package:mycrypto/app/core/user_store.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';

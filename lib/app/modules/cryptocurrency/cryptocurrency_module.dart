@@ -16,17 +16,17 @@ import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 class CryptocurrencyModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => ListCryptocurrenciesStore()),
-    Bind.lazySingleton((i) => CryptocurrencyDataStore()),
-    Bind.lazySingleton((i) => FavoritesStore()),
-    Bind.lazySingleton((i) => CryptocurrencyRepository()),
-    Bind.lazySingleton((i) => ChartStore()),
-    Bind.lazySingleton((i) => IndexChartStore()),
-    Bind.lazySingleton((i) => LoginStore()),
     Bind.lazySingleton((i) => AuthCheckStore()),
-    Bind.lazySingleton((i) => LoginRepository()),
-    Bind.lazySingleton((i) => ObscureStore()),
+    Bind.lazySingleton((i) => ChartStore()),
+    Bind.lazySingleton((i) => CryptocurrencyDataStore()),
+    Bind.lazySingleton((i) => CryptocurrencyRepository()),
     Bind.lazySingleton((i) => FavoritesRepository()),
+    Bind.lazySingleton((i) => FavoritesStore()),
+    Bind.lazySingleton((i) => IndexChartStore()),
+    Bind.lazySingleton((i) => ListCryptocurrenciesStore()),
+    Bind.lazySingleton((i) => LoginRepository()),
+    Bind.lazySingleton((i) => LoginStore()),
+    Bind.lazySingleton((i) => ObscureStore()),
   ];
 
   @override

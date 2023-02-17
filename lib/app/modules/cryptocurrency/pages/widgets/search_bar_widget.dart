@@ -79,7 +79,7 @@ class SearchBarWidget extends SearchDelegate {
         color: Theme.of(context).colorScheme.background,
         child: Center(
           child: Text(
-            'No results found',
+            'Nenhum resultado encontrado',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),

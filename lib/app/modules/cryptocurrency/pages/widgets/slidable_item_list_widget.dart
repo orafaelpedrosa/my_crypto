@@ -7,10 +7,12 @@ import 'package:mycrypto/app/shared/utils/utils.dart';
 class SlidableItemListWidget extends StatelessWidget {
   final CryptocurrencySimpleModel coin;
   final Function()? onTap;
+  final Function(BuildContext context)? slidableOnTap;
   const SlidableItemListWidget({
     Key? key,
     required this.coin,
     this.onTap,
+    this.slidableOnTap,
   }) : super(key: key);
 
   @override
@@ -123,25 +125,19 @@ class SlidableItemListWidget extends StatelessWidget {
         motion: ScrollMotion(),
         children: [
           SlidableAction(
-            flex: 2,
-            onPressed: doNothing,
-            backgroundColor: Theme.of(context).primaryColor,
+            flex: 1,
+            spacing: 10,
+            onPressed: (context) {
+              slidableOnTap!(context);
+            },
+            backgroundColor:
+                coin.isFavorite! ? Colors.red : Theme.of(context).primaryColor,
             foregroundColor: Colors.white,
-            icon: Icons.star_rate_sharp,
-            label: 'Favoritar',
-          ),
-          SlidableAction(
-            flex: 2,
-            onPressed: doNothing,
-            backgroundColor: Color(0xFF0392CF),
-            foregroundColor: Colors.white,
-            icon: Icons.save,
-            label: 'Save',
+            icon: coin.isFavorite! ? Icons.delete : Icons.star_rate_sharp,
+            label: coin.isFavorite! ? 'Remover' : 'Favoritar',
           ),
         ],
       ),
     );
   }
 }
-
-void doNothing(BuildContext context) {}

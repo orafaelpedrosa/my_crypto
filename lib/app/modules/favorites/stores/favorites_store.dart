@@ -6,7 +6,6 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 import 'package:mycrypto/app/modules/favorites/favorites_repository.dart';
 
-// ignore: must_be_immutable
 class FavoritesStore
     extends NotifierStore<Exception, List<CryptocurrencySimpleModel>> {
   FavoritesStore() : super([]);
@@ -14,7 +13,7 @@ class FavoritesStore
   List<CryptocurrencySimpleModel> _list =
       List<CryptocurrencySimpleModel>.empty(growable: true);
   List<String> listIDs = List<String>.empty(growable: true);
-  MarketsParamsModel marketsParams = MarketsParamsModel();
+  final MarketsParamsModel marketsParams = MarketsParamsModel();
   final FavoritesRepository _repository = Modular.get<FavoritesRepository>();
 
   Future<void> addOrRemoveFavorite(CryptocurrencySimpleModel crypto) async {
@@ -73,16 +72,18 @@ class FavoritesStore
     listIDs = await _repository.getFavoritesIDs();
 
     if (listIDs.isNotEmpty) {
-      marketsParams.vsCurrency = 'usd';
       marketsParams.ids = listIDs;
+      marketsParams.vsCurrency = 'usd';
       await _repository.getCryptocurrenciesByIDs(marketsParams).then((value) {
         update(value);
         setLoading(false);
-      }).catchError((onError) {
-        setLoading(false);
-        log(onError.toString());
-        setError(onError);
-      });
+      }).catchError(
+        (onError) {
+          setLoading(false);
+          log(onError.toString());
+          setError(onError);
+        },
+      );
     } else {
       setLoading(false);
     }

@@ -37,6 +37,7 @@ class CryptocurrencySimpleModel {
   num? priceChangePercentage30dInCurrency;
   num? priceChangePercentage200dInCurrency;
   num? priceChangePercentage1yInCurrency;
+  bool? isFavorite;
 
   CryptocurrencySimpleModel({
     this.id,
@@ -74,6 +75,7 @@ class CryptocurrencySimpleModel {
     this.priceChangePercentage30dInCurrency,
     this.priceChangePercentage200dInCurrency,
     this.priceChangePercentage1yInCurrency,
+    this.isFavorite = false,
   });
 
   CryptocurrencySimpleModel.fromJson(Map<String, dynamic> json) {
@@ -121,6 +123,7 @@ class CryptocurrencySimpleModel {
         json['price_change_percentage_200d_in_currency'];
     priceChangePercentage1yInCurrency =
         json['price_change_percentage_1y_in_currency'];
+    isFavorite = json['isFavorite'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -168,7 +171,7 @@ class CryptocurrencySimpleModel {
         this.priceChangePercentage200dInCurrency;
     data['price_change_percentage_1y_in_currency'] =
         this.priceChangePercentage1yInCurrency;
-
+    data['is_favorite'] = this.isFavorite;
     return data;
   }
 }

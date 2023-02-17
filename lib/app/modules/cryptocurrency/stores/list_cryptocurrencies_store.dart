@@ -17,11 +17,8 @@ class ListCryptocurrenciesStore
       Modular.get<CryptocurrencyRepository>();
   final CryptocurrencyDataStore dataStore =
       Modular.get<CryptocurrencyDataStore>();
-  // final FavoritesStore cryptoFavorite = Modular.get<FavoritesStore>();
   List<CryptocurrencySimpleModel> listCrypto = [];
   final MarketsParamsModel marketsParams = MarketsParamsModel();
-  bool search = false;
-  Timer? _debounce;
 
   Future<void> getListCryptocurrencies() async {
     setLoading(true);
@@ -55,21 +52,7 @@ class ListCryptocurrenciesStore
     }
   }
 
-  Future<void> searchCrypto(String find) async {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
 
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () async {
-      final suggestions = state.where((crypto) {
-        final cryptoName = crypto.name!.toLowerCase();
-        final input = find.toLowerCase();
-        return cryptoName.contains(input);
-      }).toList();
-      if (suggestions.isNotEmpty) {
-        await updateState(suggestions);
-      }
-    });
-  }
 
   Future<void> updateState(List<CryptocurrencySimpleModel> data) async {
     update(data);

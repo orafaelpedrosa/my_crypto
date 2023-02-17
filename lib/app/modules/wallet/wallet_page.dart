@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_store.dart';
 import 'package:flutter/material.dart';
+import 'package:mycrypto/app/modules/wallet/widgets/modal_menu_wallet_widget.dart';
 
 class WalletPage extends StatefulWidget {
   final String title;
@@ -12,6 +15,21 @@ class WalletPage extends StatefulWidget {
 class WalletPageState extends State<WalletPage> {
   final WalletStore store = Modular.get();
 
+  MyCryptoModel crypto = MyCryptoModel(
+    id: 'bloktopia',
+    name: 'Bloktopia',
+    symbol: 'blok',
+    amount: 3406.0,
+    averagePrice: 0.027,
+  );
+
+  @override
+  void initState() {
+    store.getAll();
+    store.updateProfit();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +40,32 @@ class WalletPageState extends State<WalletPage> {
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.background,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.menu_rounded,
+              color: Theme.of(context).colorScheme.primary,
+              size: 30,
+            ),
+            onPressed: () {
+              //modal menu aqui
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) {
+                  return ModalMenuWalletWidget();
+                },
+              );
+            },
+          ),
+        ],
       ),
-      body: Column(
-        children: <Widget>[],
+      body: Container(
+        color: Colors.white,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: <Widget>[],
+        ),
       ),
     );
   }

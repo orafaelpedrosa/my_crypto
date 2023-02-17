@@ -47,5 +47,7 @@ class RegisterRepository with Disposable {
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    _firebaseAuth = FirebaseAuth.instance;
+  }
 }

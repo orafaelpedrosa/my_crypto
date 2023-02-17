@@ -56,7 +56,6 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
-                // loginStore.authLogout();
                 showSearch(
                   context: context,
                   delegate: SearchBarWidget(),

@@ -7,7 +7,7 @@ import 'package:mycrypto/app/modules/authentication/login/models/credential_mode
 
 class LoginRepository with Disposable {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final googleSignIn = GoogleSignIn();
+  final _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
 
@@ -78,17 +78,17 @@ class LoginRepository with Disposable {
 
   Future<bool> googleAuth() async {
     try {
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) {
+      final _googleUser = await _googleSignIn.signIn();
+      if (_googleUser == null) {
         throw FirebaseAuthException(
           message: 'Erro ao logar com o Google',
           code: 'google-login-error',
         );
       } else {
-        _user = googleUser;
+        _user = _googleUser;
       }
 
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = await _googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -115,6 +115,15 @@ class LoginRepository with Disposable {
     }
   }
 
+  // Future<void> setLogAcess() async {
+  //   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  //   _firestore.collection('users').doc(_firebaseAuth.currentUser!.uid).set({
+  //     'lastSignIn': DateTime.now(),
+  //   }, SetOptions(merge: true));
+  // }
+
   @override
-  void dispose() {}
+  void dispose() {
+    _firebaseAuth = FirebaseAuth.instance;
+  }
 }

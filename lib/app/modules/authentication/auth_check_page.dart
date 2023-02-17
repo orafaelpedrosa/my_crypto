@@ -16,8 +16,10 @@ class AuthCheckPage extends StatefulWidget {
 
 class _AuthCheckPageState extends State<AuthCheckPage> {
   final AuthCheckStore _store = Modular.get<AuthCheckStore>();
+  // final LoginStore loginStore = Modular.get<LoginStore>();
 
   checkLocalAuth() async {
+    // loginStore.authLogout();
     final isLocalAuthAvilable = await _store.isBiometricAvailable();
     final _authFirebase = FirebaseAuth.instance;
 
