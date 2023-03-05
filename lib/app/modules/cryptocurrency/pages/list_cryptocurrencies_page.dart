@@ -19,8 +19,6 @@ class ListCryptocurrenciesPage extends StatefulWidget {
 class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final ListCryptocurrenciesStore store = Modular.get();
   final LoginStore loginStore = Modular.get();
-  // TextEditingController _searchController = TextEditingController();
-  // FocusNode _searchFocus = FocusNode();
   final FavoritesStore favoritesStore = Modular.get();
 
   @override
@@ -46,7 +44,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             height: 25,
             width: 25,
           ),
-          backgroundColor: Colors.grey[100]!,
+          backgroundColor: Theme.of(context).colorScheme.background,
           elevation: 1,
           automaticallyImplyLeading: false,
           actions: [

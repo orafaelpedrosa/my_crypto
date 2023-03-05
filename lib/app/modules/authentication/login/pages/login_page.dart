@@ -30,13 +30,13 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController password = TextEditingController();
   final FocusNode passwordFocus = FocusNode();
   final formKey = GlobalKey<FormState>();
-  bool validateFormLogin = false;
+  bool validateFormLogin = true;
   Validation _validation = Validation();
 
   @override
   void initState() {
     email.text = 'orafaelpedrosa@outlook.com';
-    password.text = 'aezakmi';
+    password.text = 'Pulodogato@7';
     super.initState();
   }
 

@@ -5,7 +5,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_mo
 
 import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
-import 'package:mycrypto/app/shared/utils/utils.dart';
+import 'package:mycrypto/app/core/utils/utils.dart';
 
 class TabPriceChangePercentageWidget extends StatefulWidget {
   TabPriceChangePercentageWidget({

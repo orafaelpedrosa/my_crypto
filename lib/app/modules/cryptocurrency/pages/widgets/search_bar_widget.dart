@@ -30,9 +30,9 @@ class SearchBarWidget extends SearchDelegate {
         brightness: Brightness.light,
         error: Colors.red,
         onBackground: Colors.black,
-        onError: Colors.white,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
+        onError: Theme.of(context).colorScheme.background,
+        onPrimary: Theme.of(context).colorScheme.background,
+        onSecondary: Theme.of(context).colorScheme.background,
         onSurface: Colors.black,
         primary: Theme.of(context).primaryColor,
         secondary: Theme.of(context).primaryColor,
@@ -167,10 +167,10 @@ class SearchBarWidget extends SearchDelegate {
             minVerticalPadding: 0,
             onTap: () {
               close(context, null);
-              Modular.to.pushNamed(
-                '/cryptocurrency/details',
-                arguments: suggestionList[index],
-              );
+              Modular.to.pushNamed('/home/cryptocurrency/details', arguments: {
+                'cryptocurrency': suggestionList[index],
+                'fromFavorite': false
+              });
             },
             leading: ClipOval(
               child: SizedBox.fromSize(

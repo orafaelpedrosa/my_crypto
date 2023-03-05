@@ -51,7 +51,7 @@ class WalletRepository extends Disposable {
   }
 
   Future<void> updateCryptocurrency(MyCryptoModel crypto) async {
-    await db
+    db
         .collection('users')
         .doc(userStore.user!.uid)
         .collection('wallet')
@@ -70,17 +70,22 @@ class WalletRepository extends Disposable {
   }
 
   Future<List<String>> getListOfWalletIDs() async {
+    startFirestore();
+    final List<String> ids = List.empty(growable: true);
+
     final QuerySnapshot<Map<String, dynamic>> _querySnapshot = await db
         .collection('users')
         .doc(userStore.user!.uid)
         .collection('wallet')
         .get();
-
-    return _querySnapshot.docs.map((doc) => doc.id).toList();
+    _querySnapshot.docs.forEach((doc) {
+      ids.add(doc.id);
+    });
+    return ids;
   }
 
-  Future<List<CryptocurrencySimpleModel>> getCryptoData(
-      List<String> ids) async {
+  Future<List<CryptocurrencySimpleModel>> getCurrentPrice() async {
+    final List<String> ids = await getListOfWalletIDs();
     final Response _response = await _dio.get(
       'https://api.coingecko.com/api/v3/coins/markets',
       queryParameters: {
@@ -98,33 +103,21 @@ class WalletRepository extends Disposable {
   }
 
   Future<void> updatePrice() async {
-    final List<String> idsList = await getListOfWalletIDs();
-    final List<CryptocurrencySimpleModel> cryptos =
-        await getCryptoData(idsList);
-
+    final List<CryptocurrencySimpleModel> cryptos = await getCurrentPrice();
     final List<MyCryptoModel> myCryptos = await getAll();
 
-    myCryptos.forEach((myCrypto) async {
-      final CryptocurrencySimpleModel crypto = cryptos.firstWhere(
-        (crypto) => crypto.id == myCrypto.id,
-      );
-      myCrypto.currentPrice = crypto.currentPrice;
-      myCrypto.profit = myCrypto.currentPrice! * myCrypto.amount! -
-          myCrypto.averagePrice! * myCrypto.amount!;
-      myCrypto.profitPercentage = myCrypto.profit! / myCrypto.averagePrice!;
-      myCrypto.lastUpdate = DateTime.now().toString();
-      await updateCryptocurrency(myCrypto);
-    });
-
-    // for (var i = 0; i < idsList.length; i++) {
-    //   final MyCryptoModel crypto = await getCryptocurrencyByID(idsList[i]);
-    //   crypto.currentPrice = cryptos[i].currentPrice;
-    //   crypto.profit = crypto.currentPrice! * crypto.amount! -
-    //       crypto.averagePrice! * crypto.amount!;
-    //   crypto.profitPercentage = crypto.profit! / crypto.averagePrice!;
-    //   crypto.lastUpdate = DateTime.now().toString();
-    //   await updateCryptocurrency(crypto);
-    // }
+    if (myCryptos.isNotEmpty) {
+      myCryptos.forEach((myCrypto) async {
+        final CryptocurrencySimpleModel crypto = cryptos.firstWhere(
+          (crypto) => crypto.id == myCrypto.id,
+        );
+        myCrypto.currentPrice = crypto.currentPrice;
+        myCrypto.profit = myCrypto.currentPrice! * myCrypto.amount! -
+            myCrypto.averagePrice! * myCrypto.amount!;
+        myCrypto.profitPercentage = myCrypto.profit! / myCrypto.averagePrice!;
+        await updateCryptocurrency(myCrypto);
+      });
+    }
   }
 
   @override

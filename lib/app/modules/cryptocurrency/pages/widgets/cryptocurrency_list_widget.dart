@@ -78,7 +78,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                             '/home/cryptocurrency/details',
                             arguments: {
                               'cryptocurrency': store.state[index],
-                              'isFavorite': false,
+                              'fromFavorite': false,
                             },
                           );
                         },

@@ -40,7 +40,7 @@ class ProfilePageState extends State<ProfilePage> {
       ),
       body: Container(
         padding: EdgeInsets.all(15),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
         child: Column(
           children: <Widget>[
             Container(

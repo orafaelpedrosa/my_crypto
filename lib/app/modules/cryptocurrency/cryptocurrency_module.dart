@@ -39,7 +39,7 @@ class CryptocurrencyModule extends Module {
       '/details',
       child: (_, args) => CryptocurrencyDetailsPage(
         cryptocurrency: args.data['cryptocurrency'],
-        isFavorite: args.data['isFavorite'],
+        fromFavorite: args.data['fromFavorite'],
       ),
     ),
   ];

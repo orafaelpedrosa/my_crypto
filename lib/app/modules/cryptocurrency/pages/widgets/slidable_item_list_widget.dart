@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/app/shared/utils/utils.dart';
+import 'package:mycrypto/app/core/utils/utils.dart';
 
 class SlidableItemListWidget extends StatelessWidget {
   final CryptocurrencySimpleModel coin;
@@ -132,7 +132,7 @@ class SlidableItemListWidget extends StatelessWidget {
             },
             backgroundColor:
                 coin.isFavorite! ? Colors.red : Theme.of(context).primaryColor,
-            foregroundColor: Colors.white,
+            foregroundColor: Theme.of(context).colorScheme.background,
             icon: coin.isFavorite! ? Icons.delete : Icons.star_rate_sharp,
             label: coin.isFavorite! ? 'Remover' : 'Favoritar',
           ),

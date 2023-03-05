@@ -7,7 +7,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
-import 'package:mycrypto/app/shared/utils/utils.dart';
+import 'package:mycrypto/app/core/utils/utils.dart';
 import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
@@ -16,11 +16,11 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
   final CryptocurrencySimpleModel cryptocurrency;
-  final bool isFavorite;
+  final bool fromFavorite;
   const CryptocurrencyDetailsPage({
     Key? key,
     required this.cryptocurrency,
-    this.isFavorite = false,
+    this.fromFavorite = false,
   }) : super(key: key);
 
   @override
@@ -52,7 +52,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBarWidget(
         onBackPressed: () {
-          widget.isFavorite
+          widget.fromFavorite
               ? Modular.to.pushReplacementNamed('/home/favorites/')
               : Modular.to.pushReplacementNamed('/home/cryptocurrency/');
         },
@@ -114,7 +114,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                       children: [
                         SizedBox(height: 20),
                         Text(
-                          snapshot.data!.name!,
+                          snapshot.data!.name ?? 'Cripotocurrency',
                           style: Theme.of(context)
                               .textTheme
                               .displaySmall!

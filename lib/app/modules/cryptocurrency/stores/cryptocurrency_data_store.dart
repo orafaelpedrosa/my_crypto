@@ -7,7 +7,7 @@ import 'package:mycrypto/app/core/services/translator_service.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
-import 'package:mycrypto/app/shared/utils/utils.dart';
+import 'package:mycrypto/app/core/utils/utils.dart';
 
 class CryptocurrencyDataStore
     extends NotifierStore<DioError, CryptocurrencyDetailsModel> {

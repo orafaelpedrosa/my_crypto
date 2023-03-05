@@ -21,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       body: ColoredBox(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
         child: ListView.separated(
           itemCount: 1,
           itemBuilder: (context, index) {

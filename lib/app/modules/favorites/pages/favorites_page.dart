@@ -79,7 +79,7 @@ class FavoritesPageState extends State<FavoritesPage> {
                                           '/home/cryptocurrency/details',
                                           arguments: {
                                             'cryptocurrency': coin,
-                                            'isFavorite': true,
+                                            'fromFavorite': true,
                                           },
                                         );
                                       });

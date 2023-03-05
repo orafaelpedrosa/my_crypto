@@ -19,15 +19,15 @@ class _ShimmerCryptocurrencyListWidgetState
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white.withOpacity(0.1),
+          color: Theme.of(context).colorScheme.background.withOpacity(0.1),
         ),
         child: Column(
           children: [
             ListTile(
               leading: Container(
-                decoration: const BoxDecoration(
+                decoration:  BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.background,
                 ),
                 height: 60,
                 width: 60,
@@ -37,7 +37,7 @@ class _ShimmerCryptocurrencyListWidgetState
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     height: 17.5,
                     width: 50,
@@ -46,7 +46,7 @@ class _ShimmerCryptocurrencyListWidgetState
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     height: 17.5,
                     width: 80,
@@ -60,7 +60,7 @@ class _ShimmerCryptocurrencyListWidgetState
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       height: 17.5,
                       width: 17.5,
@@ -69,7 +69,7 @@ class _ShimmerCryptocurrencyListWidgetState
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       height: 17.5,
                       width: 60,

@@ -4,10 +4,10 @@ class MyCryptoModel {
   String? id;
   String? name;
   String? symbol;
-  String? lastUpdate;
   num? amount;
   num? averagePrice;
   num? currentPrice;
+  num? totalValue;
   num? profit;
   num? profitPercentage;
 
@@ -15,10 +15,10 @@ class MyCryptoModel {
     this.id,
     this.name,
     this.symbol,
-    this.lastUpdate,
     this.amount,
     this.averagePrice,
     this.currentPrice,
+    this.totalValue,
     this.profit,
     this.profitPercentage,
   });
@@ -35,23 +35,23 @@ class MyCryptoModel {
     if (symbol != null) {
       result.addAll({'symbol': symbol});
     }
-    if (lastUpdate != null) {
-      result.addAll({'lastUpdate': lastUpdate});
-    }
     if (amount != null) {
       result.addAll({'amount': amount});
     }
     if (averagePrice != null) {
-      result.addAll({'averagePrice': averagePrice});
+      result.addAll({'average_price': averagePrice});
     }
     if (currentPrice != null) {
-      result.addAll({'currentPrice': currentPrice});
+      result.addAll({'current_price': currentPrice});
+    }
+    if (totalValue != null) {
+      result.addAll({'total_value': totalValue});
     }
     if (profit != null) {
       result.addAll({'profit': profit});
     }
     if (profitPercentage != null) {
-      result.addAll({'profitPercentage': profitPercentage});
+      result.addAll({'profit_percentage': profitPercentage});
     }
 
     return result;
@@ -62,12 +62,12 @@ class MyCryptoModel {
       id: map['id'],
       name: map['name'],
       symbol: map['symbol'],
-      lastUpdate: map['lastUpdate'],
       amount: map['amount'],
-      averagePrice: map['averagePrice'],
-      currentPrice: map['currentPrice'],
+      averagePrice: map['average_price'],
+      currentPrice: map['current_price'],
+      totalValue: map['total_value'],
       profit: map['profit'],
-      profitPercentage: map['profitPercentage'],
+      profitPercentage: map['profit_percentage'],
     );
   }
 

@@ -13,7 +13,7 @@ class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
     await _repository.addCryptocurrency(crypto);
   }
 
-  Future<void> removeCrypto(MyCryptoModel crypto) async {
+  Future<void> removeCryptocurrency(MyCryptoModel crypto) async {
     await _repository.removeCryptocurrency(crypto);
   }
 
@@ -21,16 +21,11 @@ class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
     await _repository.updateCryptocurrency(crypto);
   }
 
-  Future<void> getAll() async {
-    _list = await _repository.getAll();
-    update(_list);
+  Future<void> getCurrentPrice() async {
+    await _repository.getCurrentPrice();
   }
 
-  Future<MyCryptoModel> getcryptocurrencyByID(String id) async {
-    return await _repository.getCryptocurrencyByID(id);
-  }
-
-  Future<void> updateProfit() async {
+  Future<void> updatePrice() async {
     await _repository.updatePrice();
   }
 }

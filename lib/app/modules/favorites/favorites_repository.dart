@@ -29,8 +29,8 @@ class FavoritesRepository extends Disposable {
       final List<CryptocurrencySimpleModel> cryptos =
           List.empty(growable: true);
       response.data.forEach(
-        (crypto) {
-          cryptos.add(CryptocurrencySimpleModel.fromJson(crypto));
+        (coin) {
+          cryptos.add(CryptocurrencySimpleModel.fromJson(coin));
         },
       );
       return cryptos;

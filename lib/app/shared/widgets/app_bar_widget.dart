@@ -5,7 +5,7 @@ class AppBarWidget extends StatelessWidget {
   final String? title;
   final bool visibleTitle;
   final Color? colorTitle;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Function()? onBackPressed;
   final Function()? actionsPressed;
   final Icon? iconLeading;
@@ -19,7 +19,7 @@ class AppBarWidget extends StatelessWidget {
     this.title,
     this.visibleTitle = true,
     this.colorTitle,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     this.showLeading = true,
     this.showAction = false,
     this.actions = const [],

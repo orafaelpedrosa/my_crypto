@@ -17,16 +17,13 @@ class WalletPageState extends State<WalletPage> {
 
   MyCryptoModel crypto = MyCryptoModel(
     id: 'bloktopia',
-    name: 'Bloktopia',
-    symbol: 'blok',
     amount: 3406.0,
     averagePrice: 0.027,
   );
 
   @override
   void initState() {
-    store.getAll();
-    store.updateProfit();
+    store.updatePrice();
     super.initState();
   }
 
@@ -60,7 +57,7 @@ class WalletPageState extends State<WalletPage> {
         ],
       ),
       body: Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
