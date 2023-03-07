@@ -52,8 +52,6 @@ class ListCryptocurrenciesStore
     }
   }
 
-
-
   Future<void> updateState(List<CryptocurrencySimpleModel> data) async {
     update(data);
   }

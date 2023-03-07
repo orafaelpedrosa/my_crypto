@@ -66,6 +66,21 @@ class FavoritesStore
     update(list);
   }
 
+  Future<void> updateStateLoading() async {
+    setLoading(true);
+    final List<CryptocurrencySimpleModel> list =
+        List<CryptocurrencySimpleModel>.from(_list);
+    update(list);
+    setLoading(false);
+  }
+
+  Future<void> removeFavoriteByID(CryptocurrencySimpleModel coin) async {
+    setLoading(true);
+    await removeFavorite(coin);
+    await getCryptocurrenciesByIDs();
+    setLoading(false);
+  }
+
   Future<void> getCryptocurrenciesByIDs() async {
     setLoading(true);
     await startFavorites();

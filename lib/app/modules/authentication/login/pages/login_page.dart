@@ -51,6 +51,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+        ),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: true,
       body: GestureDetector(
@@ -81,21 +87,11 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/login/login.svg',
-            height: MediaQuery.of(context).size.height * 0.25,
-            placeholderBuilder: (context) => Container(
-              height: 50,
-              width: 50,
-              child: const CircularProgressIndicator(),
-            ),
-          ),
-          const SizedBox(height: 15),
-          SvgPicture.asset(
             'assets/app/mycrypto.svg',
-            height: MediaQuery.of(context).size.height * 0.05,
-            color: Theme.of(context).primaryColor,
+            height: MediaQuery.of(context).size.height * 0.07,
+            // color: Theme.of(context).colorScheme.primary,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 80),
           TripleBuilder(
             store: _store,
             builder: (_, triple) {
@@ -128,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       iconData: Icon(
                         Icons.email,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                         size: 20,
                       ),
                       label: 'E-mail',
@@ -163,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: _store.obscureStore.state,
                           iconData: Icon(
                             Icons.lock,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 20,
                           ),
                           suffixIcon: IconButton(
@@ -171,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                               _store.obscureStore.state
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                             onPressed: () {
                               _store.obscurePassword();
@@ -193,10 +189,12 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(
                           'Esqueceu a senha?',
-                          style:
-                              Theme.of(context).textTheme.titleLarge!.copyWith(
-                                    color: Colors.black87,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                         ),
                       ),
                     ),
@@ -209,21 +207,20 @@ class _LoginPageState extends State<LoginPage> {
                             width: MediaQuery.of(context).size.width * 0.85,
                             height: 50,
                             duration: Duration(seconds: 1),
-                            successColor: Theme.of(context).primaryColor,
+                            successColor: Theme.of(context).colorScheme.primary,
                             errorColor: Colors.red,
                             successIcon: Icons.check_circle_outline,
                             animateOnTap: validateFormLogin,
                             borderRadius: 15,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             child: Text(
                               'Login',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headlineMedium!
+                                  .headlineSmall!
                                   .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                             ),
                             controller: _btnController1,
@@ -291,7 +288,7 @@ class _LoginPageState extends State<LoginPage> {
                       text: TextSpan(
                         text: 'Não tem uma conta? ',
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: Colors.black87,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                         children: <TextSpan>[
                           TextSpan(
@@ -317,20 +314,20 @@ class _LoginPageState extends State<LoginPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             Theme.of(context).colorScheme.background,
-                        foregroundColor: Theme.of(context).primaryColor,
+                        foregroundColor: Theme.of(context).colorScheme.primary,
                         minimumSize: Size(double.infinity, 50),
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         side: BorderSide(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           width: 1,
                         ),
                       ),
                       icon: FaIcon(
                         FontAwesomeIcons.google,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       onPressed: () {
                         _store.authGoogle().then((value) async {
@@ -352,7 +349,7 @@ class _LoginPageState extends State<LoginPage> {
                         'Entrar com Google',
                         style:
                             Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                       ),
                     ),

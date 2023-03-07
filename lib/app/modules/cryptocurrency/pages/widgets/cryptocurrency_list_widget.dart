@@ -46,7 +46,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
           return Expanded(
             child: StreamBuilder<List<CryptocurrencySimpleModel>>(
               stream: Stream.periodic(
-                const Duration(seconds: 20),
+                const Duration(seconds: 30),
                 (_) {
                   store.getListCryptoStream();
 
@@ -62,15 +62,11 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   child: ListView.separated(
                     itemCount: store.state.length,
                     itemBuilder: (_, index) {
-
                       final isFavorite = favoritesStore.state.any(
                           (element) => element.id == store.state[index].id);
-
-                          
                       store.state[index].isFavorite = isFavorite;
-
-
                       store.getFormatImage(store.state[index].image);
+
                       return SlidableItemListWidget(
                         coin: store.state[index],
                         onTap: () {
@@ -81,6 +77,9 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                               'fromFavorite': false,
                             },
                           );
+                        },
+                        slidableOnTap: (context) {
+                          favoritesStore.toggleFavorite(store.state[index]);
                         },
                       );
                     },

@@ -23,7 +23,7 @@ class ButtonSecondaryWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
           border: Border.all(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
@@ -34,13 +34,13 @@ class ButtonSecondaryWidget extends StatelessWidget {
               ? CircularProgressIndicator(
                   strokeWidth: 2.0,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).primaryColor,
+                    Theme.of(context).colorScheme.primary,
                   ),
                 )
               : Text(
                   text,
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                 ),
         ),

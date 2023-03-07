@@ -21,7 +21,7 @@ class ButtonPrimaryWidget extends StatelessWidget {
         height: 50,
         width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
@@ -36,8 +36,8 @@ class ButtonPrimaryWidget extends StatelessWidget {
                 )
               : Text(
                   text,
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.background,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
         ),

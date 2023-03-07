@@ -77,8 +77,14 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                     )
                   : IconButton(
                       icon: favoritesStore.isFavorite(widget.cryptocurrency)
-                          ? Icon(Icons.star_rate_rounded)
-                          : Icon(Icons.star_outline_rounded),
+                          ? Icon(
+                              Icons.star_rate_rounded,
+                              color: Theme.of(context).colorScheme.primary,
+                            )
+                          : Icon(
+                              Icons.star_outline_rounded,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                       onPressed: () {
                         favoritesStore.toggleFavorite(widget.cryptocurrency);
                       },
@@ -119,7 +125,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               .textTheme
                               .displaySmall!
                               .copyWith(
-                                color: Colors.black87,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                         ),
                         SizedBox(height: 5),
@@ -132,7 +138,8 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                                   .textTheme
                                   .displayLarge!
                                   .copyWith(
-                                    color: Colors.black87,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -149,15 +156,16 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                             initialLabelIndex: selectIndex,
                             inactiveBgColor:
                                 Theme.of(context).cardColor.withOpacity(0.05),
-                            inactiveFgColor: Theme.of(context).cardColor,
+                            inactiveFgColor:
+                                Theme.of(context).colorScheme.onBackground,
                             activeFgColor:
-                                Theme.of(context).colorScheme.background,
+                                Theme.of(context).colorScheme.secondary,
                             dividerColor:
-                                Theme.of(context).cardColor.withOpacity(0.5),
+                                Theme.of(context).colorScheme.onBackground,
                             totalSwitches: 4,
                             animate: false,
                             borderWidth: 0.5,
-                            labels: ['1d', '7d', '30d', '1y'],
+                            labels: ['1d', '7d', '30d', '1a'],
                             onToggle: (index) {
                               selectIndex = index!;
                               store.chartStore.changeChart(index);
@@ -170,9 +178,9 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                           'Market Cap:',
                           style: Theme.of(context)
                               .textTheme
-                              .headlineSmall!
+                              .headlineMedium!
                               .copyWith(
-                                color: Colors.black87,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
@@ -182,7 +190,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               .textTheme
                               .headlineSmall!
                               .copyWith(
-                                color: Colors.black87,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                         ),
                         SizedBox(height: 25),
@@ -190,9 +198,9 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                           'Sobre',
                           style: Theme.of(context)
                               .textTheme
-                              .displaySmall!
+                              .headlineMedium!
                               .copyWith(
-                                color: Colors.black87,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
@@ -203,8 +211,11 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
-                              .copyWith(color: Colors.black87),
-                          colorClickableText: Theme.of(context).primaryColor,
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
+                          colorClickableText:
+                              Theme.of(context).colorScheme.primary,
                           trimMode: TrimMode.Line,
                           textAlign: TextAlign.justify,
                         ),

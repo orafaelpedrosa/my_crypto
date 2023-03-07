@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/slidable_item_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/shimmer_cryptocurrency_list_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/slidable_item_list_widget.dart';
 import 'package:mycrypto/app/modules/favorites/pages/widgets/no_favorites_widgets.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:flutter/material.dart';
@@ -72,17 +72,22 @@ class FavoritesPageState extends State<FavoritesPage> {
                                 itemCount: triple.state.length,
                                 itemBuilder: (context, index) {
                                   final coin = triple.state[index];
+                                  coin.isFavorite = store.isFavorite(coin);
                                   return SlidableItemListWidget(
-                                      coin: coin,
-                                      onTap: () {
-                                        Modular.to.pushNamed(
-                                          '/home/cryptocurrency/details',
-                                          arguments: {
-                                            'cryptocurrency': coin,
-                                            'fromFavorite': true,
-                                          },
-                                        );
-                                      });
+                                    coin: coin,
+                                    onTap: () {
+                                      Modular.to.pushNamed(
+                                        '/home/cryptocurrency/details',
+                                        arguments: {
+                                          'cryptocurrency': coin,
+                                          'fromFavorite': true,
+                                        },
+                                      );
+                                    },
+                                    slidableOnTap: (context) async {
+                                      store.removeFavoriteByID(coin);
+                                    },
+                                  );
                                 },
                                 separatorBuilder: (_, index) => const Divider(
                                   height: 1,

@@ -14,20 +14,21 @@ class _ShimmerCryptocurrencyListWidgetState
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Theme.of(context).primaryColor.withOpacity(0.25),
-      highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
+      baseColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+      highlightColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       child: Container(
+        margin:
+            const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.background.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(15),
+          color: Theme.of(context).colorScheme.onBackground,
         ),
         child: Column(
           children: [
             ListTile(
               leading: Container(
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.background,
                 ),
                 height: 60,
                 width: 60,

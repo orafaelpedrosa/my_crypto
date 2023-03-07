@@ -48,7 +48,7 @@ class _SendMailPageState extends State<SendMailPage> {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
-                    .copyWith(color: Colors.black54),
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
               SizedBox(height: 40),
               SvgPicture.asset(
@@ -68,7 +68,7 @@ class _SendMailPageState extends State<SendMailPage> {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
-                    .copyWith(color: Colors.black54),
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
               SizedBox(height: 30),
               ButtonSecondaryWidget(

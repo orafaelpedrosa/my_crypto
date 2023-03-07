@@ -19,24 +19,25 @@ class SearchBarWidget extends SearchDelegate {
       appBarTheme: AppBarTheme(
         backgroundColor: Theme.of(context).colorScheme.background,
         iconTheme: theme.primaryIconTheme
-            .copyWith(color: Theme.of(context).primaryColor),
+            .copyWith(color: Theme.of(context).colorScheme.primary),
         elevation: 1,
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: InputBorder.none,
       ),
       colorScheme: ColorScheme(
-        background: Theme.of(context).colorScheme.background,
-        brightness: Brightness.light,
+        background: const Color(0xff050409),
+        brightness: Brightness.dark,
         error: Colors.red,
-        onBackground: Colors.black,
-        onError: Theme.of(context).colorScheme.background,
-        onPrimary: Theme.of(context).colorScheme.background,
-        onSecondary: Theme.of(context).colorScheme.background,
-        onSurface: Colors.black,
-        primary: Theme.of(context).primaryColor,
-        secondary: Theme.of(context).primaryColor,
-        surface: Theme.of(context).colorScheme.background,
+        onError: Colors.red,
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+        onSurface: Colors.white,
+        primary: const Color(0xff5865F2),
+        secondary: Colors.white,
+        tertiary: Color(0xff858585),
+        surface: Colors.white,
+        onBackground: Color(0xff858585),
       ),
     );
   }
@@ -58,7 +59,7 @@ class SearchBarWidget extends SearchDelegate {
     return IconButton(
       icon: Icon(
         Icons.arrow_back,
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.primary,
       ),
       onPressed: () {
         close(context, null);
@@ -120,7 +121,7 @@ class SearchBarWidget extends SearchDelegate {
               title: Text(
                 suggestionList[index].name!,
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
               trailing: TripleBuilder<FavoritesStore, Exception,
@@ -193,7 +194,7 @@ class SearchBarWidget extends SearchDelegate {
             title: Text(
               suggestionList[index].name!,
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
             trailing: TripleBuilder<FavoritesStore, Exception,

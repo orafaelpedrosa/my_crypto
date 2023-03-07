@@ -19,9 +19,11 @@ class CryptocurrencyDataStore
   Future<void> getCryptocurrencyById(String id) async {
     setLoading(true);
     await _repository.getCryptoData(id).then((value) async {
-      value.description!.en = Utils.parseHtmlString(value.description!.en!);
-      value.description!.pt =
-          await TranslatorService.translate(value.description!.en!);
+      if (value.description!.en != "") {
+        value.description!.en = Utils.parseHtmlString(value.description!.en!);
+        value.description!.pt =
+            await TranslatorService.translate(value.description!.en!);
+      }
       update(value);
       await priceChangePercente(0);
       setLoading(false);
@@ -34,10 +36,11 @@ class CryptocurrencyDataStore
 
   Future<void> getStreamCryptocurrency(String id, int index) async {
     await _repository.getCryptoData(id).then((value) async {
-      value.description!.en = Utils.parseHtmlString(value.description!.en!);
-      value.description!.pt =
-          await TranslatorService.translate(value.description!.en!);
-      value.priceChangePercente = changePricePercente(index);
+      if (value.description!.en != "") {
+        value.description!.en = Utils.parseHtmlString(value.description!.en!);
+        value.description!.pt =
+            await TranslatorService.translate(value.description!.en!);
+      }
       update(value);
     }).catchError((onError) {
       log(onError.toString());

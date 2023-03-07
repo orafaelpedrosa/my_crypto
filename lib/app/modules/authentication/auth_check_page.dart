@@ -20,7 +20,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
   final LoginStore loginStore = Modular.get<LoginStore>();
 
   checkLocalAuth() async {
-    loginStore.authLogout();
+    // loginStore.authLogout();
     final isLocalAuthAvilable = await _store.isBiometricAvailable();
     final _authFirebase = FirebaseAuth.instance;
 
@@ -73,7 +73,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
                 Text(
                   'Acesse o MyCrypto',
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: Theme.of(context).cardColor,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                   textAlign: TextAlign.center,
@@ -82,7 +82,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
                 Text(
                   'Erro ao autenticar. Tente novamente para continuar usando o app.',
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: Theme.of(context).cardColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                   textAlign: TextAlign.center,
                 ),

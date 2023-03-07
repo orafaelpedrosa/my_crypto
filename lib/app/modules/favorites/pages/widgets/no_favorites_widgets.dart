@@ -16,7 +16,7 @@ class NoFavoritesWidget extends StatelessWidget {
             padding: EdgeInsets.all(30),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
             child: Icon(
               Icons.star_rate_rounded,

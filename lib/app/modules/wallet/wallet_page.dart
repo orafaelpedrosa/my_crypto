@@ -45,7 +45,6 @@ class WalletPageState extends State<WalletPage> {
               size: 30,
             ),
             onPressed: () {
-              //modal menu aqui
               showCupertinoModalPopup(
                 context: context,
                 builder: (context) {

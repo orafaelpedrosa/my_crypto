@@ -38,13 +38,14 @@ class AppBarWidget extends StatelessWidget {
           ? Text(
               title!,
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    color: colorTitle ?? Theme.of(context).primaryColor,
+                    color: colorTitle ?? Theme.of(context).colorScheme.primary,
                   ),
             )
           : SizedBox.shrink(),
-      backgroundColor: backgroundColor,
+      backgroundColor:
+          backgroundColor ?? Theme.of(context).colorScheme.background,
       iconTheme: IconThemeData(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.primary,
       ),
       leading: showLeading
           ? IconButton(

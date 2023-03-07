@@ -20,7 +20,7 @@ class FavoritesRepository extends Disposable {
       MarketsParamsModel marketsParamsModel) async {
     try {
       final Response response = await _dio.get(
-        'https://api.coingecko.com/api/v3/coins/markets',
+        'https://api.coingecko.com/api/v3/coins/markets?sparkline=true',
         queryParameters: {
           'vs_currency': marketsParamsModel.vsCurrency,
           'ids': marketsParamsModel.ids!.join(','),

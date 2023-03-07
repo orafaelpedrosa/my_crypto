@@ -29,6 +29,11 @@ class LoginRepository with Disposable {
           message: 'Senha incorreta',
           code: e.code,
         );
+      } else if (e.code == 'network-request-failed') {
+        throw FirebaseAuthException(
+          message: 'Sem conexão com a internet',
+          code: e.code,
+        );
       } else {
         throw FirebaseAuthException(
           message: 'Erro desconhecido',

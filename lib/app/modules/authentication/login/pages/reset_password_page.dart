@@ -70,7 +70,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
-                    .copyWith(color: Colors.black54),
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
               SvgPicture.asset(
                 'assets/login/reset_password.svg',
@@ -90,7 +90,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   keyboardType: TextInputType.emailAddress,
                   iconData: Icon(
                     Icons.email,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     size: 20,
                   ),
                   validator: (value) {
@@ -111,16 +111,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: 50,
                 duration: Duration(seconds: 1),
-                successColor: Theme.of(context).primaryColor,
+                successColor: Theme.of(context).colorScheme.primary,
                 errorColor: Colors.red,
                 successIcon: Icons.check_circle_outline,
                 animateOnTap: validateFormReset,
                 borderRadius: 15,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 child: Text(
                   'Enviar',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.background,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
                 controller: _btnController1,

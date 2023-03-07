@@ -7,7 +7,6 @@ class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
   WalletStore() : super([]);
 
   final WalletRepository _repository = WalletRepository();
-  List<MyCryptoModel> _list = List<MyCryptoModel>.empty(growable: true);
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {
     await _repository.addCryptocurrency(crypto);

@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
-              color: Colors.black.withOpacity(.1),
+              color: Theme.of(context).colorScheme.secondary.withOpacity(.1),
             )
           ],
         ),
@@ -37,15 +37,12 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
-              gap: 8,
-              activeColor: Theme.of(context).primaryColor,
+              gap: 5,
               iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
-              color: Colors.grey[700]!,
+              color: Theme.of(context).colorScheme.onBackground,
+              backgroundColor: Theme.of(context).colorScheme.background,
               tabs: [
                 GButton(
                   icon: Icons.home,

@@ -69,7 +69,7 @@ class RegisterPageState extends State<RegisterPage> {
                 Text(
                   'Cadastre-se',
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -83,7 +83,7 @@ class RegisterPageState extends State<RegisterPage> {
                         textInputAction: TextInputAction.next,
                         iconData: Icon(
                           Icons.person_outline,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                         label: 'Nome completo',
@@ -101,7 +101,7 @@ class RegisterPageState extends State<RegisterPage> {
                         textInputAction: TextInputAction.next,
                         iconData: Icon(
                           Icons.email_outlined,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                         label: 'Email',
@@ -120,7 +120,7 @@ class RegisterPageState extends State<RegisterPage> {
                         obscureText: true,
                         iconData: Icon(
                           Icons.lock_outline,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                         label: 'Senha',
@@ -139,7 +139,7 @@ class RegisterPageState extends State<RegisterPage> {
                         obscureText: true,
                         iconData: Icon(
                           Icons.lock_outline,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                         label: 'Confirme sua senha',
@@ -172,11 +172,15 @@ class RegisterPageState extends State<RegisterPage> {
                                 child: _accetpTermsStore.state
                                     ? Icon(
                                         Icons.check_box,
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       )
                                     : Icon(
                                         Icons.check_box_outline_blank,
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                               );
                             },
@@ -188,7 +192,7 @@ class RegisterPageState extends State<RegisterPage> {
                                 .textTheme
                                 .titleLarge!
                                 .copyWith(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w400,
                                 ),
                           ),
@@ -198,7 +202,7 @@ class RegisterPageState extends State<RegisterPage> {
                                 .textTheme
                                 .titleLarge!
                                 .copyWith(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
@@ -212,23 +216,22 @@ class RegisterPageState extends State<RegisterPage> {
                             width: MediaQuery.of(context).size.width * 0.85,
                             height: 50,
                             duration: Duration(seconds: 1),
-                            successColor: Theme.of(context).primaryColor,
+                            successColor: Theme.of(context).colorScheme.primary,
                             errorColor: Colors.red,
                             successIcon: Icons.check_circle_outline,
                             animateOnTap:
                                 (_validation.isEmail(_emailController.text) &&
                                     _validation.isEmail(_emailController.text)),
                             borderRadius: 15,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             child: Text(
                               'Cadastrar',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headlineMedium!
+                                  .headlineSmall!
                                   .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                             ),
                             controller: _btnController1,

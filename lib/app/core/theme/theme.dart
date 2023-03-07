@@ -61,7 +61,9 @@ ThemeData theme = ThemeData(
     ),
   ),
   colorScheme: ColorScheme(
-    background: Colors.white,
+    // background: const Color(0xff050409),
+    background: const Color(0xff0D0B18),
+
     brightness: Brightness.dark,
     error: Colors.red,
     onError: Colors.red,
@@ -69,8 +71,9 @@ ThemeData theme = ThemeData(
     onSecondary: Colors.white,
     onSurface: Colors.white,
     primary: const Color(0xff5865F2),
-    secondary: const Color(0xff5865F2),
+    secondary: Colors.white,
+    tertiary: Color(0xff858585),
     surface: Colors.white,
-    onBackground: Colors.white,
+    onBackground: Color(0xff858585),
   ),
 );

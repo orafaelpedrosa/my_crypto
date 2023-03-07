@@ -68,7 +68,7 @@ class TextFormFieldWidget extends StatelessWidget {
       validator: validator,
       obscureText: obscureText,
       style: Theme.of(context).textTheme.displayLarge!.copyWith(
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.tertiary,
             fontSize: 16,
           ),
       decoration: InputDecoration(
@@ -78,11 +78,11 @@ class TextFormFieldWidget extends StatelessWidget {
             ),
         labelText: label,
         labelStyle: TextStyle(
-          color: Colors.black54,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         hintText: hintText,
         hintStyle: TextStyle(
-          color: Colors.black54,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         prefixIcon: iconData,
         suffixIcon: suffixIcon,
@@ -91,7 +91,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -99,7 +99,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.tertiary,
             width: 1.5,
           ),
         ),
@@ -108,7 +108,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.tertiary,
             width: 1.5,
           ),
         ),
@@ -117,7 +117,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             width: 1.5,
           ),
         ),

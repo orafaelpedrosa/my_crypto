@@ -40,7 +40,6 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
           centerTitle: true,
           title: SvgPicture.asset(
             'assets/app/mycrypto.svg',
-            color: Theme.of(context).primaryColor,
             height: 25,
             width: 25,
           ),
@@ -51,7 +50,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             IconButton(
               icon: Icon(
                 Icons.search,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () {
                 showSearch(
