@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/search_bar_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tabs_filter_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 
@@ -23,6 +24,11 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
 
   @override
   void initState() {
+    store.marketsParams.order = 'market_cap_desc';
+    store.marketsParams.perPage = '100';
+    store.marketsParams.page = '1';
+    store.marketsParams.sparkline = 'true';
+    store.marketsParams.priceChangePercentage = '7d';
     store.getListCryptocurrencies();
     favoritesStore.startFavorites();
     super.initState();
@@ -59,11 +65,26 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
                 );
               },
             ),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.sort_rounded,
+            //     color: Theme.of(context).colorScheme.secondary,
+            //   ),
+            //   onPressed: () {
+            //     showCupertinoModalPopup(
+            //       context: context,
+            //       builder: (context) {
+            //         return ModalOrderMarketWidget();
+            //       },
+            //     );
+            //   },
+            // ),
           ],
         ),
         body: SafeArea(
           child: Column(
             children: [
+              TabsFilterListWidget(),
               CryptocurrencyListWidget(),
             ],
           ),

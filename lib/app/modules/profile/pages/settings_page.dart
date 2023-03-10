@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/user_store.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -38,7 +36,6 @@ class _SettingsPageState extends State<SettingsPage> {
           itemCount: 1,
           itemBuilder: (context, index) {
             return null;
-
             // return ListTile(
             //   leading: Icon(
             //     Icons.fingerprint,

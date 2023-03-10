@@ -37,7 +37,7 @@ class AppBarWidget extends StatelessWidget {
       title: visibleTitle
           ? Text(
               title!,
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     color: colorTitle ?? Theme.of(context).colorScheme.primary,
                   ),
             )
@@ -47,18 +47,19 @@ class AppBarWidget extends StatelessWidget {
       iconTheme: IconThemeData(
         color: Theme.of(context).colorScheme.primary,
       ),
-      leading: showLeading
-          ? IconButton(
-              icon: iconLeading ??
-                  Icon(
-                    Icons.arrow_back_ios,
-                  ),
-              onPressed: onBackPressed ??
-                  () {
-                    Modular.to.pop();
-                  },
-            )
-          : SizedBox.shrink(),
+      leading: Visibility(
+        visible: showLeading,
+        child: IconButton(
+          icon: iconLeading ??
+              Icon(
+                Icons.arrow_back_ios,
+              ),
+          onPressed: onBackPressed ??
+              () {
+                Modular.to.pop();
+              },
+        ),
+      ),
       actions: actions,
     );
   }

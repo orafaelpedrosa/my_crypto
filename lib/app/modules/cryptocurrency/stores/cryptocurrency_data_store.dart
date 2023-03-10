@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/services/translator_service.dart';
+import 'package:mycrypto/app/core/utils/utils.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
-import 'package:mycrypto/app/core/utils/utils.dart';
 
 class CryptocurrencyDataStore
     extends NotifierStore<DioError, CryptocurrencyDetailsModel> {
@@ -19,11 +19,7 @@ class CryptocurrencyDataStore
   Future<void> getCryptocurrencyById(String id) async {
     setLoading(true);
     await _repository.getCryptoData(id).then((value) async {
-      if (value.description!.en != "") {
-        value.description!.en = Utils.parseHtmlString(value.description!.en!);
-        value.description!.pt =
-            await TranslatorService.translate(value.description!.en!);
-      }
+      value.description!.pt = await getDesciption(value.description!.en!);
       update(value);
       await priceChangePercente(0);
       setLoading(false);
@@ -36,11 +32,7 @@ class CryptocurrencyDataStore
 
   Future<void> getStreamCryptocurrency(String id, int index) async {
     await _repository.getCryptoData(id).then((value) async {
-      if (value.description!.en != "") {
-        value.description!.en = Utils.parseHtmlString(value.description!.en!);
-        value.description!.pt =
-            await TranslatorService.translate(value.description!.en!);
-      }
+      value.description!.pt = await getDesciption(value.description!.en!);
       update(value);
     }).catchError((onError) {
       log(onError.toString());
@@ -91,5 +83,14 @@ class CryptocurrencyDataStore
 
   Future<void> updateState(CryptocurrencyDetailsModel data) async {
     update(data);
+  }
+
+  Future<String> getDesciption(String description) async {
+    String translate = "";
+    if (description.length > 10) {
+      description = Utils.parseHtmlString(description);
+      translate = await TranslatorService.translate(description);
+    }
+    return translate;
   }
 }

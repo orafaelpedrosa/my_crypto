@@ -19,13 +19,14 @@ class ListCryptocurrenciesStore
       Modular.get<CryptocurrencyDataStore>();
   List<CryptocurrencySimpleModel> listCrypto = [];
   final MarketsParamsModel marketsParams = MarketsParamsModel();
+  String order = 'market_cap_desc';
 
   Future<void> getListCryptocurrencies() async {
     setLoading(true);
     await _repository.getListCryptocurrenciesData(marketsParams).then((value) {
       update(value);
       setLoading(false);
-    }).catchError((onError) {
+    }).catchError((onError) async {
       setLoading(false);
       log(onError.toString());
       setError(onError);
@@ -50,6 +51,36 @@ class ListCryptocurrenciesStore
       String imageFormat = url.substring(ponto + 1, url.length);
       return imageFormat;
     }
+  }
+
+  Future<void> orderList(String order) async {
+    setLoading(true);
+    final List<CryptocurrencySimpleModel> _list = state;
+    switch (order) {
+      case 'market_cap_desc':
+        _list.sort((a, b) => b.marketCap!.compareTo(a.marketCap!));
+        break;
+      case 'market_cap_asc':
+        _list.sort((a, b) => a.marketCap!.compareTo(b.marketCap!));
+        break;
+      case 'volume_desc':
+        _list.sort((a, b) => b.totalVolume!.compareTo(a.totalVolume!));
+        break;
+      case 'volume_asc':
+        _list.sort((a, b) => a.totalVolume!.compareTo(b.totalVolume!));
+        break;
+      case 'percent_change_desc':
+        _list.sort((a, b) =>
+            b.priceChangePercentage24h!.compareTo(a.priceChangePercentage24h!));
+        break;
+      case 'percent_change_asc':
+        _list.sort((a, b) =>
+            a.priceChangePercentage24h!.compareTo(b.priceChangePercentage24h!));
+        break;
+      default:
+    }
+    update(_list);
+    setLoading(false);
   }
 
   Future<void> updateState(List<CryptocurrencySimpleModel> data) async {

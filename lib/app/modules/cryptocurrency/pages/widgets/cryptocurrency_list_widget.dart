@@ -49,7 +49,6 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                 const Duration(seconds: 30),
                 (_) {
                   store.getListCryptoStream();
-
                   return store.state;
                 },
               ),
@@ -57,14 +56,13 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
               builder: (context, snapshot) {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    store.getListCryptocurrencies();
+                    await store.getListCryptocurrencies();
                   },
                   child: ListView.separated(
                     itemCount: store.state.length,
                     itemBuilder: (_, index) {
-                      final isFavorite = favoritesStore.state.any(
+                      store.state[index].isFavorite = favoritesStore.state.any(
                           (element) => element.id == store.state[index].id);
-                      store.state[index].isFavorite = isFavorite;
                       store.getFormatImage(store.state[index].image);
 
                       return SlidableItemListWidget(
@@ -86,7 +84,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     separatorBuilder: (_, index) => const Divider(
                       height: 1,
                       thickness: 1,
-                      color: Colors.black12,
+                      color: Colors.transparent,
                     ),
                   ),
                 );

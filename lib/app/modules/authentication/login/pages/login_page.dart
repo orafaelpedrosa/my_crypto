@@ -358,6 +358,19 @@ class _LoginPageState extends State<LoginPage> {
               );
             },
           ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+          // SvgPicture.asset(
+          //   'assets/app/coin_gecko.svg',
+          //   height: 25,
+          // ),
+          // SizedBox(height: 5),
+          Text(
+            'Dados fornecidos por CoinGecko',
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 12,
+                ),
+          ),
         ],
       ),
     );

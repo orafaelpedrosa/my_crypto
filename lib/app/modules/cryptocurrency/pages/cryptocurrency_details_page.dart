@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,10 +11,10 @@ import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparklin
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:mycrypto/app/core/utils/utils.dart';
-import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
+import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
@@ -47,6 +50,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     int selectIndex = 0;
+    log('CryptocurrencyDetailsPage ${store.chartStore.state.pricesChart!.isNotEmpty}');
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -148,34 +152,42 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                           ],
                         ),
                         SizedBox(height: 45),
-                        ChartSparklineWidget(),
+                        Visibility(
+                          visible:
+                              store.chartStore.state.pricesChart!.isNotEmpty,
+                          child: ChartSparklineWidget(),
+                        ),
                         SizedBox(height: 40),
-                        Center(
-                          child: ToggleSwitch(
-                            minHeight: 35.0,
-                            initialLabelIndex: selectIndex,
-                            inactiveBgColor:
-                                Theme.of(context).cardColor.withOpacity(0.05),
-                            inactiveFgColor:
-                                Theme.of(context).colorScheme.onBackground,
-                            activeFgColor:
-                                Theme.of(context).colorScheme.secondary,
-                            dividerColor:
-                                Theme.of(context).colorScheme.onBackground,
-                            totalSwitches: 4,
-                            animate: false,
-                            borderWidth: 0.5,
-                            labels: ['1d', '7d', '30d', '1a'],
-                            onToggle: (index) {
-                              selectIndex = index!;
-                              store.chartStore.changeChart(index);
-                              store.priceChangePercente(selectIndex);
-                            },
+                        Visibility(
+                          // visible:snapshot.data.marketData.marketCap
+                              
+                          child: Center(
+                            child: ToggleSwitch(
+                              minHeight: 35.0,
+                              initialLabelIndex: selectIndex,
+                              inactiveBgColor:
+                                  Theme.of(context).cardColor.withOpacity(0.05),
+                              inactiveFgColor:
+                                  Theme.of(context).colorScheme.onBackground,
+                              activeFgColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              dividerColor:
+                                  Theme.of(context).colorScheme.onBackground,
+                              totalSwitches: 4,
+                              animate: false,
+                              borderWidth: 0.5,
+                              labels: ['1d', '7d', '30d', '1a'],
+                              onToggle: (index) {
+                                selectIndex = index!;
+                                store.chartStore.changeChart(index);
+                                store.priceChangePercente(selectIndex);
+                              },
+                            ),
                           ),
                         ),
                         SizedBox(height: 40),
                         Text(
-                          'Market Cap:',
+                          'Market Cap',
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium!
@@ -194,31 +206,42 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               ),
                         ),
                         SizedBox(height: 25),
-                        Text(
-                          'Sobre',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontWeight: FontWeight.bold,
+                        Visibility(
+                          visible: snapshot.data!.description!.pt! != "",
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Sobre',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                               ),
-                        ),
-                        SizedBox(height: 5),
-                        ReadMoreText(
-                          snapshot.data!.description!.pt!,
-                          trimLines: 5,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
-                          colorClickableText:
-                              Theme.of(context).colorScheme.primary,
-                          trimMode: TrimMode.Line,
-                          textAlign: TextAlign.justify,
-                        ),
+                              SizedBox(height: 10),
+                              ReadMoreText(
+                                snapshot.data!.description!.pt!,
+                                trimLines: 5,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary),
+                                colorClickableText:
+                                    Theme.of(context).colorScheme.primary,
+                                trimMode: TrimMode.Line,
+                                textAlign: TextAlign.justify,
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
