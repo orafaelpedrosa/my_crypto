@@ -26,7 +26,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
         List<CryptocurrencySimpleModel>>(
       store: store,
       builder: (_, triple) {
-        if (store.isLoading) {
+        if (store.isLoading && store.state.isEmpty) {
           return Expanded(
             child: Theme(
               data: Theme.of(context).copyWith(
@@ -63,22 +63,32 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                     itemBuilder: (_, index) {
                       store.state[index].isFavorite = favoritesStore.state.any(
                           (element) => element.id == store.state[index].id);
-                      store.getFormatImage(store.state[index].image);
-
-                      return SlidableItemListWidget(
-                        coin: store.state[index],
-                        onTap: () {
-                          Modular.to.pushNamed(
-                            '/home/cryptocurrency/details',
-                            arguments: {
-                              'cryptocurrency': store.state[index],
-                              'fromFavorite': false,
+                      // store.getFormatImage(store.state[index].image);
+                      return Column(
+                        children: [
+                          Visibility(
+                            visible: store.isLoading && index == 0,
+                            child: LinearProgressIndicator(
+                              minHeight: 1,
+                              backgroundColor: Colors.transparent,
+                            ),
+                          ),
+                          SlidableItemListWidget(
+                            coin: store.state[index],
+                            onTap: () {
+                              Modular.to.pushNamed(
+                                '/home/cryptocurrency/details',
+                                arguments: {
+                                  'cryptocurrency': store.state[index],
+                                  'fromFavorite': false,
+                                },
+                              );
                             },
-                          );
-                        },
-                        slidableOnTap: (context) {
-                          favoritesStore.toggleFavorite(store.state[index]);
-                        },
+                            slidableOnTap: (context) {
+                              favoritesStore.toggleFavorite(store.state[index]);
+                            },
+                          ),
+                        ],
                       );
                     },
                     separatorBuilder: (_, index) => const Divider(

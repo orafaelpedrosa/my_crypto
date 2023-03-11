@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/services/firestore_repository.dart';
 import 'package:mycrypto/app/core/user_store.dart';
@@ -10,6 +11,7 @@ class WalletRepository extends Disposable {
   final Dio _dio = Dio();
   late FirebaseFirestore db;
   UserStore userStore = Modular.get();
+  final String _urlBase = dotenv.get('URL_BASE');
 
   startFirestore() async {
     db = FirestoreRepository.get();
@@ -87,7 +89,7 @@ class WalletRepository extends Disposable {
   Future<List<CryptocurrencySimpleModel>> getCurrentPrice() async {
     final List<String> ids = await getListOfWalletIDs();
     final Response _response = await _dio.get(
-      'https://api.coingecko.com/api/v3/coins/markets',
+      '$_urlBase/coins/markets',
       queryParameters: {
         'vs_currency': 'usd',
         'ids': ids.join(','),

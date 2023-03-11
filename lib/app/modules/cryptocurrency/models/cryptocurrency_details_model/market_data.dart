@@ -40,9 +40,9 @@ class MarketData {
   PriceChangePercentageInCurrency? priceChangePercentage1yInCurrency;
   PriceChangePercentageInCurrency? marketCapChange24hInCurrency;
   PriceChangePercentageInCurrency? marketCapChangePercentage24hInCurrency;
-  num? totalSupply;
+  String? totalSupply;
   num? maxSupply;
-  num? circulatingSupply;
+  String? circulatingSupply;
   SparklineIn7dModel? sparkline7d;
   DateTime? lastUpdated;
 
@@ -217,9 +217,10 @@ class MarketData {
                 : PriceChangePercentageInCurrency.fromMap(
                     data['market_cap_change_percentage_24h_in_currency']
                         as Map<String, dynamic>),
-        totalSupply: (data['total_supply'] as num?)?.toDouble(),
+        // totalSupply: (data['total_supply'] as num?)?.toDouble(),
+        totalSupply: data['total_supply']?.toString(),
         maxSupply: (data['max_supply'] as num?)?.toDouble(),
-        circulatingSupply: (data['circulating_supply'] as num?)?.toDouble(),
+        circulatingSupply: (data['circulating_supply']?.toString()),
         sparkline7d: data['sparkline_7d'] == null
             ? null
             : SparklineIn7dModel.fromJson(

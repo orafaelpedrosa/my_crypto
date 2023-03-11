@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/services/firestore_repository.dart';
 import 'package:mycrypto/app/core/user_store.dart';
@@ -15,12 +16,13 @@ class FavoritesRepository extends Disposable {
   List<CryptocurrencySimpleModel> _list =
       List<CryptocurrencySimpleModel>.empty(growable: true);
   List<String> _listIDs = List<String>.empty(growable: true);
+  final String _urlBase = dotenv.get('URL_BASE');
 
   Future<List<CryptocurrencySimpleModel>> getCryptocurrenciesByIDs(
       MarketsParamsModel marketsParamsModel) async {
     try {
       final Response response = await _dio.get(
-        'https://api.coingecko.com/api/v3/coins/markets?sparkline=true',
+        '$_urlBase/coins/markets?sparkline=true',
         queryParameters: {
           'vs_currency': marketsParamsModel.vsCurrency,
           'ids': marketsParamsModel.ids!.join(','),

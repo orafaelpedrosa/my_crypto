@@ -74,6 +74,6 @@ ThemeData theme = ThemeData(
     secondary: Colors.white,
     tertiary: Color(0xff858585),
     surface: Colors.white,
-    onBackground: Color(0xff858585),
+    onBackground: Color(0xff201F26),
   ),
 );

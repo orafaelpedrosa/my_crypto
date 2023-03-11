@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -21,7 +22,18 @@ class SlidableItemListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FavoritesStore store = Modular.get();
-    String price = formatPrice(coin.currentPrice!.toDouble());
+
+    final ListCryptocurrenciesStore _listCrypto = Modular.get();
+    String price = '0.00';
+    if (coin.currentPrice != null) {
+      price = formatPrice(coin.currentPrice!.toDouble());
+    }
+    if (coin.marketCapRank.toString().length > 4) {
+      coin.marketCapRank =
+          int.parse(coin.marketCapRank.toString().substring(0, 4));
+    }
+
+    final num changeprice = _listCrypto.getPriceChangePercentage(coin);
 
     return GestureDetector(
       onTap: onTap,
@@ -56,12 +68,12 @@ class SlidableItemListWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 5),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
+                      width: MediaQuery.of(context).size.width * 0.24,
                       child: Text(
                         coin.name ?? '',
                         style: Theme.of(context)
@@ -79,7 +91,8 @@ class SlidableItemListWidget extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4, vertical: 3),
                           decoration: BoxDecoration(
                             color: Theme.of(context)
                                 .colorScheme
@@ -90,7 +103,7 @@ class SlidableItemListWidget extends StatelessWidget {
                           child: Center(
                             child: Text(
                               coin.marketCapRank.toString() != 'null'
-                                  ? '#${coin.marketCapRank.toString()}'
+                                  ? '#${coin.marketCapRank!.toString()}'
                                   : '#',
                               style: Theme.of(context)
                                   .textTheme
@@ -98,7 +111,10 @@ class SlidableItemListWidget extends StatelessWidget {
                                   .copyWith(
                                     color:
                                         Theme.of(context).colorScheme.secondary,
+                                    height: 1,
                                   ),
+                              overflow: TextOverflow.visible,
+                              maxLines: 1,
                             ),
                           ),
                         ),
@@ -113,7 +129,8 @@ class SlidableItemListWidget extends StatelessWidget {
                                 .copyWith(
                                   color: Theme.of(context).colorScheme.tertiary,
                                 ),
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
+                            maxLines: 1,
                           ),
                         ),
                       ],
@@ -122,7 +139,7 @@ class SlidableItemListWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Container(
-                  width: 80,
+                  width: 75,
                   child: SfSparkLineChart(
                     width: 1,
                     color: Theme.of(context).colorScheme.primary,
@@ -153,10 +170,8 @@ class SlidableItemListWidget extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            coin.priceChangePercentage24h != null
-                                ? !coin.priceChangePercentage24h!
-                                        .toString()
-                                        .contains('-')
+                            changeprice != null
+                                ? !changeprice.toString().contains('-')
                                     ? Icon(
                                         Icons.arrow_upward_outlined,
                                         color: Colors.green,
@@ -174,21 +189,24 @@ class SlidableItemListWidget extends StatelessWidget {
                                   ),
                             SizedBox(width: 5),
                             Text(
-                              coin.priceChangePercentage24h != null
-                                  ? !coin.priceChangePercentage24h!
-                                          .toString()
-                                          .contains('-')
-                                      ? '+${coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
-                                      : '${coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
+                              // coin.priceChangePercentage24h != null
+                              //     ? !coin.priceChangePercentage24h!
+                              //             .toString()
+                              //             .contains('-')
+                              //         ? '+${coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
+                              //         : '${coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
+                              //     : '-',
+                              changeprice != null
+                                  ? !changeprice.toString().contains('-')
+                                      ? '+${changeprice.toStringAsFixed(2)}%'
+                                      : '${changeprice.toStringAsFixed(2)}%'
                                   : '-',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
                                   .copyWith(
-                                    color: coin.priceChangePercentage24h != null
-                                        ? !coin.priceChangePercentage24h!
-                                                .toString()
-                                                .contains('-')
+                                    color: changeprice != null
+                                        ? !changeprice.toString().contains('-')
                                             ? Colors.green
                                             : Colors.red
                                         : Colors.blue,

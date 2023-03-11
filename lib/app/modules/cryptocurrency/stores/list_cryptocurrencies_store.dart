@@ -19,7 +19,6 @@ class ListCryptocurrenciesStore
       Modular.get<CryptocurrencyDataStore>();
   List<CryptocurrencySimpleModel> listCrypto = [];
   final MarketsParamsModel marketsParams = MarketsParamsModel();
-  String order = 'market_cap_desc';
 
   Future<void> getListCryptocurrencies() async {
     setLoading(true);
@@ -53,37 +52,44 @@ class ListCryptocurrenciesStore
     }
   }
 
-  Future<void> orderList(String order) async {
-    setLoading(true);
-    final List<CryptocurrencySimpleModel> _list = state;
-    switch (order) {
-      case 'market_cap_desc':
-        _list.sort((a, b) => b.marketCap!.compareTo(a.marketCap!));
-        break;
-      case 'market_cap_asc':
-        _list.sort((a, b) => a.marketCap!.compareTo(b.marketCap!));
-        break;
-      case 'volume_desc':
-        _list.sort((a, b) => b.totalVolume!.compareTo(a.totalVolume!));
-        break;
-      case 'volume_asc':
-        _list.sort((a, b) => a.totalVolume!.compareTo(b.totalVolume!));
-        break;
-      case 'percent_change_desc':
-        _list.sort((a, b) =>
-            b.priceChangePercentage24h!.compareTo(a.priceChangePercentage24h!));
-        break;
-      case 'percent_change_asc':
-        _list.sort((a, b) =>
-            a.priceChangePercentage24h!.compareTo(b.priceChangePercentage24h!));
-        break;
-      default:
-    }
-    update(_list);
-    setLoading(false);
-  }
-
   Future<void> updateState(List<CryptocurrencySimpleModel> data) async {
     update(data);
+  }
+
+  Future<void> setMarketParamsOrder(String order) async {
+    if (marketsParams.order == order) {
+      if (marketsParams.order == 'market_cap_desc') {
+        marketsParams.order = 'market_cap_asc';
+      } else if (marketsParams.order == 'market_cap_asc') {
+        marketsParams.order = 'market_cap_desc';
+      } else if (marketsParams.order == 'volume_desc') {
+        marketsParams.order = 'volume_asc';
+      } else if (marketsParams.order == 'volume_asc') {
+        marketsParams.order = 'volume_desc';
+      }
+    } else {
+      marketsParams.order = order;
+    }
+    await getListCryptocurrencies();
+  }
+
+  num getPriceChangePercentage(CryptocurrencySimpleModel coin) {
+    if (coin.priceChangePercentage1hInCurrency != null) {
+      return coin.priceChangePercentage1hInCurrency!;
+    } else if (coin.priceChangePercentage24hInCurrency != null) {
+      return coin.priceChangePercentage24hInCurrency!;
+    } else if (coin.priceChangePercentage7dInCurrency != null) {
+      return coin.priceChangePercentage7dInCurrency!;
+    } else if (coin.priceChangePercentage14dInCurrency != null) {
+      return coin.priceChangePercentage14dInCurrency!;
+    } else if (coin.priceChangePercentage30dInCurrency != null) {
+      return coin.priceChangePercentage30dInCurrency!;
+    } else if (coin.priceChangePercentage200dInCurrency != null) {
+      return coin.priceChangePercentage200dInCurrency!;
+    } else if (coin.priceChangePercentage1yInCurrency != null) {
+      return coin.priceChangePercentage1yInCurrency!;
+    } else {
+      return 0;
+    }
   }
 }

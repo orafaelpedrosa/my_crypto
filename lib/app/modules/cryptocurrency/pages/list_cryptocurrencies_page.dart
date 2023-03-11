@@ -28,7 +28,8 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
     store.marketsParams.perPage = '100';
     store.marketsParams.page = '1';
     store.marketsParams.sparkline = 'true';
-    store.marketsParams.priceChangePercentage = '7d';
+    store.marketsParams.priceChangePercentage = '24h';
+    store.marketsParams.vsCurrency = 'brl';
     store.getListCryptocurrencies();
     favoritesStore.startFavorites();
     super.initState();

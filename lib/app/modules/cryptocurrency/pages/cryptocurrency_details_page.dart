@@ -1,6 +1,3 @@
-
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -50,7 +47,6 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     int selectIndex = 0;
-    log('CryptocurrencyDetailsPage ${store.chartStore.state.pricesChart!.isNotEmpty}');
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -159,8 +155,8 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         ),
                         SizedBox(height: 40),
                         Visibility(
-                          // visible:snapshot.data.marketData.marketCap
-                              
+                          visible:
+                              store.chartStore.state.pricesChart!.isNotEmpty,
                           child: Center(
                             child: ToggleSwitch(
                               minHeight: 35.0,
@@ -187,7 +183,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         ),
                         SizedBox(height: 40),
                         Text(
-                          'Market Cap',
+                          'Capitalização de Mercado',
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium!

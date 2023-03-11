@@ -10,14 +10,13 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.
 
 class CryptocurrencyRepository with Disposable {
   final Dio _dio = Dio();
-  final String urlBase = dotenv.get('URL_BASE');
+  final String _urlBase = dotenv.get('URL_BASE');
 
   Future<List<CryptocurrencySimpleModel>> getListCryptocurrenciesData(
       MarketsParamsModel paramsModel) async {
     try {
       final Response _response = await _dio.get(
-        // 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=7d',
-        'https://api.coingecko.com/api/v3/coins/markets',
+        '$_urlBase/coins/markets',
         queryParameters: paramsModel.toJson(),
       );
 
@@ -30,7 +29,7 @@ class CryptocurrencyRepository with Disposable {
       );
       return _cryptocurrencies;
     } catch (e) {
-      // log('Error getCrypto: $e');
+      log('Error getCrypto: $e');
       rethrow;
     }
   }
@@ -38,7 +37,7 @@ class CryptocurrencyRepository with Disposable {
   Future<CryptocurrencyDetailsModel> getCryptoData(String id) async {
     try {
       final Response _response = await _dio.get(
-        'https://api.coingecko.com/api/v3/coins/$id?sparkline=true',
+        '$_urlBase/coins/$id?sparkline=true',
       );
       final CryptocurrencyDetailsModel _cryptocurrencies =
           CryptocurrencyDetailsModel.fromMap(_response.data);
@@ -52,7 +51,7 @@ class CryptocurrencyRepository with Disposable {
   Future<ChartModel> getChartData(ChartsParamsModel paramsModel) async {
     try {
       final Response _response = await _dio.get(
-        'https://api.coingecko.com/api/v3/coins/${paramsModel.id}/market_chart',
+        '$_urlBase/coins/${paramsModel.id}/market_chart',
         queryParameters: paramsModel.toJson(),
       );
       return ChartModel.fromJson(_response.data);
@@ -62,7 +61,6 @@ class CryptocurrencyRepository with Disposable {
     }
   }
 
-  @override
   void dispose() {
     _dio.close();
   }
