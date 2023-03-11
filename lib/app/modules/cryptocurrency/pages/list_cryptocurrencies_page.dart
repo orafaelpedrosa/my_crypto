@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/search_bar_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tabs_filter_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
-import 'package:mycrypto/app/shared/widgets/search_input/search_input_widget.dart';
+import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 
 class ListCryptocurrenciesPage extends StatefulWidget {
   final String title;
@@ -18,61 +20,76 @@ class ListCryptocurrenciesPage extends StatefulWidget {
 class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final ListCryptocurrenciesStore store = Modular.get();
   final LoginStore loginStore = Modular.get();
-  TextEditingController _searchController = TextEditingController();
-  FocusNode _searchFocus = FocusNode();
+  final FavoritesStore favoritesStore = Modular.get();
 
   @override
   void initState() {
+    store.marketsParams.order = 'market_cap_desc';
+    store.marketsParams.perPage = '100';
+    store.marketsParams.page = '1';
+    store.marketsParams.sparkline = 'true';
+    store.marketsParams.priceChangePercentage = '24h';
+    store.marketsParams.vsCurrency = 'brl';
     store.getListCryptocurrencies();
+    favoritesStore.startFavorites();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.975),
-      appBar: AppBar(
-        centerTitle: true,
-        title: SvgPicture.asset(
-          'assets/app/mycrypto.svg',
-          color: Colors.white,
-          height: 25,
-          width: 25,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          centerTitle: true,
+          title: SvgPicture.asset(
+            'assets/app/mycrypto.svg',
+            height: 25,
+            width: 25,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          elevation: 1,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: SearchBarWidget(),
+                );
+              },
+            ),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.sort_rounded,
+            //     color: Theme.of(context).colorScheme.secondary,
+            //   ),
+            //   onPressed: () {
+            //     showCupertinoModalPopup(
+            //       context: context,
+            //       builder: (context) {
+            //         return ModalOrderMarketWidget();
+            //       },
+            //     );
+            //   },
+            // ),
+          ],
         ),
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 1,
-        automaticallyImplyLeading: false,
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 5),
-          SearchInputWidget(
-            controller: _searchController,
-            focusNode: _searchFocus,
-            hintText: 'Pesquise uma criptomoeda',
-            enableSuggestions: false,
-            onChange: (value) {
-              if (value != '') {
-                store.searchCrypto(value!);
-                store.search = true;
-              } else {
-                store.search = false;
-                store.updateState(store.listCrypto);
-              }
-            },
+        body: SafeArea(
+          child: Column(
+            children: [
+              TabsFilterListWidget(),
+              CryptocurrencyListWidget(),
+            ],
           ),
-          Divider(
-            color: Colors.black12,
-            thickness: 1,
-          ),
-          CryptocurrencyListWidget(),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          loginStore.authLogout();
-        },
-        child: Icon(Icons.logout),
+        ),
       ),
     );
   }

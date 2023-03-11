@@ -5,6 +5,7 @@ import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/models/credential_model.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_repository.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/core/user_store.dart';
 
 // ignore: must_be_immutable
 class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
@@ -16,20 +17,7 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   final LoginRepository _loginRepository = Modular.get<LoginRepository>();
   final ObscureStore obscureStore = Modular.get<ObscureStore>();
   final AuthCheckStore _authCheckStore = Modular.get<AuthCheckStore>();
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  User? userCurrent;
-
-  void authService() async {
-    authCheck();
-  }
-
-  void authCheck() async {
-    userCurrent = await _firebaseAuth.authStateChanges().first;
-  }
-
-  _getUser() {
-    userCurrent = _firebaseAuth.currentUser;
-  }
+  UserStore userStore = Modular.get<UserStore>();
 
   void updateForm(CredentialModel form) {
     update(CredentialModel.fromJson(form.toJson()));
@@ -37,9 +25,9 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   Future<void> authLogin(CredentialModel data) async {
     setLoading(true);
-    await _loginRepository.authLogin(data).then((value) {
-      _getUser();
+    await _loginRepository.authLogin(data).then((value) async {
       _authCheckStore.updateState(true);
+      await userStore.getUser();
       setLoading(false);
     }).catchError(
       (error) {
@@ -52,7 +40,6 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   Future<void> authLogout() async {
     setLoading(true);
     await _loginRepository.authLogout().then((value) {
-      _getUser();
       Modular.to.pushReplacementNamed('/login/');
       setLoading(false);
     }).catchError(
@@ -77,10 +64,9 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
 
   Future<void> authGoogle() async {
     setLoading(true);
-    await _loginRepository.googleAuth().then((value) {
-      _getUser();
+    await _loginRepository.googleAuth().then((value) async {
+      await userStore.getUser();
       setLoading(false);
-      Modular.to.pushReplacementNamed('/cryptocurrency/');
     }).catchError(
       (error) {
         setLoading(false);
@@ -99,4 +85,8 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   void obscurePassword() {
     obscureStore.update(!obscureStore.state);
   }
+
+  // Future<void> setLogAcess() async {
+  //   await _loginRepository.setLogAcess();
+  // }
 }

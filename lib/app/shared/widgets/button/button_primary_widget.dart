@@ -21,7 +21,7 @@ class ButtonPrimaryWidget extends StatelessWidget {
         height: 50,
         width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
@@ -31,13 +31,13 @@ class ButtonPrimaryWidget extends StatelessWidget {
               ? CircularProgressIndicator(
                   strokeWidth: 2.0,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.white,
+                    Theme.of(context).colorScheme.background,
                   ),
                 )
               : Text(
                   text,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.white,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
         ),

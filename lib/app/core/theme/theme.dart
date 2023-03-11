@@ -8,7 +8,6 @@ ThemeData theme = ThemeData(
     brightness: Brightness.dark,
   ),
   scaffoldBackgroundColor: const Color(0xff1a1a1a),
-  backgroundColor: const Color(0xff1a1a1a),
   cardColor: Color(0xFF455A64),
   brightness: Brightness.dark,
   dividerTheme: const DividerThemeData(
@@ -28,37 +27,53 @@ ThemeData theme = ThemeData(
     buttonColor: Color(0xff5865F2),
   ),
   textTheme: TextTheme(
-    headline1: TextStyle(
-      fontFamily: GoogleFonts.openSans().fontFamily,
+    displayLarge: TextStyle(
+      fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 25,
     ),
-    headline2: TextStyle(
-      fontFamily: GoogleFonts.openSans().fontFamily,
+    displayMedium: TextStyle(
+      fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 22,
     ),
-    headline3: TextStyle(
-      fontFamily: GoogleFonts.openSans().fontFamily,
+    displaySmall: TextStyle(
+      fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 20,
     ),
-    headline4: TextStyle(
-      fontFamily: GoogleFonts.openSans().fontFamily,
+    headlineMedium: TextStyle(
+      fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 18,
     ),
-    headline5: TextStyle(
-      fontFamily: GoogleFonts.openSans().fontFamily,
+    headlineSmall: TextStyle(
+      fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 16,
       height: 1.5,
     ),
-    headline6: TextStyle(
-      fontFamily: GoogleFonts.openSans().fontFamily,
+    titleLarge: TextStyle(
+      fontFamily: GoogleFonts.workSans().fontFamily,
       color: Color(0xff5865F2),
       fontSize: 14,
       height: 1.5,
     ),
+  ),
+  colorScheme: ColorScheme(
+    // background: const Color(0xff050409),
+    background: const Color(0xff0D0B18),
+
+    brightness: Brightness.dark,
+    error: Colors.red,
+    onError: Colors.red,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
+    onSurface: Colors.white,
+    primary: const Color(0xff5865F2),
+    secondary: Colors.white,
+    tertiary: Color(0xff858585),
+    surface: Colors.white,
+    onBackground: Color(0xff201F26),
   ),
 );

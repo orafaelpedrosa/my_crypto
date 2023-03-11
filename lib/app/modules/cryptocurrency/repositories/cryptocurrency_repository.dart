@@ -2,37 +2,32 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 
 class CryptocurrencyRepository with Disposable {
   final Dio _dio = Dio();
-  // final String urlBase = 'https://api.coingecko.com/api/v3/coins/markets';
-  final String urlBase = dotenv.get('URL_BASE');
-  final String vsCurrency = 'usd';
-  final String ids = 'bitcoin';
-  final String order = 'market_cap_desc';
-  final String perPage = '2';
-  final String page = '1';
-  final String sparkline = 'true';
-  final String priceChangePercentage = '';
+  final String _urlBase = dotenv.get('URL_BASE');
 
-  Future<List<CryptocurrencySimpleModel>> getListCryptocurrenciesData() async {
+  Future<List<CryptocurrencySimpleModel>> getListCryptocurrenciesData(
+      MarketsParamsModel paramsModel) async {
     try {
-      // final Response response = await _dio.get(
-      //     '$urlBase/markets?vs_currency=$vsCurrency&$order&per_page=$perPage&page=$page&sparkline=$sparkline&price_change_percentage=$priceChangePercentage');
+      final Response _response = await _dio.get(
+        '$_urlBase/coins/markets',
+        queryParameters: paramsModel.toJson(),
+      );
 
-      final Response response = await _dio.get(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true');
-
-      final List<CryptocurrencySimpleModel> cryptos =
+      final List<CryptocurrencySimpleModel> _cryptocurrencies =
           List.empty(growable: true);
-      response.data.forEach(
-        (crypto) {
-          cryptos.add(CryptocurrencySimpleModel.fromJson(crypto));
+      _response.data.forEach(
+        (coin) {
+          _cryptocurrencies.add(CryptocurrencySimpleModel.fromJson(coin));
         },
       );
-      return cryptos;
+      return _cryptocurrencies;
     } catch (e) {
       log('Error getCrypto: $e');
       rethrow;
@@ -41,16 +36,32 @@ class CryptocurrencyRepository with Disposable {
 
   Future<CryptocurrencyDetailsModel> getCryptoData(String id) async {
     try {
-      final Response response = await _dio.get('$urlBase/$id?sparkline=true');
-      final CryptocurrencyDetailsModel crypto =
-          CryptocurrencyDetailsModel.fromMap(response.data);
-      return crypto;
+      final Response _response = await _dio.get(
+        '$_urlBase/coins/$id?sparkline=true',
+      );
+      final CryptocurrencyDetailsModel _cryptocurrencies =
+          CryptocurrencyDetailsModel.fromMap(_response.data);
+      return _cryptocurrencies;
     } catch (e) {
       log('Error getCrypto: $e');
       rethrow;
     }
   }
 
-  @override
-  void dispose() {}
+  Future<ChartModel> getChartData(ChartsParamsModel paramsModel) async {
+    try {
+      final Response _response = await _dio.get(
+        '$_urlBase/coins/${paramsModel.id}/market_chart',
+        queryParameters: paramsModel.toJson(),
+      );
+      return ChartModel.fromJson(_response.data);
+    } catch (e) {
+      log('Error getChart: $e');
+      rethrow;
+    }
+  }
+
+  void dispose() {
+    _dio.close();
+  }
 }

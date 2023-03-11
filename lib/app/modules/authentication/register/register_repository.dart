@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -33,6 +34,20 @@ class RegisterRepository with Disposable {
     }
   }
 
+  Future<void> setAcceptTerms(bool value) async {
+    log('setAcceptTermsRepository $value');
+    try {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(_firebaseAuth.currentUser?.uid)
+          .set({'acceptTerms': value});
+    } catch (e) {
+      throw e;
+    }
+  }
+
   @override
-  void dispose() {}
+  void dispose() {
+    _firebaseAuth = FirebaseAuth.instance;
+  }
 }

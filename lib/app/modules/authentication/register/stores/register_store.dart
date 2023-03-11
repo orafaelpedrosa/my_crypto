@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -25,7 +23,6 @@ class RegisterStore
 
   Future<void> authRegister(CredentialModel data) async {
     setLoading(true);
-    log('authRegister ${data.email}');
     await _registerRepository
         .authRegister(data.email!, data.password!)
         .then((value) {

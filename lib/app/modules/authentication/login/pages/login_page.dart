@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
+import 'package:mycrypto/app/core/user_store.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -20,6 +21,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final LoginStore _store = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
@@ -28,13 +30,13 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController password = TextEditingController();
   final FocusNode passwordFocus = FocusNode();
   final formKey = GlobalKey<FormState>();
-  bool validateFormLogin = false;
+  bool validateFormLogin = true;
   Validation _validation = Validation();
 
   @override
   void initState() {
     email.text = 'orafaelpedrosa@outlook.com';
-    password.text = 'aezakmi';
+    password.text = 'Pulodogato@7';
     super.initState();
   }
 
@@ -49,7 +51,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+        ),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: true,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -79,21 +87,11 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/login/login.svg',
-            height: MediaQuery.of(context).size.height * 0.25,
-            placeholderBuilder: (context) => Container(
-              height: 50,
-              width: 50,
-              child: const CircularProgressIndicator(),
-            ),
-          ),
-          const SizedBox(height: 15),
-          SvgPicture.asset(
             'assets/app/mycrypto.svg',
-            height: MediaQuery.of(context).size.height * 0.05,
-            color: Theme.of(context).primaryColor,
+            height: MediaQuery.of(context).size.height * 0.07,
+            // color: Theme.of(context).colorScheme.primary,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 80),
           TripleBuilder(
             store: _store,
             builder: (_, triple) {
@@ -126,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       iconData: Icon(
                         Icons.email,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                         size: 20,
                       ),
                       label: 'E-mail',
@@ -161,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: _store.obscureStore.state,
                           iconData: Icon(
                             Icons.lock,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 20,
                           ),
                           suffixIcon: IconButton(
@@ -169,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                               _store.obscureStore.state
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                             onPressed: () {
                               _store.obscurePassword();
@@ -191,10 +189,12 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(
                           'Esqueceu a senha?',
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: Colors.black87,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                         ),
                       ),
                     ),
@@ -207,19 +207,20 @@ class _LoginPageState extends State<LoginPage> {
                             width: MediaQuery.of(context).size.width * 0.85,
                             height: 50,
                             duration: Duration(seconds: 1),
-                            successColor: Theme.of(context).primaryColor,
+                            successColor: Theme.of(context).colorScheme.primary,
                             errorColor: Colors.red,
                             successIcon: Icons.check_circle_outline,
                             animateOnTap: validateFormLogin,
                             borderRadius: 15,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             child: Text(
                               'Login',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline4!
+                                  .headlineSmall!
                                   .copyWith(
-                                    color: Colors.white,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                             ),
                             controller: _btnController1,
@@ -230,19 +231,24 @@ class _LoginPageState extends State<LoginPage> {
                                 await _store
                                     .authLogin(_store.state)
                                     .then((value) async {
-                                  if (!_store.userCurrent!.emailVerified) {
-                                    await openErrorSnackBar(context,
-                                        "Verifique seu email para continuar");
-                                    await _store.authLogout();
+                                  if (!_userStore.user!.emailVerified) {
+                                    _userStore.user ??
+                                        _userStore.user!
+                                            .sendEmailVerification();
+                                    openWarningSnackBar(
+                                      context,
+                                      'Verifique seu e-mail para continuar',
+                                    );
+
+                                    // await _store.authLogout();
                                     _btnController1.reset();
-                                  } else if (_store.userCurrent != null &&
-                                      _store.userCurrent!.emailVerified) {
+                                  } else if (_userStore.user != null &&
+                                      _userStore.user!.emailVerified) {
                                     _btnController1.success();
                                     await Future.delayed(
                                       Duration(seconds: 1),
                                       () async {
-                                        Modular.to
-                                            .pushNamed('/cryptocurrency/');
+                                        Modular.to.pushNamed('/home/');
                                       },
                                     );
                                     Future.delayed(
@@ -281,16 +287,18 @@ class _LoginPageState extends State<LoginPage> {
                     RichText(
                       text: TextSpan(
                         text: 'Não tem uma conta? ',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                              color: Colors.black87,
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Cadastre-se',
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Modular.to.pushNamed(
@@ -304,29 +312,30 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Theme.of(context).primaryColor,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                        foregroundColor: Theme.of(context).colorScheme.primary,
                         minimumSize: Size(double.infinity, 50),
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         side: BorderSide(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           width: 1,
                         ),
                       ),
                       icon: FaIcon(
                         FontAwesomeIcons.google,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       onPressed: () {
                         _store.authGoogle().then((value) async {
-                          if (_store.userCurrent != null &&
-                              _store.userCurrent!.emailVerified) {
+                          if (_userStore.user != null &&
+                              _userStore.user!.emailVerified) {
                             await Future.delayed(
                               Duration(seconds: 1),
-                              () => Modular.to.pushNamed('/cryptocurrency/'),
+                              () => Modular.to.pushNamed('/home/'),
                             );
                           }
                         }).catchError((error) async {
@@ -338,15 +347,29 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       label: Text(
                         'Entrar com Google',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                              color: Theme.of(context).primaryColor,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                       ),
                     ),
                   ],
                 ),
               );
             },
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+          // SvgPicture.asset(
+          //   'assets/app/coin_gecko.svg',
+          //   height: 25,
+          // ),
+          // SizedBox(height: 5),
+          Text(
+            'Dados fornecidos por CoinGecko',
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 12,
+                ),
           ),
         ],
       ),

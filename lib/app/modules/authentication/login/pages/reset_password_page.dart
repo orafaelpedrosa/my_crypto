@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -40,14 +41,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor,
-        ),
-        elevation: 0,
-      ),
-      backgroundColor: Colors.white,
+      appBar: AppBarWidget(
+        visibleTitle: false,
+        showLeading: true,
+      ).build(context) as AppBar,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -61,7 +59,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   'Esqueceu sua senha ?',
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -71,8 +69,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5!
-                    .copyWith(color: Colors.black54),
+                    .headlineSmall!
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
               SvgPicture.asset(
                 'assets/login/reset_password.svg',
@@ -92,7 +90,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   keyboardType: TextInputType.emailAddress,
                   iconData: Icon(
                     Icons.email,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     size: 20,
                   ),
                   validator: (value) {
@@ -113,16 +111,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: 50,
                 duration: Duration(seconds: 1),
-                successColor: Theme.of(context).primaryColor,
+                successColor: Theme.of(context).colorScheme.primary,
                 errorColor: Colors.red,
                 successIcon: Icons.check_circle_outline,
                 animateOnTap: validateFormReset,
                 borderRadius: 15,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 child: Text(
                   'Enviar',
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.white,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
                 controller: _btnController1,

@@ -7,7 +7,6 @@ class SparklineIn7dModel {
 
   SparklineIn7dModel.fromJson(Map<String, dynamic> json) {
     price = json['price']?.cast<double>();
-    // price = json['price'];
   }
 
   Map<String, dynamic> toJson() {

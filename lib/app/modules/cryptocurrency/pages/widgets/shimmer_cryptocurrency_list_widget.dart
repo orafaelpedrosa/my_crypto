@@ -5,51 +5,81 @@ class ShimmerCryptocurrencyListWidget extends StatefulWidget {
   const ShimmerCryptocurrencyListWidget({Key? key}) : super(key: key);
 
   @override
-  State<ShimmerCryptocurrencyListWidget> createState() => _ShimmerCryptocurrencyListWidgetState();
+  State<ShimmerCryptocurrencyListWidget> createState() =>
+      _ShimmerCryptocurrencyListWidgetState();
 }
 
-class _ShimmerCryptocurrencyListWidgetState extends State<ShimmerCryptocurrencyListWidget> {
+class _ShimmerCryptocurrencyListWidgetState
+    extends State<ShimmerCryptocurrencyListWidget> {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Theme.of(context).primaryColor.withOpacity(0.25),
-      highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
+      baseColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+      highlightColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       child: Container(
-        padding: const EdgeInsets.only(bottom: 10),
+        margin:
+            const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(15),
+          color: Theme.of(context).colorScheme.onBackground,
         ),
-        child: ListTile(
-          leading: Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
+        child: Column(
+          children: [
+            ListTile(
+              leading: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                height: 60,
+                width: 60,
+              ),
+              title: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Theme.of(context).colorScheme.background,
+                    ),
+                    height: 17.5,
+                    width: 50,
+                  ),
+                  Spacer(),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Theme.of(context).colorScheme.background,
+                    ),
+                    height: 17.5,
+                    width: 80,
+                  ),
+                ],
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Theme.of(context).colorScheme.background,
+                      ),
+                      height: 17.5,
+                      width: 17.5,
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Theme.of(context).colorScheme.background,
+                      ),
+                      height: 17.5,
+                      width: 60,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            height: 60,
-            width: 60,
-          ),
-          title: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-            ),
-            height: 15,
-            width: double.infinity,
-          ),
-          subtitle: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-            ),
-            height: 15,
-            width: MediaQuery.of(context).size.width * 0.5,
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios_outlined,
-            color: Theme.of(context).primaryColor,
-            size: 20,
-          ),
+          ],
         ),
       ),
     );

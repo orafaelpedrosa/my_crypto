@@ -61,34 +61,28 @@ class TextFormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      toolbarOptions: ToolbarOptions(
-        copy: true,
-        cut: true,
-        paste: true,
-        selectAll: false,
-      ),
       textInputAction: textInputAction,
       controller: controller,
       autofocus: autoFocus,
       keyboardType: keyboardType,
       validator: validator,
       obscureText: obscureText,
-      style: Theme.of(context).textTheme.headline1!.copyWith(
-            color: Colors.black54,
+      style: Theme.of(context).textTheme.displayLarge!.copyWith(
+            color: Theme.of(context).colorScheme.tertiary,
             fontSize: 16,
           ),
       decoration: InputDecoration(
-        errorStyle: Theme.of(context).textTheme.headline1!.copyWith(
+        errorStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
               color: Colors.red,
               fontSize: 12,
             ),
         labelText: label,
         labelStyle: TextStyle(
-          color: Colors.black54,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         hintText: hintText,
         hintStyle: TextStyle(
-          color: Colors.black54,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         prefixIcon: iconData,
         suffixIcon: suffixIcon,
@@ -97,7 +91,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -105,7 +99,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.tertiary,
             width: 1.5,
           ),
         ),
@@ -114,7 +108,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Colors.black54,
+            color: Theme.of(context).colorScheme.tertiary,
             width: 1.5,
           ),
         ),
@@ -123,7 +117,7 @@ class TextFormFieldWidget extends StatelessWidget {
             Radius.circular(15),
           ),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             width: 1.5,
           ),
         ),

@@ -7,7 +7,7 @@ import 'package:mycrypto/app/modules/authentication/login/models/credential_mode
 
 class LoginRepository with Disposable {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final googleSignIn = GoogleSignIn();
+  final _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
 
@@ -27,6 +27,11 @@ class LoginRepository with Disposable {
       } else if (e.code == 'wrong-password') {
         throw FirebaseAuthException(
           message: 'Senha incorreta',
+          code: e.code,
+        );
+      } else if (e.code == 'network-request-failed') {
+        throw FirebaseAuthException(
+          message: 'Sem conexão com a internet',
           code: e.code,
         );
       } else {
@@ -78,25 +83,26 @@ class LoginRepository with Disposable {
 
   Future<bool> googleAuth() async {
     try {
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) {
+      final _googleUser = await _googleSignIn.signIn();
+      if (_googleUser == null) {
         throw FirebaseAuthException(
           message: 'Erro ao logar com o Google',
           code: 'google-login-error',
         );
       } else {
-        _user = googleUser;
+        _user = _googleUser;
       }
 
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = await _googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      await _firebaseAuth.signInWithCredential(credential);
-      log('Logado com sucesso Google: ${_user!.displayName}');
+      await _firebaseAuth.signInWithCredential(credential).then((value) {
+        log('Logado com sucesso Google: ${value.user!.displayName}');
+      });
       return true;
     } on FirebaseAuthException catch (e) {
       log(e.code);
@@ -114,26 +120,15 @@ class LoginRepository with Disposable {
     }
   }
 
-  // Future<void> googleAuth() async {
-  //   GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  //   if (googleSignInAccount != null) {
-  //     GoogleSignInAuthentication googleAuth =
-  //         await googleSignInAccount.authentication;
-
-  //     AuthCredential credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-
-  //     UserCredential userCredential =
-  //         await _firebaseAuth.signInWithCredential(credential);
-  //     User user = userCredential.user!;
-  //     log("User name: ${user.displayName}");
-  //   } else {
-  //     log("Erro ao logar com o Google");
-  //   }
+  // Future<void> setLogAcess() async {
+  //   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  //   _firestore.collection('users').doc(_firebaseAuth.currentUser!.uid).set({
+  //     'lastSignIn': DateTime.now(),
+  //   }, SetOptions(merge: true));
   // }
 
   @override
-  void dispose() {}
+  void dispose() {
+    _firebaseAuth = FirebaseAuth.instance;
+  }
 }

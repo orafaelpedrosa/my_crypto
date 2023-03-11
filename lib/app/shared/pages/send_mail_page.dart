@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 
 import 'package:mycrypto/app/shared/widgets/button/button_secondary_widget.dart';
 
@@ -20,12 +21,11 @@ class _SendMailPageState extends State<SendMailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      backgroundColor: Colors.white,
+      appBar: AppBarWidget(
+        visibleTitle: false,
+        showLeading: false,
+      ).build(context) as AppBar,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 25),
@@ -37,7 +37,7 @@ class _SendMailPageState extends State<SendMailPage> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   'E-mail enviado!',
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -47,8 +47,8 @@ class _SendMailPageState extends State<SendMailPage> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5!
-                    .copyWith(color: Colors.black54),
+                    .headlineSmall!
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
               SizedBox(height: 40),
               SvgPicture.asset(
@@ -67,14 +67,16 @@ class _SendMailPageState extends State<SendMailPage> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5!
-                    .copyWith(color: Colors.black54),
+                    .headlineSmall!
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
               SizedBox(height: 30),
               ButtonSecondaryWidget(
                 text: 'Continuar',
                 onPressed: () {
-                  Modular.to.popUntil(ModalRoute.withName('/login/'));
+                  Modular.to.popUntil(
+                    ModalRoute.withName('/login/'),
+                  );
                 },
                 isLoading: false,
               ),

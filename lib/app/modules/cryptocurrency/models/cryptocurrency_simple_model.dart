@@ -37,6 +37,7 @@ class CryptocurrencySimpleModel {
   num? priceChangePercentage30dInCurrency;
   num? priceChangePercentage200dInCurrency;
   num? priceChangePercentage1yInCurrency;
+  bool? isFavorite;
 
   CryptocurrencySimpleModel({
     this.id,
@@ -74,14 +75,125 @@ class CryptocurrencySimpleModel {
     this.priceChangePercentage30dInCurrency,
     this.priceChangePercentage200dInCurrency,
     this.priceChangePercentage1yInCurrency,
+    this.isFavorite = false,
   });
 
   CryptocurrencySimpleModel.fromJson(Map<String, dynamic> json) {
+    if (json['id'] != null) {
+      id = json['id'];
+    }
+    if (json['symbol'] != null) {
+      symbol = json['symbol'];
+    }
+    if (json['name'] != null) {
+      name = json['name'];
+    }
+    if (json['image'] != null) {
+      image = json['image'];
+    }
+    if (json['current_price'] != null) {
+      currentPrice = json['current_price'];
+    }
+    if (json['market_cap'] != null) {
+      marketCap = json['market_cap'];
+    }
+    if (json['market_cap_rank'] != null) {
+      marketCapRank = json['market_cap_rank'];
+    }
+    if (json['fully_diluted_valuation'] != null) {
+      fullyDilutedValuation = json['fully_diluted_valuation'];
+    }
+    if (json['total_volume'] != null) {
+      totalVolume = json['total_volume'];
+    }
+    if (json['high_24h'] != null) {
+      high24h = json['high_24h'];
+    }
+    if (json['low_24h'] != null) {
+      low24h = json['low_24h'];
+    }
+    if (json['price_change_24h'] != null) {
+      priceChange24h = json['price_change_24h'];
+    }
+    if (json['price_change_percentage_24h'] != null) {
+      priceChangePercentage24h = json['price_change_percentage_24h'];
+    }
+    if (json['market_cap_change_24h'] != null) {
+      marketCapChange24h = json['market_cap_change_24h'];
+    }
+    if (json['market_cap_change_percentage_24h'] != null) {
+      marketCapChangePercentage24h = json['market_cap_change_percentage_24h'];
+    }
+    if (json['circulating_supply'] != null) {
+      circulatingSupply = json['circulating_supply'];
+    }
+    if (json['total_supply'] != null) {
+      totalSupply = json['total_supply'];
+    }
+    if (json['max_supply'] != null) {
+      maxSupply = json['max_supply'];
+    }
+    if (json['ath'] != null) {
+      ath = json['ath'];
+    }
+    if (json['ath_change_percentage'] != null) {
+      athChangePercentage = json['ath_change_percentage'];
+    }
+    if (json['ath_date'] != null) {
+      athDate = json['ath_date'];
+    }
+    if (json['atl'] != null) {
+      atl = json['atl'];
+    }
+    if (json['atl_change_percentage'] != null) {
+      atlChangePercentage = json['atl_change_percentage'];
+    }
+    if (json['atl_date'] != null) {
+      atlDate = json['atl_date'];
+    }
+    if (json['roi'] != null) {
+      roi = RoiModel.fromJson(json['roi']);
+    }
+    if (json['last_updated'] != null) {
+      lastUpdated = json['last_updated'];
+    }
+    if (json['sparkline_in_7d'] != null) {
+      sparklineIn7d = SparklineIn7dModel.fromJson(json['sparkline_in_7d']);
+    }
+    if (json['price_change_percentage_1h_in_currency'] != null) {
+      priceChangePercentage1hInCurrency =
+          json['price_change_percentage_1h_in_currency'];
+    }
+    if (json['price_change_percentage_24h_in_currency'] != null) {
+      priceChangePercentage24hInCurrency =
+          json['price_change_percentage_24h_in_currency'];
+    }
+    if (json['price_change_percentage_7d_in_currency'] != null) {
+      priceChangePercentage7dInCurrency =
+          json['price_change_percentage_7d_in_currency'];
+    }
+    if (json['price_change_percentage_14d_in_currency'] != null) {
+      priceChangePercentage14dInCurrency =
+          json['price_change_percentage_14d_in_currency'];
+    }
+    if (json['price_change_percentage_30d_in_currency'] != null) {
+      priceChangePercentage30dInCurrency =
+          json['price_change_percentage_30d_in_currency'];
+    }
+    if (json['price_change_percentage_200d_in_currency'] != null) {
+      priceChangePercentage200dInCurrency =
+          json['price_change_percentage_200d_in_currency'];
+    }
+    if (json['price_change_percentage_1y_in_currency'] != null) {
+      priceChangePercentage1yInCurrency =
+          json['price_change_percentage_1y_in_currency'];
+    }
+    isFavorite = false;
+
     id = json['id'];
     symbol = json['symbol'];
     name = json['name'];
     image = json['image'];
-    // formatImage = json['format_image'];
     currentPrice = json['current_price'];
     marketCap = json['market_cap'];
     marketCapRank = json['market_cap_rank'];
@@ -102,11 +214,12 @@ class CryptocurrencySimpleModel {
     atl = json['atl'];
     atlChangePercentage = json['atl_change_percentage'];
     atlDate = json['atl_date'];
-    if (json['roi'] != null) {
-      roi = RoiModel.fromJson(json['roi']);
-    }
+    roi = json['roi'] != null ? RoiModel.fromJson(json['roi']) : null;
+
     lastUpdated = json['last_updated'];
-    sparklineIn7d = SparklineIn7dModel.fromJson(json['sparkline_in_7d']);
+    sparklineIn7d = json['sparkline_in_7d'] != null
+        ? SparklineIn7dModel.fromJson(json['sparkline_in_7d'])
+        : null;
     priceChangePercentage1hInCurrency =
         json['price_change_percentage_1h_in_currency'];
     priceChangePercentage24hInCurrency =
@@ -121,6 +234,7 @@ class CryptocurrencySimpleModel {
         json['price_change_percentage_200d_in_currency'];
     priceChangePercentage1yInCurrency =
         json['price_change_percentage_1y_in_currency'];
+    isFavorite = false;
   }
 
   Map<String, dynamic> toJson() {
@@ -168,7 +282,7 @@ class CryptocurrencySimpleModel {
         this.priceChangePercentage200dInCurrency;
     data['price_change_percentage_1y_in_currency'] =
         this.priceChangePercentage1yInCurrency;
-
+    data['is_favorite'] = this.isFavorite;
     return data;
   }
 }
