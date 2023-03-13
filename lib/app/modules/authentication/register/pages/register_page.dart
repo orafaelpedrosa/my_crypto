@@ -156,7 +156,6 @@ class RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       SizedBox(height: 15),
-                      //Aceito dos termos de uso
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

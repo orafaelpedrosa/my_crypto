@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -117,9 +119,22 @@ class WalletRepository extends Disposable {
         myCrypto.profit = myCrypto.currentPrice! * myCrypto.amount! -
             myCrypto.averagePrice! * myCrypto.amount!;
         myCrypto.profitPercentage = myCrypto.profit! / myCrypto.averagePrice!;
+        myCrypto.totalValue = myCrypto.currentPrice! * myCrypto.amount!;
         await updateCryptocurrency(myCrypto);
       });
     }
+  }
+
+  Future<void> updateTotalWallet() async {
+    final List<MyCryptoModel> myCryptos = await getAll();
+    double totalWallet = 0;
+
+    if (myCryptos.isNotEmpty) {
+      myCryptos.forEach((myCrypto) {
+        totalWallet += myCrypto.totalValue!;
+      });
+    }
+    log('Total wallet: $totalWallet');
   }
 
   @override

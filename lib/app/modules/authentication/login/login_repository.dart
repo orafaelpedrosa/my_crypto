@@ -120,13 +120,6 @@ class LoginRepository with Disposable {
     }
   }
 
-  // Future<void> setLogAcess() async {
-  //   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  //   _firestore.collection('users').doc(_firebaseAuth.currentUser!.uid).set({
-  //     'lastSignIn': DateTime.now(),
-  //   }, SetOptions(merge: true));
-  // }
-
   @override
   void dispose() {
     _firebaseAuth = FirebaseAuth.instance;

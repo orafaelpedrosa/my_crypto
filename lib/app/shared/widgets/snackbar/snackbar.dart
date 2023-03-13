@@ -79,3 +79,30 @@ openSucessSnackBar(context, String text) {
     ),
   );
 }
+
+openInfoSnackBar(context, String text, bool flag) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      content: Row(
+        children: [
+          Icon(
+            flag ? Icons.star_rate_rounded : Icons.delete,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+          SizedBox(width: 5),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+      duration: Duration(
+        seconds: 2,
+      ),
+    ),
+  );
+}

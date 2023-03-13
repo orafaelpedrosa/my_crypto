@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/user_store.dart';
 import 'package:mycrypto/app/modules/profile/profile_store.dart';
 import 'package:flutter/material.dart';
 
@@ -13,20 +14,12 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   final ProfileStore store = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   @override
   Widget build(BuildContext context) {
     log(DateTime.now().toString());
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     widget.title,
-      //     style: Theme.of(context).textTheme.displaySmall,
-      //   ),
-      //   centerTitle: true,
-      //   backgroundColor: Theme.of(context).colorScheme.background,
-      //   elevation: 1,
-      // ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100),
         child: AppBar(
@@ -36,6 +29,18 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
           elevation: 0,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.logout_outlined,
+                color: Theme.of(context).colorScheme.primary,
+                size: 30,
+              ),
+              onPressed: () {
+                _userStore.logout();
+              },
+            ),
+          ],
         ),
       ),
       body: Container(

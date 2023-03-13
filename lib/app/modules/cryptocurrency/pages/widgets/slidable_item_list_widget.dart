@@ -4,7 +4,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -22,8 +21,6 @@ class SlidableItemListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FavoritesStore store = Modular.get();
-
-    final ListCryptocurrenciesStore _listCrypto = Modular.get();
     String price = '0.00';
     if (coin.currentPrice != null) {
       price = formatPrice(coin.currentPrice!.toDouble());
@@ -32,8 +29,6 @@ class SlidableItemListWidget extends StatelessWidget {
       coin.marketCapRank =
           int.parse(coin.marketCapRank.toString().substring(0, 4));
     }
-
-    final num changeprice = _listCrypto.getPriceChangePercentage(coin);
 
     return GestureDetector(
       onTap: onTap,
@@ -170,8 +165,10 @@ class SlidableItemListWidget extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            changeprice != null
-                                ? !changeprice.toString().contains('-')
+                            coin.priceChangePercentageTime != 0
+                                ? !coin.priceChangePercentageTime
+                                        .toString()
+                                        .contains('-')
                                     ? Icon(
                                         Icons.arrow_upward_outlined,
                                         color: Colors.green,
@@ -189,24 +186,21 @@ class SlidableItemListWidget extends StatelessWidget {
                                   ),
                             SizedBox(width: 5),
                             Text(
-                              // coin.priceChangePercentage24h != null
-                              //     ? !coin.priceChangePercentage24h!
-                              //             .toString()
-                              //             .contains('-')
-                              //         ? '+${coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
-                              //         : '${coin.priceChangePercentage24h!.toStringAsFixed(2)}%'
-                              //     : '-',
-                              changeprice != null
-                                  ? !changeprice.toString().contains('-')
-                                      ? '+${changeprice.toStringAsFixed(2)}%'
-                                      : '${changeprice.toStringAsFixed(2)}%'
+                              coin.priceChangePercentageTime != 0
+                                  ? !coin.priceChangePercentageTime
+                                          .toString()
+                                          .contains('-')
+                                      ? '+${coin.priceChangePercentageTime!.toStringAsFixed(2)}%'
+                                      : '${coin.priceChangePercentageTime!.toStringAsFixed(2)}%'
                                   : '-',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
                                   .copyWith(
-                                    color: changeprice != null
-                                        ? !changeprice.toString().contains('-')
+                                    color: coin.priceChangePercentageTime != 0
+                                        ? !coin.priceChangePercentageTime
+                                                .toString()
+                                                .contains('-')
                                             ? Colors.green
                                             : Colors.red
                                         : Colors.blue,

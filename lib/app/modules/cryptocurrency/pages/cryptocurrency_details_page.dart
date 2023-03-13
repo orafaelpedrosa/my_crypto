@@ -12,6 +12,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_s
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
+import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {
@@ -86,7 +87,17 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                       onPressed: () {
-                        favoritesStore.toggleFavorite(widget.cryptocurrency);
+                        favoritesStore
+                            .toggleFavorite(widget.cryptocurrency)
+                            .then(
+                          (value) async {
+                            await openInfoSnackBar(
+                              context,
+                              '${widget.cryptocurrency.name} ${favoritesStore.state.any((element) => element.id == widget.cryptocurrency.id) ? 'foi adicionado' : 'foi removido'} dos favoritos',
+                              favoritesStore.isFavorite(widget.cryptocurrency),
+                            );
+                          },
+                        );
                       },
                     );
             },
@@ -164,13 +175,13 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               inactiveBgColor:
                                   Theme.of(context).cardColor.withOpacity(0.05),
                               inactiveFgColor:
-                                  Theme.of(context).colorScheme.onBackground,
+                                  Theme.of(context).colorScheme.secondary,
                               activeFgColor:
                                   Theme.of(context).colorScheme.secondary,
                               dividerColor:
                                   Theme.of(context).colorScheme.onBackground,
                               totalSwitches: 4,
-                              animate: false,
+                              animate: true,
                               borderWidth: 0.5,
                               labels: ['1d', '7d', '30d', '1a'],
                               onToggle: (index) {

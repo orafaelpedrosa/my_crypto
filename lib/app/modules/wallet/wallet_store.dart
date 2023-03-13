@@ -27,4 +27,21 @@ class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
   Future<void> updatePrice() async {
     await _repository.updatePrice();
   }
+
+  Future<void> getWallet() async {
+    setLoading(true);
+    await _repository.getAll().then((value) {
+      update(value);
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+    });
+  }
+
+  Future<void> totalValue() async {
+    setLoading(true);
+    await _repository.updateTotalWallet();
+    setLoading(false);
+  }
 }

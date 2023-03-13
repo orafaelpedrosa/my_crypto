@@ -170,8 +170,8 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                     );
                   },
                   child: Icon(
-                    Icons.percent_rounded,
-                    color: Theme.of(context).colorScheme.primary,
+                    Icons.settings,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ],

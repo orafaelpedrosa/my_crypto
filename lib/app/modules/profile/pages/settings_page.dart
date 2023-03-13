@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mycrypto/app/core/user_store.dart';
 
@@ -35,26 +36,19 @@ class _SettingsPageState extends State<SettingsPage> {
         child: ListView.separated(
           itemCount: 1,
           itemBuilder: (context, index) {
-            return null;
-            // return ListTile(
-            //   leading: Icon(
-            //     Icons.fingerprint,
-            //   ),
-            //   title: Text(
-            //     'Biometria',
-            //     style: Theme.of(context).textTheme.headlineSmall,
-            //   ),
-            //   trailing: CupertinoSwitch(
-            //     value: userStore.state.userPreference!.hasBiometric ==
-            //         UseBiometricPermissionEnum.accepted,
-            //     onChanged: (value) {
-            //       setState(() {
-            //         userStore.state.userPreference!.hasBiometric =
-            //             UseBiometricPermissionEnum.accepted;
-            //       });
-            //     },
-            //   ),
-            // );
+            return ListTile(
+              leading: Icon(
+                Icons.fingerprint,
+              ),
+              title: Text(
+                'Biometria',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              trailing: CupertinoSwitch(
+                value: true,
+                onChanged: (value) {},
+              ),
+            );
           },
           separatorBuilder: (context, index) {
             return Divider();

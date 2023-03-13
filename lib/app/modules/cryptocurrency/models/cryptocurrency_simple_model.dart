@@ -30,6 +30,7 @@ class CryptocurrencySimpleModel {
   RoiModel? roi;
   String? lastUpdated;
   SparklineIn7dModel? sparklineIn7d;
+  num? priceChangePercentageTime;
   num? priceChangePercentage1hInCurrency;
   num? priceChangePercentage24hInCurrency;
   num? priceChangePercentage7dInCurrency;
@@ -68,6 +69,7 @@ class CryptocurrencySimpleModel {
     this.roi,
     this.lastUpdated,
     this.sparklineIn7d,
+    this.priceChangePercentageTime,
     this.priceChangePercentage1hInCurrency,
     this.priceChangePercentage24hInCurrency,
     this.priceChangePercentage7dInCurrency,
@@ -160,6 +162,9 @@ class CryptocurrencySimpleModel {
     if (json['sparkline_in_7d'] != null) {
       sparklineIn7d = SparklineIn7dModel.fromJson(json['sparkline_in_7d']);
     }
+    if (json['price_change_percentage_time'] != null) {
+      priceChangePercentage1hInCurrency = json['price_change_percentage_time'];
+    }
     if (json['price_change_percentage_1h_in_currency'] != null) {
       priceChangePercentage1hInCurrency =
           json['price_change_percentage_1h_in_currency'];
@@ -220,6 +225,7 @@ class CryptocurrencySimpleModel {
     sparklineIn7d = json['sparkline_in_7d'] != null
         ? SparklineIn7dModel.fromJson(json['sparkline_in_7d'])
         : null;
+    priceChangePercentageTime = json['price_change_percentage_time'];
     priceChangePercentage1hInCurrency =
         json['price_change_percentage_1h_in_currency'];
     priceChangePercentage24hInCurrency =
@@ -268,6 +274,7 @@ class CryptocurrencySimpleModel {
     data['roi'] = this.roi;
     data['last_updated'] = this.lastUpdated;
     data['sparkline_in_7d'] = this.sparklineIn7d;
+    data['price_change_percentage_time'] = this.priceChangePercentageTime;
     data['price_change_percentage_1h_in_currency'] =
         this.priceChangePercentage1hInCurrency;
     data['price_change_percentage_24h_in_currency'] =

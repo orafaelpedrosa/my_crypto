@@ -85,8 +85,4 @@ class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
   void obscurePassword() {
     obscureStore.update(!obscureStore.state);
   }
-
-  // Future<void> setLogAcess() async {
-  //   await _loginRepository.setLogAcess();
-  // }
 }

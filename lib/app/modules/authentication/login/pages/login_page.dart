@@ -358,19 +358,22 @@ class _LoginPageState extends State<LoginPage> {
               );
             },
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-          // SvgPicture.asset(
-          //   'assets/app/coin_gecko.svg',
-          //   height: 25,
-          // ),
-          // SizedBox(height: 5),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           Text(
-            'Dados fornecidos por CoinGecko',
+            'Dados fornecidos por:',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.secondary.withOpacity(
+                        0.5,
+                      ),
+                  fontSize: 10,
                 ),
           ),
+          SizedBox(height: 5),
+          SvgPicture.asset('assets/app/coin_gecko.svg',
+              height: 20,
+              color: Theme.of(context).colorScheme.secondary.withOpacity(
+                    0.5,
+                  )),
         ],
       ),
     );

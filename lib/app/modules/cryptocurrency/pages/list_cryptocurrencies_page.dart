@@ -66,20 +66,6 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
                 );
               },
             ),
-            // IconButton(
-            //   icon: Icon(
-            //     Icons.sort_rounded,
-            //     color: Theme.of(context).colorScheme.secondary,
-            //   ),
-            //   onPressed: () {
-            //     showCupertinoModalPopup(
-            //       context: context,
-            //       builder: (context) {
-            //         return ModalOrderMarketWidget();
-            //       },
-            //     );
-            //   },
-            // ),
           ],
         ),
         body: SafeArea(

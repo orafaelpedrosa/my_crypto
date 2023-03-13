@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_store.dart';
 import 'package:flutter/material.dart';
 import 'package:mycrypto/app/modules/wallet/widgets/modal_menu_wallet_widget.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class WalletPage extends StatefulWidget {
   final String title;
@@ -15,15 +17,11 @@ class WalletPage extends StatefulWidget {
 class WalletPageState extends State<WalletPage> {
   final WalletStore store = Modular.get();
 
-  MyCryptoModel crypto = MyCryptoModel(
-    id: 'bloktopia',
-    amount: 3406.0,
-    averagePrice: 0.027,
-  );
-
   @override
   void initState() {
+    store.getWallet();
     store.updatePrice();
+    store.totalValue();
     super.initState();
   }
 
@@ -55,14 +53,54 @@ class WalletPageState extends State<WalletPage> {
           ),
         ],
       ),
-      body: Container(
-        color: Theme.of(context).colorScheme.background,
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[],
-        ),
-      ),
+      body: TripleBuilder<WalletStore, Exception, List<MyCryptoModel>>(
+          store: store,
+          builder: (_, triple) {
+            if (triple.isLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return RefreshIndicator(
+              onRefresh: () async {
+                await store.getWallet();
+                await store.updatePrice();
+              },
+              child: Container(
+                color: Theme.of(context).colorScheme.background,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SfCircularChart(
+                  legend: Legend(
+                    isVisible: true,
+                    position: LegendPosition.bottom,
+                    overflowMode: LegendItemOverflowMode.wrap,
+                  ),
+                  palette: <Color>[
+                    Color(0xff508ca4),
+                    Color(0xff004f2d),
+                    Color(0xffd64933),
+                    Color(0xffc20114),
+                    Color(0xff80ff72),
+                    Color(0xff508ca4),
+                    Color(0xff508ca4),
+                    Color(0xff508ca4),
+                  ],
+                  series: <CircularSeries>[
+                    DoughnutSeries<MyCryptoModel, String>(
+                      dataSource: store.state,
+                      xValueMapper: (MyCryptoModel data, _) => data.id,
+                      yValueMapper: (MyCryptoModel data, _) => data.totalValue,
+                      dataLabelSettings: DataLabelSettings(
+                        isVisible: false,
+                        labelPosition: ChartDataLabelPosition.outside,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
     );
   }
 }
