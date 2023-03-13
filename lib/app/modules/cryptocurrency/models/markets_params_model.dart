@@ -9,8 +9,8 @@ class MarketsParamsModel {
   String? priceChangePercentage;
 
   MarketsParamsModel({
-    this.vsCurrency = 'usd',
-    this.ids,
+    this.vsCurrency,
+    this.ids = const [],
     this.category,
     this.order,
     this.perPage,
@@ -33,7 +33,8 @@ class MarketsParamsModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['vs_currency'] = vsCurrency;
-    data['ids'] = ids;
+    // data['ids'] = ids;
+    data['ids'] = ids!.join(',');
     data['category'] = category;
     data['order'] = order;
     data['per_page'] = perPage;

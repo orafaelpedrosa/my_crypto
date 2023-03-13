@@ -68,24 +68,12 @@ class WalletPageState extends State<WalletPage> {
               },
               child: Container(
                 color: Theme.of(context).colorScheme.background,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
                 child: SfCircularChart(
                   legend: Legend(
                     isVisible: true,
                     position: LegendPosition.bottom,
                     overflowMode: LegendItemOverflowMode.wrap,
                   ),
-                  palette: <Color>[
-                    Color(0xff508ca4),
-                    Color(0xff004f2d),
-                    Color(0xffd64933),
-                    Color(0xffc20114),
-                    Color(0xff80ff72),
-                    Color(0xff508ca4),
-                    Color(0xff508ca4),
-                    Color(0xff508ca4),
-                  ],
                   series: <CircularSeries>[
                     DoughnutSeries<MyCryptoModel, String>(
                       dataSource: store.state,

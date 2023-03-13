@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:mycrypto/app/core/models/user_preference_model.dart';
 
 class UserModel {
@@ -34,11 +33,9 @@ class UserModel {
     if (uid != null) {
       result.addAll({'uid': uid});
     }
-
     if (cpf != null) {
       result.addAll({'cpf': cpf});
     }
-
     if (userPreference != null) {
       result.addAll({'userPreference': userPreference!.toMap()});
     }

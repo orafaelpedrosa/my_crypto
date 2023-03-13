@@ -1,33 +1,32 @@
-import 'dart:convert';
-
 import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
-import 'package:mycrypto/app/core/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
   final _preferences = SharedPreferences.getInstance();
 
-  static Future<void> setUserPreferences(UserModel user) async {
-    await SharedPreferences.getInstance().then(
-      (instance) async {
-        await instance.setString('userID', user.uid!);
-        await instance.setString(
-          'userPreferences',
-          jsonEncode(user.userPreference!.toMap()),
-        );
-      },
-    );
+  static Future<void> setHasBiometricPermission(
+      UseBiometricPermissionEnum hasBiometricPermission) async {
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('hasBiometric', hasBiometricPermission.label);
+    });
   }
 
-  Future<void> setHasBiometrics(
-      UseBiometricPermissionEnum useBiometrics) async {
-    _preferences.then(
-      (instance) async {
-        await instance.setString(
-          'hasBiometrics',
-          useBiometricPermissionFromJson(useBiometrics),
-        );
-      },
-    );
+  static Future<UseBiometricPermissionEnum> getHasBiometricPermission() async {
+    return SharedPreferences.getInstance().then((prefs) {
+      return prefs.getString('hasBiometric') == 'accepted'
+          ? UseBiometricPermissionEnum.accepted
+          : prefs.getString('hasBiometric') == 'notAccepted'
+              ? UseBiometricPermissionEnum.notAccepted
+              : UseBiometricPermissionEnum.denied;
+    });
+  }
+
+  //print all preferences
+  static Future<void> printAllPreferences() async {
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.getKeys().forEach((key) {
+        print('$key: ${prefs.getString(key)}');
+      });
+    });
   }
 }

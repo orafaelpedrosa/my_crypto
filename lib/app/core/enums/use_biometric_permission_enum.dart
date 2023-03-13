@@ -4,11 +4,11 @@ extension UseBiometricPermissionExtension on UseBiometricPermissionEnum {
   String get label {
     switch (this) {
       case UseBiometricPermissionEnum.accepted:
-        return 'Aceito';
+        return 'accepted';
       case UseBiometricPermissionEnum.notAccepted:
-        return 'Não Aceito';
+        return 'notAccepted';
       case UseBiometricPermissionEnum.denied:
-        return 'Negado';
+        return 'denied';
       default:
         return toString();
     }

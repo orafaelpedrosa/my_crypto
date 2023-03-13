@@ -140,6 +140,10 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                   ),
                 ),
                 GestureDetector(
+                  child: Icon(
+                    Icons.filter_list_rounded,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                   onTap: () {
                     showCupertinoModalPopup(
                       context: context,
@@ -162,17 +166,13 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.pop(context);
+                              Modular.to.pop();
                             },
                           ),
                         );
                       },
                     );
                   },
-                  child: Icon(
-                    Icons.settings,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
                 ),
               ],
             );

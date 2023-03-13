@@ -73,6 +73,8 @@ class FavoritesPageState extends State<FavoritesPage> {
                                 itemBuilder: (context, index) {
                                   final coin = triple.state[index];
                                   coin.isFavorite = store.isFavorite(coin);
+                                  coin.priceChangePercentageTime =
+                                      store.getPriceChangePercentage(coin);
                                   return SlidableItemListWidget(
                                     coin: coin,
                                     onTap: () {

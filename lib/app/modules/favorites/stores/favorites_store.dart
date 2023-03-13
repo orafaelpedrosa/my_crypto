@@ -90,6 +90,11 @@ class FavoritesStore
     if (listIDs.isNotEmpty) {
       marketsParams.ids = listIDs;
       marketsParams.vsCurrency = 'usd';
+      marketsParams.order = 'market_cap_desc';
+      marketsParams.perPage = '100';
+      marketsParams.page = '1';
+      marketsParams.sparkline = 'true';
+      marketsParams.priceChangePercentage = '1h,24h,7d,14d,30d,200d,1y';
       await _repository.getCryptocurrenciesByIDs(marketsParams).then((value) {
         update(value);
         setLoading(false);
@@ -102,6 +107,26 @@ class FavoritesStore
       );
     } else {
       setLoading(false);
+    }
+  }
+
+  num getPriceChangePercentage(CryptocurrencySimpleModel coin) {
+    if (coin.priceChangePercentage24hInCurrency != null) {
+      return coin.priceChangePercentage24hInCurrency!;
+    } else if (coin.priceChangePercentage1hInCurrency != null) {
+      return coin.priceChangePercentage1hInCurrency!;
+    } else if (coin.priceChangePercentage7dInCurrency != null) {
+      return coin.priceChangePercentage7dInCurrency!;
+    } else if (coin.priceChangePercentage14dInCurrency != null) {
+      return coin.priceChangePercentage14dInCurrency!;
+    } else if (coin.priceChangePercentage30dInCurrency != null) {
+      return coin.priceChangePercentage30dInCurrency!;
+    } else if (coin.priceChangePercentage200dInCurrency != null) {
+      return coin.priceChangePercentage200dInCurrency!;
+    } else if (coin.priceChangePercentage1yInCurrency != null) {
+      return coin.priceChangePercentage1yInCurrency!;
+    } else {
+      return coin.priceChangePercentage24hInCurrency!;
     }
   }
 }

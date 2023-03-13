@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/core/user_store.dart';
 import 'package:mycrypto/app/modules/profile/profile_store.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,6 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   final ProfileStore store = Modular.get();
-  final UserStore _userStore = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class ProfilePageState extends State<ProfilePage> {
                 size: 30,
               ),
               onPressed: () {
-                _userStore.logout();
+                // store.loginStore.authLogout();
               },
             ),
           ],
@@ -58,16 +56,24 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: 20),
             ListTile(
-              leading: Icon(
-                Icons.settings,
-              ),
-              title: Text(
-                'Configurações',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
               onTap: () {
                 Modular.to.pushNamed('/home/profile/settings');
               },
+              leading: Icon(
+                Icons.settings,
+                // color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                'Configurações',
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+              ),
+              trailing: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 15,
+              ),
             ),
           ],
         ),

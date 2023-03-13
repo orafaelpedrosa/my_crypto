@@ -23,10 +23,7 @@ class FavoritesRepository extends Disposable {
     try {
       final Response response = await _dio.get(
         '$_urlBase/coins/markets?sparkline=true',
-        queryParameters: {
-          'vs_currency': marketsParamsModel.vsCurrency,
-          'ids': marketsParamsModel.ids!.join(','),
-        },
+        queryParameters: marketsParamsModel.toJson(),
       );
       final List<CryptocurrencySimpleModel> cryptos =
           List.empty(growable: true);

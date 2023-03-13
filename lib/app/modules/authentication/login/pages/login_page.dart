@@ -89,7 +89,6 @@ class _LoginPageState extends State<LoginPage> {
           SvgPicture.asset(
             'assets/app/mycrypto.svg',
             height: MediaQuery.of(context).size.height * 0.07,
-            // color: Theme.of(context).colorScheme.primary,
           ),
           const SizedBox(height: 80),
           TripleBuilder(

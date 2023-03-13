@@ -20,7 +20,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
   final LoginStore loginStore = Modular.get<LoginStore>();
 
   checkLocalAuth() async {
-    // loginStore.authLogout();
+    loginStore.authLogout();
     final isLocalAuthAvilable = await _store.isBiometricAvailable();
     final _authFirebase = FirebaseAuth.instance;
 

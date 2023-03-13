@@ -27,27 +27,4 @@ class AuthCheckStore extends NotifierStore<PlatformException, bool> {
   void updateState(bool value) {
     update(value);
   }
-
-  // Future<bool> hasBiometrics() async {
-  //   try {
-  //     return await _auth.canCheckBiometrics;
-  //   } on PlatformException {
-  //     return false;
-  //   }
-  // }
-
-  // Future<bool> authBio() async {
-  //   final isAvailable = await hasBiometrics();
-  //   if (!isAvailable) {
-  //     return false;
-  //   }
-
-  //   try {
-  //     return await _auth.authenticate(
-  //       localizedReason: 'Obrigado por desbloquear o aplicativo',
-  //     );
-  //   } on PlatformException {
-  //     return false;
-  //   }
-  // }
 }

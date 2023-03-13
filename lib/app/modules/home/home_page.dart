@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.secondary,
               backgroundColor: Theme.of(context).colorScheme.background,
               tabs: [
                 GButton(
