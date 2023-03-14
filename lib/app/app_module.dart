@@ -3,7 +3,7 @@ import 'package:mycrypto/app/modules/authentication/auth_module.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_module.dart';
 import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
 import 'package:mycrypto/app/modules/authentication/register/register_module.dart';
-import 'package:mycrypto/app/core/user_store.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
 import 'package:mycrypto/app/modules/home/home_module.dart';
 import 'package:mycrypto/app/modules/profile/profile_module.dart';

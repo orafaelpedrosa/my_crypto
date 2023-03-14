@@ -5,7 +5,7 @@ import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/models/credential_model.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_repository.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
-import 'package:mycrypto/app/core/user_store.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 
 // ignore: must_be_immutable
 class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {

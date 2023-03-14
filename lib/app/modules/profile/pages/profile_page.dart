@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/profile/profile_store.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +14,6 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    log(DateTime.now().toString());
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100),

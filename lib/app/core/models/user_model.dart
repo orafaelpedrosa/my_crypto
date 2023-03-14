@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:mycrypto/app/core/models/user_preference_model.dart';
 
 class UserModel {
@@ -7,7 +8,7 @@ class UserModel {
   String? photoUrl;
   String? uid;
   String? cpf;
-  UserPreferenceModel? userPreference;
+  UserPreferenceModel userPreference;
 
   UserModel({
     this.name,
@@ -15,7 +16,7 @@ class UserModel {
     this.photoUrl,
     this.uid,
     this.cpf,
-    this.userPreference,
+    required this.userPreference,
   });
 
   Map<String, dynamic> toMap() {
@@ -36,9 +37,7 @@ class UserModel {
     if (cpf != null) {
       result.addAll({'cpf': cpf});
     }
-    if (userPreference != null) {
-      result.addAll({'userPreference': userPreference!.toMap()});
-    }
+    result.addAll({'userPreference': userPreference.toMap()});
 
     return result;
   }
@@ -50,9 +49,7 @@ class UserModel {
       photoUrl: map['photoUrl'],
       uid: map['uid'],
       cpf: map['cpf'],
-      userPreference: map['userPreference'] != null
-          ? UserPreferenceModel.fromMap(map['userPreference'])
-          : null,
+      userPreference: UserPreferenceModel.fromMap(map['userPreference']),
     );
   }
 
