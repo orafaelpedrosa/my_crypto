@@ -14,6 +14,22 @@ class LocalAuthService {
     }
   }
 
+  static Future<bool> hasBiometricsAvailable() async {
+    return await _auth.getAvailableBiometrics().then(
+      (value) {
+        if (value.contains(BiometricType.face)) {
+          return true;
+        } else if (value.contains(BiometricType.fingerprint)) {
+          return true;
+        } else if (value.contains(BiometricType.iris)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    );
+  }
+
   static Future<BiometricType> getBiometricType() async {
     return _auth.getAvailableBiometrics().then(
       (value) {
@@ -39,7 +55,7 @@ class LocalAuthService {
     if (!canAuthenticate) return false;
     try {
       return _auth.authenticate(
-        localizedReason: 'Utilize sua biometria para entrar',
+        localizedReason: 'Entre com sua biometria para continuar',
         authMessages: const <AuthMessages>[
           AndroidAuthMessages(
             signInTitle: 'Oops! Autenticação por biometria requerida!',

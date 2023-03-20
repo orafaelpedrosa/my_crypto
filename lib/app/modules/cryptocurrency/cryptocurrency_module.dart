@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/stores/use_biometric_store.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_repository.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
@@ -27,6 +28,7 @@ class CryptocurrencyModule extends Module {
     Bind.lazySingleton((i) => LoginRepository()),
     Bind.lazySingleton((i) => LoginStore()),
     Bind.lazySingleton((i) => ObscureStore()),
+    Bind.lazySingleton((i) => UseBiometricStore()),
   ];
 
   @override

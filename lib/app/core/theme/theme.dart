@@ -61,9 +61,7 @@ ThemeData theme = ThemeData(
     ),
   ),
   colorScheme: ColorScheme(
-    // background: const Color(0xff050409),
     background: const Color(0xff0D0B18),
-
     brightness: Brightness.dark,
     error: Colors.red,
     onError: Colors.red,

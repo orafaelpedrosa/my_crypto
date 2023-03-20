@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/modules/profile/profile_store.dart';
+import 'package:mycrypto/app/modules/profile/stores/profile_store.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {

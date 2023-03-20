@@ -4,7 +4,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
+import 'package:mycrypto/app/core/stores/use_biometric_store.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
+import 'package:mycrypto/app/modules/authentication/login/pages/permission_biometric_page.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
@@ -22,6 +25,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final LoginStore _store = Modular.get();
   final UserStore _userStore = Modular.get();
+  final UseBiometricStore _useBiometricStore = Modular.get();
 
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
@@ -244,18 +248,35 @@ class _LoginPageState extends State<LoginPage> {
                                   } else if (_userStore.user != null &&
                                       _userStore.user!.emailVerified) {
                                     _btnController1.success();
-                                    await Future.delayed(
-                                      Duration(seconds: 1),
-                                      () async {
-                                        Modular.to.pushNamed('/home/');
-                                      },
-                                    );
-                                    Future.delayed(
-                                      Duration(seconds: 5),
-                                      () async {
-                                        _btnController1.reset();
-                                      },
-                                    );
+                                    final isLocalAuthAvailable =
+                                        await _useBiometricStore
+                                            .isBiometricAvailable();
+                                    final hasBiometricsAvailable =
+                                        isLocalAuthAvailable &&
+                                            await _useBiometricStore
+                                                .hasBiometricsAvailable();
+
+                                    if (hasBiometricsAvailable &&
+                                        await _useBiometricStore
+                                                .getHasBiometrics() ==
+                                            UseBiometricPermissionEnum
+                                                .notAccepted) {
+                                      await showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        enableDrag: false,
+                                        builder: (context) {
+                                          return PermissionBiometricPage();
+                                        },
+                                      );
+                                    } else {
+                                      await Future.delayed(
+                                        Duration(seconds: 1),
+                                      );
+                                      Modular.to.pushReplacementNamed(
+                                        '/home',
+                                      );
+                                    }
                                   }
                                 }).catchError(
                                   (error) async {
@@ -332,10 +353,17 @@ class _LoginPageState extends State<LoginPage> {
                         _store.authGoogle().then((value) async {
                           if (_userStore.user != null &&
                               _userStore.user!.emailVerified) {
-                            await Future.delayed(
-                              Duration(seconds: 1),
-                              () => Modular.to.pushNamed('/home/'),
+                            await showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return PermissionBiometricPage();
+                              },
                             );
+                            // await Future.delayed(
+                            //   Duration(seconds: 1),
+                            //   () => Modular.to.pushNamed('/home/'),
+                            // );
                           }
                         }).catchError((error) async {
                           await openErrorSnackBar(

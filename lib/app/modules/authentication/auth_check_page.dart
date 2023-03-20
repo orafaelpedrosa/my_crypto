@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
-import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
 
 class AuthCheckPage extends StatefulWidget {
@@ -18,28 +15,9 @@ class AuthCheckPage extends StatefulWidget {
 
 class _AuthCheckPageState extends State<AuthCheckPage> {
   final AuthCheckStore _store = Modular.get<AuthCheckStore>();
-  final LoginStore loginStore = Modular.get<LoginStore>();
-  final UserStore userStore = Modular.get<UserStore>();
 
-  checkLocalAuth() async {
-    final isLocalAuthAvilable = await _store.isBiometricAvailable();
-    final _authFirebase = FirebaseAuth.instance;
-
-    _store.updateState(false);
-    if (_authFirebase.currentUser == null ||
-        !_authFirebase.currentUser!.emailVerified) {
-      Modular.to.pushReplacementNamed('/login/');
-    } else {
-      if (isLocalAuthAvilable) {
-        final _authenticate = await _store.authenticate();
-
-        if (!_authenticate) {
-          _store.updateState(true);
-        } else {
-          Modular.to.pushReplacementNamed('/home/');
-        }
-      }
-    }
+  void checkLocalAuth() async {
+    await _store.checkLocalAuth();
   }
 
   @override
@@ -73,9 +51,10 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
                 SizedBox(height: 20),
                 Text(
                   'Acesse o MyCrypto',
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        height: 1.5,
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -99,8 +78,19 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
             ),
           );
         }
+        if (failed.isLoading)
+          return Center(
+              child: SvgPicture.asset(
+            'assets/app/mycrypto.svg',
+            height: 50,
+            placeholderBuilder: (context) => Container(
+              height: 100,
+              width: 100,
+              child: const CircularProgressIndicator(),
+            ),
+          ));
         return Container(
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).colorScheme.background,
         );
       },
     );

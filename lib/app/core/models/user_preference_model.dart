@@ -5,14 +5,14 @@ import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 class UserPreferenceModel {
   String? language;
   String? vsCurrency;
-  UseBiometricPermissionEnum hasBiometric;
+  UseBiometricPermissionEnum hasBiometrics;
   bool? hasDarkMode;
   bool? acceptTerms;
 
   UserPreferenceModel({
     this.language,
     this.vsCurrency,
-    this.hasBiometric = UseBiometricPermissionEnum.notAccepted,
+    this.hasBiometrics = UseBiometricPermissionEnum.notAccepted,
     this.hasDarkMode,
     this.acceptTerms,
   });
@@ -24,9 +24,9 @@ class UserPreferenceModel {
       result.addAll({'language': language});
     }
     if (vsCurrency != null) {
-      result.addAll({'vsCurrency': vsCurrency});
+      result.addAll({'vs_currency': vsCurrency});
     }
-    result.addAll({'hasBiometric': hasBiometric.label});
+    result.addAll({'has_biometric': hasBiometrics.label});
     if (hasDarkMode != null) {
       result.addAll({'hasDarkMode': hasDarkMode});
     }
@@ -40,8 +40,8 @@ class UserPreferenceModel {
   factory UserPreferenceModel.fromMap(Map<String, dynamic> map) {
     return UserPreferenceModel(
       language: map['language'],
-      vsCurrency: map['vsCurrency'],
-      hasBiometric: UseBiometricPermissionEnum.notAccepted,
+      vsCurrency: map['vs_currency'],
+      hasBiometrics: UseBiometricPermissionEnum.notAccepted,
       hasDarkMode: map['hasDarkMode'],
       acceptTerms: map['acceptTerms'],
     );

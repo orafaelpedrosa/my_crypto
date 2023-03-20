@@ -1,3 +1,4 @@
+import 'package:mycrypto/app/core/stores/use_biometric_store.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_repository.dart';
 import 'package:mycrypto/app/modules/authentication/login/pages/login_page.dart';
@@ -14,6 +15,7 @@ class LoginModule extends Module {
     Bind.lazySingleton((i) => LoginStore()),
     Bind.lazySingleton((i) => LoginRepository()),
     Bind.lazySingleton((i) => AuthCheckStore()),
+    Bind.lazySingleton((i) => UseBiometricStore()),
   ];
 
   @override

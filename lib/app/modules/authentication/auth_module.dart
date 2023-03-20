@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/stores/use_biometric_store.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_page.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/login_module.dart';
@@ -16,6 +17,7 @@ class AuthModule extends Module {
     Bind.lazySingleton((i) => LoginStore()),
     Bind.lazySingleton((i) => ObscureStore()),
     Bind.lazySingleton((i) => AuthCheckStore()),
+    Bind.lazySingleton((i) => UseBiometricStore()),
   ];
 
   @override

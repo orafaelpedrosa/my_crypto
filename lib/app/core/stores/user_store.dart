@@ -29,12 +29,12 @@ class UserStore extends NotifierStore<Exception, UserModel> {
     update(user);
   }
 
-  Future<void> setBiometric(bool hasBiometric) async {
-    if (hasBiometric) {
-      state.userPreference.hasBiometric = UseBiometricPermissionEnum.accepted;
+  Future<void> setBiometric(bool hasBiometrics) async {
+    if (hasBiometrics) {
+      state.userPreference.hasBiometrics = UseBiometricPermissionEnum.accepted;
     } else {
-      state.userPreference.hasBiometric =
-          UseBiometricPermissionEnum.notAccepted;
+      state.userPreference.hasBiometrics =
+          UseBiometricPermissionEnum.denied;
     }
     await setPreference(state.userPreference);
     await getPreference();
@@ -42,11 +42,11 @@ class UserStore extends NotifierStore<Exception, UserModel> {
   }
 
   Future<void> setPreference(UserPreferenceModel userPreference) async {
-    await PreferencesService().setPreferencesUser(userPreference);
+    await PreferencesService.setPreferencesUser(userPreference);
   }
 
   Future<void> getPreference() async {
-    final userPreference = await PreferencesService().getPreferencesUser();
+    final userPreference = await PreferencesService.getPreferencesUser();
     state.userPreference = userPreference;
     update(state);
   }
