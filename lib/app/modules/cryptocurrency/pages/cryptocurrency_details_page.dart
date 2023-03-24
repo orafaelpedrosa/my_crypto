@@ -113,7 +113,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
           } else {
             return StreamBuilder<CryptocurrencyDetailsModel>(
               stream: Stream.periodic(
-                const Duration(seconds: 10),
+                const Duration(seconds: 30),
                 (_) {
                   store.getStreamCryptocurrency(
                       widget.cryptocurrency.id!, selectIndex);
@@ -184,10 +184,10 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               animate: true,
                               borderWidth: 0.5,
                               labels: ['1d', '7d', '30d', '1a'],
-                              onToggle: (index) {
+                              onToggle: (index) async {
                                 selectIndex = index!;
-                                store.chartStore.changeChart(index);
-                                store.priceChangePercente(selectIndex);
+                                await store.chartStore.changeChart(index);
+                                await store.priceChangePercente(selectIndex);
                               },
                             ),
                           ),

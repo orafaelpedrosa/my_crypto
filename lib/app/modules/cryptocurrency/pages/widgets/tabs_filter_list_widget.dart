@@ -41,7 +41,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     height: 30,
                     decoration: BoxDecoration(
-                      color: Color(0xff201F26),
+                      color: Theme.of(context).colorScheme.onBackground,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Center(
@@ -52,6 +52,15 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                             store.marketsParams.vsCurrency == 'usd'
                                 ? 'USD'
                                 : 'BRL',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(
+                                  height: 1,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  fontSize: 14,
+                                ),
                           ),
                         ],
                       ),
@@ -66,7 +75,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     height: 30,
                     decoration: BoxDecoration(
-                      color: Color(0xff201F26),
+                      color: Theme.of(context).colorScheme.onBackground,
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: Center(
@@ -107,7 +116,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     height: 30,
                     decoration: BoxDecoration(
-                      color: Color(0xff201F26),
+                      color: Theme.of(context).colorScheme.onBackground,
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: Center(
@@ -141,7 +150,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                 ),
                 GestureDetector(
                   child: Icon(
-                    Icons.filter_list_rounded,
+                    Icons.percent_rounded,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   onTap: () {
@@ -193,6 +202,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
       ),
       onPressed: () async {
         store.marketsParams.priceChangePercentage = value;
+        store.cryptocurrencies.clear();
         store.getListCryptocurrencies();
         Modular.to.pop();
       },

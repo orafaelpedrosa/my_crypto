@@ -25,6 +25,9 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
 
   void _checkBiometric() async {
     _visibleBiometric = await _store.hasBiometricsAvailable();
+    if (!_visibleBiometric) {
+      _store.setHasBiometrics(false);
+    }
     _store.updateState(await _store.getHasBiometrics());
     setState(() {});
   }
@@ -36,14 +39,13 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
       child: ListTile(
         leading: Icon(
           Icons.fingerprint,
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.primary,
           size: 30,
         ),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Text(
               'Biometria',
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
@@ -90,7 +92,7 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
               onChanged: (change) async {
                 LocalAuthService.authenticate().then(
                   (value) {
-                    _store.changeBiometricPermission(change);
+                    _store.setHasBiometrics(change);
                   },
                 );
               },

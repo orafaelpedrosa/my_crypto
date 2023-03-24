@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -39,9 +41,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    email.text = 'orafaelpedrosa@outlook.com';
-    password.text = 'Pulodogato@7';
+    // email.text = 'orafaelpedrosa@outlook.com';
+    // password.text = 'Pulodogato@7';
     super.initState();
+    setState(() {
+      email.text = 'orafaelpedrosa@outlook.com';
+      password.text = 'Pulodogato@7';
+    });
   }
 
   void dispose() {
@@ -59,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
         preferredSize: Size.fromHeight(0),
         child: AppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
+          elevation: 0,
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -91,10 +98,12 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/app/mycrypto.svg',
-            height: MediaQuery.of(context).size.height * 0.07,
+            Theme.of(context).brightness == Brightness.light
+                ? 'assets/app/mycrypto.svg'
+                : 'assets/app/mycrypto.svg',
+            width: MediaQuery.of(context).size.width * 0.8,
           ),
-          const SizedBox(height: 80),
+          const SizedBox(height: 50),
           TripleBuilder(
             store: _store,
             builder: (_, triple) {
@@ -223,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .headlineSmall!
                                   .copyWith(
                                     color:
-                                        Theme.of(context).colorScheme.secondary,
+                                        Theme.of(context).colorScheme.onPrimary,
                                   ),
                             ),
                             controller: _btnController1,
@@ -231,54 +240,50 @@ class _LoginPageState extends State<LoginPage> {
                               if (formKey.currentState!.validate()) {
                                 _store.state.email = email.text;
                                 _store.state.password = password.text;
-                                await _store
-                                    .authLogin(_store.state)
-                                    .then((value) async {
-                                  if (!_userStore.user!.emailVerified) {
-                                    _userStore.user ??
-                                        _userStore.user!
-                                            .sendEmailVerification();
-                                    openWarningSnackBar(
-                                      context,
-                                      'Verifique seu e-mail para continuar',
-                                    );
-
-                                    // await _store.authLogout();
-                                    _btnController1.reset();
-                                  } else if (_userStore.user != null &&
-                                      _userStore.user!.emailVerified) {
-                                    _btnController1.success();
-                                    final isLocalAuthAvailable =
-                                        await _useBiometricStore
-                                            .isBiometricAvailable();
-                                    final hasBiometricsAvailable =
-                                        isLocalAuthAvailable &&
-                                            await _useBiometricStore
-                                                .hasBiometricsAvailable();
-
-                                    if (hasBiometricsAvailable &&
-                                        await _useBiometricStore
-                                                .getHasBiometrics() ==
-                                            UseBiometricPermissionEnum
-                                                .notAccepted) {
-                                      await showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        enableDrag: false,
-                                        builder: (context) {
-                                          return PermissionBiometricPage();
-                                        },
+                                await _store.authLogin(_store.state).then(
+                                  (value) async {
+                                    if (!_userStore.user!.emailVerified) {
+                                      await _userStore.user!
+                                          .sendEmailVerification();
+                                      await openWarningSnackBar(
+                                        context,
+                                        'Verifique seu e-mail para continuar',
                                       );
+                                      _btnController1.reset();
                                     } else {
+                                      _btnController1.success();
+
+                                      final isLocalAuthAvailable =
+                                          await _useBiometricStore
+                                              .isBiometricAvailable();
+
+                                      final hasBiometricsAvailable =
+                                          isLocalAuthAvailable &&
+                                              await _useBiometricStore
+                                                  .hasBiometricsAvailable();
+
+                                      if (hasBiometricsAvailable &&
+                                          (await _useBiometricStore
+                                                  .getHasBiometrics()) ==
+                                              UseBiometricPermissionEnum
+                                                  .notAccepted) {
+                                        await showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          enableDrag: false,
+                                          builder: (context) {
+                                            return PermissionBiometricPage();
+                                          },
+                                        );
+                                      }
                                       await Future.delayed(
-                                        Duration(seconds: 1),
-                                      );
-                                      Modular.to.pushReplacementNamed(
-                                        '/home',
+                                          Duration(seconds: 1));
+                                      Modular.to.pushNamed(
+                                        '/home/',
                                       );
                                     }
-                                  }
-                                }).catchError(
+                                  },
+                                ).catchError(
                                   (error) async {
                                     _store.state.email = null;
                                     _store.state.password = null;
@@ -322,7 +327,7 @@ class _LoginPageState extends State<LoginPage> {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Modular.to.pushNamed(
-                                  '/register_module/',
+                                  '/register/',
                                 );
                               },
                           ),
@@ -353,17 +358,29 @@ class _LoginPageState extends State<LoginPage> {
                         _store.authGoogle().then((value) async {
                           if (_userStore.user != null &&
                               _userStore.user!.emailVerified) {
-                            await showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (context) {
-                                return PermissionBiometricPage();
-                              },
-                            );
-                            // await Future.delayed(
-                            //   Duration(seconds: 1),
-                            //   () => Modular.to.pushNamed('/home/'),
-                            // );
+                            final isLocalAuthAvailable =
+                                await _useBiometricStore.isBiometricAvailable();
+                            final hasBiometricsAvailable =
+                                isLocalAuthAvailable &&
+                                    await _useBiometricStore
+                                        .hasBiometricsAvailable();
+
+                            if (hasBiometricsAvailable &&
+                                (await _useBiometricStore.getHasBiometrics()) ==
+                                    UseBiometricPermissionEnum.notAccepted) {
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                enableDrag: false,
+                                builder: (context) {
+                                  return PermissionBiometricPage();
+                                },
+                              );
+                            } else {
+                              log('Login realizado com sucesso');
+                              await Future.delayed(Duration(seconds: 1));
+                              Modular.to.pushNamed('/home/');
+                            }
                           }
                         }).catchError((error) async {
                           await openErrorSnackBar(

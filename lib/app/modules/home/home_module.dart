@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/modules/authentication/login/login_module.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
 import 'package:mycrypto/app/modules/favorites/favorites_module.dart';
 import 'package:mycrypto/app/modules/home/home_page.dart';
@@ -33,6 +34,10 @@ class HomeModule extends Module {
         ModuleRoute(
           '/profile',
           module: ProfileModule(),
+        ),
+        ModuleRoute(
+          '/login',
+          module: LoginModule(),
         ),
       ],
     ),

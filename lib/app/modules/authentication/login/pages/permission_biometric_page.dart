@@ -88,7 +88,7 @@ class _PermissionBiometricPageState extends State<PermissionBiometricPage> {
               //     Modular.to.pushReplacementNamed('/home/');
               //   },
               // );
-              _store.changeBiometricPermission(true);
+              _store.setHasBiometrics(true);
               _store.updateState(UseBiometricPermissionEnum.accepted);
               Modular.to.pushReplacementNamed('/home/');
             },
@@ -98,7 +98,7 @@ class _PermissionBiometricPageState extends State<PermissionBiometricPage> {
             text: 'Negar',
             isLoading: false,
             onPressed: () async {
-              _store.changeBiometricPermission(false);
+              _store.setHasBiometrics(false);
               _store.updateState(UseBiometricPermissionEnum.denied);
               Modular.to.pushReplacementNamed('/home/');
             },

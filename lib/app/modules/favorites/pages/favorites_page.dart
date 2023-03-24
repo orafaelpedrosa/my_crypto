@@ -67,7 +67,7 @@ class FavoritesPageState extends State<FavoritesPage> {
                               onRefresh: () async {
                                 await store.getCryptocurrenciesByIDs();
                               },
-                              child: ListView.separated(
+                              child: ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: triple.state.length,
                                 itemBuilder: (context, index) {
@@ -91,11 +91,6 @@ class FavoritesPageState extends State<FavoritesPage> {
                                     },
                                   );
                                 },
-                                separatorBuilder: (_, index) => const Divider(
-                                  height: 1,
-                                  thickness: 1,
-                                  color: Colors.black12,
-                                ),
                               ),
                             ),
                           ),

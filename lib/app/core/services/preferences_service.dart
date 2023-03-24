@@ -1,3 +1,4 @@
+import 'package:mycrypto/app/core/enums/theme_type_enum.dart';
 import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/models/user_preference_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,6 +44,24 @@ class PreferencesService {
           'has_biometric',
           useBiometricPermissionFromJson(useBiometrics),
         );
+      },
+    );
+  }
+
+  static Future<void> setThemeType(ThemeType theme) async {
+    await SharedPreferences.getInstance().then(
+      (instance) async {
+        await instance.setBool('theme', theme == ThemeType.dark);
+      },
+    );
+  }
+
+  static Future<ThemeType> getThemeType() async {
+    return SharedPreferences.getInstance().then(
+      (instance) async {
+        return instance.getBool('theme') == true
+            ? ThemeType.dark
+            : ThemeType.light;
       },
     );
   }

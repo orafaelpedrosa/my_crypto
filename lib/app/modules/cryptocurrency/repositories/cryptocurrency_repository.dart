@@ -29,7 +29,7 @@ class CryptocurrencyRepository with Disposable {
       );
       return _cryptocurrencies;
     } catch (e) {
-      log('Error getCrypto: $e');
+      log('Error getList: $e');
       rethrow;
     }
   }

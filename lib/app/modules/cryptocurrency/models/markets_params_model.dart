@@ -3,8 +3,8 @@ class MarketsParamsModel {
   List<String>? ids;
   String? category;
   String? order;
-  String? perPage;
-  String? page;
+  int? perPage;
+  int? page;
   String? sparkline;
   String? priceChangePercentage;
 
@@ -24,8 +24,8 @@ class MarketsParamsModel {
     ids = json['ids'] as List<String>?;
     category = json['category'] as String?;
     order = json['order'] as String?;
-    perPage = json['per_page'] as String?;
-    page = json['page'] as String?;
+    perPage = json['per_page'] as int?;
+    page = json['page'] as int?;
     sparkline = json['sparkline'] as String?;
     priceChangePercentage = json['price_change_percentage'] as String?;
   }
@@ -33,7 +33,6 @@ class MarketsParamsModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['vs_currency'] = vsCurrency;
-    // data['ids'] = ids;
     data['ids'] = ids!.join(',');
     data['category'] = category;
     data['order'] = order;

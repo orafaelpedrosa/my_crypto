@@ -18,12 +18,17 @@ class ListCryptocurrenciesStore
   final CryptocurrencyDataStore dataStore =
       Modular.get<CryptocurrencyDataStore>();
   List<CryptocurrencySimpleModel> listCrypto = [];
+  List<CryptocurrencySimpleModel> cryptocurrencies = [];
+
   final MarketsParamsModel marketsParams = MarketsParamsModel();
 
   Future<void> getListCryptocurrencies() async {
     setLoading(true);
-    await _repository.getListCryptocurrenciesData(marketsParams).then((value) {
-      update(value);
+    await _repository
+        .getListCryptocurrenciesData(marketsParams)
+        .then((value) async {
+      cryptocurrencies.addAll(value);
+      update(cryptocurrencies);
       setLoading(false);
     }).catchError((onError) async {
       setLoading(false);
@@ -70,6 +75,7 @@ class ListCryptocurrenciesStore
     } else {
       marketsParams.order = order;
     }
+    cryptocurrencies.clear();
     await getListCryptocurrencies();
   }
 

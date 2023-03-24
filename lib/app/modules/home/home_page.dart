@@ -46,37 +46,32 @@ class _HomePageState extends State<HomePage> {
               tabs: [
                 GButton(
                   icon: Icons.home,
-                  text: 'Home',
-                  style: GnavStyle.oldSchool,
-                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
                 GButton(
                   icon: Icons.star,
-                  text: 'Favoritas',
-                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
                 GButton(
                   icon: Icons.wallet,
-                  text: 'Carteira',
-                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
                 GButton(
                   icon: Icons.person,
-                  text: 'Perfil',
-                  textStyle: Theme.of(context).textTheme.titleLarge!,
                 ),
               ],
               selectedIndex: _selectedIndex,
               onTabChange: (index) {
                 setState(() {
                   if (index == 0) {
-                    Modular.to.pushReplacementNamed('/home/cryptocurrency/');
+                    Modular.to.pushNamedAndRemoveUntil(
+                        '/home/cryptocurrency/', (route) => false);
                   } else if (index == 1) {
-                    Modular.to.pushReplacementNamed('/home/favorites/');
+                    Modular.to.pushNamedAndRemoveUntil(
+                        '/home/favorites/', (route) => false);
                   } else if (index == 2) {
-                    Modular.to.pushReplacementNamed('/home/wallet/');
+                    Modular.to.pushNamedAndRemoveUntil(
+                        '/home/wallet/', (route) => false);
                   } else if (index == 3) {
-                    Modular.to.pushReplacementNamed('/home/profile/');
+                    Modular.to.pushNamedAndRemoveUntil(
+                        '/home/profile/', (route) => false);
                   }
                 });
               },

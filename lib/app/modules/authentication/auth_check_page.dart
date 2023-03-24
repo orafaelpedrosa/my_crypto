@@ -79,16 +79,19 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
           );
         }
         if (failed.isLoading)
-          return Center(
-              child: SvgPicture.asset(
-            'assets/app/mycrypto.svg',
+          return Container(
+            color: Theme.of(context).colorScheme.background,
             height: 50,
-            placeholderBuilder: (context) => Container(
-              height: 100,
-              width: 100,
-              child: const CircularProgressIndicator(),
+            child: SvgPicture.asset(
+              'assets/app/mycrypto.svg',
+              height: 30,
+              placeholderBuilder: (context) => Container(
+                height: 50,
+                width: 50,
+                child: const CircularProgressIndicator(),
+              ),
             ),
-          ));
+          );
         return Container(
           color: Theme.of(context).colorScheme.background,
         );

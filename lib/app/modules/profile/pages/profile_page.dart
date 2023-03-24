@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/profile/stores/profile_store.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,7 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   final ProfileStore store = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +27,6 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
           elevation: 0,
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.logout_outlined,
-                color: Theme.of(context).colorScheme.primary,
-                size: 30,
-              ),
-              onPressed: () {
-                // store.loginStore.authLogout();
-              },
-            ),
-          ],
         ),
       ),
       body: Container(
@@ -43,26 +34,99 @@ class ProfilePageState extends State<ProfilePage> {
         color: Theme.of(context).colorScheme.background,
         child: Column(
           children: <Widget>[
-            Container(
-              height: 150,
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                //circular
-                shape: BoxShape.circle,
+            ClipOval(
+              child: SizedBox.fromSize(
+                size: Size(100, 100),
+                child: _userStore.user!.photoURL != null
+                    ? Image.network(
+                        '${_userStore.user!.photoURL!}',
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      )
+                    : Icon(
+                        Icons.person,
+                        size: 100,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              '${_userStore.user!.displayName ?? 'Usuário'}',
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+            ),
+            SizedBox(height: 20),
+            ListTile(
+              onTap: () {
+                Modular.to.pushNamed('settings');
+              },
+              leading: Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.primary,
+                size: 30,
+              ),
+              title: Text(
+                'Configurações',
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+              ),
+              trailing: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 15,
               ),
             ),
             SizedBox(height: 20),
             ListTile(
               onTap: () {
-                Modular.to.pushNamed('/home/profile/settings');
+                showCupertinoDialog(
+                  context: context,
+                  routeSettings: RouteSettings(name: 'Sair'),
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: Text('Sair'),
+                      content: Text('Deseja realmente sair?'),
+                      actions: [
+                        CupertinoDialogAction(
+                          child: Text('Não'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        CupertinoDialogAction(
+                          child: Text('Sim'),
+                          onPressed: () {
+                            _userStore.signOut();
+                            // Navigator.pushNamedAndRemoveUntil(context,
+                            //     '/login/', ModalRoute.withName('/home/'));
+                            Modular.to.pop();
+                            Modular.to.pushReplacementNamed('/login/');
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               leading: Icon(
-                Icons.settings,
-                // color: Theme.of(context).colorScheme.secondary,
+                Icons.logout_outlined,
+                color: Theme.of(context).colorScheme.primary,
+                size: 30,
               ),
               title: Text(
-                'Configurações',
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                'Sair',
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
               ),

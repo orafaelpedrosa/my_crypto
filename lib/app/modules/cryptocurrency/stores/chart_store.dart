@@ -25,7 +25,7 @@ class ChartStore extends NotifierStore<DioError, ChartModel> {
     setLoading(false);
   }
 
-  void changeChart(int period) {
+  Future<void> changeChart(int period) async {
     switch (period) {
       case 0:
         paramsChart.days = '1d';
@@ -43,7 +43,7 @@ class ChartStore extends NotifierStore<DioError, ChartModel> {
         paramsChart.days = '1d';
         break;
     }
-    getChartData();
+    await getChartData();
   }
 
   Future<void> updateState() async {

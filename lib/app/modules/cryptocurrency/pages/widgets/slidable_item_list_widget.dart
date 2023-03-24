@@ -35,7 +35,7 @@ class SlidableItemListWidget extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
         decoration: BoxDecoration(
-          color: Color(0xff201F26),
+          color: Theme.of(context).colorScheme.onBackground,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Slidable(
@@ -139,7 +139,7 @@ class SlidableItemListWidget extends StatelessWidget {
                     width: 1,
                     color: Theme.of(context).colorScheme.primary,
                     axisLineColor: Colors.transparent,
-                    data: coin.sparklineIn7d!.price,
+                    data: coin.sparklineIn7d!.price ?? [1, 1, 1, 1, 1, 1, 1],
                     marker: SparkChartMarker(
                       color: Colors.red,
                     ),

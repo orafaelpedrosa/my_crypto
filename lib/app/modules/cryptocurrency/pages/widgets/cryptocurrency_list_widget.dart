@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -11,6 +13,12 @@ import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
+  final ScrollController scrollController;
+  const CryptocurrencyListWidget({
+    Key? key,
+    required this.scrollController,
+  }) : super(key: key);
+
   @override
   State<CryptocurrencyListWidget> createState() =>
       _CryptocurrencyListWidgetState();
@@ -19,6 +27,19 @@ class CryptocurrencyListWidget extends StatefulWidget {
 class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
   ListCryptocurrenciesStore store = Modular.get();
   FavoritesStore favoritesStore = Modular.get();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(() {
+      if (widget.scrollController.position.pixels ==
+              widget.scrollController.position.maxScrollExtent &&
+          !store.isLoading) {
+        store.marketsParams.page = store.marketsParams.page! + 1;
+        store.getListCryptocurrencies();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +81,9 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                   },
                   child: Scrollbar(
                     thumbVisibility: true,
+                    controller: widget.scrollController,
                     child: ListView.separated(
+                      controller: widget.scrollController,
                       itemCount: store.state.length,
                       itemBuilder: (_, index) {
                         store.state[index].isFavorite = favoritesStore.state
@@ -68,8 +91,6 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                                 element.id == store.state[index].id);
                         store.state[index].priceChangePercentageTime =
                             store.getPriceChangePercentage(store.state[index]);
-
-                        // store.getFormatImage(store.state[index].image);
                         return Column(
                           children: [
                             Visibility(
@@ -97,7 +118,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
                                   (value) async {
                                     await openInfoSnackBar(
                                       context,
-                                      '${store.state[index].name} ${favoritesStore.state.any((element) => element.id == store.state[index].id) ? 'foi adicionado' : 'foi removido'} dos favoritos',
+                                      '${store.state[index].name} ${favoritesStore.state.any((element) => element.id == store.state[index].id) ? 'foi adicionado' : 'foi removido'} aos favoritos',
                                       favoritesStore.isFavorite(
                                         store.state[index],
                                       ),

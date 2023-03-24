@@ -20,8 +20,8 @@ class AppModule extends Module {
     ModuleRoute(Modular.initialRoute, module: AuthModule()),
     ModuleRoute('/auth', module: AuthModule()),
     ModuleRoute('/home', module: HomeModule()),
-    ModuleRoute('/login_module', module: LoginModule()),
-    ModuleRoute('/register_module', module: RegisterModule()),
+    ModuleRoute('/login', module: LoginModule()),
+    ModuleRoute('/register', module: RegisterModule()),
     ModuleRoute('/cryptocurrency', module: CryptocurrencyModule()),
     ModuleRoute('/profile', module: ProfileModule()),
   ];

@@ -54,41 +54,42 @@ class WalletPageState extends State<WalletPage> {
         ],
       ),
       body: TripleBuilder<WalletStore, Exception, List<MyCryptoModel>>(
-          store: store,
-          builder: (_, triple) {
-            if (triple.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return RefreshIndicator(
-              onRefresh: () async {
-                await store.getWallet();
-                await store.updatePrice();
-              },
-              child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: SfCircularChart(
-                  legend: Legend(
-                    isVisible: true,
-                    position: LegendPosition.bottom,
-                    overflowMode: LegendItemOverflowMode.wrap,
-                  ),
-                  series: <CircularSeries>[
-                    DoughnutSeries<MyCryptoModel, String>(
-                      dataSource: store.state,
-                      xValueMapper: (MyCryptoModel data, _) => data.id,
-                      yValueMapper: (MyCryptoModel data, _) => data.totalValue,
-                      dataLabelSettings: DataLabelSettings(
-                        isVisible: false,
-                        labelPosition: ChartDataLabelPosition.outside,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+        store: store,
+        builder: (_, triple) {
+          if (triple.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          }),
+          }
+          return RefreshIndicator(
+            onRefresh: () async {
+              await store.getWallet();
+              await store.updatePrice();
+            },
+            child: Container(
+              color: Theme.of(context).colorScheme.background,
+              child: SfCircularChart(
+                legend: Legend(
+                  isVisible: true,
+                  position: LegendPosition.bottom,
+                  overflowMode: LegendItemOverflowMode.wrap,
+                ),
+                series: <CircularSeries>[
+                  DoughnutSeries<MyCryptoModel, String>(
+                    dataSource: store.state,
+                    xValueMapper: (MyCryptoModel data, _) => data.id,
+                    yValueMapper: (MyCryptoModel data, _) => data.totalValue,
+                    dataLabelSettings: DataLabelSettings(
+                      isVisible: false,
+                      labelPosition: ChartDataLabelPosition.outside,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

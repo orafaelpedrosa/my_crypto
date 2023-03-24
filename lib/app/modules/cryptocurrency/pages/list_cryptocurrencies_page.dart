@@ -22,17 +22,31 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final LoginStore loginStore = Modular.get();
   final FavoritesStore favoritesStore = Modular.get();
 
+  final ScrollController _scrollController = ScrollController();
+  bool _showButton = false;
+
   @override
   void initState() {
     store.marketsParams.order = 'market_cap_desc';
-    store.marketsParams.perPage = '100';
-    store.marketsParams.page = '1';
+    store.marketsParams.perPage = 250;
+    store.marketsParams.page = 1;
     store.marketsParams.sparkline = 'true';
     store.marketsParams.priceChangePercentage = '24h';
     store.marketsParams.vsCurrency = 'brl';
     store.getListCryptocurrencies();
     favoritesStore.startFavorites();
     super.initState();
+    _scrollController.addListener(() {
+      setState(() {
+        _showButton = _scrollController.offset > 100;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,7 +65,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             width: 25,
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
-          elevation: 1,
+          elevation: 2,
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
@@ -72,10 +86,24 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
           child: Column(
             children: [
               TabsFilterListWidget(),
-              CryptocurrencyListWidget(),
+              CryptocurrencyListWidget(scrollController: _scrollController),
             ],
           ),
         ),
+        floatingActionButton: _showButton
+            ? FloatingActionButton(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                onPressed: () {
+                  _scrollController.animateTo(0,
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut);
+                },
+                child: Icon(
+                  Icons.arrow_upward,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              )
+            : null,
       ),
     );
   }

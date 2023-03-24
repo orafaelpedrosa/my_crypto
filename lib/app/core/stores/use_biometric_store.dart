@@ -42,7 +42,7 @@ class UseBiometricStore
     );
   }
 
-  void changeBiometricPermission(bool hasBiometrics) {
+  void setHasBiometrics(bool hasBiometrics) {
     if (hasBiometrics) {
       update(UseBiometricPermissionEnum.accepted);
       PreferencesService.setHasBiometrics(UseBiometricPermissionEnum.accepted);

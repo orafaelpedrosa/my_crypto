@@ -292,4 +292,6 @@ class CryptocurrencySimpleModel {
     data['is_favorite'] = this.isFavorite;
     return data;
   }
+
+  fromJson(String element) {}
 }

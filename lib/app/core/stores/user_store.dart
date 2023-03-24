@@ -17,8 +17,13 @@ class UserStore extends NotifierStore<Exception, UserModel> {
     user = FirebaseAuth.instance.currentUser!;
   }
 
-  static Future<void> signOut() async {
+  Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  //delete user
+  Future<void> deleteUser() async {
+    await FirebaseAuth.instance.currentUser!.delete();
   }
 
   bool stateUser() {
@@ -33,8 +38,7 @@ class UserStore extends NotifierStore<Exception, UserModel> {
     if (hasBiometrics) {
       state.userPreference.hasBiometrics = UseBiometricPermissionEnum.accepted;
     } else {
-      state.userPreference.hasBiometrics =
-          UseBiometricPermissionEnum.denied;
+      state.userPreference.hasBiometrics = UseBiometricPermissionEnum.denied;
     }
     await setPreference(state.userPreference);
     await getPreference();
