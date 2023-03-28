@@ -61,6 +61,9 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
           centerTitle: true,
           title: SvgPicture.asset(
             'assets/app/mycrypto.svg',
+            color: Theme.of(context).brightness == Brightness.light
+                ? Theme.of(context).colorScheme.primary
+                : null,
             height: 25,
             width: 25,
           ),
@@ -94,9 +97,11 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             ? FloatingActionButton(
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: () {
-                  _scrollController.animateTo(0,
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.easeInOut);
+                  _scrollController.animateTo(
+                    0,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInQuad,
+                  );
                 },
                 child: Icon(
                   Icons.arrow_upward,

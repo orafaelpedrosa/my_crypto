@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/services/translator_service.dart';
@@ -9,8 +8,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_detail
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/chart_store.dart';
 
-class CryptocurrencyDataStore
-    extends NotifierStore<DioError, CryptocurrencyDetailsModel> {
+class CryptocurrencyDataStore extends Store<CryptocurrencyDetailsModel> {
   CryptocurrencyDataStore() : super(CryptocurrencyDetailsModel());
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();

@@ -7,8 +7,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.
 import 'package:mycrypto/app/modules/favorites/favorites_repository.dart';
 
 // ignore: must_be_immutable
-class FavoritesStore
-    extends NotifierStore<Exception, List<CryptocurrencySimpleModel>> {
+class FavoritesStore extends Store<List<CryptocurrencySimpleModel>> {
   FavoritesStore() : super([]);
 
   List<CryptocurrencySimpleModel> _list =

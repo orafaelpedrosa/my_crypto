@@ -1,4 +1,4 @@
-import 'package:mycrypto/app/core/enums/theme_type_enum.dart';
+import 'package:flutter/material.dart';
 import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/models/user_preference_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,32 +48,6 @@ class PreferencesService {
     );
   }
 
-  static Future<void> setThemeType(ThemeModeEnum theme) async {
-    await SharedPreferences.getInstance().then(
-      (instance) async {
-        await instance.setString(
-          'theme',
-          useThemeModeFromJson(theme),
-        );
-      },
-    );
-  }
-
-  static Future<ThemeModeEnum?> getThemeType() async {
-    return SharedPreferences.getInstance().then(
-      (instance) async {
-        if (instance.getString('theme') == null) {
-          await setThemeType(ThemeModeEnum.system);
-          return ThemeModeEnum.system;
-        } else {
-          return useThemeModeFromDevice(
-            instance.getString('theme'),
-          );
-        }
-      },
-    );
-  }
-
   static Future<UseBiometricPermissionEnum?> getHasBiometrics() async {
     return SharedPreferences.getInstance().then(
       (instance) async {
@@ -90,5 +64,41 @@ class PreferencesService {
         return instance.clear();
       },
     );
+  }
+
+  static Future<void> setThemeType(ThemeMode themeMode) async {
+    await SharedPreferences.getInstance().then(
+      (instance) async {
+        await instance.setString(
+          'theme',
+          themeMode.name,
+        );
+      },
+    );
+  }
+
+  static Future<ThemeMode> getThemeType() async {
+    return SharedPreferences.getInstance().then(
+      (instance) async {
+        if (instance.getString('theme') != null) {
+          return themeModeFromJson(instance.getString('theme')!);
+        } else {
+          return ThemeMode.system;
+        }
+      },
+    );
+  }
+
+  static ThemeMode themeModeFromJson(String s) {
+    switch (s) {
+      case 'system':
+        return ThemeMode.system;
+      case 'light':
+        return ThemeMode.light;
+      case 'dark':
+        return ThemeMode.dark;
+      default:
+        return ThemeMode.system;
+    }
   }
 }

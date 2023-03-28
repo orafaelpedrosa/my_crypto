@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/core/enums/theme_type_enum.dart';
-import 'package:mycrypto/app/core/services/theme_manager.dart';
-import 'package:mycrypto/app/core/stores/user_store.dart';
+import 'package:mycrypto/app/modules/profile/stores/theme_mode_store.dart';
 
 class ThemeModeWidget extends StatefulWidget {
   const ThemeModeWidget({Key? key}) : super(key: key);
@@ -13,15 +11,13 @@ class ThemeModeWidget extends StatefulWidget {
 }
 
 class _ThemeModeWidgetState extends State<ThemeModeWidget> {
-  ThemeModeEnum? theme;
-  final UserStore _store = Modular.get();
+  final ThemeModeStore _store = Modular.get();
+  ThemeMode theme = ThemeMode.system;
 
   void getTheme() async {
-    await ThemeManager().getThemeType().then((value) {
-      setState(() {
-        theme = value;
-      });
-    });
+    final themeMode = await _store.getThemeMode();
+    theme = themeMode;
+    setState(() {});
   }
 
   @override
@@ -42,34 +38,17 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
             actions: [
               CupertinoActionSheetAction(
                 child: Text(
-                  'Sistema',
-                  style: theme == ThemeModeEnum.system
-                      ? TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        )
-                      : null,
+                  'Automático',
+                  style: TextStyle(
+                    color: theme == ThemeMode.system
+                        ? Theme.of(context).colorScheme.secondary
+                        : null,
+                  ),
                 ),
                 onPressed: () async {
-                  await ThemeManager().setThemeType(ThemeModeEnum.system);
+                  await _store.setThemeMode(ThemeMode.system);
                   setState(() {
-                    theme = ThemeModeEnum.system;
-                  });
-                  Modular.to.pop();
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  'Claro',
-                  style: theme == ThemeModeEnum.light
-                      ? TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        )
-                      : null,
-                ),
-                onPressed: () async {
-                  await ThemeManager().setThemeType(ThemeModeEnum.light);
-                  setState(() {
-                    theme = ThemeModeEnum.light;
+                    theme = ThemeMode.system;
                   });
                   Modular.to.pop();
                 },
@@ -77,16 +56,33 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
               CupertinoActionSheetAction(
                 child: Text(
                   'Escuro',
-                  style: theme == ThemeModeEnum.dark
-                      ? TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        )
-                      : null,
+                  style: TextStyle(
+                    color: theme == ThemeMode.dark
+                        ? Theme.of(context).colorScheme.secondary
+                        : null,
+                  ),
                 ),
                 onPressed: () async {
-                  await ThemeManager().setThemeType(ThemeModeEnum.dark);
+                  await _store.setThemeMode(ThemeMode.dark);
                   setState(() {
-                    theme = ThemeModeEnum.dark;
+                    theme = ThemeMode.dark;
+                  });
+                  Modular.to.pop();
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: Text(
+                  'Claro',
+                  style: TextStyle(
+                    color: theme == ThemeMode.light
+                        ? Theme.of(context).colorScheme.secondary
+                        : null,
+                  ),
+                ),
+                onPressed: () async {
+                  await _store.setThemeMode(ThemeMode.light);
+                  setState(() {
+                    theme = ThemeMode.light;
                   });
                   Modular.to.pop();
                 },
@@ -116,9 +112,9 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            theme == ThemeModeEnum.system
-                ? 'Sistema'
-                : theme == ThemeModeEnum.light
+            theme == ThemeMode.system
+                ? 'Automático'
+                : theme == ThemeMode.light
                     ? 'Claro'
                     : 'Escuro',
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
@@ -129,7 +125,7 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
           SizedBox(width: 8),
           Icon(
             Icons.arrow_forward_ios,
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
             size: 15,
           ),
         ],

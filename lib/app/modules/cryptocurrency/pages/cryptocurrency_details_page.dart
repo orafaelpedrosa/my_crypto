@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -62,8 +61,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
         elevation: 1,
         showAction: true,
         actions: [
-          TripleBuilder<FavoritesStore, Exception,
-              List<CryptocurrencySimpleModel>>(
+          TripleBuilder<FavoritesStore, List<CryptocurrencySimpleModel>>(
             store: favoritesStore,
             builder: (_, triple) {
               return triple.isLoading
@@ -105,8 +103,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
           ),
         ],
       ).build(context) as AppBar,
-      body: TripleBuilder<CryptocurrencyDataStore, DioError,
-          CryptocurrencyDetailsModel>(
+      body: TripleBuilder<CryptocurrencyDataStore, CryptocurrencyDetailsModel>(
         store: store,
         builder: (_, triple) {
           if (store.isLoading) {
@@ -186,7 +183,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         ),
                         SizedBox(height: 45),
                         Visibility(
-                          visible:
+                          visible: store.chartStore.state.pricesChart != null &&
                               store.chartStore.state.pricesChart!.isNotEmpty,
                           child: ChartSparklineWidget(),
                         ),

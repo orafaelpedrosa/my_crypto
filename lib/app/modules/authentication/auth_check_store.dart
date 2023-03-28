@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/services/preferences_service.dart';
 import 'package:mycrypto/app/core/stores/use_biometric_store.dart';
 
-class AuthCheckStore extends NotifierStore<PlatformException, bool> {
+class AuthCheckStore extends Store<bool> {
   AuthCheckStore() : super(false);
   final UseBiometricStore _useBiometricStore = Modular.get();
 

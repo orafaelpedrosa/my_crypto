@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -28,7 +27,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder<AuthCheckStore, PlatformException, bool>(
+    return TripleBuilder<AuthCheckStore, bool>(
       store: _store,
       builder: (_, failed) {
         if (_store.state) {

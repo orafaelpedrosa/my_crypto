@@ -1,5 +1,5 @@
 import 'package:flutter_triple/flutter_triple.dart';
 
-class ObscureStore extends NotifierStore<Exception, bool> {
+class ObscureStore extends Store<bool> {
   ObscureStore() : super(true);
 }

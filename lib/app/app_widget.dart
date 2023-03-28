@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/core/enums/theme_type_enum.dart';
-import 'package:mycrypto/app/core/services/theme_manager.dart';
+import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/theme/app_theme.dart';
+import 'package:mycrypto/app/modules/profile/stores/theme_mode_store.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
-  final ThemeManager _themeManager = ThemeManager();
+  final ThemeModeStore _themeModeStore = Modular.get();
 
   @override
   void initState() {
@@ -26,22 +27,37 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  @override
   Future<void> didChangePlatformBrightness() async {
     super.didChangePlatformBrightness();
-    final ThemeModeEnum themeMode = await _themeManager.getThemeType();
-    await _themeManager.setThemeType(themeMode);
-    setState(() {});
+    final themeMode = await _themeModeStore.getThemeMode();
+    if (themeMode == ThemeMode.system) {
+      final brightness = WidgetsBinding.instance.window.platformBrightness;
+      if (brightness == Brightness.dark) {
+        _themeModeStore.updateState(ThemeMode.dark);
+      } else {
+        _themeModeStore.updateState(ThemeMode.light);
+      }
+    } else {
+      _themeModeStore.updateState(themeMode);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: _themeManager.themeData,
-      routerDelegate: Modular.routerDelegate,
-      routeInformationParser: Modular.routeInformationParser,
-      locale: Locale('pt', 'BR'),
+    _themeModeStore.updateState(_themeModeStore.state);
+    return TripleBuilder(
+      store: _themeModeStore,
+      builder: (context, triple) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: _themeModeStore.state,
+          locale: Locale('pt', 'BR'),
+          routerDelegate: Modular.routerDelegate,
+          routeInformationParser: Modular.routeInformationParser,
+        );
+      },
     );
   }
 }

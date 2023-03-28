@@ -5,8 +5,7 @@ import 'package:mycrypto/app/modules/authentication/login/models/credential_mode
 import 'package:mycrypto/app/modules/authentication/register/register_repository.dart';
 
 // ignore: must_be_immutable
-class RegisterStore
-    extends NotifierStore<FirebaseAuthException, CredentialModel> {
+class RegisterStore extends Store<CredentialModel> {
   RegisterStore()
       : super(
           CredentialModel(),

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
@@ -8,7 +7,7 @@ import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.d
 import 'package:mycrypto/app/core/stores/user_store.dart';
 
 // ignore: must_be_immutable
-class LoginStore extends NotifierStore<FirebaseAuthException, CredentialModel> {
+class LoginStore extends Store<CredentialModel> {
   LoginStore()
       : super(
           CredentialModel(),

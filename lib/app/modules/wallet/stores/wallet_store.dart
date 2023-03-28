@@ -5,11 +5,11 @@ import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
 
 // ignore: must_be_immutable
-class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
+class WalletStore extends Store<List<MyCryptoModel>> {
   WalletStore() : super([]);
 
   final WalletRepository _repository = WalletRepository();
-  
+  MyCryptoModel crypto = MyCryptoModel();
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {
     await _repository.addCryptocurrency(crypto);
@@ -45,7 +45,7 @@ class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
 
   Future<void> totalValue() async {
     setLoading(true);
-    await _repository.updateTotalWallet();
+    // await _repository.updateTotalWallet();
     setLoading(false);
   }
 }

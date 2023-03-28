@@ -37,6 +37,7 @@ class WalletRepository extends Disposable {
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {
     startFirestore();
+    log('WalletRepository: addCryptocurrency: ${crypto.id}');
     await db
         .collection('users')
         .doc(userStore.user!.uid)
@@ -141,17 +142,17 @@ class WalletRepository extends Disposable {
     }
   }
 
-  Future<void> updateTotalWallet() async {
-    final List<MyCryptoModel> myCryptos = await getAll();
-    double totalWallet = 0;
+  // Future<void> updateTotalWallet() async {
+  //   final List<MyCryptoModel> myCryptos = await getAll();
+  //   double totalWallet = 0;
 
-    if (myCryptos.isNotEmpty) {
-      myCryptos.forEach((myCrypto) {
-        totalWallet += myCrypto.totalValue!;
-      });
-    }
-    log('Total wallet: $totalWallet');
-  }
+  //   if (myCryptos.isNotEmpty) {
+  //     myCryptos.forEach((myCrypto) {
+  //       totalWallet += myCrypto.totalValue!;
+  //     });
+  //   }
+  //   log('Total wallet: $totalWallet');
+  // }
 
   @override
   void dispose() {

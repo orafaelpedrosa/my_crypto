@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
@@ -10,8 +9,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 
 // ignore: must_be_immutable
-class ListCryptocurrenciesStore
-    extends NotifierStore<DioError, List<CryptocurrencySimpleModel>> {
+class ListCryptocurrenciesStore extends Store<List<CryptocurrencySimpleModel>> {
   ListCryptocurrenciesStore() : super([]);
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();

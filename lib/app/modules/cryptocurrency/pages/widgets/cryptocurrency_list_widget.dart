@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -43,7 +42,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder<ListCryptocurrenciesStore, DioError,
+    return TripleBuilder<ListCryptocurrenciesStore,
         List<CryptocurrencySimpleModel>>(
       store: store,
       builder: (_, triple) {

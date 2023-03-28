@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/authentication/register/register_repository.dart';
 
-class AccetpTermsStore extends NotifierStore<FirebaseAuthException, bool> {
+class AccetpTermsStore extends Store<bool> {
   AccetpTermsStore() : super(false);
 
-  final RegisterRepository _registerRepository = Modular.get<RegisterRepository>();
+  final RegisterRepository _registerRepository =
+      Modular.get<RegisterRepository>();
 
   Future<void> acceptTerms(bool value) async {
     setLoading(true);

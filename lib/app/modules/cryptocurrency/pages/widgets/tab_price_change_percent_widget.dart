@@ -24,7 +24,7 @@ class _TabPriceChangePercentageWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder<ChartStore, Exception, ChartModel>(
+    return TripleBuilder<ChartStore, ChartModel>(
       store: _store,
       builder: (_, triplo) {
         return Container(

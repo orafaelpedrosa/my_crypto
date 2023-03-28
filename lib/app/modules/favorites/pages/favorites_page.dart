@@ -38,8 +38,7 @@ class FavoritesPageState extends State<FavoritesPage> {
       body: Container(
         color: Theme.of(context).colorScheme.background,
         child: SafeArea(
-          child: TripleBuilder<FavoritesStore, Exception,
-              List<CryptocurrencySimpleModel>>(
+          child: TripleBuilder<FavoritesStore, List<CryptocurrencySimpleModel>>(
             store: store,
             builder: (context, triple) {
               if (triple.isLoading) {

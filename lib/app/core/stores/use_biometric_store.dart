@@ -7,8 +7,7 @@ import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/services/local_auth_service.dart';
 import 'package:mycrypto/app/core/services/preferences_service.dart';
 
-class UseBiometricStore
-    extends NotifierStore<Exception, UseBiometricPermissionEnum> {
+class UseBiometricStore extends Store<UseBiometricPermissionEnum> {
   UseBiometricStore() : super(UseBiometricPermissionEnum.notAccepted);
   final LocalAuthentication _auth = LocalAuthentication();
 

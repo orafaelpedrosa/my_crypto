@@ -19,7 +19,7 @@ dependencies:
   flutter_modular: ^5.0.3
   flutter_native_splash: ^2.2.4
   flutter_svg: ^1.0.3
-  flutter_triple: ^1.2.6
+  flutter_triple: ^2.0.0
   font_awesome_flutter: ^10.1.0
   google_fonts: ^2.3.1
   google_nav_bar: ^5.0.6

@@ -124,7 +124,7 @@ class SearchBarWidget extends SearchDelegate {
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
-              trailing: TripleBuilder<FavoritesStore, Exception,
+              trailing: TripleBuilder<FavoritesStore,
                   List<CryptocurrencySimpleModel>>(
                 store: favoritesStore,
                 builder: (_, triple) {
@@ -197,8 +197,8 @@ class SearchBarWidget extends SearchDelegate {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
-            trailing: TripleBuilder<FavoritesStore, Exception,
-                List<CryptocurrencySimpleModel>>(
+            trailing:
+                TripleBuilder<FavoritesStore, List<CryptocurrencySimpleModel>>(
               store: favoritesStore,
               builder: (_, triple) {
                 return store.isLoading

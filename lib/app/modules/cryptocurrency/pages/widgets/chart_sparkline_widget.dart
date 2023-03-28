@@ -21,7 +21,7 @@ class _ChartSparklineWidgetState extends State<ChartSparklineWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TripleBuilder<ChartStore, Exception, ChartModel>(
+    return TripleBuilder<ChartStore, ChartModel>(
       store: _store,
       builder: (_, triple) {
         return SfSparkLineChart(

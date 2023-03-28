@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -159,8 +158,7 @@ class RegisterPageState extends State<RegisterPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TripleBuilder<AccetpTermsStore, FirebaseAuthException,
-                              bool>(
+                          TripleBuilder<AccetpTermsStore, bool>(
                             store: _accetpTermsStore,
                             builder: (_, state) {
                               return GestureDetector(

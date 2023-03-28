@@ -41,8 +41,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // email.text = 'orafaelpedrosa@outlook.com';
-    // password.text = 'Pulodogato@7';
     super.initState();
     setState(() {
       email.text = 'orafaelpedrosa@outlook.com';
@@ -98,9 +96,10 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            Theme.of(context).brightness == Brightness.light
-                ? 'assets/app/mycrypto.svg'
-                : 'assets/app/mycrypto.svg',
+            'assets/app/mycrypto.svg',
+            color: Theme.of(context).brightness == Brightness.light
+                ? Theme.of(context).colorScheme.primary
+                : null,
             width: MediaQuery.of(context).size.width * 0.8,
           ),
           const SizedBox(height: 50),
@@ -144,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                       enableSuggestions: false,
                     ),
                     const SizedBox(height: 20),
-                    TripleBuilder<ObscureStore, Exception, bool>(
+                    TripleBuilder<ObscureStore, bool>(
                       store: _store.obscureStore,
                       builder: (_, obscureStore) {
                         return TextFormFieldWidget(

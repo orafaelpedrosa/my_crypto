@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_model.dart';
@@ -6,7 +5,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_pa
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
 
 // ignore: must_be_immutable
-class ChartStore extends NotifierStore<DioError, ChartModel> {
+class ChartStore extends Store<ChartModel> {
   ChartStore() : super(ChartModel());
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();

@@ -83,8 +83,7 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
             ),
           ],
         ),
-        trailing: TripleBuilder<UseBiometricStore, Exception,
-            UseBiometricPermissionEnum>(
+        trailing: TripleBuilder<UseBiometricStore, UseBiometricPermissionEnum>(
           store: _store,
           builder: (_, triple) {
             return CupertinoSwitch(

@@ -137,7 +137,13 @@ class SlidableItemListWidget extends StatelessWidget {
                   width: 75,
                   child: SfSparkLineChart(
                     width: 1,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: coin.priceChangePercentage7dInCurrency != 0
+                        ? !coin.priceChangePercentageTime
+                                .toString()
+                                .contains('-')
+                            ? Colors.green
+                            : Colors.red
+                        : Colors.blue,
                     axisLineColor: Colors.transparent,
                     data: coin.sparklineIn7d!.price ?? [1, 1, 1, 1, 1, 1, 1],
                     marker: SparkChartMarker(
@@ -218,8 +224,7 @@ class SlidableItemListWidget extends StatelessWidget {
           endActionPane: ActionPane(
             motion: ScrollMotion(),
             children: [
-              TripleBuilder<FavoritesStore, Exception,
-                      List<CryptocurrencySimpleModel>>(
+              TripleBuilder<FavoritesStore, List<CryptocurrencySimpleModel>>(
                   store: store,
                   builder: (_, triple) {
                     return SlidableAction(

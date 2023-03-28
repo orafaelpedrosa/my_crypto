@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -24,7 +23,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: TripleBuilder<ListCryptocurrenciesStore, DioError,
+      child: TripleBuilder<ListCryptocurrenciesStore,
               List<CryptocurrencySimpleModel>>(
           store: store,
           builder: (_, triple) {
@@ -199,7 +198,6 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
           color: store.marketsParams.priceChangePercentage == value
               ? Theme.of(context).colorScheme.secondary
               : Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.w300,
         ),
       ),
       onPressed: () async {

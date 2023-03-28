@@ -7,12 +7,14 @@ import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
 import 'package:mycrypto/app/modules/home/home_module.dart';
 import 'package:mycrypto/app/modules/profile/profile_module.dart';
+import 'package:mycrypto/app/modules/profile/stores/theme_mode_store.dart';
 
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => LoginPage()),
     Bind.lazySingleton((i) => UserStore()),
+    Bind.lazySingleton((i) => ThemeModeStore()),
   ];
 
   @override

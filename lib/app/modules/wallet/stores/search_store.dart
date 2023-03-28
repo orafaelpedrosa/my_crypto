@@ -6,8 +6,7 @@ import 'package:mycrypto/app/core/models/coin_search_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
 
 // ignore: must_be_immutable
-class SearchStore extends NotifierStore<Exception, SearchModel>
-    with Disposable {
+class SearchStore extends Store<SearchModel> with Disposable {
   SearchStore() : super(SearchModel());
 
   final WalletRepository _repository = WalletRepository();

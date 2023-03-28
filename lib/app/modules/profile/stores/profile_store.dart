@@ -1,6 +1,6 @@
 import 'package:flutter_triple/flutter_triple.dart';
 
-class ProfileStore extends NotifierStore<Exception, int> {
+class ProfileStore extends Store<int> {
   ProfileStore() : super(0);
 
   Future<void> increment() async {
