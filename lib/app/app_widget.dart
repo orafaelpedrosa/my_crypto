@@ -29,12 +29,8 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
   @override
   Future<void> didChangePlatformBrightness() async {
     super.didChangePlatformBrightness();
-    final brightness = WidgetsBinding.instance.window.platformBrightness;
-    if (brightness == Brightness.dark) {
-      await _themeManager.setThemeType(ThemeType.dark);
-    } else {
-      await _themeManager.setThemeType(ThemeType.light);
-    }
+    final ThemeModeEnum themeMode = await _themeManager.getThemeType();
+    await _themeManager.setThemeType(themeMode);
     setState(() {});
   }
 

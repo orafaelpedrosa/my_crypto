@@ -100,7 +100,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
                 },
                 child: Icon(
                   Icons.arrow_upward,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               )
             : null,

@@ -37,16 +37,15 @@ class AppBarWidget extends StatelessWidget {
       title: visibleTitle
           ? Text(
               title!,
-              style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    color:
-                        colorTitle ?? Theme.of(context).colorScheme.secondary,
+              style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    color: colorTitle ?? Theme.of(context).colorScheme.primary,
                   ),
             )
           : SizedBox.shrink(),
       backgroundColor:
           backgroundColor ?? Theme.of(context).colorScheme.background,
       iconTheme: IconThemeData(
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.tertiary,
       ),
       leading: Visibility(
         visible: showLeading,

@@ -4,14 +4,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/about_cryptocurrency_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparkline_widget.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/link_cryptocurrency_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:mycrypto/app/core/utils/utils.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
-import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -130,14 +131,39 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: 20),
-                        Text(
-                          snapshot.data!.name ?? 'Cripotocurrency',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.secondary,
+                        Row(
+                          children: [
+                            ClipOval(
+                              child: SizedBox.fromSize(
+                                size: Size(25, 25),
+                                child: Image.network(
+                                  snapshot.data!.image!.small ?? '',
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  },
+                                ),
                               ),
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              snapshot.data!.name ?? 'Cripotocurrency',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displaySmall!
+                                  .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 5),
                         Row(
@@ -215,40 +241,19 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         SizedBox(height: 25),
                         Visibility(
                           visible: snapshot.data!.description!.pt! != "",
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Sobre',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                              SizedBox(height: 10),
-                              ReadMoreText(
-                                snapshot.data!.description!.pt!,
-                                trimLines: 5,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                colorClickableText:
-                                    Theme.of(context).colorScheme.primary,
-                                trimMode: TrimMode.Line,
-                                textAlign: TextAlign.justify,
-                              )
-                            ],
+                          child: AboutCryptocurrencyWidget(
+                            about: snapshot.data!.description!.pt!,
                           ),
-                        )
+                        ),
+                        Visibility(
+                          visible: snapshot.data!.description!.pt! != "",
+                          child: SizedBox(height: 40),
+                        ),
+                        SizedBox(height: 20),
+                        LinkCryptocurrencyWidget(
+                          title: 'Site Oficial',
+                          url: snapshot.data!.links!.homepage!.first,
+                        ),
                       ],
                     ),
                   ),

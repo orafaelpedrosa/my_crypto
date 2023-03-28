@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
@@ -7,6 +9,7 @@ class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
   WalletStore() : super([]);
 
   final WalletRepository _repository = WalletRepository();
+  
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {
     await _repository.addCryptocurrency(crypto);
@@ -32,6 +35,7 @@ class WalletStore extends NotifierStore<Exception, List<MyCryptoModel>> {
     setLoading(true);
     await _repository.getAll().then((value) {
       update(value);
+      log('WalletStore: getWallet: ${value.length}');
       setLoading(false);
     }).catchError((e) {
       setLoading(false);

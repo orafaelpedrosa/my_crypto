@@ -19,6 +19,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
   final ListCryptocurrenciesStore store = Modular.get();
   final LoginStore loginStore = Modular.get();
   final FavoritesStore favoritesStore = Modular.get();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +34,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
               children: [
                 GestureDetector(
                   onTap: () {
+                    store.cryptocurrencies.clear();
                     store.marketsParams.vsCurrency =
                         store.marketsParams.vsCurrency == 'usd' ? 'brl' : 'usd';
                     store.getListCryptocurrencies();

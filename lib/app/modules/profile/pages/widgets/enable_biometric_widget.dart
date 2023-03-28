@@ -37,6 +37,7 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
     return Visibility(
       visible: _visibleBiometric,
       child: ListTile(
+        contentPadding: const EdgeInsets.all(0),
         leading: Icon(
           Icons.fingerprint,
           color: Theme.of(context).colorScheme.primary,

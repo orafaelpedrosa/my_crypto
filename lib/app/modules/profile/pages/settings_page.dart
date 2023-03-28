@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/delete_account_widget.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/enable_biometric_widget.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/theme_mode_widget.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -15,24 +16,32 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          title: Text(
-            'Configurações',
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          elevation: 0,
-        ),
-      ),
+      appBar: AppBarWidget(
+        title: 'Configurações',
+        onBackPressed: () {
+          Navigator.of(context).pop();
+        },
+      ).build(context) as AppBar,
       body: Container(
+        padding: EdgeInsets.all(15),
         color: Theme.of(context).colorScheme.background,
         child: Column(
           children: [
             EnableBiometricWidget(),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+              thickness: 0.5,
+            ),
             ThemeModeWidget(),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+              thickness: 0.5,
+            ),
             DeleteAccountWidget(),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+              thickness: 0.5,
+            ),
           ],
         ),
       ),

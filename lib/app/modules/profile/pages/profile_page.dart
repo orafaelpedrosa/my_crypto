@@ -61,14 +61,19 @@ class ProfilePageState extends State<ProfilePage> {
             SizedBox(height: 20),
             Text(
               '${_userStore.user!.displayName ?? 'Usuário'}',
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
             SizedBox(height: 20),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+              thickness: 0.5,
+            ),
             ListTile(
+              contentPadding: const EdgeInsets.all(0),
               onTap: () {
-                Modular.to.pushNamed('settings');
+                Modular.to.pushNamed('/home/profile/settings');
               },
               leading: Icon(
                 Icons.settings,
@@ -87,8 +92,12 @@ class ProfilePageState extends State<ProfilePage> {
                 size: 15,
               ),
             ),
-            SizedBox(height: 20),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+              thickness: 0.5,
+            ),
             ListTile(
+              contentPadding: const EdgeInsets.all(0),
               onTap: () {
                 showCupertinoDialog(
                   context: context,
@@ -105,11 +114,12 @@ class ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                         CupertinoDialogAction(
-                          child: Text('Sim'),
+                          child: Text('Sim',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              )),
                           onPressed: () {
                             _userStore.signOut();
-                            // Navigator.pushNamedAndRemoveUntil(context,
-                            //     '/login/', ModalRoute.withName('/home/'));
                             Modular.to.pop();
                             Modular.to.pushReplacementNamed('/login/');
                           },
@@ -135,6 +145,10 @@ class ProfilePageState extends State<ProfilePage> {
                 color: Theme.of(context).colorScheme.secondary,
                 size: 15,
               ),
+            ),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+              thickness: 0.5,
             ),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/models/coin_search_model.dart';
 import 'package:mycrypto/app/core/services/firestore_repository.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
@@ -17,6 +18,21 @@ class WalletRepository extends Disposable {
 
   startFirestore() async {
     db = FirestoreRepository.get();
+  }
+
+  Future<SearchModel> getSearchCoin(String value) async {
+    try {
+      final Response _response = await _dio.get(
+        '$_urlBase/search',
+        queryParameters: {
+          'query': value,
+        },
+      );
+      return SearchModel.fromJson(_response.data);
+    } catch (e) {
+      log(e.toString());
+      throw e;
+    }
   }
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {

@@ -28,15 +28,14 @@ class NoFavoritesWidget extends StatelessWidget {
           Text(
             'Nenhuma favorita!',
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  color: Theme.of(context).cardColor,
                   fontWeight: FontWeight.bold,
                 ),
           ),
           SizedBox(height: 15),
           Text(
             'Adicione uma criptomoeda a sua lista de favoritas clicando no botão de estrela na tela de detalhes.',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).cardColor,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
             textAlign: TextAlign.center,
           ),

@@ -4,25 +4,35 @@ import 'package:mycrypto/app/core/services/preferences_service.dart';
 import 'package:mycrypto/app/core/theme/app_theme.dart';
 
 class ThemeManager {
-  ThemeType _themeType = ThemeType.dark;
+  ThemeModeEnum? _themeType;
 
-  ThemeType getThemeType() {
-    PreferencesService.getThemeType().then((value) {
+  Future<ThemeModeEnum> getThemeType() async {
+    await PreferencesService.getThemeType().then((value) {
       _themeType = value;
     });
-    return _themeType;
+    return _themeType!;
   }
 
-  Future<void> setThemeType(ThemeType themeType) async {
-    _themeType = themeType;
+  Future<void> setThemeType(ThemeModeEnum themeType) async {
     await PreferencesService.setThemeType(themeType);
+
+    if (themeType == ThemeModeEnum.system) {
+      final brightness = WidgetsBinding.instance.window.platformBrightness;
+      if (brightness == Brightness.dark) {
+        _themeType = ThemeModeEnum.dark;
+      } else {
+        _themeType = ThemeModeEnum.light;
+      }
+    } else {
+      _themeType = themeType;
+    }
   }
 
   ThemeData get themeData {
     switch (_themeType) {
-      case ThemeType.light:
+      case ThemeModeEnum.light:
         return AppTheme.lightTheme;
-      case ThemeType.dark:
+      case ThemeModeEnum.dark:
         return AppTheme.darkTheme;
       default:
         return AppTheme.lightTheme;

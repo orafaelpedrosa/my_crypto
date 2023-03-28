@@ -48,20 +48,28 @@ class PreferencesService {
     );
   }
 
-  static Future<void> setThemeType(ThemeType theme) async {
+  static Future<void> setThemeType(ThemeModeEnum theme) async {
     await SharedPreferences.getInstance().then(
       (instance) async {
-        await instance.setBool('theme', theme == ThemeType.dark);
+        await instance.setString(
+          'theme',
+          useThemeModeFromJson(theme),
+        );
       },
     );
   }
 
-  static Future<ThemeType> getThemeType() async {
+  static Future<ThemeModeEnum?> getThemeType() async {
     return SharedPreferences.getInstance().then(
       (instance) async {
-        return instance.getBool('theme') == true
-            ? ThemeType.dark
-            : ThemeType.light;
+        if (instance.getString('theme') == null) {
+          await setThemeType(ThemeModeEnum.system);
+          return ThemeModeEnum.system;
+        } else {
+          return useThemeModeFromDevice(
+            instance.getString('theme'),
+          );
+        }
       },
     );
   }

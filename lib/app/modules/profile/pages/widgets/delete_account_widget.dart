@@ -15,6 +15,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(0),
       onTap: () {
         showCupertinoDialog(
           context: context,
@@ -38,6 +39,9 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                 CupertinoDialogAction(
                   child: Text(
                     'Deletar',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                   onPressed: () async {
                     // store.userStore.deleteUser();

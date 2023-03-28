@@ -34,8 +34,7 @@ dependencies:
   translator: ^0.1.7
   flutter_slidable: ^2.0.0
   shared_preferences: ^2.0.17
-
-
+  url_launcher: ^6.1.10
 
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1
@@ -57,5 +56,6 @@ flutter:
     - .env
     - assets/
     - assets/app/
+    - assets/app/wallet/
     - assets/login/
     - assets/error/
