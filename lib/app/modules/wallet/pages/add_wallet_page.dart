@@ -1,13 +1,23 @@
+import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_triple/flutter_triple.dart';
+
+import 'package:mycrypto/app/core/models/coin_search_model.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
+import 'package:mycrypto/app/modules/wallet/stores/search_store.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
-import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
+import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
 
 class AddWalletPage extends StatefulWidget {
-  const AddWalletPage({Key? key}) : super(key: key);
+  final CoinSearchModel coin;
+  const AddWalletPage({
+    Key? key,
+    required this.coin,
+  }) : super(key: key);
 
   @override
   State<AddWalletPage> createState() => _AddWalletPageState();
@@ -15,6 +25,8 @@ class AddWalletPage extends StatefulWidget {
 
 class _AddWalletPageState extends State<AddWalletPage> {
   final WalletStore store = Modular.get();
+  final SearchStore searchStore = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   final TextEditingController amountController = TextEditingController();
   final TextEditingController idController = TextEditingController();
@@ -23,76 +35,129 @@ class _AddWalletPageState extends State<AddWalletPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => store.getSimplePriceID(widget.coin.id!));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        title: 'Adicionar Criptomoeda ',
-        onBackPressed: () {
-          Modular.to.pushReplacementNamed('/home/wallet/');
-        },
-      ).build(context) as PreferredSizeWidget?,
-      body: Container(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          children: [
-            TextFormFieldWidget(
-              controller: amountController,
-              hintText: 'Quantidade',
-              keyboardType: TextInputType.number,
-              onChange: (value) {
-                store.crypto.amount =
-                    amountController.text.isEmpty ? 0 : double.parse(value!);
-              },
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 1,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ImageCoinWidget(
+              url: widget.coin.large!,
+              size: 30,
             ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormFieldWidget(
-              controller: priceAverageController,
-              hintText: 'Preço médio',
-              keyboardType: TextInputType.number,
-              onChange: (value) {
-                store.crypto.averagePrice = priceAverageController.text.isEmpty
-                    ? 0
-                    : double.parse(value!);
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormFieldWidget(
-              controller: idController,
-              hintText: 'ID',
-              keyboardType: TextInputType.name,
-              onChange: (value) {
-                store.crypto.id = idController.text;
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ButtonPrimaryWidget(
-              text: 'Adicionar',
-              isLoading: store.isLoading,
-              onPressed: () async {
-                crypto.id = idController.text;
-                crypto.amount = double.parse(amountController.text);
-                crypto.averagePrice = double.parse(priceAverageController.text);
-                await store.addCryptocurrency(crypto).then(
-                  (value) async {
-                    await store.getWallet();
-                    await store.updatePrice();
-                    await store.totalValue();
-                    Modular.to.pushReplacementNamed('/home/wallet/');
-                  },
-                );
-              },
+            const SizedBox(width: 10),
+            Flexible(
+              child: Text(
+                widget.coin.name!,
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.swap_vert,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            onPressed: () {
+              if (store.fiat == widget.coin.symbol) {
+                store.fiat = _userStore.state.userPreference.vsCurrency!;
+              } else {
+                store.fiat = widget.coin.symbol!;
+              }
+              store.updateState();
+            },
+          )
+        ],
+      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: TripleBuilder<WalletStore, List<MyCryptoModel>>(
+          store: store,
+          builder: (_, triple) {
+            if (triple.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Container(
+              color: Theme.of(context).colorScheme.background,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    alignment: Alignment.center,
+                    child: AutoSizeTextField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      ],
+                      showCursor: false,
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      controller: amountController,
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {}
+                      },
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.2,
+                          ),
+                      decoration: InputDecoration(
+                        hintText: '0',
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(
+                              color: Theme.of(context).colorScheme.onBackground,
+                              fontSize: MediaQuery.of(context).size.width * 0.2,
+                              fontWeight: FontWeight.bold,
+                            ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    store.fiat,
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                  ),
+                  const SizedBox(height: 20),
+                  ButtonPrimaryWidget(
+                    text: 'Adicionar a carteira',
+                    isLoading: false,
+                    onPressed: () {
+                      if (store.fiat != widget.coin.symbol) {
+                      } else {
+                        double amount = double.parse(amountController.text);
+                      }
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

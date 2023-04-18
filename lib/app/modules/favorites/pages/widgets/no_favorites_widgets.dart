@@ -11,7 +11,7 @@ class NoFavoritesWidget extends StatelessWidget {
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Container(
             padding: EdgeInsets.all(30),
             decoration: BoxDecoration(

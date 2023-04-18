@@ -18,7 +18,7 @@ class _AboutCryptocurrencyWidgetState extends State<AboutCryptocurrencyWidget> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           'Sobre',
           style: Theme.of(context).textTheme.headlineMedium!.copyWith(

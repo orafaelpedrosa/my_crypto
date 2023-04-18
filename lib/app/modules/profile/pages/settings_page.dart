@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mycrypto/app/modules/profile/pages/widgets/change_vs_currency_widget.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/delete_account_widget.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/enable_biometric_widget.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/theme_mode_widget.dart';
@@ -26,8 +27,13 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.all(15),
         color: Theme.of(context).colorScheme.background,
         child: Column(
-          children: [
+          children: <Widget>[
             EnableBiometricWidget(),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+              thickness: 0.5,
+            ),
+            ChangeVsCurrenyWidget(),
             Divider(
               color: Theme.of(context).colorScheme.secondary.withOpacity(0.25),
               thickness: 0.5,

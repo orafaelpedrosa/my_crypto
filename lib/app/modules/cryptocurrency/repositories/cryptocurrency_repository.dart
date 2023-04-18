@@ -61,6 +61,18 @@ class CryptocurrencyRepository with Disposable {
     }
   }
 
+  Future<String> getStatus() async {
+    try {
+      final Response _response = await _dio.get(
+        'https://status.coingecko.com/',
+      );
+      return _response.data;
+    } catch (e) {
+      log('Error getStatus: $e');
+      rethrow;
+    }
+  }
+
   void dispose() {
     _dio.close();
   }

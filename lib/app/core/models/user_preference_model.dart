@@ -1,19 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 
 class UserPreferenceModel {
   String? language;
   String? vsCurrency;
   UseBiometricPermissionEnum hasBiometrics;
-  bool? hasDarkMode;
+  ThemeMode? theme;
   bool? acceptTerms;
 
   UserPreferenceModel({
     this.language,
     this.vsCurrency,
     this.hasBiometrics = UseBiometricPermissionEnum.notAccepted,
-    this.hasDarkMode,
+    this.theme,
     this.acceptTerms,
   });
 
@@ -27,8 +28,8 @@ class UserPreferenceModel {
       result.addAll({'vs_currency': vsCurrency});
     }
     result.addAll({'has_biometric': hasBiometrics.label});
-    if (hasDarkMode != null) {
-      result.addAll({'hasDarkMode': hasDarkMode});
+    if (theme != null) {
+      result.addAll({'theme': theme});
     }
     if (acceptTerms != null) {
       result.addAll({'acceptTerms': acceptTerms});
@@ -42,7 +43,7 @@ class UserPreferenceModel {
       language: map['language'],
       vsCurrency: map['vs_currency'],
       hasBiometrics: UseBiometricPermissionEnum.notAccepted,
-      hasDarkMode: map['hasDarkMode'],
+      theme: map['theme'],
       acceptTerms: map['acceptTerms'],
     );
   }

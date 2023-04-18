@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/about_cryptocurrency_widget.dart';
@@ -8,9 +9,9 @@ import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/chart_sparklin
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/link_cryptocurrency_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
-import 'package:mycrypto/app/core/utils/utils.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
 import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
+import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
 import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -32,6 +33,18 @@ class CryptocurrencyDetailsPage extends StatefulWidget {
 class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   CryptocurrencyDataStore store = Modular.get();
   FavoritesStore favoritesStore = Modular.get();
+  UserStore _userStore = Modular.get();
+
+  // void inittst() async {
+  //   await favoritesStore.startFavorites();
+  //   await store.getCryptocurrencyById(widget.cryptocurrency.id!);
+  //   await store.priceChangePercente(0);
+  //   store.chartStore.paramsChart.id = widget.cryptocurrency.id;
+  //   store.chartStore.paramsChart.days = '1d';
+  //   store.chartStore.paramsChart.vsCurrency =
+  //       _userStore.state.userPreference.vsCurrency;
+  //   await store.chartStore.getChartData();
+  // }
 
   @override
   void initState() {
@@ -40,7 +53,8 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
     store.priceChangePercente(0);
     store.chartStore.paramsChart.id = widget.cryptocurrency.id;
     store.chartStore.paramsChart.days = '1d';
-    store.chartStore.paramsChart.vsCurrency = 'usd';
+    store.chartStore.paramsChart.vsCurrency =
+        _userStore.state.userPreference.vsCurrency;
     store.chartStore.getChartData();
     super.initState();
   }
@@ -126,28 +140,13 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         SizedBox(height: 20),
                         Row(
-                          children: [
-                            ClipOval(
-                              child: SizedBox.fromSize(
-                                size: Size(25, 25),
-                                child: Image.network(
-                                  snapshot.data!.image!.small ?? '',
-                                  fit: BoxFit.cover,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
+                          children: <Widget>[
+                            ImageCoinWidget(
+                              url: snapshot.data!.image!.small ?? '',
+                              size: 25,
                             ),
                             SizedBox(width: 10),
                             Text(
@@ -164,10 +163,10 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         ),
                         SizedBox(height: 5),
                         Row(
-                          children: [
+                          children: <Widget>[
                             Text(
-                              Utils.formatNumber(snapshot
-                                  .data!.marketData!.currentPrice!.usd!),
+                              store.getPriceInCurrency(
+                                  _userStore.state.userPreference.vsCurrency!),
                               style: Theme.of(context)
                                   .textTheme
                                   .displayLarge!
@@ -190,7 +189,8 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                         SizedBox(height: 40),
                         Visibility(
                           visible:
-                              store.chartStore.state.pricesChart!.isNotEmpty,
+                              store.chartStore.state.pricesChart?.isNotEmpty ??
+                                  false,
                           child: Center(
                             child: ToggleSwitch(
                               minHeight: 35.0,
@@ -227,7 +227,10 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               ),
                         ),
                         Text(
-                          '\$ ${Utils.formatNumber(snapshot.data!.marketData!.marketCap!.usd!)}',
+                          // '\$ ${Utils.formatNumber(snapshot.data!.marketData!.marketCap!.usd!)}',
+                          // snapshot.data!.marketData!.marketCap!.usd!.toString(),
+                          store.state.marketData?.marketCap!.usd.toString() ??
+                              '',
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!

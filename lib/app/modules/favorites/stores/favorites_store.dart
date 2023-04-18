@@ -88,12 +88,12 @@ class FavoritesStore extends Store<List<CryptocurrencySimpleModel>> {
 
     if (listIDs.isNotEmpty) {
       marketsParams.ids = listIDs;
-      marketsParams.vsCurrency = 'usd';
-      marketsParams.order = 'market_cap_desc';
-      marketsParams.perPage = 100;
-      marketsParams.page = 1;
-      marketsParams.sparkline = 'true';
-      marketsParams.priceChangePercentage = '1h,24h,7d,14d,30d,200d,1y';
+      // marketsParams.vsCurrency = 'usd';
+      // marketsParams.order = 'market_cap_desc';
+      // marketsParams.perPage = 100;
+      // marketsParams.page = 1;
+      // marketsParams.sparkline = 'true';
+      // marketsParams.priceChangePercentage = '1h,24h,7d,14d,30d,200d,1y';
       await _repository.getCryptocurrenciesByIDs(marketsParams).then((value) {
         update(value);
         setLoading(false);

@@ -32,16 +32,22 @@ class UseBiometricStore extends Store<UseBiometricPermissionEnum> {
   }
 
   Future<UseBiometricPermissionEnum> getHasBiometrics() async {
+    setLoading(true);
     return PreferencesService.getHasBiometrics().then(
       (value) {
         if (value == null) return UseBiometricPermissionEnum.notAccepted;
         update(value);
+        setLoading(false);
         return value;
       },
-    );
+    ).catchError((e) {
+      setLoading(false);
+      return UseBiometricPermissionEnum.notAccepted;
+    });
   }
 
   void setHasBiometrics(bool hasBiometrics) {
+    setLoading(true);
     if (hasBiometrics) {
       update(UseBiometricPermissionEnum.accepted);
       PreferencesService.setHasBiometrics(UseBiometricPermissionEnum.accepted);
@@ -49,9 +55,19 @@ class UseBiometricStore extends Store<UseBiometricPermissionEnum> {
       update(UseBiometricPermissionEnum.denied);
       PreferencesService.setHasBiometrics(UseBiometricPermissionEnum.denied);
     }
+    setLoading(false);
   }
 
   Future<bool> hasBiometricsAvailable() async {
-    return await LocalAuthService.hasBiometricsAvailable();
+    setLoading(true);
+    return await LocalAuthService.hasBiometricsAvailable().then(
+      (value) {
+        setLoading(false);
+        return value;
+      },
+    ).catchError((e) {
+      setLoading(false);
+      return false;
+    });
   }
 }

@@ -12,13 +12,15 @@ class WalletModule extends Module {
     Bind.lazySingleton((i) => WalletStore()),
     Bind.lazySingleton((i) => WalletRepository()),
     Bind.lazySingleton((i) => SearchStore()),
-
   ];
 
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => WalletPage()),
-    ChildRoute('/add', child: (_, args) => AddWalletPage()),
+    ChildRoute('/add',
+        child: (_, args) => AddWalletPage(
+              coin: args.data,
+            )),
     ChildRoute('/remove', child: (_, args) => RemoveWalletPage()),
   ];
 }

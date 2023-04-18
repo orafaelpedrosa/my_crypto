@@ -4,13 +4,17 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/services/preferences_service.dart';
 import 'package:mycrypto/app/core/stores/use_biometric_store.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 
 class AuthCheckStore extends Store<bool> {
   AuthCheckStore() : super(false);
   final UseBiometricStore _useBiometricStore = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   Future<void> checkLocalAuth() async {
     setLoading(true);
+
+    await _userStore.getPreference();
 
     // Pega o usuário atual
     final User? currentUser = FirebaseAuth.instance.currentUser;

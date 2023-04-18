@@ -36,7 +36,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
             padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 SvgPicture.asset(
                   'assets/login/auth.svg',
                   height: 200,

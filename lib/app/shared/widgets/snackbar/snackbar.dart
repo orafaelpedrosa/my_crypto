@@ -4,7 +4,7 @@ openErrorSnackBar(context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Row(
-        children: [
+        children: <Widget>[
           Icon(
             Icons.error,
             color: Theme.of(context).colorScheme.secondary,
@@ -33,7 +33,7 @@ openWarningSnackBar(context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Row(
-        children: [
+        children: <Widget>[
           Icon(
             Icons.warning,
             color: Theme.of(context).colorScheme.background,
@@ -62,7 +62,7 @@ openSucessSnackBar(context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Row(
-        children: [
+        children: <Widget>[
           Icon(
             Icons.check,
             color: Theme.of(context).colorScheme.secondary,
@@ -91,7 +91,7 @@ openInfoSnackBar(context, String text, bool flag) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Row(
-        children: [
+        children: <Widget>[
           Icon(
             flag ? Icons.star_rate_rounded : Icons.delete,
             color: Theme.of(context).colorScheme.secondary,

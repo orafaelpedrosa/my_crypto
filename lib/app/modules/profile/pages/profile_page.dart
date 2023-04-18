@@ -15,6 +15,16 @@ class ProfilePageState extends State<ProfilePage> {
   final ProfileStore store = Modular.get();
   final UserStore _userStore = Modular.get();
 
+  Future<void> _changeLanguage() async {
+    await _userStore.startFirestore();
+  }
+
+  @override
+  void initState() {
+    _changeLanguage();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,10 +124,12 @@ class ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                         CupertinoDialogAction(
-                          child: Text('Sim',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                              )),
+                          child: Text(
+                            'Sim',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
                           onPressed: () {
                             _userStore.signOut();
                             Modular.to.pop();

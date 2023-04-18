@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/models/coin_search_model.dart';
 import 'package:mycrypto/app/core/services/firestore_repository.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
-import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/price_simple_model.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 
 class WalletRepository extends Disposable {
@@ -20,7 +21,8 @@ class WalletRepository extends Disposable {
     db = FirestoreRepository.get();
   }
 
-  Future<SearchModel> getSearchCoin(String value) async {
+  Future<List<CoinSearchModel>> getSearchCoin(String value) async {
+    List<CoinSearchModel> cryptos = List.empty(growable: true);
     try {
       final Response _response = await _dio.get(
         '$_urlBase/search',
@@ -28,7 +30,15 @@ class WalletRepository extends Disposable {
           'query': value,
         },
       );
-      return SearchModel.fromJson(_response.data);
+      await _response.data['coins'].forEach(
+        (coin) {
+          cryptos.add(
+            CoinSearchModel.fromJson(coin),
+          );
+        },
+      );
+      log(cryptos.length.toString());
+      return cryptos;
     } catch (e) {
       log(e.toString());
       throw e;
@@ -37,7 +47,6 @@ class WalletRepository extends Disposable {
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {
     startFirestore();
-    log('WalletRepository: addCryptocurrency: ${crypto.id}');
     await db
         .collection('users')
         .doc(userStore.user!.uid)
@@ -105,34 +114,60 @@ class WalletRepository extends Disposable {
     return ids;
   }
 
-  Future<List<CryptocurrencySimpleModel>> getCurrentPrice() async {
-    final List<String> ids = await getListOfWalletIDs();
+  Future<List<PriceSimpleModel>> getSimplePriceList(List<String> ids) async {
+    final List<PriceSimpleModel> _coinSimplePriceList =
+        List.empty(growable: true);
     final Response _response = await _dio.get(
-      '$_urlBase/coins/markets',
+      '$_urlBase/simple/price/',
       queryParameters: {
-        'vs_currency': 'usd',
+        'vs_currencies':
+            '${userStore.state.userPreference.vsCurrency!.toLowerCase()}',
         'ids': ids.join(','),
       },
     );
-    final List<CryptocurrencySimpleModel> cryptos = List.empty(growable: true);
-    _response.data.forEach(
-      (crypto) {
-        cryptos.add(CryptocurrencySimpleModel.fromJson(crypto));
-      },
-    );
-    return cryptos;
+
+    final _listCoinsDecode = jsonDecode(jsonEncode(_response.data));
+
+    _listCoinsDecode.forEach((key, value) {
+      _coinSimplePriceList.add(PriceSimpleModel.fromJson(value));
+      _coinSimplePriceList.last.id = key;
+    });
+    return _coinSimplePriceList;
+  }
+
+  Future<PriceSimpleModel> getSimplePriceID(String id) async {
+    try {
+      final Response _response = await _dio.get(
+        '$_urlBase/simple/price/',
+        queryParameters: {
+          'vs_currencies':
+              '${userStore.state.userPreference.vsCurrency?.toLowerCase()}',
+          'ids': id,
+        },
+      );
+      final coinDecode = _response.data;
+      final PriceSimpleModel _coinSimplePrice =
+          PriceSimpleModel.fromMap(coinDecode[id]);
+      _coinSimplePrice.id = id;
+      return _coinSimplePrice;
+    } catch (e) {
+      log(e.toString());
+      throw e;
+    }
   }
 
   Future<void> updatePrice() async {
-    final List<CryptocurrencySimpleModel> cryptos = await getCurrentPrice();
-    final List<MyCryptoModel> myCryptos = await getAll();
+    final List<String> ids = await getListOfWalletIDs();
+    final List<PriceSimpleModel> _currentPriceList =
+        await getSimplePriceList(ids);
+    final List<MyCryptoModel> _myCryptosList = await getAll();
 
-    if (myCryptos.isNotEmpty) {
-      myCryptos.forEach((myCrypto) async {
-        final CryptocurrencySimpleModel crypto = cryptos.firstWhere(
+    if (_myCryptosList.isNotEmpty) {
+      _myCryptosList.forEach((myCrypto) async {
+        final PriceSimpleModel crypto = _currentPriceList.firstWhere(
           (crypto) => crypto.id == myCrypto.id,
         );
-        myCrypto.currentPrice = crypto.currentPrice;
+        myCrypto.currentPrice = crypto.usd;
         myCrypto.profit = myCrypto.currentPrice! * myCrypto.amount! -
             myCrypto.averagePrice! * myCrypto.amount!;
         myCrypto.profitPercentage = myCrypto.profit! / myCrypto.averagePrice!;
@@ -142,21 +177,19 @@ class WalletRepository extends Disposable {
     }
   }
 
-  // Future<void> updateTotalWallet() async {
-  //   final List<MyCryptoModel> myCryptos = await getAll();
-  //   double totalWallet = 0;
+  Future<String> updateTotalWallet() async {
+    final List<MyCryptoModel> myCryptos = await getAll();
+    double totalWallet = 0;
 
-  //   if (myCryptos.isNotEmpty) {
-  //     myCryptos.forEach((myCrypto) {
-  //       totalWallet += myCrypto.totalValue!;
-  //     });
-  //   }
-  //   log('Total wallet: $totalWallet');
-  // }
+    if (myCryptos.isNotEmpty) {
+      myCryptos.forEach((myCrypto) {
+        totalWallet += myCrypto.totalValue!;
+      });
+      return totalWallet.toString();
+    }
+    return '0';
+  }
 
   @override
-  void dispose() {
-    _dio.close();
-    db.terminate();
-  }
+  void dispose() {}
 }

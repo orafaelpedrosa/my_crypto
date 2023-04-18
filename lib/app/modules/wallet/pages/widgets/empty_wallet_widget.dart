@@ -16,7 +16,7 @@ class _EmptyWalletWidgetState extends State<EmptyWalletWidget> {
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           SvgPicture.asset(
             'assets/app/wallet/image.svg',
             height: 150,

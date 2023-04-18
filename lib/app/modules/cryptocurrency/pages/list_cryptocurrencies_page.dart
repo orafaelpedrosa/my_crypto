@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/search_bar_widget.dart';
@@ -21,6 +22,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
   final ListCryptocurrenciesStore store = Modular.get();
   final LoginStore loginStore = Modular.get();
   final FavoritesStore favoritesStore = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   final ScrollController _scrollController = ScrollController();
   bool _showButton = false;
@@ -32,7 +34,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
     store.marketsParams.page = 1;
     store.marketsParams.sparkline = 'true';
     store.marketsParams.priceChangePercentage = '24h';
-    store.marketsParams.vsCurrency = 'brl';
+    store.marketsParams.vsCurrency = _userStore.state.userPreference.vsCurrency;
     store.getListCryptocurrencies();
     favoritesStore.startFavorites();
     super.initState();
@@ -87,7 +89,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
         ),
         body: SafeArea(
           child: Column(
-            children: [
+            children: <Widget>[
               TabsFilterListWidget(),
               CryptocurrencyListWidget(scrollController: _scrollController),
             ],
@@ -103,10 +105,8 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
                     curve: Curves.easeInQuad,
                   );
                 },
-                child: Icon(
-                  Icons.arrow_upward,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                child: Icon(Icons.keyboard_arrow_up_rounded,
+                    color: Theme.of(context).colorScheme.onPrimary, size: 40),
               )
             : null,
       ),

@@ -23,7 +23,7 @@ class _ShimmerCryptocurrencyListWidgetState
           color: Theme.of(context).colorScheme.onBackground,
         ),
         child: Column(
-          children: [
+          children: <Widget>[
             ListTile(
               leading: Container(
                 decoration: BoxDecoration(
@@ -33,7 +33,7 @@ class _ShimmerCryptocurrencyListWidgetState
                 width: 60,
               ),
               title: Row(
-                children: [
+                children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -56,7 +56,7 @@ class _ShimmerCryptocurrencyListWidgetState
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),

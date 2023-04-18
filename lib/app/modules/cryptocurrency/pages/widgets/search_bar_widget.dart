@@ -43,6 +43,9 @@ class SearchBarWidget extends SearchDelegate {
   }
 
   @override
+  String get searchFieldLabel => 'Busque por uma criptomoeda';
+
+  @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(

@@ -1,5 +1,6 @@
 enum ErrorHttpEnum {
   e401,
+  e403,
   e404,
   e429,
 }
@@ -13,6 +14,8 @@ extension ErrorHttpEnumExtension on ErrorHttpEnum {
         return '404';
       case ErrorHttpEnum.e429:
         return '429';
+      case ErrorHttpEnum.e403:
+        return '403';
       default:
         return '404';
     }
@@ -25,6 +28,8 @@ extension ErrorHttpEnumExtension on ErrorHttpEnum {
       case ErrorHttpEnum.e404:
         return 'Nenhum resultado encontrado';
       case ErrorHttpEnum.e429:
+        return 'Estamos com problemas.\nTente novamente mais tarde!';
+      case ErrorHttpEnum.e403:
         return 'Estamos com problemas.\nTente novamente mais tarde!';
       default:
         return '404';
@@ -39,6 +44,8 @@ extension ErrorHttpEnumExtension on ErrorHttpEnum {
         return 'assets/error/error_404.svg';
       case ErrorHttpEnum.e429:
         return 'assets/error/error_429.svg';
+      case ErrorHttpEnum.e403:
+        return 'assets/error/error_http.svg';
       default:
         return 'assets/error/error_404.svg';
     }

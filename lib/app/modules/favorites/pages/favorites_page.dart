@@ -1,11 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/shimmer_cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/slidable_item_list_widget.dart';
 import 'package:mycrypto/app/modules/favorites/pages/widgets/no_favorites_widgets.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:flutter/material.dart';
+import 'package:mycrypto/app/shared/widgets/error/error_type_widget.dart';
 
 class FavoritesPage extends StatefulWidget {
   final String title;
@@ -16,9 +19,16 @@ class FavoritesPage extends StatefulWidget {
 
 class FavoritesPageState extends State<FavoritesPage> {
   final FavoritesStore store = Modular.get();
+  final UserStore _userStore = Modular.get();
 
   @override
   void initState() {
+    store.marketsParams.vsCurrency = _userStore.state.userPreference.vsCurrency;
+    store.marketsParams.order = 'market_cap_desc';
+    store.marketsParams.perPage = 100;
+    store.marketsParams.page = 1;
+    store.marketsParams.sparkline = 'true';
+    store.marketsParams.priceChangePercentage = '1h,24h,7d,14d,30d,200d,1y';
     store.getCryptocurrenciesByIDs();
     super.initState();
   }
@@ -41,6 +51,17 @@ class FavoritesPageState extends State<FavoritesPage> {
           child: TripleBuilder<FavoritesStore, List<CryptocurrencySimpleModel>>(
             store: store,
             builder: (context, triple) {
+              if (triple.event == TripleEvent.error) {
+                DioError dioError = triple.error as DioError;
+                return ErrorHttpWidget(
+                  error: dioError.response!.statusCode.toString(),
+                  subtitle:
+                      'Infelizmente não foi possível carregar a sua lista de favoritos.',
+                  onTap: () {
+                    store.getCryptocurrenciesByIDs();
+                  },
+                );
+              }
               if (triple.isLoading) {
                 return Container(
                   child: SingleChildScrollView(
@@ -52,15 +73,11 @@ class FavoritesPageState extends State<FavoritesPage> {
                     ),
                   ),
                 );
-              } else if (triple.error != null) {
-                return Center(
-                  child: Text(triple.error.toString()),
-                );
               } else {
                 return (triple.state.isEmpty)
                     ? NoFavoritesWidget()
                     : Column(
-                        children: [
+                        children: <Widget>[
                           Expanded(
                             child: RefreshIndicator(
                               onRefresh: () async {

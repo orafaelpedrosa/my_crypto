@@ -1,89 +1,64 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mycrypto/app/core/stores/theme_mode_store.dart';
+import 'package:mycrypto/app/core/services/preferences_service.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 
-class ThemeModeWidget extends StatefulWidget {
-  const ThemeModeWidget({Key? key}) : super(key: key);
+class ChangeVsCurrenyWidget extends StatefulWidget {
+  const ChangeVsCurrenyWidget({Key? key}) : super(key: key);
 
   @override
-  State<ThemeModeWidget> createState() => _ThemeModeWidgetState();
+  State<ChangeVsCurrenyWidget> createState() => _ChangeVsCurrenyWidgetState();
 }
 
-class _ThemeModeWidgetState extends State<ThemeModeWidget> {
-  final ThemeModeStore _store = Modular.get();
-  ThemeMode? theme;
-
-  void getTheme() async {
-    final themeMode = await _store.getThemeMode();
-    theme = themeMode;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    getTheme();
-    super.initState();
-  }
+class _ChangeVsCurrenyWidgetState extends State<ChangeVsCurrenyWidget> {
+  final UserStore _userStore = Modular.get();
 
   @override
   Widget build(BuildContext context) {
+    String vsCurrency = _userStore.state.userPreference.vsCurrency!;
     return ListTile(
       contentPadding: const EdgeInsets.all(0),
       onTap: () {
         showCupertinoModalPopup(
           context: context,
           builder: (context) => CupertinoActionSheet(
-            title: Text('Selecione o tema'),
-            message: Text('Escolha o tema que deseja utilizar no aplicativo'),
+            title: Text('Seleciona a moeda'),
+            message: Text(
+                'Selecione a moeda que deseja utilizar para exibir o valor de suas criptomoedas'),
             actions: [
               CupertinoActionSheetAction(
                 child: Text(
-                  'Automático',
+                  'USD',
                   style: TextStyle(
-                    color: theme == ThemeMode.system
+                    color: vsCurrency == 'USD'
                         ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                 ),
                 onPressed: () async {
-                  await _store.setThemeMode(ThemeMode.system);
+                  PreferencesService.setVsCurrency('USD');
+                  await _userStore.getPreference();
                   setState(() {
-                    theme = ThemeMode.system;
+                    vsCurrency = 'USD';
                   });
                   Modular.to.pop();
                 },
               ),
               CupertinoActionSheetAction(
                 child: Text(
-                  'Escuro',
+                  'BRL',
                   style: TextStyle(
-                    color: theme == ThemeMode.dark
+                    color: vsCurrency == 'BRL'
                         ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                 ),
                 onPressed: () async {
-                  await _store.setThemeMode(ThemeMode.dark);
+                  PreferencesService.setVsCurrency('BRL');
+                  await _userStore.getPreference();
                   setState(() {
-                    theme = ThemeMode.dark;
-                  });
-                  Modular.to.pop();
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  'Claro',
-                  style: TextStyle(
-                    color: theme == ThemeMode.light
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                  ),
-                ),
-                onPressed: () async {
-                  await _store.setThemeMode(ThemeMode.light);
-                  setState(() {
-                    theme = ThemeMode.light;
+                    vsCurrency = 'BRL';
                   });
                   Modular.to.pop();
                 },
@@ -98,26 +73,22 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
           ),
         );
       },
+      leading: Icon(
+        Icons.attach_money_rounded,
+        color: Theme.of(context).colorScheme.primary,
+        size: 30,
+      ),
       title: Text(
-        'Tema',
+        'Moeda',
         style: Theme.of(context).textTheme.headlineMedium!.copyWith(
               color: Theme.of(context).colorScheme.secondary,
             ),
-      ),
-      leading: Icon(
-        Icons.brightness_6_rounded,
-        color: Theme.of(context).colorScheme.primary,
-        size: 30,
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-            theme == ThemeMode.system
-                ? 'Automático'
-                : theme == ThemeMode.light
-                    ? 'Claro'
-                    : 'Escuro',
+            vsCurrency,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   color:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.5),

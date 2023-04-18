@@ -1,27 +1,4 @@
-class SearchModel {
-  List<Coins>? coins;
-
-  SearchModel({this.coins});
-
-  SearchModel.fromJson(Map<String, dynamic> json) {
-    if (json['coins'] != null) {
-      coins = <Coins>[];
-      json['coins'].forEach((v) {
-        coins!.add(new Coins.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.coins != null) {
-      data['coins'] = this.coins!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Coins {
+class CoinSearchModel {
   String? id;
   String? name;
   String? apiSymbol;
@@ -30,7 +7,7 @@ class Coins {
   String? thumb;
   String? large;
 
-  Coins(
+  CoinSearchModel(
       {this.id,
       this.name,
       this.apiSymbol,
@@ -39,7 +16,7 @@ class Coins {
       this.thumb,
       this.large});
 
-  Coins.fromJson(Map<String, dynamic> json) {
+  CoinSearchModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     apiSymbol = json['api_symbol'];

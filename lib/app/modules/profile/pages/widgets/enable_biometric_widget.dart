@@ -46,7 +46,7 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Text(
               'Biometria',
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
@@ -66,7 +66,9 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
                     return CupertinoAlertDialog(
                       title: Text('Biometria'),
                       content: Text(
-                        'Nós utilizamos a biometria somente para desbloquear o aplicativo e garantir a sua segurança. Saiba que as suas informações biométricas não são coletadas ou armazenadas em nossos sistemas. A sua privacidade é uma prioridade para nós.',
+                        'Nós utilizamos a biometria somente para desbloquear o aplicativo e garantir a sua segurança. '
+                        'Saiba que as suas informações biométricas não são coletadas ou armazenadas em nossos sistemas. '
+                        'A sua privacidade é uma prioridade para nós.',
                       ),
                       actions: [
                         CupertinoDialogAction(
@@ -86,6 +88,9 @@ class _EnableBiometricWidgetState extends State<EnableBiometricWidget> {
         trailing: TripleBuilder<UseBiometricStore, UseBiometricPermissionEnum>(
           store: _store,
           builder: (_, triple) {
+            if (_store.isLoading) {
+              return CupertinoActivityIndicator();
+            }
             return CupertinoSwitch(
               activeColor: Theme.of(context).colorScheme.primary,
               value: triple.state == UseBiometricPermissionEnum.accepted,

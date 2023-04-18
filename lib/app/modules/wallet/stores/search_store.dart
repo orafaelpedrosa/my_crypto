@@ -6,8 +6,8 @@ import 'package:mycrypto/app/core/models/coin_search_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
 
 // ignore: must_be_immutable
-class SearchStore extends Store<SearchModel> with Disposable {
-  SearchStore() : super(SearchModel());
+class SearchStore extends Store<List<CoinSearchModel>> with Disposable {
+  SearchStore() : super([]);
 
   final WalletRepository _repository = WalletRepository();
   Timer? _debounce;
@@ -15,7 +15,7 @@ class SearchStore extends Store<SearchModel> with Disposable {
   Future<void> getSearchCoin(String text) async {
     if (_debounce!.isActive) _debounce!.cancel();
     _debounce = Timer(
-      const Duration(milliseconds: 500),
+      const Duration(milliseconds: 2000),
       () async {
         setLoading(true);
         await _repository.getSearchCoin(text).then((value) {
@@ -31,9 +31,21 @@ class SearchStore extends Store<SearchModel> with Disposable {
     );
   }
 
+  Future<void> getTest(String text) async {
+    setLoading(true);
+    await _repository.getSearchCoin(text).then((value) {
+      update(value);
+      setLoading(false);
+    }).catchError(
+      (e) {
+        setLoading(false);
+        setError(e);
+      },
+    );
+  }
+
   @override
   void dispose() {
     _repository.dispose();
-    _debounce!.cancel();
   }
 }

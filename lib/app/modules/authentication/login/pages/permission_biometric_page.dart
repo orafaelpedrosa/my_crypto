@@ -40,7 +40,7 @@ class _PermissionBiometricPageState extends State<PermissionBiometricPage> {
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           _biometricType == BiometricType.face
               ? SvgPicture.asset(
                   'assets/login/face_id.svg',

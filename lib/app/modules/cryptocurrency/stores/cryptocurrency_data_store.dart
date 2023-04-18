@@ -13,6 +13,7 @@ class CryptocurrencyDataStore extends Store<CryptocurrencyDetailsModel> {
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
   final ChartStore chartStore = Modular.get();
+  // String vsCurrency = 'USD';
 
   Future<void> getCryptocurrencyById(String id) async {
     setLoading(true);
@@ -87,8 +88,27 @@ class CryptocurrencyDataStore extends Store<CryptocurrencyDetailsModel> {
     String translate = "";
     if (description.length > 10) {
       description = Utils.parseHtmlString(description);
-      translate = await TranslatorService.translate(description);
+      await TranslatorService.translate(description).then((value) {
+        translate = value;
+      });
     }
     return translate;
+  }
+
+  // Future<void> getVsCurrency() async {
+  //   setLoading(true);
+  //   vsCurrency = await PreferencesService.getVsCurrency();
+  //   setLoading(false);
+  // }
+
+  String getPriceInCurrency(String price) {
+    switch (price) {
+      case "USD":
+        return "\$ ${state.marketData?.currentPrice?.usd}";
+      case "BRL":
+        return "R\$ ${state.marketData?.currentPrice?.brl}";
+      default:
+        return "\$ ${state.marketData?.currentPrice?.usd}";
+    }
   }
 }

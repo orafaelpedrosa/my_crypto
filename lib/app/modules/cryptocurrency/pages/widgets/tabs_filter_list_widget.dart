@@ -30,7 +30,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 GestureDetector(
                   onTap: () {
                     store.cryptocurrencies.clear();
@@ -48,7 +48,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           Text(
                             store.marketsParams.vsCurrency == 'usd'
                                 ? 'USD'
@@ -82,7 +82,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           Text(
                             'Cap. Mercado',
                             style: Theme.of(context)
@@ -97,12 +97,12 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                           ),
                           Icon(
                             store.marketsParams.order != 'market_cap_desc'
-                                ? Icons.arrow_drop_down
-                                : Icons.arrow_drop_up,
+                                ? Icons.arrow_drop_up
+                                : Icons.arrow_drop_down,
                             color:
                                 store.marketsParams.order != 'market_cap_desc'
-                                    ? Theme.of(context).colorScheme.secondary
-                                    : Theme.of(context).colorScheme.primary,
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.secondary,
                           ),
                         ],
                       ),
@@ -110,8 +110,8 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    store.setMarketParamsOrder('volume_desc');
+                  onTap: () async {
+                    await store.setMarketParamsOrder('volume_desc');
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -123,7 +123,7 @@ class _TabsFilterListWidgetState extends State<TabsFilterListWidget> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           Text(
                             'Volume 24h',
                             style: Theme.of(context)

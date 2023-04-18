@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/theme/app_theme.dart';
-import 'package:mycrypto/app/modules/profile/stores/theme_mode_store.dart';
+import 'package:mycrypto/app/core/stores/theme_mode_store.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({Key? key}) : super(key: key);

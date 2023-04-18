@@ -14,9 +14,9 @@ class LinkCryptocurrencyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Row(
-          children: [
+          children: <Widget>[
             Icon(
               Icons.link_outlined,
               color: Theme.of(context).colorScheme.secondary,

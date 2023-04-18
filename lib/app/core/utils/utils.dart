@@ -10,7 +10,6 @@ class Utils {
   }
 
   static String formatNumber(double number) {
-    final String locale = Intl.getCurrentLocale();
-    return NumberFormat.decimalPattern(locale).format(number);
+    return NumberFormat.decimalPattern('pt_BR').format(number);
   }
 }

@@ -11,13 +11,17 @@ class PreferencesService {
   }
 
   static Future<UserPreferenceModel> getPreferencesUser() async {
-    final preferences = await SharedPreferences.getInstance();
-    final userPreference = preferences.getString('userPreference');
-    if (userPreference != null) {
-      return UserPreferenceModel.fromJson(userPreference);
-    } else {
-      return UserPreferenceModel();
-    }
+    UserPreferenceModel userPreference = UserPreferenceModel();
+    await Future.wait([
+      getVsCurrency(),
+      getHasBiometrics(),
+      getThemeType(),
+    ]).then((value) {
+      userPreference.vsCurrency = value[0].toString();
+      userPreference.hasBiometrics = value[1]! as UseBiometricPermissionEnum;
+      userPreference.theme = value[2]! as ThemeMode;
+    });
+    return userPreference;
   }
 
   static Future<void> setVsCurrency(String vsCurrency) async {
@@ -31,7 +35,11 @@ class PreferencesService {
   static Future<String> getVsCurrency() async {
     return SharedPreferences.getInstance().then(
       (instance) async {
-        return instance.getString('vs_currency')!;
+        if (instance.getString('vs_currency') != null) {
+          return instance.getString('vs_currency')!;
+        } else {
+          return 'BRL';
+        }
       },
     );
   }

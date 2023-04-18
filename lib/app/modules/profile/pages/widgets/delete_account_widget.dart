@@ -44,7 +44,6 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                     ),
                   ),
                   onPressed: () async {
-                    // store.userStore.deleteUser();
                     await store.deleteUser();
                     await store.signOut();
                     Modular.to.pop();

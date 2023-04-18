@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -44,29 +45,15 @@ class SlidableItemListWidget extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ClipOval(
-                  child: SizedBox.fromSize(
-                    size: Size(40, 40),
-                    child: Image.network(
-                      coin.image ?? '',
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    ),
-                  ),
+              children: <Widget>[
+                ImageCoinWidget(
+                  size: 40,
+                  url: coin.image ?? '',
                 ),
                 SizedBox(width: 5),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.24,
                       child: Text(
@@ -84,7 +71,7 @@ class SlidableItemListWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Row(
-                      children: [
+                      children: <Widget>[
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 4, vertical: 3),
@@ -153,11 +140,11 @@ class SlidableItemListWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Row(
-                  children: [
+                  children: <Widget>[
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
+                      children: <Widget>[
                         Text(
                           price,
                           style: Theme.of(context)
@@ -170,7 +157,7 @@ class SlidableItemListWidget extends StatelessWidget {
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: <Widget>[
                             coin.priceChangePercentageTime != 0
                                 ? !coin.priceChangePercentageTime
                                         .toString()
@@ -223,7 +210,7 @@ class SlidableItemListWidget extends StatelessWidget {
           ),
           endActionPane: ActionPane(
             motion: ScrollMotion(),
-            children: [
+            children: <Widget>[
               TripleBuilder<FavoritesStore, List<CryptocurrencySimpleModel>>(
                   store: store,
                   builder: (_, triple) {

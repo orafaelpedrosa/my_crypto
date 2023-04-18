@@ -59,7 +59,7 @@ class RegisterPageState extends State<RegisterPage> {
               parent: NeverScrollableScrollPhysics(),
             ),
             child: Column(
-              children: [
+              children: <Widget>[
                 SvgPicture.asset(
                   'assets/login/register.svg',
                   height: 145,
@@ -76,7 +76,7 @@ class RegisterPageState extends State<RegisterPage> {
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       TextFormFieldWidget(
                         controller: _nameController,
                         textInputAction: TextInputAction.next,
@@ -157,7 +157,7 @@ class RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           TripleBuilder<AccetpTermsStore, bool>(
                             store: _accetpTermsStore,
                             builder: (_, state) {
@@ -208,7 +208,7 @@ class RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           RoundedLoadingButton(
                             width: MediaQuery.of(context).size.width * 0.85,
                             height: 50,

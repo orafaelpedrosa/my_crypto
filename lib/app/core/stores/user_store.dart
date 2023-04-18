@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/models/user_model.dart';
 import 'package:mycrypto/app/core/models/user_preference_model.dart';
+import 'package:mycrypto/app/core/services/firestore_repository.dart';
 import 'package:mycrypto/app/core/services/preferences_service.dart';
 
 // ignore: must_be_immutable
@@ -12,6 +13,12 @@ class UserStore extends Store<UserModel> {
           userPreference: UserPreferenceModel(),
         ));
   User? user;
+
+  late FirebaseFirestore db;
+
+  startFirestore() async {
+    db = FirestoreRepository.get();
+  }
 
   Future<void> getUser() async {
     user = FirebaseAuth.instance.currentUser!;
@@ -34,24 +41,18 @@ class UserStore extends Store<UserModel> {
     update(user);
   }
 
-  Future<void> setBiometric(bool hasBiometrics) async {
-    if (hasBiometrics) {
-      state.userPreference.hasBiometrics = UseBiometricPermissionEnum.accepted;
-    } else {
-      state.userPreference.hasBiometrics = UseBiometricPermissionEnum.denied;
-    }
-    await setPreference(state.userPreference);
-    await getPreference();
-    update(state);
-  }
-
-  Future<void> setPreference(UserPreferenceModel userPreference) async {
-    await PreferencesService.setPreferencesUser(userPreference);
+  Future<void> setPreferenceFirebase(UserPreferenceModel preference) async {
+    db
+        .collection('users')
+        .doc(user!.uid)
+        .collection('preferences')
+        .doc(DateTime.now().toIso8601String())
+        .set(preference.toMap());
   }
 
   Future<void> getPreference() async {
     final userPreference = await PreferencesService.getPreferencesUser();
     state.userPreference = userPreference;
     update(state);
-  }
+  }  
 }

@@ -1,6 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
+import 'package:mycrypto/app/modules/wallet/pages/widgets/search_bar_coin_widget.dart';
+import 'package:mycrypto/app/modules/wallet/stores/search_store.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -14,12 +16,12 @@ class WalletPage extends StatefulWidget {
 
 class WalletPageState extends State<WalletPage> {
   final WalletStore store = Modular.get();
-
-  MyCryptoModel crypto = MyCryptoModel();
+  final SearchStore _searchStore = Modular.get();
 
   @override
   void initState() {
     store.getWallet();
+    _searchStore.getTest('');
     store.updatePrice();
     store.totalValue();
     super.initState();
@@ -40,18 +42,20 @@ class WalletPageState extends State<WalletPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              Modular.to.pushNamed('/home/wallet/add');
-            },
             icon: Icon(
-              Icons.add,
+              Icons.add_circle_outline,
               color: Theme.of(context).colorScheme.secondary,
             ),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: SearchBarCoinWidget(),
+              );
+            },
           ),
         ],
       ),
       body: Container(
-        alignment: Alignment.center,
         padding: EdgeInsets.all(20),
         child: TripleBuilder<WalletStore, List<MyCryptoModel>>(
           store: store,
@@ -61,30 +65,41 @@ class WalletPageState extends State<WalletPage> {
                 child: CircularProgressIndicator(),
               );
             }
-            // if (store.state.isEmpty) {
-            //   return EmptyWalletWidget();
-            // }
             return RefreshIndicator(
               onRefresh: () async {
                 await store.getWallet();
                 await store.updatePrice();
               },
               child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: SfCircularChart(
-                  legend: Legend(
-                    isVisible: true,
-                    position: LegendPosition.bottom,
-                    overflowMode: LegendItemOverflowMode.wrap,
-                  ),
-                  series: <CircularSeries>[
-                    DoughnutSeries<MyCryptoModel, String>(
-                      dataSource: store.state,
-                      xValueMapper: (MyCryptoModel data, _) => data.id,
-                      yValueMapper: (MyCryptoModel data, _) => data.totalValue,
-                      dataLabelSettings: DataLabelSettings(
-                        isVisible: false,
-                        labelPosition: ChartDataLabelPosition.outside,
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 400,
+                      child: SfCircularChart(
+                        margin: EdgeInsets.all(0),
+                        legend: Legend(
+                          position: LegendPosition.bottom,
+                          isVisible: true,
+                          isResponsive: true,
+                          overflowMode: LegendItemOverflowMode.wrap,
+                        ),
+                        series: <CircularSeries>[
+                          DoughnutSeries<MyCryptoModel, String>(
+                            dataSource: store.state,
+                            startAngle: 0,
+                            xValueMapper: (MyCryptoModel data, _) => data.id,
+                            yValueMapper: (MyCryptoModel data, _) =>
+                                data.totalValue,
+                            dataLabelSettings: DataLabelSettings(
+                              isVisible: false,
+                              labelPosition: ChartDataLabelPosition.outside,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

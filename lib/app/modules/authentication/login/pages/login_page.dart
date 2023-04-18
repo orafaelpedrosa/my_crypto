@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
                 physics: ClampingScrollPhysics(
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           SvgPicture.asset(
             'assets/app/mycrypto.svg',
             color: Theme.of(context).brightness == Brightness.light
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               return Form(
                 key: formKey,
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     TextFormFieldWidget(
                       focusNode: emailFocus,
                       textInputAction: TextInputAction.next,
@@ -213,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.zero,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           RoundedLoadingButton(
                             width: MediaQuery.of(context).size.width * 0.85,
                             height: 50,

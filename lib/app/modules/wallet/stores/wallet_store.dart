@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/price_simple_model.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
 
@@ -10,6 +9,12 @@ class WalletStore extends Store<List<MyCryptoModel>> {
 
   final WalletRepository _repository = WalletRepository();
   MyCryptoModel crypto = MyCryptoModel();
+  PriceSimpleModel price = PriceSimpleModel();
+  String fiat = 'BRL';
+
+  Future<void> updateState() async {
+    update(state, force: true);
+  }
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {
     await _repository.addCryptocurrency(crypto);
@@ -23,19 +28,20 @@ class WalletStore extends Store<List<MyCryptoModel>> {
     await _repository.updateCryptocurrency(crypto);
   }
 
-  Future<void> getCurrentPrice() async {
-    await _repository.getCurrentPrice();
-  }
-
   Future<void> updatePrice() async {
-    await _repository.updatePrice();
+    setLoading(true);
+    await _repository.updatePrice().then((value) {
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+    });
   }
 
   Future<void> getWallet() async {
     setLoading(true);
     await _repository.getAll().then((value) {
       update(value);
-      log('WalletStore: getWallet: ${value.length}');
       setLoading(false);
     }).catchError((e) {
       setLoading(false);
@@ -45,7 +51,33 @@ class WalletStore extends Store<List<MyCryptoModel>> {
 
   Future<void> totalValue() async {
     setLoading(true);
-    // await _repository.updateTotalWallet();
+    await _repository.updateTotalWallet().then((value) {
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+    });
     setLoading(false);
+  }
+
+  Future<void> searchCoin(String value) async {
+    setLoading(true);
+    await _repository.getSearchCoin(value).then((value) {
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+    });
+  }
+
+  Future<void> getSimplePriceID(String id) async {
+    setLoading(true);
+    await _repository.getSimplePriceID(id).then((value) {
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+      throw e;
+    });
   }
 }
