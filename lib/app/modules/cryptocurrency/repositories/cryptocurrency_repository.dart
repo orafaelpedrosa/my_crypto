@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/services/http_service.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/chart_model/charts_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_details_model/cryptocurrency_details_model.dart';
@@ -9,14 +9,13 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 
 class CryptocurrencyRepository with Disposable {
-  final Dio _dio = Dio();
-  final String _urlBase = dotenv.get('URL_BASE');
+  final httpService = HttpService();
 
   Future<List<CryptocurrencySimpleModel>> getListCryptocurrenciesData(
       MarketsParamsModel paramsModel) async {
     try {
-      final Response _response = await _dio.get(
-        '$_urlBase/coins/markets',
+      final Response _response = await httpService.get(
+        '/coins/markets',
         queryParameters: paramsModel.toJson(),
       );
 
@@ -36,8 +35,8 @@ class CryptocurrencyRepository with Disposable {
 
   Future<CryptocurrencyDetailsModel> getCryptoData(String id) async {
     try {
-      final Response _response = await _dio.get(
-        '$_urlBase/coins/$id?sparkline=true',
+      final Response _response = await httpService.get(
+        '/coins/$id?sparkline=true',
       );
       final CryptocurrencyDetailsModel _cryptocurrencies =
           CryptocurrencyDetailsModel.fromMap(_response.data);
@@ -50,8 +49,8 @@ class CryptocurrencyRepository with Disposable {
 
   Future<ChartModel> getChartData(ChartsParamsModel paramsModel) async {
     try {
-      final Response _response = await _dio.get(
-        '$_urlBase/coins/${paramsModel.id}/market_chart',
+      final Response _response = await httpService.get(
+        '/coins/${paramsModel.id}/market_chart',
         queryParameters: paramsModel.toJson(),
       );
       return ChartModel.fromJson(_response.data);
@@ -61,19 +60,6 @@ class CryptocurrencyRepository with Disposable {
     }
   }
 
-  Future<String> getStatus() async {
-    try {
-      final Response _response = await _dio.get(
-        'https://status.coingecko.com/',
-      );
-      return _response.data;
-    } catch (e) {
-      log('Error getStatus: $e');
-      rethrow;
-    }
-  }
-
-  void dispose() {
-    _dio.close();
-  }
+  @override
+  void dispose() {}
 }

@@ -217,7 +217,6 @@ class MarketData {
                 : PriceChangePercentageInCurrency.fromMap(
                     data['market_cap_change_percentage_24h_in_currency']
                         as Map<String, dynamic>),
-        // totalSupply: (data['total_supply'] as num?)?.toDouble(),
         totalSupply: data['total_supply']?.toString(),
         maxSupply: (data['max_supply'] as num?)?.toDouble(),
         circulatingSupply: (data['circulating_supply']?.toString()),

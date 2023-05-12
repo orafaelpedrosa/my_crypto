@@ -55,9 +55,7 @@ class RegisterPageState extends State<RegisterPage> {
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
           child: SingleChildScrollView(
-            physics: ClampingScrollPhysics(
-              parent: NeverScrollableScrollPhysics(),
-            ),
+            physics: ClampingScrollPhysics(),
             child: Column(
               children: <Widget>[
                 SvgPicture.asset(
@@ -97,6 +95,7 @@ class RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 15),
                       TextFormFieldWidget(
                         controller: _emailController,
+                        keyboardType:  TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         iconData: Icon(
                           Icons.email_outlined,

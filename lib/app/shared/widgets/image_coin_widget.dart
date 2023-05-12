@@ -47,8 +47,11 @@ class _ImageCoinWidgetState extends State<ImageCoinWidget> {
                         return child;
                       } else {
                         return Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1.0,
+                          child: CircularProgressIndicator.adaptive(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).primaryColor,
+                            ),
+                            strokeWidth: 1.5,
                           ),
                         );
                       }

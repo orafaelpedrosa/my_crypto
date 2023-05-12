@@ -1,4 +1,7 @@
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/models/coin_search_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
+import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/price_simple_model.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
@@ -8,24 +11,48 @@ class WalletStore extends Store<List<MyCryptoModel>> {
   WalletStore() : super([]);
 
   final WalletRepository _repository = WalletRepository();
-  MyCryptoModel crypto = MyCryptoModel();
+
   PriceSimpleModel price = PriceSimpleModel();
-  String fiat = 'BRL';
+  List<CoinSearchModel> listSearch = List.empty(growable: true);
+  List<CryptocurrencySimpleModel> coinsList = List.empty(growable: true);
+  MyCryptoModel cryptoModel = MyCryptoModel();
+  DateTime date = DateTime.now();
 
   Future<void> updateState() async {
     update(state, force: true);
   }
 
   Future<void> addCryptocurrency(MyCryptoModel crypto) async {
-    await _repository.addCryptocurrency(crypto);
+    setLoading(true);
+    await _repository.addCrypto(crypto).then((value) {
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+      throw e;
+    });
   }
 
   Future<void> removeCryptocurrency(MyCryptoModel crypto) async {
-    await _repository.removeCryptocurrency(crypto);
+    setLoading(true);
+    await _repository.removeCryptocurrency(crypto).then((value) {
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+      throw e;
+    });
   }
 
   Future<void> updateCryptocurrency(MyCryptoModel crypto) async {
-    await _repository.updateCryptocurrency(crypto);
+    setLoading(true);
+    await _repository.updateCryptocurrency(crypto).then((value) {
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+      throw e;
+    });
   }
 
   Future<void> updatePrice() async {
@@ -38,9 +65,9 @@ class WalletStore extends Store<List<MyCryptoModel>> {
     });
   }
 
-  Future<void> getWallet() async {
+  Future<void> getAllWalletCoins() async {
     setLoading(true);
-    await _repository.getAll().then((value) {
+    await _repository.getAllWalletCoins().then((value) {
       update(value);
       setLoading(false);
     }).catchError((e) {
@@ -60,24 +87,58 @@ class WalletStore extends Store<List<MyCryptoModel>> {
     setLoading(false);
   }
 
-  Future<void> searchCoin(String value) async {
+  Future<void> getSearchCoin(String text) async {
     setLoading(true);
-    await _repository.getSearchCoin(value).then((value) {
+    await _repository.getSearchCoin(text).then((value) {
+      listSearch = value;
       setLoading(false);
-    }).catchError((e) {
-      setLoading(false);
-      setError(e);
-    });
+    }).catchError(
+      (e) {
+        setLoading(false);
+        setError(e);
+      },
+    );
   }
 
   Future<void> getSimplePriceID(String id) async {
     setLoading(true);
     await _repository.getSimplePriceID(id).then((value) {
+      cryptoModel.currentPrice = value.usd;
+      update(state, force: true);
       setLoading(false);
     }).catchError((e) {
       setLoading(false);
       setError(e);
       throw e;
     });
+  }
+
+  Future<void> getListCryptocurrenciesData(
+      MarketsParamsModel paramsModel) async {
+    setLoading(true);
+    paramsModel.ids = await _repository.getListOfWalletIDs();
+    await _repository.getListCryptocurrenciesData(paramsModel).then((value) {
+      coinsList = value;
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+      throw e;
+    });
+  }
+
+  Future<double> getPriceDolarInBRL() async {
+    setLoading(true);
+    double priceDolar = 1;
+    await _repository.getPriceDolarInBRL().then((value) {
+      cryptoModel.currentPrice =
+          (cryptoModel.currentPrice! * double.parse(value.ask!));
+      setLoading(false);
+    }).catchError((e) {
+      setLoading(false);
+      setError(e);
+      throw e;
+    });
+    return priceDolar;
   }
 }

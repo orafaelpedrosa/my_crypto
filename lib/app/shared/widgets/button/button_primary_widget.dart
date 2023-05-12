@@ -5,23 +5,28 @@ class ButtonPrimaryWidget extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final bool isLoading;
+  final bool? isDisabled;
+
   const ButtonPrimaryWidget({
     Key? key,
     required this.text,
     required this.onPressed,
     required this.isLoading,
+    this.isDisabled = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = false;
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         height: 50,
         width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: 
+          isDisabled!
+              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+              : Theme.of(context).colorScheme.primary,
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),

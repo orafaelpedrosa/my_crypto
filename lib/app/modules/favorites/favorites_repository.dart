@@ -2,27 +2,26 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/services/firestore_repository.dart';
+import 'package:mycrypto/app/core/services/http_service.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 
 class FavoritesRepository extends Disposable {
-  final Dio _dio = Dio();
+  final httpService = HttpService();
   late FirebaseFirestore db;
   UserStore userStore = Modular.get();
   List<CryptocurrencySimpleModel> _list =
       List<CryptocurrencySimpleModel>.empty(growable: true);
   List<String> _listIDs = List<String>.empty(growable: true);
-  final String _urlBase = dotenv.get('URL_BASE');
 
   Future<List<CryptocurrencySimpleModel>> getCryptocurrenciesByIDs(
       MarketsParamsModel marketsParamsModel) async {
     try {
-      final Response response = await _dio.get(
-        '$_urlBase/coins/markets?sparkline=true',
+      final Response response = await httpService.get(
+        '/coins/markets?sparkline=true',
         queryParameters: marketsParamsModel.toJson(),
       );
       final List<CryptocurrencySimpleModel> cryptos =
@@ -157,7 +156,5 @@ class FavoritesRepository extends Disposable {
   }
 
   @override
-  void dispose() {
-    _dio.close();
-  }
+  void dispose() {}
 }

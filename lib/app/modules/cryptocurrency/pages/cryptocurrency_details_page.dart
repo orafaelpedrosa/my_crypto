@@ -35,17 +35,6 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
   FavoritesStore favoritesStore = Modular.get();
   UserStore _userStore = Modular.get();
 
-  // void inittst() async {
-  //   await favoritesStore.startFavorites();
-  //   await store.getCryptocurrencyById(widget.cryptocurrency.id!);
-  //   await store.priceChangePercente(0);
-  //   store.chartStore.paramsChart.id = widget.cryptocurrency.id;
-  //   store.chartStore.paramsChart.days = '1d';
-  //   store.chartStore.paramsChart.vsCurrency =
-  //       _userStore.state.userPreference.vsCurrency;
-  //   await store.chartStore.getChartData();
-  // }
-
   @override
   void initState() {
     favoritesStore.startFavorites();
@@ -227,8 +216,6 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               ),
                         ),
                         Text(
-                          // '\$ ${Utils.formatNumber(snapshot.data!.marketData!.marketCap!.usd!)}',
-                          // snapshot.data!.marketData!.marketCap!.usd!.toString(),
                           store.state.marketData?.marketCap!.usd.toString() ??
                               '',
                           style: Theme.of(context)

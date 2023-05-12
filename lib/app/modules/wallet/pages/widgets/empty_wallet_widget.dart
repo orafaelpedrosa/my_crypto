@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/modules/wallet/pages/widgets/search_bar_coin_widget.dart';
 import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
 
 class EmptyWalletWidget extends StatefulWidget {
@@ -13,6 +14,7 @@ class _EmptyWalletWidgetState extends State<EmptyWalletWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +49,10 @@ class _EmptyWalletWidgetState extends State<EmptyWalletWidget> {
           ButtonPrimaryWidget(
             text: 'Adicionar criptomoeda',
             onPressed: () {
-              // Modular.to.pushNamed('/home/wallet/add');
+              showSearch(
+                context: context,
+                delegate: SearchBarCoinWidget(),
+              );
             },
             isLoading: false,
           ),

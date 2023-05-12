@@ -54,7 +54,7 @@ class _ErrorHttpWidgetState extends State<ErrorHttpWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SvgPicture.asset(
-            widget.errorType!.assetError,
+            widget.errorType?.assetError ?? 'assets/error/error_http.svg',
             width: 200,
             height: 200,
           ),

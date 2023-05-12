@@ -13,7 +13,6 @@ class CryptocurrencyDataStore extends Store<CryptocurrencyDetailsModel> {
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
   final ChartStore chartStore = Modular.get();
-  // String vsCurrency = 'USD';
 
   Future<void> getCryptocurrencyById(String id) async {
     setLoading(true);
@@ -94,12 +93,6 @@ class CryptocurrencyDataStore extends Store<CryptocurrencyDetailsModel> {
     }
     return translate;
   }
-
-  // Future<void> getVsCurrency() async {
-  //   setLoading(true);
-  //   vsCurrency = await PreferencesService.getVsCurrency();
-  //   setLoading(false);
-  // }
 
   String getPriceInCurrency(String price) {
     switch (price) {

@@ -88,11 +88,11 @@ class SearchBarCoinWidget extends SearchDelegate {
           return ListTile(
             minVerticalPadding: 0,
             onTap: () async {
-              // await walletStore.getSimplePriceID(suggestionList[index].id!);
-              await Modular.to.pushReplacementNamed(
+              Modular.to.pushReplacementNamed(
                 '/home/wallet/add',
                 arguments: suggestionList[index],
               );
+              close(context, null);
             },
             leading: ImageCoinWidget(
               size: 40,
@@ -147,6 +147,7 @@ class SearchBarCoinWidget extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     List<CoinSearchModel> suggestionList = [];
+    final ScrollController _scrollController = ScrollController();
 
     suggestionList = store.state
         .where((element) =>
@@ -154,7 +155,7 @@ class SearchBarCoinWidget extends SearchDelegate {
             element.symbol!.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    if (query.isEmpty || suggestionList.isEmpty) {
+    if (query.isEmpty && suggestionList.isEmpty) {
       log('Nenhum resultado encontrado');
       return Container(
         color: Theme.of(context).colorScheme.background,
@@ -168,69 +169,74 @@ class SearchBarCoinWidget extends SearchDelegate {
     } else {
       return Container(
         color: Theme.of(context).colorScheme.background,
-        child: ListView.separated(
-          itemCount: suggestionList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              minVerticalPadding: 0,
-              onTap: () async {
-                // walletStore.getSimplePriceID(suggestionList[index].id!);
-                await Modular.to.pushReplacementNamed(
-                  '/home/wallet/add',
-                  arguments: suggestionList[index],
-                );
-              },
-              leading: ImageCoinWidget(
-                size: 40,
-                url: suggestionList[index].large!,
-              ),
-              title: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Flexible(
-                      child: Text(
-                        suggestionList[index].name!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: AutoSizeText(
-                        suggestionList[index].symbol!.toUpperCase(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(
-                              color: Theme.of(context).colorScheme.onBackground,
-                            ),
-                      ),
-                    ),
-                  ],
+        child: Scrollbar(
+          controller: _scrollController,
+          child: ListView.separated(
+            itemCount: suggestionList.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                minVerticalPadding: 0,
+                onTap: () async {
+                  log('onTap ');
+                  Modular.to.pushReplacementNamed(
+                    '/home/wallet/add',
+                    arguments: suggestionList[index],
+                  );
+                  close(context, null);
+                },
+                leading: ImageCoinWidget(
+                  size: 40,
+                  url: suggestionList[index].large!,
                 ),
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
+                title: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(
+                        child: Text(
+                          suggestionList[index].name!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: AutoSizeText(
+                          suggestionList[index].symbol!.toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).colorScheme.onBackground,
+                  size: 15,
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Divider(
                 color: Theme.of(context).colorScheme.onBackground,
-                size: 15,
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Divider(
-              color: Theme.of(context).colorScheme.onBackground,
-              height: 0,
-              thickness: 0.25,
-            );
-          },
+                height: 0,
+                thickness: 0.25,
+              );
+            },
+          ),
         ),
       );
     }

@@ -72,31 +72,34 @@ class SlidableItemListWidget extends StatelessWidget {
                     SizedBox(height: 5),
                     Row(
                       children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(0.05),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Center(
-                            child: Text(
-                              coin.marketCapRank.toString() != 'null'
-                                  ? '#${coin.marketCapRank!.toString()}'
-                                  : '#',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                    height: 1,
-                                  ),
-                              overflow: TextOverflow.visible,
-                              maxLines: 1,
+                        Visibility(
+                          visible: coin.marketCapRank != null,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4, vertical: 3),
+                            margin: const EdgeInsets.only(left: 5),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '#${coin.marketCapRank?.toString()}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      height: 1,
+                                    ),
+                                overflow: TextOverflow.visible,
+                                maxLines: 1,
+                              ),
                             ),
                           ),
                         ),

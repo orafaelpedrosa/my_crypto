@@ -62,6 +62,7 @@ class _PermissionBiometricPageState extends State<PermissionBiometricPage> {
                 ? 'Desbloquear com ${_biometricType == BiometricType.face ? 'Face ID' : 'Touch ID'}'
                 : 'Desbloquear com ${_biometricType == BiometricType.face ? 'Reconhecimento Facial' : 'Digital'}',
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   height: 1.5,

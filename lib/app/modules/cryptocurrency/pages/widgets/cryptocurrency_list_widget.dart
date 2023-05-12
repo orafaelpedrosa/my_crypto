@@ -80,7 +80,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
           return Expanded(
             child: StreamBuilder<List<CryptocurrencySimpleModel>>(
               stream: Stream.periodic(
-                const Duration(seconds: 30),
+                const Duration(seconds: 60),
                 (_) {
                   store.getListCryptoStream();
                   return store.state;
@@ -89,7 +89,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
               initialData: const [],
               builder: (context, snapshot) {
                 return RefreshIndicator(
-                  onRefresh: () async {
+                  onRefresh: () async{ 
                     await store.getListCryptocurrencies();
                   },
                   child: Scrollbar(
