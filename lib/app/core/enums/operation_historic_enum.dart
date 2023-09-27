@@ -48,3 +48,29 @@ extension OperationHistoricEnumExtension on OperationHistoricEnum {
 
   String toJson() => json.encode(toMap());
 }
+
+OperationHistoricEnum fromMap(Map<String, dynamic> map) {
+  switch (map['value']) {
+    case 'add':
+      return OperationHistoricEnum.add;
+    case 'remove':
+      return OperationHistoricEnum.remove;
+    case 'update':
+      return OperationHistoricEnum.update;
+    default:
+      return OperationHistoricEnum.add;
+  }
+}
+
+String getLabelFirebase(OperationHistoricEnum operation) {
+  switch (operation) {
+    case OperationHistoricEnum.add:
+      return 'add';
+    case OperationHistoricEnum.remove:
+      return 'remove';
+    case OperationHistoricEnum.update:
+      return 'update';
+    default:
+      return 'add';
+  }
+}

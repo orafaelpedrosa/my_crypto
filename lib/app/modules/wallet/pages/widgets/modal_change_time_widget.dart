@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -36,7 +34,7 @@ class _ModalChangeTimeWidgetState extends State<ModalChangeTimeWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  CupertinoIcons.calendar,
+                  Icons.edit_calendar_rounded,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
                 const SizedBox(width: 10),
@@ -73,7 +71,6 @@ class _ModalChangeTimeWidgetState extends State<ModalChangeTimeWidget> {
                       if (_date != walletStore.date) {
                         onSelectedDate(_date);
                       }
-                      log('Date: ${walletStore.date}');
                       Navigator.pop(context);
                     },
                   ),

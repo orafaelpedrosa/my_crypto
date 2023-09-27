@@ -19,26 +19,11 @@ class HomeModule extends Module {
       Modular.initialRoute,
       child: (_, args) => const HomePage(),
       children: [
-        ModuleRoute(
-          '/cryptocurrency',
-          module: CryptocurrencyModule(),
-        ),
-        ModuleRoute(
-          '/favorites',
-          module: FavoritesModule(),
-        ),
-        ModuleRoute(
-          '/wallet',
-          module: WalletModule(),
-        ),
-        ModuleRoute(
-          '/profile',
-          module: ProfileModule(),
-        ),
-        ModuleRoute(
-          '/login',
-          module: LoginModule(),
-        ),
+        ModuleRoute('/cryptocurrency', module: CryptocurrencyModule()),
+        ModuleRoute('/favorites', module: FavoritesModule()),
+        ModuleRoute('/wallet', module: WalletModule()),
+        ModuleRoute('/profile', module: ProfileModule()),
+        ModuleRoute('/login', module: LoginModule()),
       ],
     ),
   ];

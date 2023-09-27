@@ -5,11 +5,11 @@ import 'package:mycrypto/app/core/services/preferences_service.dart';
 class ThemeModeStore extends Store<ThemeMode> {
   ThemeModeStore() : super(ThemeMode.system);
 
-  Future<void> setThemeMode(ThemeMode themeMode) async {
+  Future<void> setThemeMode(ThemeMode themeMode, BuildContext context) async {
     await PreferencesService.setThemeType(themeMode);
     if (themeMode == ThemeMode.system) {
-      final brightness = WidgetsBinding.instance.window.platformBrightness;
-      if (brightness == Brightness.dark) {
+      Brightness sysBrightness = MediaQuery.of(context).platformBrightness;
+      if (sysBrightness == Brightness.dark) {
         update(ThemeMode.dark);
       } else {
         update(ThemeMode.light);

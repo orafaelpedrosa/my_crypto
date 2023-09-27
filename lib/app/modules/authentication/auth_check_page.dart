@@ -33,7 +33,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
         if (_store.state) {
           return Container(
             color: Theme.of(context).colorScheme.background,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -79,16 +79,15 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
         }
         if (failed.isLoading)
           return Container(
+            padding: const EdgeInsets.all(50),
             color: Theme.of(context).colorScheme.background,
-            height: 50,
             child: SvgPicture.asset(
               'assets/app/mycrypto.svg',
-              height: 30,
-              placeholderBuilder: (context) => Container(
-                height: 50,
-                width: 50,
-                child: const CircularProgressIndicator(),
-              ),
+              colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+              // color: Theme.of(context).brightness == Brightness.light
+              //     ? Theme.of(context).colorScheme.primary
+              //     : null,
             ),
           );
         return Container(

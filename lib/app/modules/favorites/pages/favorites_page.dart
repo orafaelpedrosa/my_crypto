@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
@@ -7,12 +8,11 @@ import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/shimmer_crypto
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/slidable_item_list_widget.dart';
 import 'package:mycrypto/app/modules/favorites/pages/widgets/no_favorites_widgets.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
-import 'package:flutter/material.dart';
 import 'package:mycrypto/app/shared/widgets/error/error_type_widget.dart';
 
 class FavoritesPage extends StatefulWidget {
   final String title;
-  const FavoritesPage({Key? key, this.title = 'Favoritas'}) : super(key: key);
+  const FavoritesPage({Key? key, this.title = 'Favoritos'}) : super(key: key);
   @override
   FavoritesPageState createState() => FavoritesPageState();
 }
@@ -37,10 +37,10 @@ class FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
+        title: Text(widget.title,
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                )),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 1,
@@ -52,7 +52,7 @@ class FavoritesPageState extends State<FavoritesPage> {
             store: store,
             builder: (context, triple) {
               if (triple.event == TripleEvent.error) {
-                DioError dioError = triple.error as DioError;
+                DioException dioError = triple.error as DioException;
                 return ErrorHttpWidget(
                   error: dioError.response!.statusCode.toString(),
                   subtitle:

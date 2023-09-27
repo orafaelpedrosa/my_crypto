@@ -18,14 +18,13 @@ class ButtonPrimaryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isDisabled! ? null : onPressed,
       child: Container(
         height: 50,
         width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
-          color: 
-          isDisabled!
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+          color: isDisabled!
+              ? Theme.of(context).colorScheme.primary.withOpacity(0.5)
               : Theme.of(context).colorScheme.primary,
           borderRadius: const BorderRadius.all(
             Radius.circular(15),

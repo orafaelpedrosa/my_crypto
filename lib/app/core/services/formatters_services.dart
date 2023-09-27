@@ -39,4 +39,17 @@ class FormattersServices {
         return "\$ $price";
     }
   }
+
+  static String formatDateinISO(String date) {
+    final DateTime dateTime = DateTime.parse(date);
+    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm');
+    final String formatted = formatter.format(dateTime);
+    return formatted;
+  }
+
+  static formatDateBR(DateTime date) {
+    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm');
+    final String formatted = formatter.format(date);
+    return formatted;
+  }
 }

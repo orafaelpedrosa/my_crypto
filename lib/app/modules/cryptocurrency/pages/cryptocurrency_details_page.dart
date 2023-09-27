@@ -95,7 +95,7 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                           (value) async {
                             await openInfoSnackBar(
                               context,
-                              '${widget.cryptocurrency.name} ${favoritesStore.state.any((element) => element.id == widget.cryptocurrency.id) ? 'foi adicionado' : 'foi removido'} dos favoritos',
+                              '${widget.cryptocurrency.name} ${favoritesStore.state.any((element) => element.id == widget.cryptocurrency.id) ? 'foi adicionado ao' : 'foi removido do'} favoritos',
                               favoritesStore.isFavorite(widget.cryptocurrency),
                             );
                           },
@@ -185,17 +185,19 @@ class _CryptocurrencyDetailsPageState extends State<CryptocurrencyDetailsPage> {
                               minHeight: 35.0,
                               initialLabelIndex: selectIndex,
                               inactiveBgColor:
-                                  Theme.of(context).cardColor.withOpacity(0.05),
+                                  Theme.of(context).colorScheme.onBackground,
                               inactiveFgColor:
                                   Theme.of(context).colorScheme.secondary,
                               activeFgColor:
                                   Theme.of(context).colorScheme.secondary,
-                              dividerColor:
-                                  Theme.of(context).colorScheme.onBackground,
+                              dividerColor: Theme.of(context)
+                                  .colorScheme
+                                  .background
+                                  .withOpacity(0.5),
                               totalSwitches: 4,
                               animate: true,
                               borderWidth: 0.5,
-                              labels: ['1d', '7d', '30d', '1a'],
+                              labels: ['1d', '7d', '30d', '1A'],
                               onToggle: (index) async {
                                 selectIndex = index!;
                                 await store.chartStore.changeChart(index);

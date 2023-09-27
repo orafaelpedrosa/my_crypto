@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:mycrypto/app/core/models/coin_search_model.dart';
-import 'package:mycrypto/app/modules/wallet/stores/search_store.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
 import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
 
 class SearchBarCoinWidget extends SearchDelegate {
-  final SearchStore store = Modular.get();
   final WalletStore walletStore = Modular.get();
 
   ThemeData appBarTheme(BuildContext context) {
@@ -49,7 +47,10 @@ class SearchBarCoinWidget extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: Icon(
+          Icons.clear,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
         onPressed: () {
           query = '';
         },
@@ -61,8 +62,8 @@ class SearchBarCoinWidget extends SearchDelegate {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       icon: Icon(
-        Icons.arrow_back,
-        color: Theme.of(context).colorScheme.primary,
+        Icons.arrow_back_ios,
+        color: Theme.of(context).colorScheme.secondary,
       ),
       onPressed: () {
         close(context, null);
@@ -74,7 +75,7 @@ class SearchBarCoinWidget extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     List<CoinSearchModel> suggestionList = [];
 
-    suggestionList = store.state
+    suggestionList = walletStore.listSearch
         .where((element) =>
             element.name!.toLowerCase().contains(query.toLowerCase()) ||
             element.symbol!.toLowerCase().contains(query.toLowerCase()))
@@ -149,7 +150,7 @@ class SearchBarCoinWidget extends SearchDelegate {
     List<CoinSearchModel> suggestionList = [];
     final ScrollController _scrollController = ScrollController();
 
-    suggestionList = store.state
+    suggestionList = walletStore.listSearch
         .where((element) =>
             element.name!.toLowerCase().contains(query.toLowerCase()) ||
             element.symbol!.toLowerCase().contains(query.toLowerCase()))

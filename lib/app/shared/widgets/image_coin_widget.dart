@@ -39,24 +39,30 @@ class _ImageCoinWidgetState extends State<ImageCoinWidget> {
             : ClipOval(
                 child: SizedBox.fromSize(
                   size: Size(widget.size, widget.size),
-                  child: Image.network(
-                    widget.url,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator.adaptive(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).primaryColor,
-                            ),
-                            strokeWidth: 1.5,
-                          ),
-                        );
-                      }
-                    },
-                  ),
+                  child: widget.url != ''
+                      ? Image.network(
+                          widget.url,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator.adaptive(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor,
+                                  ),
+                                  strokeWidth: 1.5,
+                                ),
+                              );
+                            }
+                          },
+                        )
+                      : Icon(
+                          Icons.monetization_on,
+                          color: Theme.of(context).colorScheme.secondary,
+                          size: 35,
+                        ),
                 ),
               )
         : Icon(

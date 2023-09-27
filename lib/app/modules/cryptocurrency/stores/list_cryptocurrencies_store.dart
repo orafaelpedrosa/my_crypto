@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/services/preferences_service.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
@@ -27,8 +29,10 @@ class ListCryptocurrenciesStore extends Store<List<CryptocurrencySimpleModel>> {
         .then((value) async {
       cryptocurrencies.addAll(value);
       update(cryptocurrencies);
+      await setListSharedPreference(cryptocurrencies);
       setLoading(false);
     }).catchError((onError) async {
+      await getListSharedPreference();
       setLoading(false);
       log(onError.toString());
       setError(onError);
@@ -36,13 +40,33 @@ class ListCryptocurrenciesStore extends Store<List<CryptocurrencySimpleModel>> {
   }
 
   Future<void> getListCryptoStream() async {
-    await _repository.getListCryptocurrenciesData(marketsParams).then((value) {
+    await _repository
+        .getListCryptocurrenciesData(marketsParams)
+        .then((value) async {
       listCrypto = value;
       update(value);
-    }).catchError((onError) {
+      await setListSharedPreference(value);
+    }).catchError((onError) async {
+      await getListSharedPreference();
       log(onError.toString());
       setError(onError);
     });
+  }
+
+  Future<void> setListSharedPreference(
+      List<CryptocurrencySimpleModel> list) async {
+    await PreferencesService.setPreference('list', jsonEncode(list).toString());
+  }
+
+  Future<void> getListSharedPreference() async {
+    var cryptocurrencies = await PreferencesService.getPreference('list');
+    if (cryptocurrencies != null) {
+      listCrypto = jsonDecode(cryptocurrencies)
+          .map<CryptocurrencySimpleModel>(
+              (e) => CryptocurrencySimpleModel.fromJson(e))
+          .toList();
+      update(listCrypto);
+    }
   }
 
   String getFormatImage(String? url) {

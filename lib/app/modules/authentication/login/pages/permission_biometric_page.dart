@@ -37,7 +37,7 @@ class _PermissionBiometricPageState extends State<PermissionBiometricPage> {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.background,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -82,13 +82,6 @@ class _PermissionBiometricPageState extends State<PermissionBiometricPage> {
             text: 'Aceitar',
             isLoading: false,
             onPressed: () async {
-              // LocalAuthService.authenticate().then(
-              //   (value) {
-              //     _store.changeBiometricPermission(true);
-              //     _store.updateState(UseBiometricPermissionEnum.accepted);
-              //     Modular.to.pushReplacementNamed('/home/');
-              //   },
-              // );
               _store.setHasBiometrics(true);
               _store.updateState(UseBiometricPermissionEnum.accepted);
               Modular.to.pushReplacementNamed('/home/');

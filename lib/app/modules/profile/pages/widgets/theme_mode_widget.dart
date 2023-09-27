@@ -47,7 +47,7 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
                   ),
                 ),
                 onPressed: () async {
-                  await _store.setThemeMode(ThemeMode.system);
+                  await _store.setThemeMode(ThemeMode.system, context);
                   setState(() {
                     theme = ThemeMode.system;
                   });
@@ -64,7 +64,7 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
                   ),
                 ),
                 onPressed: () async {
-                  await _store.setThemeMode(ThemeMode.dark);
+                  await _store.setThemeMode(ThemeMode.dark, context);
                   setState(() {
                     theme = ThemeMode.dark;
                   });
@@ -81,7 +81,7 @@ class _ThemeModeWidgetState extends State<ThemeModeWidget> {
                   ),
                 ),
                 onPressed: () async {
-                  await _store.setThemeMode(ThemeMode.light);
+                  await _store.setThemeMode(ThemeMode.light, context);
                   setState(() {
                     theme = ThemeMode.light;
                   });

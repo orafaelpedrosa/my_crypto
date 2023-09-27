@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mycrypto/app/core/enums/operation_historic_enum.dart';
 import 'package:mycrypto/app/core/models/coin_search_model.dart';
 import 'package:mycrypto/app/core/services/firestore_repository.dart';
 import 'package:mycrypto/app/core/services/http_service.dart';
@@ -12,6 +13,8 @@ import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/price_simple_model.dart';
 import 'package:mycrypto/app/modules/wallet/models/fiat_coin_widget.dart';
+import 'package:mycrypto/app/modules/wallet/models/market_chart_model.dart';
+import 'package:mycrypto/app/modules/wallet/models/transaction_model.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 
 class WalletRepository extends Disposable {
@@ -61,6 +64,7 @@ class WalletRepository extends Disposable {
 
   //remove uma moeda que está na carteira
   Future<void> removeCryptocurrency(MyCryptoModel crypto) async {
+    startFirestore();
     await db
         .collection('users')
         .doc(userStore.user!.uid)
@@ -170,8 +174,8 @@ class WalletRepository extends Disposable {
 
   Future<void> updatePrice() async {
     startFirestore();
-    String profit = '';
-    String profitPercentage = '';
+    late String profit;
+    late String profitPercentage;
 
     //obtem a lista de ids das moedas que estão na carteira
     final List<String> ids = await getListOfWalletIDs();
@@ -214,12 +218,15 @@ class WalletRepository extends Disposable {
   Future<void> addCrypto(MyCryptoModel newCrypto) async {
     startFirestore();
     final List<MyCryptoModel> myCryptos = await getAllWalletCoins();
+    TransactionHistoryModel historic = TransactionHistoryModel();
+    MyCryptoModel myCrypto = MyCryptoModel();
+
     bool found = myCryptos.any((element) => element.id == newCrypto.id);
     if (found) {
       //obtem a moeda que está na carteira
-      final MyCryptoModel myCrypto = await getCryptocurrencyByID(newCrypto.id!);
+      myCrypto = await getCryptocurrencyByID(newCrypto.id!);
 
-      //media ponderada em realçao ao valor atual e ao valor anterior sem arredondamento
+      //media ponderada em relaçao ao valor atual e ao valor anterior sem arredondamento
       final double newAveragePrice =
           ((myCrypto.averagePrice!.toDouble() * myCrypto.amount!.toDouble()) +
                   (newCrypto.averagePrice!.toDouble() *
@@ -228,18 +235,77 @@ class WalletRepository extends Disposable {
       final double newAmount = myCrypto.amount!.toDouble() + newCrypto.amount!;
       myCrypto.averagePrice = newAveragePrice;
       myCrypto.amount = newAmount;
-      await updateCryptocurrency(myCrypto).then((value) {
-        log('Moeda ATUALIZADA com sucesso');
-      }).catchError((e) {
-        log('Erro ao ATUALIZAR moeda');
-      });
+
+      await updateCryptocurrency(myCrypto);
     } else {
-      await addCryptocurrency(newCrypto).then((value) {
-        log('Moeda +ADICIONADA com sucesso');
-      }).catchError((e) {
-        log('Erro ao +ADICIONAR moeda');
-      });
+      await addCryptocurrency(newCrypto);
     }
+
+    historic.id = newCrypto.id;
+    historic.name = newCrypto.name;
+    historic.value = newCrypto.amount;
+    historic.purchasePrice = newCrypto.currentPrice;
+    //DATE TIME ONTEM
+    historic.date = DateTime.now();
+    historic.operation = OperationHistoricEnum.add;
+
+    await addTransactionHistoryHistoric(historic);
+  }
+
+  Future<void> updateAddOrRemoveCrypto(
+      MyCryptoModel updatedCrypto, OperationHistoricEnum operation) async {
+    startFirestore();
+    final List<MyCryptoModel> myCryptos = await getAllWalletCoins();
+    TransactionHistoryModel historic = TransactionHistoryModel();
+    MyCryptoModel myCrypto = MyCryptoModel();
+
+    bool found = myCryptos.any((element) => element.id == updatedCrypto.id);
+    if (found) {
+      // Obtém a moeda que está na carteira
+      myCrypto = await getCryptocurrencyByID(updatedCrypto.id!);
+
+      if (operation == OperationHistoricEnum.add) {
+        // Adiciona a quantidade de criptomoeda à carteira
+        // Média ponderada em relação ao valor atual e ao valor anterior sem arredondamento
+        final double newAveragePrice = ((myCrypto.averagePrice!.toDouble() *
+                    myCrypto.amount!.toDouble()) +
+                (updatedCrypto.averagePrice!.toDouble() *
+                    updatedCrypto.amount!.toDouble())) /
+            (myCrypto.amount!.toDouble() + updatedCrypto.amount!.toDouble());
+        final double newAmount =
+            myCrypto.amount!.toDouble() + updatedCrypto.amount!;
+        myCrypto.averagePrice = newAveragePrice;
+        myCrypto.amount = newAmount;
+
+        await updateCryptocurrency(myCrypto);
+      } else if (operation == OperationHistoricEnum.remove) {
+        // Remove a quantidade de criptomoeda da carteira
+        if (updatedCrypto.amount! >= myCrypto.amount!) {
+          // Remove completamente a criptomoeda da carteira
+          await removeCryptocurrency(myCrypto);
+        } else {
+          // Atualiza a quantidade e o preço médio da criptomoeda na carteira
+          final double newAmount =
+              myCrypto.amount!.toDouble() - updatedCrypto.amount!;
+          myCrypto.amount = newAmount;
+
+          await updateCryptocurrency(myCrypto);
+        }
+      }
+    } else {
+      if (operation == OperationHistoricEnum.add && updatedCrypto.amount! > 0) {
+        // Adiciona uma nova criptomoeda à carteira
+        await addCryptocurrency(updatedCrypto);
+      }
+    }
+
+    historic.id = updatedCrypto.id;
+    historic.name = updatedCrypto.name;
+    historic.value = updatedCrypto.amount;
+    historic.purchasePrice = updatedCrypto.currentPrice;
+    historic.date = DateTime.now();
+    historic.operation = operation;
+    await addTransactionHistoryHistoric(historic);
   }
 
   Future<String> updateTotalWallet() async {
@@ -277,12 +343,41 @@ class WalletRepository extends Disposable {
     }
   }
 
-  Future<FiatCoinModel> getPriceDolarInBRL() async {
-    final Response _response = await httpService.get(
-      'https://economia.awesomeapi.com.br/json/last/USD-BRL',
-    );
+  // Future<FiatCoinModel> getPriceDolarInBRL() async {
+  //   final Response _response = await httpService.get(
+  //     'https://economia.awesomeapi.com.br/json/last/USD-BRL',
+  //   );
 
-    return FiatCoinModel.fromMap(_response.data['USDBRL']);
+  //   return FiatCoinModel.fromMap(_response.data['USDBRL']);
+  // }
+
+  Future<void> addTransactionHistoryHistoric(
+      TransactionHistoryModel historic) async {
+    startFirestore();
+    await db
+        .collection('users')
+        .doc(userStore.user!.uid)
+        .collection('transactions')
+        .add(
+          historic.toMap(),
+        );
+  }
+
+  Future<CryptoData> getMarketChart(String id) async {
+    try {
+      final Response _response = await httpService.get(
+        '/coins/$id/market_chart',
+        queryParameters: {
+          'vs_currency': 'usd',
+          'days': '7',
+        },
+      );
+      final CryptoData cryptoData = CryptoData.fromJson(_response.data);
+      return cryptoData;
+    } catch (e) {
+      log('Error getMarketChart: $e');
+      rethrow;
+    }
   }
 
   @override

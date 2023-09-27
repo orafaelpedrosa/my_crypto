@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/profile/stores/profile_store.dart';
 import 'package:flutter/material.dart';
+import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   final String title;
@@ -28,17 +29,25 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          title: Text(
-            widget.title,
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          elevation: 0,
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(100),
+      //   child: AppBar(
+      //     title: Text(
+      //       widget.title,
+      //       style: Theme.of(context).textTheme.displaySmall!.copyWith(
+      //             color: Theme.of(context).colorScheme.secondary,
+      //           ),
+      //     ),
+      //     backgroundColor: Theme.of(context).colorScheme.background,
+      //     elevation: 0,
+      //   ),
+      // ),
+      appBar: AppBarWidget(
+        title: widget.title,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 1,
+        showLeading: false,
+      ).build(context) as AppBar,
       body: Container(
         padding: EdgeInsets.all(15),
         color: Theme.of(context).colorScheme.background,
@@ -114,7 +123,17 @@ class ProfilePageState extends State<ProfilePage> {
                   routeSettings: RouteSettings(name: 'Sair'),
                   builder: (context) {
                     return CupertinoAlertDialog(
-                      title: Text('Sair'),
+                      title: Column(
+                        children: [
+                          Icon(
+                            Icons.logout_outlined,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 30,
+                          ),
+                          SizedBox(height: 10),
+                          Text('Sair'),
+                        ],
+                      ),
                       content: Text('Deseja realmente sair?'),
                       actions: [
                         CupertinoDialogAction(

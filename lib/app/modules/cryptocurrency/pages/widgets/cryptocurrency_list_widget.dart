@@ -1,16 +1,13 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/shimmer_cryptocurrency_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/slidable_item_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
-import 'package:mycrypto/app/shared/widgets/error/error_type_widget.dart';
 import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
@@ -48,19 +45,20 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
         List<CryptocurrencySimpleModel>>(
       store: store,
       builder: (_, triple) {
-        if (triple.event == TripleEvent.error) {
-          DioError dioError = triple.error as DioError;
-          return Expanded(
-            child: ErrorHttpWidget(
-              error: dioError.response!.statusCode.toString(),
-              subtitle:
-                  'Infelizmente não foi possível carregar a lista de criptomoedas devido a um erro no servidor.',
-              onTap: () {
-                store.getListCryptocurrencies();
-              },
-            ),
-          );
-        } else if (store.isLoading && store.state.isEmpty) {
+        // if (triple.event == TripleEvent.error) {
+        //   DioError dioError = triple.error as DioError;
+        //   return Expanded(
+        //     child: ErrorHttpWidget(
+        //       error: dioError.response!.statusCode.toString(),
+        //       subtitle:
+        //           'Infelizmente não foi possível carregar a lista de criptomoedas devido a um erro no servidor.',
+        //       onTap: () {
+        //         store.getListCryptocurrencies();
+        //       },
+        //     ),
+        //   );
+        // } else
+        if (store.isLoading && store.state.isEmpty) {
           return Expanded(
             child: Theme(
               data: Theme.of(context).copyWith(
@@ -89,7 +87,7 @@ class _CryptocurrencyListWidgetState extends State<CryptocurrencyListWidget> {
               initialData: const [],
               builder: (context, snapshot) {
                 return RefreshIndicator(
-                  onRefresh: () async{ 
+                  onRefresh: () async {
                     await store.getListCryptocurrencies();
                   },
                   child: Scrollbar(

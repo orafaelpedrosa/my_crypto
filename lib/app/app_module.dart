@@ -8,6 +8,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/cryptocurrency_module.dart';
 import 'package:mycrypto/app/modules/home/home_module.dart';
 import 'package:mycrypto/app/modules/profile/profile_module.dart';
 import 'package:mycrypto/app/core/stores/theme_mode_store.dart';
+import 'package:mycrypto/app/modules/wallet/wallet_module.dart';
 
 class AppModule extends Module {
   @override
@@ -26,5 +27,6 @@ class AppModule extends Module {
     ModuleRoute('/register', module: RegisterModule()),
     ModuleRoute('/cryptocurrency', module: CryptocurrencyModule()),
     ModuleRoute('/profile', module: ProfileModule()),
+    ModuleRoute('/wallet', module: WalletModule()),
   ];
 }

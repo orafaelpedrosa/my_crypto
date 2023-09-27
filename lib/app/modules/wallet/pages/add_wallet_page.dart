@@ -6,12 +6,10 @@ import 'package:flutter_triple/flutter_triple.dart';
 
 import 'package:mycrypto/app/core/models/coin_search_model.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
-import 'package:mycrypto/app/core/utils/formatters_services.dart';
+import 'package:mycrypto/app/core/services/formatters_services.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/pages/widgets/modal_change_price_widget.dart';
 import 'package:mycrypto/app/modules/wallet/pages/widgets/modal_change_time_widget.dart';
-import 'package:mycrypto/app/modules/wallet/stores/add_wallet_store.dart';
-import 'package:mycrypto/app/modules/wallet/stores/search_store.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
 import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
 import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
@@ -28,9 +26,7 @@ class AddWalletPage extends StatefulWidget {
 }
 
 class _AddWalletPageState extends State<AddWalletPage> {
-  final AddWalletStore store = Modular.get();
   final WalletStore walletStore = Modular.get();
-  final SearchStore searchStore = Modular.get();
   final UserStore _userStore = Modular.get();
 
   final TextEditingController amountController = TextEditingController();
@@ -39,16 +35,16 @@ class _AddWalletPageState extends State<AddWalletPage> {
 
   @override
   void initState() {
-    store.fiat = widget.coin.symbol!;
+    walletStore.fiat = widget.coin.symbol!;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await walletStore
           .getSimplePriceID(widget.coin.id!)
           .whenComplete(() async {
         FocusScope.of(context).requestFocus(_focusNode);
       });
-      if (_userStore.state.userPreference.vsCurrency == 'BRL') {
-        await walletStore.getPriceDolarInBRL();
-      }
+      // if (_userStore.state.userPreference.vsCurrency == 'BRL') {
+      //   await walletStore.getPriceDolarInBRL();
+      // }
     });
     super.initState();
   }
@@ -111,10 +107,10 @@ class _AddWalletPageState extends State<AddWalletPage> {
               color: Theme.of(context).colorScheme.secondary,
             ),
             onPressed: () {
-              if (store.fiat == widget.coin.symbol) {
-                store.fiat = _userStore.state.userPreference.vsCurrency!;
+              if (walletStore.fiat == widget.coin.symbol) {
+                walletStore.fiat = _userStore.state.userPreference.vsCurrency!;
               } else {
-                store.fiat = widget.coin.symbol!;
+                walletStore.fiat = widget.coin.symbol!;
               }
               walletStore.updateState();
             },
@@ -129,7 +125,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
           store: walletStore,
           builder: (_, triple) {
             return Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(15),
               color: Theme.of(context).colorScheme.background,
               alignment: Alignment.center,
               child: SingleChildScrollView(
@@ -177,11 +173,11 @@ class _AddWalletPageState extends State<AddWalletPage> {
                       ),
                     ),
                     Text(
-                      store.fiat,
+                      walletStore.fiat,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 20),
-                    triple.isLoading
+                    triple.isLoading && amountController.text.isEmpty
                         ? CircularProgressIndicator.adaptive(
                             valueColor: AlwaysStoppedAnimation<Color>(
                               Theme.of(context).primaryColor,
@@ -237,7 +233,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
                               child: Row(
                                 children: [
                                   Icon(
-                                    Icons.date_range,
+                                    Icons.edit,
                                     color:
                                         Theme.of(context).colorScheme.secondary,
                                     size: 20,
@@ -312,15 +308,16 @@ class _AddWalletPageState extends State<AddWalletPage> {
                     ),
                     const SizedBox(height: 20),
                     ButtonPrimaryWidget(
+                      isDisabled: amountController.text.isEmpty,
                       text: 'Adicionar a carteira',
-                      isLoading: triple.isLoading,
+                      isLoading: triple.isLoading && amountController.text.isNotEmpty,
                       onPressed: () async {
                         walletStore.cryptoModel.id = widget.coin.id;
-                        walletStore.cryptoModel.name = widget.coin.name;
+                        walletStore.cryptoModel.name = widget.coin.name; 
                         walletStore.cryptoModel.symbol = widget.coin.symbol;
                         walletStore.cryptoModel.averagePrice =
                             walletStore.cryptoModel.currentPrice!.toDouble();
-                        if (store.fiat == widget.coin.symbol) {
+                        if (walletStore.fiat == widget.coin.symbol) {
                           walletStore.cryptoModel.amount =
                               double.parse(amountController.text);
                         } else {
@@ -336,6 +333,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
                           await walletStore.updatePrice();
                           await walletStore.totalValue();
                         });
+
                         Modular.to.pushNamedAndRemoveUntil('/home/wallet/',
                             ModalRoute.withName('/home/wallet/'));
                       },

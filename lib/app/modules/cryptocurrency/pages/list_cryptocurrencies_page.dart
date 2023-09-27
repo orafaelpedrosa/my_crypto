@@ -1,5 +1,5 @@
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
@@ -70,7 +70,7 @@ class CryptocurrencyPageState extends State<ListCryptocurrenciesPage> {
             width: 25,
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
-          elevation: 2,
+          elevation: 1,
           automaticallyImplyLeading: false,
           actions: [
             IconButton(

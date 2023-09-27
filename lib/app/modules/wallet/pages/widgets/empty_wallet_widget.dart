@@ -22,12 +22,16 @@ class _EmptyWalletWidgetState extends State<EmptyWalletWidget> {
           SvgPicture.asset(
             'assets/app/wallet/image.svg',
             height: 150,
-            color: Theme.of(context).colorScheme.secondary,
-            placeholderBuilder: (context) => Container(
-              height: 50,
-              width: 50,
-              child: const CircularProgressIndicator(),
+            colorFilter: ColorFilter.mode(
+              Colors.red,
+              BlendMode.srcIn,
             ),
+
+            // placeholderBuilder: (context) => Container(
+            //   height: 50,
+            //   width: 50,
+            //   child: const CircularProgressIndicator(),
+            // ),
           ),
           const SizedBox(height: 20),
           Text(

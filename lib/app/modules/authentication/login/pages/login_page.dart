@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     setState(() {
       email.text = 'orafaelpedrosa@outlook.com';
-      password.text = 'Pulodogato@7';
+      password.text = 'teste@123';
     });
   }
 
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget get _buildFormLoginPage {
     return Container(
       height: MediaQuery.of(context).size.height,
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

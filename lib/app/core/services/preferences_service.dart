@@ -79,6 +79,7 @@ class PreferencesService {
       (instance) async {
         await instance.setString(
           'theme',
+          // ignore: sdk_version_since
           themeMode.name,
         );
       },
@@ -108,5 +109,21 @@ class PreferencesService {
       default:
         return ThemeMode.system;
     }
+  }
+
+  static Future<void> setPreference(String key, String value) async {
+    await SharedPreferences.getInstance().then(
+      (instance) async {
+        await instance.setString(key, value);
+      },
+    );
+  }
+
+  static Future<String?> getPreference(String key) async {
+    return SharedPreferences.getInstance().then(
+      (instance) async {
+        return instance.getString(key);
+      },
+    );
   }
 }

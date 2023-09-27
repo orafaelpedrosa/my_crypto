@@ -6,7 +6,7 @@ class HttpService {
 
   HttpService() {
     _dio.options.baseUrl = dotenv.get('URL_BASE');
-    _dio.options.connectTimeout = 3000;
+    // _dio.options.connectTimeout = 3000;
     _dio.interceptors.add(LogInterceptor(
       responseHeader: false,
       responseBody: true,

@@ -13,6 +13,7 @@ class CryptocurrencyDataStore extends Store<CryptocurrencyDetailsModel> {
   final CryptocurrencyRepository _repository =
       Modular.get<CryptocurrencyRepository>();
   final ChartStore chartStore = Modular.get();
+  
 
   Future<void> getCryptocurrencyById(String id) async {
     setLoading(true);
@@ -34,7 +35,7 @@ class CryptocurrencyDataStore extends Store<CryptocurrencyDetailsModel> {
       update(value);
     }).catchError((onError) {
       log(onError.toString());
-      setError(onError);
+      setError(onError); 
     });
   }
 

@@ -109,7 +109,7 @@ openInfoSnackBar(context, String text, bool flag) {
           ),
         ],
       ),
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: flag ? Colors.green : Colors.red,
       duration: Duration(seconds: 3),
       behavior: SnackBarBehavior.floating,
     ),
