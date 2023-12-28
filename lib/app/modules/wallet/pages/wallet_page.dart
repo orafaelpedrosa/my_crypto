@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -9,7 +10,6 @@ import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/pages/widgets/empty_wallet_widget.dart';
 import 'package:mycrypto/app/modules/wallet/pages/widgets/search_bar_coin_widget.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
-import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class WalletPage extends StatefulWidget {

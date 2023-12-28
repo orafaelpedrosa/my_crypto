@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-
+import 'package:mycrypto/app/core/shared/widgets/image_coin_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
-import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -107,7 +106,7 @@ class SlidableItemListWidget extends StatelessWidget {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.15,
                           child: Text(
-                            coin.symbol!.toUpperCase(),
+                            coin.symbol?.toUpperCase() ?? '-',
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!

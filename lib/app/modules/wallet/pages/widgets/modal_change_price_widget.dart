@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
-import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/button/button_primary_widget.dart';
 
 class ModalChangePriceWidget extends StatefulWidget {
   const ModalChangePriceWidget({Key? key}) : super(key: key);

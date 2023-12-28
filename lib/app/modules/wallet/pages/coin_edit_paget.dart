@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/app_bar_widget.dart';
 
 class CoinEditPage extends StatefulWidget {
   final MyCryptoModel coin;

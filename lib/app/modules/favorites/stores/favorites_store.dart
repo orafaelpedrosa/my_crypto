@@ -119,7 +119,7 @@ class FavoritesStore extends Store<List<CryptocurrencySimpleModel>> {
     } else if (coin.priceChangePercentage1yInCurrency != null) {
       return coin.priceChangePercentage1yInCurrency!;
     } else {
-      return coin.priceChangePercentage24hInCurrency!;
+      return coin.priceChangePercentage24hInCurrency?? 0;
     }
   }
 }

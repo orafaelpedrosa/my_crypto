@@ -7,8 +7,8 @@ import 'package:local_auth/local_auth.dart';
 import 'package:mycrypto/app/core/enums/use_biometric_permission_enum.dart';
 import 'package:mycrypto/app/core/services/local_auth_service.dart';
 import 'package:mycrypto/app/core/stores/use_biometric_store.dart';
-import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
-import 'package:mycrypto/app/shared/widgets/button/button_secondary_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/button/button_primary_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/button/button_secondary_widget.dart';
 
 class PermissionBiometricPage extends StatefulWidget {
   const PermissionBiometricPage({Key? key}) : super(key: key);

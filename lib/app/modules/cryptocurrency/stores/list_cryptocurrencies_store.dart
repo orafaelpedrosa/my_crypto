@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/core/services/preferences_service.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/repositories/cryptocurrency_repository.dart';
@@ -19,6 +20,7 @@ class ListCryptocurrenciesStore extends Store<List<CryptocurrencySimpleModel>> {
       Modular.get<CryptocurrencyDataStore>();
   List<CryptocurrencySimpleModel> listCrypto = [];
   List<CryptocurrencySimpleModel> cryptocurrencies = [];
+  UserStore userStore = Modular.get<UserStore>();
 
   final MarketsParamsModel marketsParams = MarketsParamsModel();
 
@@ -55,11 +57,13 @@ class ListCryptocurrenciesStore extends Store<List<CryptocurrencySimpleModel>> {
 
   Future<void> setListSharedPreference(
       List<CryptocurrencySimpleModel> list) async {
-    await PreferencesService.setPreference('list', jsonEncode(list).toString());
+    await PreferencesService.setPreference(
+        'list-mycrypto', jsonEncode(list).toString());
   }
 
   Future<void> getListSharedPreference() async {
-    var cryptocurrencies = await PreferencesService.getPreference('list');
+    var cryptocurrencies =
+        await PreferencesService.getPreference('list-mycrypto');
     if (cryptocurrencies != null) {
       listCrypto = jsonDecode(cryptocurrencies)
           .map<CryptocurrencySimpleModel>(

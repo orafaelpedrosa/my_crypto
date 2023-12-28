@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-
 import 'package:mycrypto/app/core/models/coin_search_model.dart';
-import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/core/services/formatters_services.dart';
+import 'package:mycrypto/app/core/shared/widgets/button/button_primary_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/image_coin_widget.dart';
+import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
 import 'package:mycrypto/app/modules/wallet/pages/widgets/modal_change_price_widget.dart';
 import 'package:mycrypto/app/modules/wallet/pages/widgets/modal_change_time_widget.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
-import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
-import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
 
 class AddWalletPage extends StatefulWidget {
   final CoinSearchModel coin;
@@ -137,7 +136,9 @@ class _AddWalletPageState extends State<AddWalletPage> {
                       child: AutoSizeTextField(
                         focusNode: _focusNode,
                         inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'[0-9]'),
+                          ),
                         ],
                         showCursor: false,
                         textAlign: TextAlign.center,
@@ -310,10 +311,11 @@ class _AddWalletPageState extends State<AddWalletPage> {
                     ButtonPrimaryWidget(
                       isDisabled: amountController.text.isEmpty,
                       text: 'Adicionar a carteira',
-                      isLoading: triple.isLoading && amountController.text.isNotEmpty,
+                      isLoading:
+                          triple.isLoading && amountController.text.isNotEmpty,
                       onPressed: () async {
                         walletStore.cryptoModel.id = widget.coin.id;
-                        walletStore.cryptoModel.name = widget.coin.name; 
+                        walletStore.cryptoModel.name = widget.coin.name;
                         walletStore.cryptoModel.symbol = widget.coin.symbol;
                         walletStore.cryptoModel.averagePrice =
                             walletStore.cryptoModel.currentPrice!.toDouble();

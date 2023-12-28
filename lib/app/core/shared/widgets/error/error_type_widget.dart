@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:mycrypto/app/core/enums/error_type_enum.dart';
-import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/button/button_primary_widget.dart';
 
 // ignore: must_be_immutable
 class ErrorHttpWidget extends StatefulWidget {

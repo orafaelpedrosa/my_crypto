@@ -8,7 +8,7 @@ import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/shimmer_crypto
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/slidable_item_list_widget.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/list_cryptocurrencies_store.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
-import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
+import 'package:mycrypto/app/core/shared/widgets/snackbar/snackbar.dart';
 
 class CryptocurrencyListWidget extends StatefulWidget {
   final ScrollController scrollController;

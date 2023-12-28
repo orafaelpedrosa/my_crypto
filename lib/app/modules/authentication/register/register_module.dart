@@ -3,7 +3,7 @@ import 'package:mycrypto/app/modules/authentication/register/register_repository
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/authentication/register/stores/accept_terms_store.dart';
 import 'package:mycrypto/app/modules/authentication/register/stores/register_store.dart';
-import 'package:mycrypto/app/shared/pages/send_mail_page.dart';
+import 'package:mycrypto/app/core/shared/pages/send_mail_page.dart';
 
 class RegisterModule extends Module {
   @override

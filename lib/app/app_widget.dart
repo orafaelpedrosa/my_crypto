@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:mycrypto/app/core/theme/app_theme.dart';
 import 'package:mycrypto/app/core/stores/theme_mode_store.dart';
+import 'package:mycrypto/app/core/theme/app_theme.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
-  final ThemeModeStore _themeModeStore = Modular.get();
+  final ThemeModeStore store = Modular.get();
 
   @override
   void initState() {
@@ -30,30 +30,30 @@ class _AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
 
   Future<void> didChangePlatformBrightness() async {
     super.didChangePlatformBrightness();
-    final themeMode = await _themeModeStore.getThemeMode();
+    final themeMode = await store.getThemeMode();
     if (themeMode == ThemeMode.system) {
       final brightness = WidgetsBinding.instance.window.platformBrightness;
       if (brightness == Brightness.dark) {
-        _themeModeStore.updateState(ThemeMode.dark);
+        store.updateState(ThemeMode.dark);
       } else {
-        _themeModeStore.updateState(ThemeMode.light);
+        store.updateState(ThemeMode.light);
       }
     } else {
-      _themeModeStore.updateState(themeMode);
+      store.updateState(themeMode);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _themeModeStore.updateState(_themeModeStore.state);
+    store.updateState(store.state);
     return TripleBuilder(
-      store: _themeModeStore,
+      store: store,
       builder: (context, triple) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          themeMode: _themeModeStore.state,
+          themeMode: store.state,
           supportedLocales: const [Locale('pt', 'BR')],
           localizationsDelegates: const [
             GlobalCupertinoLocalizations.delegate,

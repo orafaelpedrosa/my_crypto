@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
 import 'package:mycrypto/app/modules/profile/stores/profile_store.dart';
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/app_bar_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   final String title;

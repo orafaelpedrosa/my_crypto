@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mycrypto/app/shared/widgets/read_more_text.dart';
+import 'package:mycrypto/app/core/shared/widgets/read_more_text.dart';
 
 class AboutCryptocurrencyWidget extends StatefulWidget {
   final String about;

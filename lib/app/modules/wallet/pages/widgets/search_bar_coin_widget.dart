@@ -3,10 +3,9 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
 import 'package:mycrypto/app/core/models/coin_search_model.dart';
+import 'package:mycrypto/app/core/shared/widgets/image_coin_widget.dart';
 import 'package:mycrypto/app/modules/wallet/stores/wallet_store.dart';
-import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
 
 class SearchBarCoinWidget extends SearchDelegate {
   final WalletStore walletStore = Modular.get();
@@ -178,7 +177,6 @@ class SearchBarCoinWidget extends SearchDelegate {
               return ListTile(
                 minVerticalPadding: 0,
                 onTap: () async {
-                  log('onTap ');
                   Modular.to.pushReplacementNamed(
                     '/home/wallet/add',
                     arguments: suggestionList[index],

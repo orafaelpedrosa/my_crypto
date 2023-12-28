@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mycrypto/app/modules/authentication/auth_check_store.dart';
-import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/button/button_primary_widget.dart';
 
 class AuthCheckPage extends StatefulWidget {
   const AuthCheckPage({Key? key}) : super(key: key);

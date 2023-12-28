@@ -7,8 +7,8 @@ import 'package:mycrypto/app/core/models/coin_search_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/cryptocurrency_simple_model.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/models/markets_params_model.dart';
 import 'package:mycrypto/app/modules/wallet/models/market_chart_model.dart';
-import 'package:mycrypto/app/modules/wallet/models/transaction_model.dart';
 import 'package:mycrypto/app/modules/wallet/models/my_crypto_model.dart';
+import 'package:mycrypto/app/modules/wallet/models/transaction_model.dart';
 import 'package:mycrypto/app/modules/wallet/wallet_repository.dart';
 
 // ignore: must_be_immutable

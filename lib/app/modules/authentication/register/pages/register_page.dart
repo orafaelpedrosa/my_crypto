@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mycrypto/app/core/shared/widgets/app_bar_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/snackbar/snackbar.dart';
+import 'package:mycrypto/app/core/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/register/stores/accept_terms_store.dart';
 import 'package:mycrypto/app/modules/authentication/register/stores/register_store.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
-import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
-import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -95,7 +95,7 @@ class RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 15),
                       TextFormFieldWidget(
                         controller: _emailController,
-                        keyboardType:  TextInputType.emailAddress,
+                        keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         iconData: Icon(
                           Icons.email_outlined,

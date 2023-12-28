@@ -10,10 +10,10 @@ import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/link_cryptocur
 import 'package:mycrypto/app/modules/cryptocurrency/pages/widgets/tab_price_change_percent_widget.dart';
 import 'package:mycrypto/app/modules/favorites/stores/favorites_store.dart';
 import 'package:mycrypto/app/modules/cryptocurrency/stores/cryptocurrency_data_store.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
-import 'package:mycrypto/app/shared/widgets/image_coin_widget.dart';
-import 'package:mycrypto/app/shared/widgets/loading/loading_widget.dart';
-import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
+import 'package:mycrypto/app/core/shared/widgets/app_bar_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/image_coin_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/loading/loading_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/snackbar/snackbar.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class CryptocurrencyDetailsPage extends StatefulWidget {

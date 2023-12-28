@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mycrypto/app/core/shared/widgets/button/button_primary_widget.dart';
 import 'package:mycrypto/app/modules/wallet/pages/widgets/search_bar_coin_widget.dart';
-import 'package:mycrypto/app/shared/widgets/button/button_primary_widget.dart';
 
 class EmptyWalletWidget extends StatefulWidget {
   const EmptyWalletWidget({Key? key}) : super(key: key);
@@ -19,20 +18,20 @@ class _EmptyWalletWidgetState extends State<EmptyWalletWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SvgPicture.asset(
-            'assets/app/wallet/image.svg',
-            height: 150,
-            colorFilter: ColorFilter.mode(
-              Colors.red,
-              BlendMode.srcIn,
-            ),
+          // SvgPicture.asset(
+          //   'assets/app/wallet/image.svg',
+          //   height: 150,
+          //   // colorFilter: ColorFilter.mode(
+          //   //   Colors.red,
+          //   //   BlendMode.srcIn,
+          //   // ),
 
-            // placeholderBuilder: (context) => Container(
-            //   height: 50,
-            //   width: 50,
-            //   child: const CircularProgressIndicator(),
-            // ),
-          ),
+          //   placeholderBuilder: (context) => Container(
+          //     height: 50,
+          //     width: 50,
+          //     child: const CircularProgressIndicator(),
+          //   ),
+          // ),
           const SizedBox(height: 20),
           Text(
             'Sua carteira está vazia!',

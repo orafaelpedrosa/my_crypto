@@ -5,7 +5,7 @@ import 'package:mycrypto/app/modules/profile/pages/widgets/change_vs_currency_wi
 import 'package:mycrypto/app/modules/profile/pages/widgets/delete_account_widget.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/enable_biometric_widget.dart';
 import 'package:mycrypto/app/modules/profile/pages/widgets/theme_mode_widget.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/app_bar_widget.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);

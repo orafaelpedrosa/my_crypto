@@ -13,8 +13,8 @@ import 'package:mycrypto/app/modules/authentication/login/pages/permission_biome
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.dart';
 import 'package:mycrypto/app/core/stores/user_store.dart';
-import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
-import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/snackbar/snackbar.dart';
+import 'package:mycrypto/app/core/shared/widgets/text_field/text_form_field_widget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginPage extends StatefulWidget {

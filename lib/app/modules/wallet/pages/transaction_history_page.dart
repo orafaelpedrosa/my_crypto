@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-
 import 'package:mycrypto/app/core/enums/operation_historic_enum.dart';
 import 'package:mycrypto/app/core/services/formatters_services.dart';
+import 'package:mycrypto/app/core/shared/widgets/app_bar_widget.dart';
 import 'package:mycrypto/app/modules/wallet/models/transaction_model.dart';
 import 'package:mycrypto/app/modules/wallet/stores/transaction_history_store.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
 
 class TransactionHistoryPage extends StatefulWidget {
   final String? id;
@@ -130,7 +129,9 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                         : Colors.red,
                   ),
                   title: Text(item.name!),
-                  subtitle: Text(FormattersServices.formatDateBR(item.date!)),
+                  subtitle: Text(
+                    FormattersServices.formatDateBR(item.date!),
+                  ),
                   trailing: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -140,12 +141,13 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                             : '- ${item.value}',
                       ),
                       Expanded(
-                        child: Text(item.operation ==
-                                OperationHistoricEnum.remove
-                            ? FormattersServices.priceInCurrencyFormat(
-                                '- ${item.purchasePrice!.toStringAsFixed(2)}')
-                            : FormattersServices.priceInCurrencyFormat(
-                                '${item.purchasePrice!.toStringAsFixed(2)}')),
+                        child: Text(
+                          item.operation == OperationHistoricEnum.remove
+                              ? FormattersServices.priceInCurrencyFormat(
+                                  '- ${item.purchasePrice!.toStringAsFixed(2)}')
+                              : FormattersServices.priceInCurrencyFormat(
+                                  '${item.purchasePrice!.toStringAsFixed(2)}'),
+                        ),
                       ),
                     ],
                   ),

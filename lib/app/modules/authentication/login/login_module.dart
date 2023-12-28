@@ -6,7 +6,7 @@ import 'package:mycrypto/app/modules/authentication/login/stores/obscure_store.d
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mycrypto/app/modules/authentication/login/pages/reset_password_page.dart';
-import 'package:mycrypto/app/shared/pages/send_mail_page.dart';
+import 'package:mycrypto/app/core/shared/pages/send_mail_page.dart';
 
 class LoginModule extends Module {
   @override

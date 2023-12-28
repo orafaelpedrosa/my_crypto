@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mycrypto/app/shared/widgets/app_bar_widget.dart';
-import 'package:mycrypto/app/shared/widgets/snackbar/snackbar.dart';
+import 'package:mycrypto/app/core/shared/widgets/app_bar_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/snackbar/snackbar.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import 'package:mycrypto/app/core/utils/validation.dart';
 import 'package:mycrypto/app/modules/authentication/login/stores/login_store.dart';
-import 'package:mycrypto/app/shared/widgets/text_field/text_form_field_widget.dart';
+import 'package:mycrypto/app/core/shared/widgets/text_field/text_form_field_widget.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   final String? email;
